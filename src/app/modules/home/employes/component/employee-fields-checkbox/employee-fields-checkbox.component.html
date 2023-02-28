@@ -1,0 +1,76 @@
+<div class="employee-chexbox-excel">
+  <div class="scroll-general-rhis content-emp-chexbox">
+    <div class="card common-table-card">
+      <div class="card-body">
+        <ul class="mr-4">
+          <li *ngFor="let firstLevel of fieldsToPrint; index as i"
+              class="first-list-{{i+1}}" [ngClass]="{'mt-2': i!==0}">
+              <input [id]="firstLevel.value"
+                     [name]="firstLevel.value"
+                     type="checkbox">
+              <label class="first-level" (click)="displayHideSections('first-list-',firstLevel.value, i+1); $event.stopPropagation();"
+                     [attr.data-for-id]="firstLevel.value">
+                {{firstLevel.libelle}}
+              </label>
+              <span (click)="displayHideSections('first-list-',firstLevel.value, i+1); $event.stopPropagation();"
+                    *ngIf="firstLevel.secondLevel && !firstLevel.isOpen" class="pi pi-fw pi-chevron-right"> </span>
+              <span (click)="displayHideSections('first-list-',firstLevel.value, i+1); $event.stopPropagation();"
+                    *ngIf="firstLevel.secondLevel && firstLevel.isOpen" class="pi pi-fw pi-chevron-down"> </span>
+            <ul class="content-first ml-2 mt-3">
+              <li *ngFor="let secondLevel of firstLevel.secondLevel; index as j"
+                  class="second-list-{{j+1}}-{{i+1}} content" [ngClass]="{'mt-3': j!==0}">
+                  <input [attr.data-parent]="firstLevel.value"
+                         [id]="secondLevel.value"
+                         [name]="secondLevel.value-1"
+                         type="checkbox">
+                  <label  class="second-level"
+                          (click)="displayHideSections('second-list-',secondLevel.value, j+1,i+1); $event.stopPropagation();"
+                          [attr.data-for-id]="secondLevel.value">
+                    {{secondLevel.libelle}}
+                  </label>
+                  <span
+                          (click)="displayHideSections('second-list-',secondLevel.value, j+1,i+1); $event.stopPropagation();"
+                          *ngIf="secondLevel.thirdLevel && !secondLevel.isOpen" class="pi pi-fw pi-chevron-right"> </span>
+                  <span
+                          (click)="displayHideSections('second-list-',secondLevel.value, j+1,i+1); $event.stopPropagation();"
+                          *ngIf="secondLevel.thirdLevel && secondLevel.isOpen" class="pi pi-fw pi-chevron-down"> </span>
+                <ul class="content-second mt-3 ml-2">
+                  <li *ngFor="let thirdLevel of secondLevel.thirdLevel">
+                      <input [attr.data-parent]="secondLevel.value"
+                             [attr.thirdLevel]="true"
+                             [id]="thirdLevel.value"
+                             [name]="thirdLevel.value"
+                             type="checkbox">
+                      <label [for]="thirdLevel.value">
+                        {{thirdLevel.libelle}}
+                      </label>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bloc-submit d-flex justify-content-center mb-2 mt-2">
+    <button (click)="generateExcelFileWithFields()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+            id="EMP_Filter-excel-btn"
+            type="button">
+      <span>{{'DOWNLOAD_EMPLOYEE_EXCEL.GENERATE_BUTTON' | translate}}</span>
+    </button>
+  </div>
+</div>
+
+<p-confirmDialog *ngIf="displayConfirmDialog" [appendTo]="'body'" [key]="'popupConfirmation'">
+  <p-footer>
+    <button (click)="generateExcelFileWithFields({skip:true})" id="PLG-Eq-affectation-popup-btn"
+            label="{{'DOWNLOAD_EMPLOYEE_EXCEL.OUI'|translate}}"
+            pButton
+            type="button"></button>
+    <button (click)="generateExcelFileWithFields({close:true})" id="PLG-Eq-recalculer-popup-btn"
+            label="{{'DOWNLOAD_EMPLOYEE_EXCEL.NON'|translate}}"
+            pButton
+            type="button"></button>
+  </p-footer>
+</p-confirmDialog>

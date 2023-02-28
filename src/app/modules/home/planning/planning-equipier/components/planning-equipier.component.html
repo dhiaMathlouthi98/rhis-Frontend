@@ -1,0 +1,867 @@
+<div *ngIf="equipierScrollableMenuOpen && !displayPlgHebdo">
+  <div class="hide-hour">
+  </div>
+  <div class="hide-hour right-hour-planning">
+  </div>
+</div>
+<div [ngClass]="{'horizontal-scroll-equipier-menu-open': equipierScrollableMenuOpen,
+                 'horizontal-scroll-equipier-menu-close': !equipierScrollableMenuOpen}"
+     class="rhis-container Scroll-horizontal-planning-equipier">
+  <div class="rhis-container" [ngClass]="backgroundRowColor">
+    <div (rhisHeightScrollableSection)="heightInterface = ($event)" [offset]="85"
+         class="header">
+      <div class="header-equipier-block block-flex-general-eq">
+        <div class="block-flex-left">
+          <div class="block-week-nmbre">
+            {{weekNumber}}
+          </div>
+          <div *ngIf="frConfig && !displayPlgHebdo" class="calendar block-filter-calendar">
+            <p-calendar #myCalendar (onSelect)="onDateChanged($event)" [locale]="frConfig"
+                        [ngModel]="calendarDate"
+                        [showIcon]="true" dateFormat="D. dd M. yy" id="PLG-Eq-calendar"></p-calendar>
+            <button (click)="goToNextDay()" class="next-day-button" type="button"><span><img
+              id="PLG_Eq-next-btn" src="assets/icons/arrow-icons/next-arrow.png"></span></button>
+            <button (click)="goToPreviousDay()" class="previous-day-button" type="button"><span><img
+              id="PLG_Eq-prev-btn" src="assets/icons/arrow-icons/previous-arrow.png"></span></button>
+          </div>
+          <div class="calendar block-filter-calendar" *ngIf="calendar_fr && displayPlgHebdo">
+            <p-calendar [showWeek]="true" [locale]="calendar_fr" [(ngModel)]="values" selectionMode="range" dateFormat="dd/mm/yy"
+              (onSelect)="checkDataAndChangeDate(this.selectDate, $event)" [showIcon]="true">
+            </p-calendar>
+            <button (click)="checkDataAndChangeDate(this.upWeekDate)" class="next-day-button" type="button"><span><img
+              id="PLG_Eq-next-btn" src="assets/icons/arrow-icons/next-arrow.png"></span></button>
+            <button (click)="checkDataAndChangeDate(this.downWeekDate)" class="previous-day-button" type="button"><span><img
+              id="PLG_Eq-prev-btn" src="assets/icons/arrow-icons/previous-arrow.png"></span></button>
+          </div>
+
+          <div class="block-left-buttons-equipier">
+            <div class="display-buttons">
+              <div [hidden]="displayPlgHebdo" class="vue-condensee-buttons">
+                <button (click)="showMinimalDisplay(false)"
+                        [ngClass]="{'white-background': !minimalDisplay, 'grey-background': minimalDisplay}"
+                        class="switch-button-left"
+                        id="PLG_Eq-NvueC-btn"
+                        type="button"><span><img
+                  src="assets/icons/employe/Ico_Paragraph_ON.svg"></span></button>
+                <button (click)="showMinimalDisplay(true)"
+                        [ngClass]="{'white-background': minimalDisplay, 'grey-background': !minimalDisplay}"
+                        class="switch-button-right"
+                        id="PLG_Eq-vueC-btn"
+                        type="button"><span><img
+                  src="assets/icons/employe/Ico_List_ON.svg"></span></button>
+              </div>
+                <div class="btn-group btn-jour-semaine" role="group">
+                  <button (click)="displayHidePlgHebdo(false)" [ngClass]="{'white-background active': !displayPlgHebdo, 'grey-background': displayPlgHebdo}"
+                          class="btn btn-light" id="GDH-jour-btn" type="button">
+                    {{"GDH.FILTER.DAY" | translate}}
+                  </button>
+                  <button (click)="displayHidePlgHebdo(true)" [ngClass]="{'white-background active': displayPlgHebdo, 'grey-background': !displayPlgHebdo}"
+                   class="btn btn-light"
+                          id="GDH-week-btn" type="button">{{"GDH.FILTER.WEEK" | translate}}
+                  </button>
+                </div>
+
+                <button (click)="displayHidePlgManagers()"
+                  [ngClass]="{'white-background': !displayPlgManagers, 'grey-background': displayPlgManagers}"
+                  class="switch-button-right enca-switch-button manager-leader-button" id="PLG_Eq-HidePM-btn" type="button">
+                  <span>M/L</span>
+                </button>
+            </div>
+            <button (click)="displayMoeProductivity(false)"
+                    [ngClass]="{'white-background': !showMoe, 'grey-background': showMoe}"
+                    class="switch-button-left moe-block moe-prod-button"
+                    id="PLG_Eq-Moe-btn"
+                    type="button">{{"PLANNING_EQUIPIER.TAUX_MOE" | translate}} : <span>{{tauxMOA}}</span>
+              <rhis-infos-tooltip
+                [buttom]="15"
+                [right]="-15"
+                [top]="-13" class="moe-tooltip-hover-content"
+                style="z-index: 999 !important;">
+                <div style="width: max-content;">{{"PLANNING_EQUIPIER.MOE_HOVER_TEXT" | translate}}</div>
+              </rhis-infos-tooltip>
+            </button>
+            <button (click)="displayMoeProductivity(true)"
+                    [ngClass]="{'white-background': showMoe, 'grey-background': !showMoe}"
+                    class="switch-button-right moe-block moe-prod-button prod-btn"
+                    id="PLG_Eq-prod-btn"
+                    type="button">{{"PLANNING_EQUIPIER.PRODUCTIVITY" | translate}} : <span>{{prod}}</span>
+              <rhis-infos-tooltip
+                [buttom]="15"
+                [right]="-15"
+                [top]="-13" class="moe-tooltip-hover-content"
+                style="z-index: 999 !important;">
+                <div style="width: max-content;">{{"PLANNING_EQUIPIER.PROD_HOVER_TEXT" | translate}}</div>
+              </rhis-infos-tooltip>
+            </button>
+          </div>
+        </div>
+        <div class="block-flex-right">
+          <!-- ************************************************************************ -->
+          <!------------ DISPLAY THIS BLOCK JUST IN THE DEVICE INF OF 1380 PX ------------>
+          <!-- ************************************************************************ -->
+          <div class="edit-buttons bloc-inf-1500 mr-1">
+            <nav>
+              <ul>
+                <li>
+                  <a><img class="icon-plus-plus" src="assets/icons/employe/plus-plus.png"></a>
+                  <ul>
+                    <li (click)="onDeleteEmployee()" *ngIf="deleteButtonControl()">
+                      <a>
+                        <span>
+                          <img id="PLG_Eq-deleteEmpSUP-btn" src="assets/icons/planning/delete/delete.svg">
+                        </span>
+                      </a>
+                    </li>
+                    <li (click)="openSaveReferencePopup()" *ngIf="updateButtonControl()">
+                      <a>
+                        <span>
+                           <img id="PLG_Eq-saveRefSUP-btn" src="assets/icons/planning/save-gray-bg-x1.png">
+                        </span>
+                      </a>
+                    </li>
+                    <li (click)="openChargerReferencePopup()">
+                      <a>
+                        <span>
+                          <img id="PLG_Eq-chargeRefSUP-btn" src="assets/icons/employe/dl small.svg">
+                        </span>
+                      </a>
+                    </li>
+                    <li (click)="onSearchEmployee()">
+                      <a>
+                        <span>
+                          <img id="PLG_Eq-serachEmpSUP-btn" src="assets/icons/employe/search.svg">
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <span>
+                          <img src="assets/icons/employe/plus.svg">
+                        </span>
+                      </a>
+                      <ul>
+                        <li>
+                          <a (click)="showActionPopup(RESUME_PLANNING)"
+                             id="PLG_Eq-resumeJSUP-dropdown">
+                            {{"PLANNING_EQUIPIER.RESUME_PLANNING" | translate}}
+                          </a>
+                        </li>
+                        <li>
+                          <a (click)="openPdfSectionsSelectionView()"
+                             id="PLG_Eq-resumeJournalierSUP-dropdown">
+                            {{"PLANNING_EQUIPIER.RESUME_JOURNALIER" | translate}}
+                          </a>
+                        </li>
+                        <li>
+                          <a (click)="showActionPopup(PLANNING_EMPLOYEE)"
+                             id="PLG_Eq-resumeHSUP-btn">
+                            {{"PLANNING_EQUIPIER.PLANNING_HEBDO_EQ" | translate}}
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </nav>
+          </div>
+          <!-- ************************************************************************ -->
+          <!------------ DISPLAY THIS BLOCK JUST IN THE DEVICE SUP OF 1380 PX ------------>
+          <!-- ************************************************************************ -->
+          <div class="edit-buttons bloc-sup-1500">
+            <button (click)="onDeleteEmployee()" *ngIf="deleteButtonControl()" class="btn btn-delete">
+              <span>
+                <img id="PLG_Eq-deleteEmpINF-btn" src="assets/icons/planning/delete/delete.svg">
+              </span>
+            </button>
+            <button (click)="openSaveReferencePopup()" *ngIf="updateButtonControl()" class="btn btn-download">
+              <span>
+                <img id="PLG_Eq-saveRefINF-btn" src="assets/icons/planning/save-gray-bg-x1.png">
+              </span>
+            </button>
+            <button (click)="openChargerReferencePopup()" class="btn btn-download">
+              <span>
+                <img id="PLG_Eq-chargeRefINF-btn" src="assets/icons/employe/dl small.svg">
+              </span>
+            </button>
+            <button *ngIf="!displayPlgHebdo" (click)="onSearchEmployee()" class="btn btn-search">
+              <span>
+                <img id="PLG_Eq-serachEmpINF-btn" src="assets/icons/employe/search.svg">
+              </span>
+            </button>
+            <div class="dropdown">
+              <button class="btn btn-plus" id="PLG-Eq-plusSUP-dropdown">
+                <span>
+                  <img src="assets/icons/employe/plus.svg">
+                </span>
+              </button>
+              <div class="dropdown-content">
+                <a (click)="showActionPopup(RESUME_PLANNING)"
+                   id="PLG_Eq-resumeJINF-dropdown">
+                  {{"PLANNING_EQUIPIER.RESUME_PLANNING" | translate}}
+                </a>
+                <a (click)="openPdfSectionsSelectionView()"
+                   id="PLG_Eq-resumeJournalierINF-dropdown">
+                  {{"PLANNING_EQUIPIER.RESUME_JOURNALIER" | translate}}
+                </a>
+                <a (click)="showActionPopup(PLANNING_EMPLOYEE)"
+                   id="PLG_Eq-resumeHINF-btn">
+                  {{"PLANNING_EQUIPIER.PLANNING_HEBDO_EQ" | translate}}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="addButtonControl()" class="block-btn-principaux">
+            <button (click)="saveGlobale(0)"
+                    class="btn save-add-button-rhis blue-background btn-save-employee btn-special-equipierHome"
+                    id="PLG_Eq-save-btn"
+                    type="button">
+              <span>{{'BUTTON.SAVE'|translate}}</span>
+            </button>
+            <button (click)="openAddShiftForm()" *ngIf="!displayPlgHebdo"
+                    class="btn save-add-button-rhis blue-background btn-special-equipierHome"
+                    id="PLG_Eq-addShift-btn"
+                    type="button">
+              <span>{{"PLANNING_EQUIPIER.ADD_SHIFT" | translate}}</span>
+            </button>
+            <button (click)="addEmployeeButton(false, null)"
+                    class="btn save-add-button-rhis blue-background btn-add-employee btn-special-equipierHome"
+                    id="PLG_Eq-addEmployee-btn"
+                    type="button">
+              <span>{{"PLANNING_EQUIPIER.ADD_EMPLOYE" | translate}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div [style.height.px]="heightInterface" class="content-planning-equipier" *ngIf="!displayPlgHebdo, else plgHebdoTemplate" #content_planning_equipier>
+      <ng-container *ngIf="!showEmployeeDetails">
+        <rhis-planning-jour (closeEmployeePlanning)="closeEmployeeWeekPlanning()"
+                            [displayPlgManagers]="displayPlgManagers"
+                            [listShiftUpdated]="listShiftToUpdate"
+                            (decrement)="decrementPayedTime($event)"
+                            (deleteListShiftEvent)="deleteListShiftEvent($event)"
+                            (deleteShiftEvent)="deleteShift($event)"
+                            (increment)="incrementPayedTime($event)"
+                            (incrementManagerIndexes)="incrementManagerPayedTime($event)"
+                            (newEmployeesList)="getNewEmployeesList($event)"
+                            (openUpdatePopup)="openUpdateShiftForm($event)"
+                            (selectEmployee)="openEmployeeWeeklyPlanning($event)"
+                            (sortByEmployeeChange)="sortByEmployeeChange($event)"
+                            (updateEmployeesList)="updateEmployees($event)"
+                            (updateShiftAfterResize)="updateShiftResize($event)"
+                            (updateShiftToUpdateList)="updateShiftsToUpdate($event)" [(employees)]="employees"
+                            [debutJourneeActivite]="debutJourneeActivite" [enableDragAndResize]="true"
+                            [finJourneeActivite]="finJourneeActivite"
+                            [endMinutesCells]="endMinutesCells"
+                            [minutesToSubstructFin]="minutesToSubstructFin"
+                            [hours]="hours"
+                            [idGrid]="1"
+                            [leftElement]="leftElement"
+                            [listOfBreakAndShift]="listOfBreakAndShift"
+                            [listShift]="listShift" [minimalDisplay]="minimalDisplay"
+                            [newActiveEmployees]="newActiveEmployees"
+                            [paramNationaux]="paramNationaux"
+                            [searchedEmployee]="searchedEmployee"
+                            [selectedDate]="selectedDate" [selectedEmployee]="selectedEmployee"
+                            [shiftToAdd]="shiftToAdd" [showTimeAxis]="true"
+                            [startMinutesCells]="startMinutesCells"
+                            [activeEmployeesPerWeek]="activeEmployeesPerWeek"
+                            [indisponibilities]="indisponibilities"
+                            [absences]="absences"
+                            [lockState]="lockState"
+                            (employesActifsWithTotalPlanifieJour)="employesActifsWithTotalPlanifieJour($event)"
+                            (employesActifsWithTotalPlanifieSemaine)="employesActifsWithTotalPlanifieSemaine($event)"
+                            (employeesChange)="updateSortedEmployeeList($event)"
+                            [columnWidthFromWeekValue]="columnWidthFromWeekValue"
+                            [listShiftToUpdate]="newListItemToUpdate"
+                            [setModeAffichage]="modeAffichage"
+                            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+                            [frConfig]="frConfig"
+                            [weekDates]="weekDates"
+                            [paramMode]="paramMode"
+                            class="first-interface-planing-jour">
+        </rhis-planning-jour>
+      </ng-container>
+
+      <div *ngIf="showEmployeeDetails && selectedEmployeePosition === employeePositions.NotLast">
+        <rhis-planning-jour (closeEmployeePlanning)="closeEmployeeWeekPlanning($event)"
+                            [displayPlgManagers]="displayPlgManagers"
+                            [listShiftUpdated]="listShiftToUpdate"
+                            (decrement)="decrementPayedTime($event)"
+                            (deleteListShiftEvent)="deleteListShiftEvent($event)"
+                            (deleteShiftEvent)="deleteShift($event)"
+                            (employesActifsWithTotalPlanifieJour)="employesActifsWithTotalPlanifieJour($event)"
+                            (employesActifsWithTotalPlanifieSemaine)="employesActifsWithTotalPlanifieSemaine($event)"
+                            (increment)="incrementPayedTime($event)"
+                            (incrementManagerIndexes)="incrementManagerPayedTime($event)"
+                            (newEmployeesList)="getNewEmployeesList($event)"
+                            (openUpdatePopup)="openUpdateShiftForm($event)"
+                            (selectEmployee)="openEmployeeWeeklyPlanning($event)"
+                            (sortByEmployeeChange)="sortByEmployeeChange($event)"
+                            (updateEmployeesList)="updateEmployees($event)"
+                            (updateShiftAfterResize)="updateShiftResize($event)"
+                            (updateShiftToUpdateList)="updateShiftsToUpdate($event)"
+                            [(employees)]="employeesStartGrid"
+                            [activeEmployeesPerWeek]="activeEmployeesPerWeek"
+                            [debutJourneeActivite]="debutJourneeActivite"
+                            [finJourneeActivite]="finJourneeActivite"
+                            [enableDragAndResize]="false"
+                            [endMinutesCells]="endMinutesCells"
+                            [minutesToSubstructFin]="minutesToSubstructFin"
+                            [hours]="hours"
+                            [idGrid]="1"
+                            [listOfBreakAndShift]="listOfBreakAndShift"
+                            [listShift]="weeklyPlanningStartGrid"
+                            [minimalDisplay]="false"
+                            [newActiveEmployees]="newActiveEmployees"
+                            [paramNationaux]="paramNationaux" [searchedEmployee]="searchedEmployee"
+                            [selectedDate]="selectedDate" [selectedEmployee]="selectedEmployee"
+                            [showTimeAxis]="true"
+                            [startMinutesCells]="startMinutesCells"
+                            [indisponibilities]="indisponibilitiesStart" [absences]="absencesStart"
+                            [lockState]="lockState"
+                            (employeesChange)="updateSortedEmployeeList($event)"
+                            [columnWidthFromWeekValue]="columnWidthFromWeekValue"
+                            [listShiftToUpdate]="newListItemToUpdate"
+                            [setModeAffichage]="modeAffichage"
+                            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+                            [frConfig]="frConfig"
+                            [weekDates]="weekDates"
+                            [paramMode]="paramMode"
+                            class="first-interface-planing-jour">
+
+        </rhis-planning-jour>
+        <rhis-planning-semaine (columnWidthFromWeek)="columnWidthFromWeek($event)"
+                               (deleteShiftEvent)="deleteShift($event)"
+                               (updateEmployeeSummary)="updateEmployeeSummary($event)"
+                               (updateShiftAfterResize)="updateShiftResize($event)"
+                               [debutJourneeActivite]="debutJourneeActivite" [debutPeriode]="debutPeriode"
+                               [employee]="selectedEmployee"
+                               [endMinutesCells]="endMinutesCells" [minutesToSubstructFin]="minutesToSubstructFin"
+                               [finJourneeActivite]="finJourneeActivite"
+                               [finPeriode]="finPeriode"
+                               [hours]="hours"
+                               [listOfBreakAndShift]="listOfBreakAndShift"
+                               [listShiftWithSignForWeekOrDay]="listShiftWithSignForWeekOrDay"
+                               [monthEmployeeSummary]="monthEmployeeSummary"
+                               [paramNationaux]="paramNationaux" [shiftToUpdate]="shiftToAdd"
+                               [startMinutesCells]="startMinutesCells" [weekDatesToDisplay]="weekDatesToDisplay"
+                               [weekDates]="weekDates"
+                               [lockState]="lockState"
+                               [weekEmployeeSummary]="weekEmployeeSummary" [weekNumber]="weekNumber"
+                               [weeklyDetailsPlanning]="weeklyDetailsPlanning" [weeklyPlanning]="employeePlanning"
+                               [setModeAffichage]="modeAffichage"
+                               [frConfig]="frConfig"
+                               [paramMode]="paramMode"
+                               [decoupageHoraireFinEtDebutActivity]="decoupageHoraireFinEtDebutActivity"
+
+                               class="first-interface-planing-jour"></rhis-planning-semaine>
+
+        <rhis-planning-jour (closeEmployeePlanning)="closeEmployeeWeekPlanning($event)"
+                            [displayPlgManagers]="displayPlgManagers"
+                            [listShiftUpdated]="listShiftToUpdate"
+                            (decrement)="decrementPayedTime($event)"
+                            (deleteListShiftEvent)="deleteListShiftEvent($event)"
+                            (deleteShiftEvent)="deleteShift($event)"
+                            (employesActifsWithTotalPlanifieJour)="employesActifsWithTotalPlanifieJour($event)"
+                            (employesActifsWithTotalPlanifieSemaine)="employesActifsWithTotalPlanifieSemaine($event)"
+                            (increment)="incrementPayedTime($event)"
+                            (incrementManagerIndexes)="incrementManagerPayedTime($event)"
+                            (newEmployeesList)="getNewEmployeesList($event)"
+                            (openUpdatePopup)="openUpdateShiftForm($event)"
+                            (selectEmployee)="openEmployeeWeeklyPlanning($event)"
+                            (sortByEmployeeChange)="sortByEmployeeChange($event)"
+                            (updateEmployeesList)="updateEmployees($event)"
+                            (updateShiftAfterResize)="updateShiftResize($event)"
+                            (updateShiftToUpdateList)="updateShiftsToUpdate($event)"
+                            [(employees)]="employeesEndGrid"
+                            [activeEmployeesPerWeek]="activeEmployeesPerWeek"
+                            [debutJourneeActivite]="debutJourneeActivite"
+                            [finJourneeActivite]="finJourneeActivite"
+                            [enableDragAndResize]="false"
+                            [endMinutesCells]="endMinutesCells"
+                            [minutesToSubstructFin]="minutesToSubstructFin"
+                            [hours]="hours"
+                            [idGrid]="2"
+                            [listOfBreakAndShift]="listOfBreakAndShift"
+                            [listShift]="weeklyPlanningEndGrid"
+                            [minimalDisplay]="false"
+                            [newActiveEmployees]="newActiveEmployees"
+                            [paramNationaux]="paramNationaux"
+                            [searchedEmployee]="searchedEmployee"
+                            [lockState]="lockState"
+                            [selectedDate]="selectedDate" [selectedEmployee]="selectedEmployee"
+                            [showTimeAxis]="false" [startMinutesCells]="startMinutesCells"
+                            (employeesChange)="updateSortedEmployeeList($event)"
+                            [absences]="absencesEnd" [columnWidthFromWeekValue]="columnWidthFromWeekValue"
+                            [indisponibilities]="indisponibilitiesEnd" [listShiftToUpdate]="newListItemToUpdate"
+                            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+                            [setModeAffichage]="modeAffichage"
+                            [frConfig]="frConfig"
+                            [weekDates]="weekDates"
+                            [paramMode]="paramMode">
+        </rhis-planning-jour>
+      </div>
+
+      <div *ngIf="showEmployeeDetails && selectedEmployeePosition === employeePositions.Last">
+        <rhis-planning-jour (closeEmployeePlanning)="closeEmployeeWeekPlanning($event)"
+                            [displayPlgManagers]="displayPlgManagers"
+                            [listShiftUpdated]="listShiftToUpdate"
+                            (decrement)="decrementPayedTime($event)"
+                            (deleteListShiftEvent)="deleteListShiftEvent($event)"
+                            (deleteShiftEvent)="deleteShift($event)"
+                            (employesActifsWithTotalPlanifieJour)="employesActifsWithTotalPlanifieJour($event)"
+                            (employesActifsWithTotalPlanifieSemaine)="employesActifsWithTotalPlanifieSemaine($event)"
+                            (increment)="incrementPayedTime($event)"
+                            (incrementManagerIndexes)="incrementManagerPayedTime($event)"
+                            (newEmployeesList)="getNewEmployeesList($event)"
+                            (openUpdatePopup)="openUpdateShiftForm($event)"
+                            (selectEmployee)="openEmployeeWeeklyPlanning($event)"
+                            (sortByEmployeeChange)="sortByEmployeeChange($event)"
+                            (updateEmployeesList)="updateEmployees($event)"
+                            (updateShiftAfterResize)="updateShiftResize($event)"
+                            (updateShiftToUpdateList)="updateShiftsToUpdate($event)" [(employees)]="employees"
+                            [activeEmployeesPerWeek]="activeEmployeesPerWeek"
+                            [debutJourneeActivite]="debutJourneeActivite"
+                            [finJourneeActivite]="finJourneeActivite"
+                            [enableDragAndResize]="false"
+                            [endMinutesCells]="endMinutesCells"
+                            [minutesToSubstructFin]="minutesToSubstructFin"
+                            [hours]="hours"
+                            [idGrid]="1"
+                            [listOfBreakAndShift]="listOfBreakAndShift"
+                            [listShift]="listShift"
+                            [lockState]="lockState"
+                            [minimalDisplay]="false"
+                            [newActiveEmployees]="newActiveEmployees" [paramNationaux]="paramNationaux"
+                            [searchedEmployee]="searchedEmployee" [selectedDate]="selectedDate"
+                            [selectedEmployee]="selectedEmployee"
+                            [showTimeAxis]="true"
+                            [startMinutesCells]="startMinutesCells"
+                            [indisponibilities]="indisponibilities"
+                            [absences]="absences"
+                            (employeesChange)="updateSortedEmployeeList($event)"
+                            [columnWidthFromWeekValue]="columnWidthFromWeekValue"
+                            [listShiftToUpdate]="newListItemToUpdate"
+                            [setModeAffichage]="modeAffichage"
+                            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+                            [frConfig]="frConfig"
+                            [weekDates]="weekDates"
+                            [paramMode]="paramMode"
+                            class="first-interface-planing-jour">
+        </rhis-planning-jour>
+        <rhis-planning-semaine (columnWidthFromWeek)="columnWidthFromWeek($event)"
+                               (deleteShiftEvent)="deleteShift($event)"
+                               (updateEmployeeSummary)="updateEmployeeSummary($event)"
+                               (updateShiftAfterResize)="updateShiftResize($event)"
+                               [debutJourneeActivite]="debutJourneeActivite" [debutPeriode]="debutPeriode"
+                               [employee]="selectedEmployee"
+                               [endMinutesCells]="endMinutesCells" [minutesToSubstructFin]="minutesToSubstructFin"
+                               [finJourneeActivite]="finJourneeActivite"
+                               [finPeriode]="finPeriode"
+                               [hours]="hours"
+                               [lockState]="lockState"
+                               [listOfBreakAndShift]="listOfBreakAndShift"
+                               [listShiftWithSignForWeekOrDay]="listShiftWithSignForWeekOrDay"
+                               [monthEmployeeSummary]="monthEmployeeSummary"
+                               [paramNationaux]="paramNationaux" [shiftToUpdate]="shiftToAdd"
+                               [startMinutesCells]="startMinutesCells" [weekDatesToDisplay]="weekDatesToDisplay"
+                               [weekDates]="weekDates"
+                               [weekEmployeeSummary]="weekEmployeeSummary" [weekNumber]="weekNumber"
+                               [weeklyDetailsPlanning]="weeklyDetailsPlanning"
+                               [setModeAffichage]="modeAffichage"
+                               [weeklyPlanning]="employeePlanning"
+                               [frConfig]="frConfig"
+                               [paramMode]="paramMode"
+                               [decoupageHoraireFinEtDebutActivity]="decoupageHoraireFinEtDebutActivity"
+        ></rhis-planning-semaine>
+      </div>
+
+
+      <rhis-pop-up (closeEvent)="showAddShiftPopup = false"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="showAddShiftPopup"
+                   [title]="popupTitle"
+                   [width]="popUpStyle?.width">
+        <rhis-add-shift (addShiftEmitter)="addUpdateShift($event)" (checkIfNightValueEvent)="checkIfNightValue()"
+                        [buttonLabel]='buttonLabel' [debutJourneeActivite]="debutJourneeActivite"
+                        [employees]="employeesList"
+                        [finJourneeActivite]="finJourneeActivite" [nightValue]="setNightValue"
+                        [modeAffichage]=modeAffichage
+                        [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+                        [selectedDate]="calendarDate" [selectedShift]='selectedShift'>
+        </rhis-add-shift>
+      </rhis-pop-up>
+      <rhis-pop-up (closeEvent)="showOverlapErrorMessage = false"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="showOverlapErrorMessage"
+                   [title]="overlapPopupMessage"
+                   [width]="popUpStyle?.width">
+        {{"PLANNING_EQUIPIER.CHEVAUCHEMENT_SHIFT" | translate}}
+      </rhis-pop-up>
+
+      <rhis-pop-up (closeEvent)="closePopup()"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="popupVerificationContrainteVisibility"
+                   [title]="titlePopupContraint"
+                   [width]="popUpStyle?.width">
+        <div class="table-list bg-gris-avec-border perso-table-popup-rhis popup-containte-eq">
+          <p-table [value]="listContrainte">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="date-width">{{'SHIFT_FIXE.DATE' | translate}}</th>
+                <th class="employee-width">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+                <th class="message-contrainte-width" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+              </tr>
+            </ng-template>
+            <ng-template let-messageVerification pTemplate="body">
+              <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+                  [pSelectableRow]="messageVerification">
+                <td *ngIf="  !messageVerification?.acheval && !messageVerification?.dateOfAnomalie" class="date-width">
+                  {{ dateContraintSocial }}
+                </td>
+
+                <td *ngIf="messageVerification?.acheval" class="col-popup-anomalie-1">
+                  {{ dateContrainteAcheve }}
+                </td>
+                <td *ngIf=" !messageVerification?.acheval && messageVerification?.dateOfAnomalie" class="date-width">
+                  {{ messageVerification?.dateOfAnomalie }}
+                </td>
+                <td class="employee-width">
+                  <span>
+                    {{employeeHasAnomalieContraintSocial?.nom}}&nbsp;{{employeeHasAnomalieContraintSocial?.prenom}}
+                  </span>
+                </td>
+                <td class="message-contrainte-width">
+                  {{messageVerification?.message}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="pop-up-table-rhis">
+            <button (click)="save()" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+                    id="PLG-Eq-blockCtrainte-popup" type="button">
+              <span>{{'BUTTON.SAVE' | translate}}</span>
+            </button>
+            <button (click)="closePopup()"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis"
+                    id="PLG-Eq-cancel-verifCtr-popup" type="button">
+              <span>{{'BUTTON.CANCEL' | translate}}</span>
+            </button>
+          </div>
+        </div>
+      </rhis-pop-up>
+
+      <rhis-pop-up (closeEvent)="closePopup()"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="popupVerificationContrainteGlobaleVisibility"
+                   [title]="titlePopupContraint"
+                   [width]="popUpStyle?.width" *ngIf="listContrainteGlobale.length">
+        <div class="table-list bg-gris-avec-border perso-table-popup-rhis popup-containte-eq">
+          <p-table [value]="listContrainteGlobale">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="date-width">{{'SHIFT_FIXE.DATE' | translate}}</th>
+                <th class="employee-width">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+                <th class="message-contrainte-width" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+              </tr>
+            </ng-template>
+            <ng-template let-messageVerification pTemplate="body">
+              <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+                  [pSelectableRow]="messageVerification">
+                <td *ngIf="messageVerification?.employe" class="date-width">
+                  {{ messageVerification?.dateOfAnomalie }}
+                </td>
+                <td *ngIf="messageVerification?.employee" class="date-width">
+                  {{ dateContraintSocial }}
+                </td>
+                <td *ngIf="messageVerification?.employee" class="employee-width">
+                  {{messageVerification?.employee?.nom}}&nbsp;{{messageVerification?.employee?.prenom}}
+                </td>
+                <td *ngIf="messageVerification?.employe" class="employee-width">
+                  {{messageVerification?.employe?.nom}}&nbsp;{{messageVerification?.employe?.prenom}}
+                </td>
+                <td class="message-contrainte-width">
+                  {{messageVerification?.message}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="pop-up-table-rhis">
+            <button (click)="saveListShift(0)" *ngIf="!hiddenSaveGlobale"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+                    id="PLG-Eq-saveGlobal-btn" type="button">
+              <span>{{'BUTTON.SAVE' | translate}}</span>
+            </button>
+            <button (click)="closePopup()"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis "
+                    id="PLG-Eq-cancel-cteGlobal-popup" type="button">
+              <span>{{'BUTTON.CANCEL' | translate}}</span>
+            </button>
+          </div>
+        </div>
+      </rhis-pop-up>
+
+      <!-- popup to dispaly CS NB max de shift par jour en cas de suppression -->
+      <rhis-pop-up (closeEvent)="closePopup()"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="popupVerificationCsMaxShift"
+                   [title]="titlePopupContraint"
+                   [width]="popUpStyle?.width">
+        <div class="table-list bg-gris-avec-border perso-table-popup-rhis popup-containte-eq">
+          <p-table [value]="listContrainteSuppression">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="date-width">{{'SHIFT_FIXE.DATE' | translate}}</th>
+                <th class="employee-width">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+                <th class="message-contrainte-width" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+              </tr>
+            </ng-template>
+            <ng-template let-messageVerification pTemplate="body">
+              <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+                  [pSelectableRow]="messageVerification">
+                <td class="date-width">
+                  {{ dateContraintSocial }}
+                </td>
+                <td class="employee-width">
+                  {{employeeHasAnomalieContraintSocial?.nom}}&nbsp;{{employeeHasAnomalieContraintSocial?.prenom}}
+                </td>
+                <td class="message-contrainte-width">
+                  {{messageVerification?.message}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="pop-up-table-rhis">
+            <button (click)="saveAfterDelete()" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+                    id="PLG-Eq-saveAfterD-popup"
+                    type="button">
+              <span>{{'BUTTON.SAVE' | translate}}</span>
+            </button>
+            <button (click)="closePopup()"
+                    class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis"
+                    id="PLG-Eq-cancel-popup"
+                    type="button">
+              <span>{{'BUTTON.CANCEL' | translate}}</span>
+            </button>
+          </div>
+        </div>
+      </rhis-pop-up>
+
+      <rhis-pop-up (closeEvent)="showSaveReferencePopup = false"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="showSaveReferencePopup"
+                   [title]="popupTitle"
+                   [width]="popUpStyle?.width">
+        <p-tabView>
+        <p-tabPanel #variableTabReference  [selected]="true" [header]="'GESTION_PARC_RAPPORT.SAVE_POPUP' | translate" >
+
+        <form [formGroup]="saveReferenceForm" class="popup-equipier">
+          <div class="d-flex flex-column ">
+            <div class="row">
+              <div class="col-6 mt-4">
+                <p-radioButton [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" [value]=false
+                               label="{{'PLANNING_EQUIPIER.SAVE_JOURNEE' | translate}}"
+                               id="PLG-Eq-saveJournee-popup" name="groupname"></p-radioButton>
+              </div>
+              <div class="col-6 mt-4">
+                <p-radioButton [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" [value]=true
+                               label="{{'PLANNING_EQUIPIER.SAVE_SEMAINE' | translate}}"
+                               id="PLG-Eq-saveSemaine-popup" name="groupname"></p-radioButton>
+              </div>
+            </div>
+            <div class="section-element position-relative mt-3 w-100">
+              <label class="section-element-title"
+                     for="PLG-Eq-refName-popup">{{'PLANNING_EQUIPIER.REFERENCE_NAME' | translate}}*</label>
+              <input class="text-field" formControlName="referenceName" id="PLG-Eq-refName-popup"
+                     maxlength="250" rhisStyleForm
+                     type="text">
+
+              <span *ngIf="saveReferenceForm.get('referenceName').hasError('required') && isSubmitted"
+                    class="form-item-error red small-rhis"
+                    id="PLG-Eq-refNameError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+            </div>
+            <div class="section-element position-relative mt-3 w-100">
+              <label class="section-element-title"
+                     for="PLG-Eq-refList-popup">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+              <p-dropdown [autoDisplayFirst]="false" [options]="shiftReferenceList" class="drop-down-general"
+                          formControlName="referenceList" id="PLG-Eq-refList-popup"
+                          optionLabel="libelle">
+              </p-dropdown>
+            </div>
+            <button  (click)="checkReferenceExistance()"
+                    class="btn save-add-button-rhis orange-background btn-popup-rhis mt-4 mb-3"
+                    id="PLG-Eq-refExistance-popup-btn" type="button">
+              <span>{{'PLANNING_EQUIPIER.SAVE_REFERENCE' | translate}}</span>
+            </button>
+          </div>
+
+        </form>
+        </p-tabPanel>
+          <p-tabPanel #variableTabDelete [header]="'BUTTON.SUPPRIMER' | translate">
+
+            <div class="popup-equipier" style="height: 140px">
+              <div *ngIf="shiftReferenceList?.length > 0;else noReferenceFound">
+                <div class="section-element position-relative w-100">
+                  <label class="section-element-title">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+                  <p-dropdown (onChange)="choosenDayReferenceDeletedLibelleError = false;"
+                              [(ngModel)]="choosenDayReferenceToDelete"
+                              [autoDisplayFirst]="false"
+                              [options]="shiftReferenceList"
+                              appendTo="body"
+                              class="drop-down-general" id="PLG-Eq-refJ-list-popup-delete"
+                              optionLabel="libelle">
+                  </p-dropdown>
+                  <span *ngIf="choosenDayReferenceDeletedLibelleError"
+                        class="form-item-error red small-rhis"
+                        id="PLG-Eq-refJError-list-popup-delete">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+
+                </div>
+                <button (click)="showConfirmDeleteReference()"
+                        class="btn save-add-button-rhis orange-background btn-popup-rhis mt-4"
+                        id="PLG-Eq-loadJRef-popup-delete" type="button">
+                  <span>{{'PLANNING_REFERENCE.SUP_REFERENCE' | translate}}</span>
+
+                </button>
+              </div>
+              <ng-template #noReferenceFound>
+                {{'PLANNING_EQUIPIER.CHARGER_REF_EMPTY_LIST' | translate}}
+              </ng-template>
+            </div>
+          </p-tabPanel>
+          </p-tabView>
+      </rhis-pop-up>
+
+      <rhis-pop-up (closeEvent)="showSearchEmployeePopup = false"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="showSearchEmployeePopup"
+                   title="{{'PLANNING_EQUIPIER.SEARCH_EMPLOYEE' | translate}}"
+                   [width]="popUpStyle?.width">
+        <div class="pop-up-search popup-equipier">
+          <p-dropdown [(ngModel)]="searchedEmployeeId"
+                      [options]="searchEmployeesList"
+                      appendTo="body"
+                      filter="true">
+            <ng-template let-item pTemplate="selectedItem">
+              <span style="vertical-align:middle; margin-left: .5em">{{item?.label}}</span>
+            </ng-template>
+            <ng-template let-employee pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 18px;">
+                <div style="font-size:11px;margin-top:0">{{employee?.label}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <button (click)="searchEmployee()" class="btn save-add-button-rhis orange-background btn-popup-rhis mt-2"
+                  id="PLG-Eq-search-popup"
+                  style="top: 38px;position: relative;" type="button">
+            <span>{{'PLANNING_EQUIPIER.SEARCH_BUTTON' | translate}}</span>
+          </button>
+        </div>
+      </rhis-pop-up>
+
+      <rhis-pop-up (closeEvent)="showChargerJourReferencePopup = false"
+                   [height]="popUpStyle?.height"
+                   [showPopUp]="showChargerJourReferencePopup"
+                   [title]="titleChargerJourReferencePopup"
+                   [width]="popUpStyle?.width">
+        <div class="popup-equipier" style="height: 140px">
+          <div *ngIf="shiftReferenceList?.length > 0;else noReferenceFound">
+            <div class="section-element position-relative w-100">
+              <label class="section-element-title">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+              <p-dropdown (onChange)="choosenJourReferenceLibelleError = false;"
+                          [(ngModel)]="choosenJourReference"
+                          [autoDisplayFirst]="false"
+                          [options]="shiftReferenceList"
+                          appendTo="body"
+                          class="drop-down-general" id="PLG-Eq-refJ-list-popup"
+                          optionLabel="libelle">
+              </p-dropdown>
+              <span *ngIf="choosenJourReferenceLibelleError"
+                    class="form-item-error red small-rhis"
+                    id="PLG-Eq-refJError-list-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+
+            </div>
+            <button (click)="prepareToLoadJourReference()"
+                    class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+                    id="PLG-Eq-loadJRef-popup" type="button">
+              <span *ngIf="!choosenJourReference?.semaine">{{'PLANNING_EQUIPIER.CHARGER_JOUR_REF' | translate}}</span>
+              <span *ngIf="choosenJourReference?.semaine">{{'PLANNING_EQUIPIER.CHARGER_SEM_REF' | translate}}</span>
+            </button>
+          </div>
+          <ng-template #noReferenceFound>
+            {{'PLANNING_EQUIPIER.CHARGER_REF_EMPTY_LIST' | translate}}
+          </ng-template>
+        </div>
+
+      </rhis-pop-up>
+      <div class="footer" id="footer">
+        <rhis-details-temps-paye (tauxMoeByDay)="getTauxMoeByDay($event)"
+                                 [activeEmployeesWithTotalPlanifieJour]="activeEmployeesWithTotalPlanifieJour"
+                                 [activeEmployeesWithTotalPlanifieSemaine]="activeEmployeesWithTotalPlanifieSemaine"
+                                 [date]="selectedDate" [finJourneeActivite]="finJourneeActivite"
+                                 [hours]="hours"
+                                 [displayPlgManagers]="displayPlgManagers"
+                                 [setTotalEquipieNonAffecteByWeek]="totalEquipNonAffecteByWeekToSend"
+                                 [setModeAffichage]="modeAffichage" [showMoe]="showMoe"
+                                 [totalTempsAbsence]="totalTempsAbsence"
+                                 [week]="weekNumber">
+        </rhis-details-temps-paye>
+      </div>
+    </div>
+    <rhis-pop-up (closeEvent)="showPdfSections = false"
+                 [height]="popUpStyle?.height"
+                 [showPopUp]="showPdfSections"
+                 [title]="planningJournalierTitle"
+                 [width]="popUpStyle?.width">
+      <rhis-popup-planning-journalier [selectedDate]="selectedDate"
+                                      [planningEquipierShow]="planningEquipierShow"
+      ></rhis-popup-planning-journalier>
+    </rhis-pop-up>
+  </div>
+
+
+  <p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+  <p-confirmDialog *ngIf="displayDialogChargerReference" [appendTo]="'body'" [key]="'dialogChargerReference'">
+    <p-footer>
+      <button (click)="ecraserShiftsForReference()" label="{{'PLANNING_EQUIPIER.ECRASER_ALL'|translate}}" pButton
+              type="button"></button>
+      <button (click)="keepShifstForReference()" label="{{'PLANNING_EQUIPIER.ADD_ALL'|translate}}" pButton
+              type="button"></button>
+    </p-footer>
+  </p-confirmDialog>
+</div>
+<div class="planning_lock_style">
+  <p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showPopupRapport"
+  [title]="selectedRapport?.libelleFile"
+  width="600">
+
+  <rhis-popup-rapports (generateRapportEvent)="launchGenerateRapport($event)"
+                       (getListEmployeeEvent)="getListEmployeeByPointage($event)"
+                       *ngIf="showPopupRapport"
+                       [initAllEmployeeLabel]="allEmployeeLabel"
+                       [initDateDisplay]="calendarDate"
+                       [initFirstDayOfWeekend]="premierJourDeLaSemaine"
+                       [initListEmployee]="listEmployees"
+                       [initSelectedRapport]="selectedRapport"
+  ></rhis-popup-rapports>
+</rhis-pop-up>
+<ng-template #plgHebdoTemplate>
+  <rhis-plg-hebdo-container [displayPlgManagers]="displayPlgManagers" [selectedDate]="selectedDate"
+   [showMoe]="showMoe" [deleteRow]="deleteRow"
+    [dateDebut]="dateDebut" [dateFin]="dateFin" (displayHebdoEmitter)="displayHebdoAfterDeactive($event)"
+    (saveListShiftEmitter)="saveShiftsForPlgHebdo()" (saveListGlobaleEmitter)="saveHebdoDataAndChangeView($event)"
+                            (checkNavigationAway)="checkNavigationAndNavigateAwayFromPlgHebdo()"
+    (totalMoeSemaineEmitter)="totalMoeSemaineDisplay($event)"
+    [listPairAndOdd]="listPairAndOdd" [weekNumber]="weekNumber" [getTauxMoeWeekTotal]="getTauxMoeWeekTotal"></rhis-plg-hebdo-container>
+</ng-template>

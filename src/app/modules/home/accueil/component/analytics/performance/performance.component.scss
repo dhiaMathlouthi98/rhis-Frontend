@@ -1,0 +1,126 @@
+.header-container {
+  display: grid;
+  grid-template-columns: 12% 18% 65% 5%;
+  grid-template-rows: 40px;
+  text-align: left;
+  margin-bottom: 2%;
+}
+
+.mini-btn {
+  padding: 0.175rem 0.15rem !important;
+  justify-self: end;
+}
+
+
+.title {
+  display: flex;
+  align-items: center;
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  @media screen and (max-width: 1366px) {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.btn-group {
+  padding-left: 4%;
+  padding-right: 4%;
+  button {
+    width: 100px;
+    padding: 7px 20px;
+    @media screen and (max-width: 1400px) {
+      width: 85px;
+      padding: 7px 15px;
+    }
+    @media screen and (max-width: 1300px) {
+      width: 75px;
+      padding: 7px;
+    }
+  }
+
+  .btn-light {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium";
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.btn-group .btn-light.active {
+  background-color: #f4f4f4;
+}
+
+
+
+.data-in-progress {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+}
+
+
+
+.text-right {
+  text-align: right;
+  padding-right: 50px;
+}
+
+
+:host ::ng-deep {
+  .ui-calendar .ui-inputtext {
+    margin-top: unset;
+    height: 40px;
+  }
+
+  .ui-calendar {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 1px solid #C8C7C4;
+    text-align: center;
+  }
+
+  .ui-button {
+    margin: 0;
+    color: #ffffff;
+    background-color: #ffffff;
+    border: 1px solid #C8C7C4;
+    font-size: 14px;
+  }
+
+  .ui-button-icon-only .ui-button-text, .ui-button-text-empty .ui-button-text {
+    padding: unset !important;
+    text-indent: -9999999px;
+    margin-left: 5px;
+    background-image: url(/assets/icons/gdh/Ico_Grille_ON.svg);
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+
+  .pi-calendar:before {
+    content: none;
+  }
+
+  .ui-button:enabled:hover {
+    background-color: #ffffff;
+    color: #ffffff;
+    border-color: #C8C7C4;
+  }
+}
+
+:host ::ng-deep {
+  .btn-group {
+    margin: 0;
+  }
+}

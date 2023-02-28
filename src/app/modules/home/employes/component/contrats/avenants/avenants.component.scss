@@ -1,0 +1,27 @@
+.rhis-container {
+  position: relative;
+}
+
+.days-block .titleHeader {
+  width: fit-content;
+  color: #385FE3;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+:host ::ng-deep {
+  .ui-accordion-header-text {
+    float: left;
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 35px;
+  }
+
+  button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+    z-index: 99;
+  }
+}

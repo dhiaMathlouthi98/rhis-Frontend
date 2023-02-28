@@ -1,0 +1,34 @@
+.rhis-container {
+    display: inline;
+    font-family: "TT Wellingtons Light";
+  
+    span {
+      position: relative;
+      float: right;
+      top: 2px;
+      outline: none;
+  
+      &:last-child {
+        margin-right: 16px;
+        @media screen and (max-width: 991px) {
+          margin-right: 10px;
+        }
+      }
+  
+      @media screen and (max-width: 991px) {
+        img {
+          width: 25px;
+        }
+      }
+    }
+  
+    img {
+      cursor: pointer;
+    }
+  }
+  
+  .tooltip-container {
+    left: 29px;
+    position: relative;
+  }
+  

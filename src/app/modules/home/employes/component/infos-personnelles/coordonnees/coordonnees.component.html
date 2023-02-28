@@ -1,0 +1,339 @@
+<ng-container *ngIf="formGroup" [formGroup]="formGroup">
+  <div class="view-section container-fluid change-container-fluid-rhis">
+    <div class="section-body">
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6">
+          <label for="EMP-infoPerso-numFichier"
+                 class="section-element-title col-12 delete-padding-col-rhis">{{'COORDONNES.NUMERO_FICHER' | translate}}
+            *</label>
+          <input rhisStyleForm
+                 [hasError]="formGroup.controls['matricule'].invalid  &&(formGroup.controls['matricule'].touched || onSubmit) || unicite.matriculeExist"
+                 formControlName="matricule" id="EMP-infoPerso-numFichier" type="text"
+                 class="input-general-rhis">
+          <span class="red small-rhis"
+                *ngIf="formGroup.controls['matricule'].invalid  &&(formGroup.controls['matricule'].touched || onSubmit)"
+                id="EMP-infoPerso-numFichierError">
+            {{'MESSAGE.MATRICULE_REQUIRED' | translate}}
+          </span>
+          <span *ngIf="unicite.matriculeExist" class="red small-rhis" id="EMP-infoPerso-numFichierExistError">
+            {{'MESSAGE.MATRICULE_EXISTE' | translate}}
+          </span>
+        </div>
+        <div class="col-6" [hidden]="hiddenBadge">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-badge">{{'COORDONNES.NUMERO_BADGE' | translate}}</label>
+          <p-dropdown [autoDisplayFirst]="false"
+                      [selector]="selectors.dropDownSelector"
+                      id="EMP-infoPerso-badge" rhisStyleForm
+                      formControlName="badge" optionLabel="code" [options]="listBadge"
+                      class="drop-down-general"></p-dropdown>
+        </div>
+      </div>
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-4">
+
+          <label class="section-element-title"
+                 for="EMP-infoPerso-dateAnciennete">{{'EMPLOYEE.DATE_ANCIENNETE' | translate}}
+            <span *ngIf="formGroup.controls['requiredDateAnciennete'].value">
+            *
+          </span>
+          </label>
+          <div style="display: flex">
+            <span style="width: 70%;">
+          <p-calendar
+            [hasError]="formGroup.controls['dateEntree'].invalid  &&(formGroup.controls['dateEntree'].touched|| onSubmit)"
+            [monthNavigator]="true"
+            [placeholder]="'JJ/MM/AAAA'" [selector]="selectors.calendarSelector" [yearNavigator]="true"
+            dateFormat="dd/mm/yy" formControlName="dateEntree" id="EMP-infoPerso-dateAnciennete"
+            rhisStyleForm
+            yearRange="1950:2050"></p-calendar>
+              </span>
+          <button *ngIf="dpaeStatut.statut ==  'DISABLED' && this.showButtonControl()" id="dpae-disabled" disabled class="dpae-btn-disabled btn save-add-button-rhis" > <i class="pi pi-times"></i> DPAE </button>
+          <button *ngIf="dpaeStatut.statut == 'REJECTED' && this.showButtonControl()" id="dpae-rejected" [pTooltip]="dpaeStatut.errroList[0]"  class="dpae-btn-rejected btn save-add-button-rhis" (click)="showDPAE_popup()"> <i class="pi pi-times"></i> DPAE </button>
+          <button *ngIf="dpaeStatut.statut == 'NOT_YET_WITH_COMPLETE_INFOS' && this.showButtonControl()"   id="dpae-ok-not-yet" class="dpae-btn-ok-not-yet btn save-add-button-rhis" (click)="showDPAE_popup()"> <i class="pi pi-upload"></i> DPAE  </button>
+          <button *ngIf="dpaeStatut.statut == 'NOT_YET_WITH_MISSED_INFOS' && this.showButtonControl()" id="dpae-ko-not-yet" class="dpae-btn-ko-not-yet btn save-add-button-rhis" (click)="showDPAE_popup()" > <i class="pi pi-exclamation-triangle"></i> DPAE</button>
+          <button  *ngIf="dpaeStatut.statut ==  'ACCEPTED' && this.showButtonControl()"  id="dpae-accepted"  class="dpae-btn-accepted btn save-add-button-rhis"> <i class="pi pi-check"></i> DPAE </button>
+          </div>
+          <span
+            *ngIf="formGroup.controls['requiredDateAnciennete'].value && formGroup.controls['dateEntree'].errors?.required  && (formGroup.controls['dateEntree'].touched|| onSubmit)"
+            class="red small-rhis"
+            id="EMP-infoPerso-dateAncienneteError">
+          {{'MESSAGE.DATE_ANCIENNETE_REQUIRED' | translate}}
+        </span>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+<!--  dpae pop-up -->
+  <rhis-pop-up
+    (closeEvent)="popupVisibility = false"
+    [showPopUp]="popupVisibility"
+    [title]="pop_up_dape_title"
+    [width]="popUpStyle"
+  >
+    <rhis-dpae-popup [dpaeStatut]="dpaeStatut" (close)="popupVisibility = false" (afterDepot)="updateDPAE($event)" ></rhis-dpae-popup>
+  </rhis-pop-up>
+  <!--  dpae pop-up -->
+
+  <div class="view-section container-fluid change-container-fluid-rhis">
+    <div class="view-section-title margin-top-title-rhis">{{'COORDONNES.COORDONNES' | translate}}</div>
+    <div class="section-body">
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-nom">{{'EMPLOYEE.NOM' | translate}}*</label>
+          <input rhisStyleForm
+                 [hasError]="formGroup.controls['nom'].invalid  &&(formGroup.controls['nom'].touched|| onSubmit)"
+                 type="text"
+                 class="input-general-rhis" formControlName="nom" id="EMP-infoPerso-nom">
+          <span class="red small-rhis"
+                *ngIf="!formGroup.controls['nom'].valid  &&(formGroup.controls['nom'].touched|| onSubmit)"
+                id="EMP-infoPerso-nomError">
+            {{'MESSAGE.NOM_REQUIRED' | translate}}
+          </span>
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-prenom">{{'EMPLOYEE.PRENOM' | translate}}*</label>
+          <input rhisStyleForm
+                 [hasError]="formGroup.controls['prenom'].invalid  &&(formGroup.controls['prenom'].touched|| onSubmit)"
+                 class="input-general-rhis" formControlName="prenom" id="EMP-infoPerso-prenom" type="text">
+          <span class="red small-rhis"
+                *ngIf="!formGroup.controls['prenom'].valid  &&(formGroup.controls['prenom'].touched|| onSubmit)"
+                id="EMP-infoPerso-prenomError">
+            {{'MESSAGE.PRENOM_REQUIRED' | translate}}
+          </span>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-6 checkbox-section checkbox-position">
+          <label class="section-element-title">{{"EMPLOYEE.SEXE" | translate}}*</label>
+          <div class="row">
+            <div class="container-fluid">
+              <ng-container *ngFor="let sexe of sexEnum">
+                <p-checkbox rhisStyleForm
+                            [hasError]="formGroup.controls['sexe'].invalid && (formGroup.controls['sexe'].touched|| onSubmit)"
+                            [selector]="selectors.checkboxSelector" [value]="sexe.value" id="EMP-infoPerso-sexe"
+                            name="sexe"
+                            [label]="sexe.label" formControlName="sexe"
+                            (onChange)="setSex($event, sexe.value)"></p-checkbox>
+              </ng-container>
+            </div>
+          </div>
+          <span class="red small-rhis checkbox-error-position"
+                *ngIf="!formGroup.controls['sexe'].valid  &&(formGroup.controls['sexe'].touched|| onSubmit)"
+                id="EMP-infoPerso-sexeError">
+            {{'MESSAGE.SEXE_REQUIRED' | translate}}
+          </span>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-6 checkbox-section checkbox-position">
+          <label class="section-element-title"> &nbsp;</label>
+          <div class="row">
+            <div class="container-fluid">
+              <p-checkbox rhisStyleForm
+                          [selector]="selectors.checkboxSelector" id="EMP-infoPerso-handicap"
+                          formControlName="handicap"
+                          binary="true" class="p-checkbox"
+                          [label]="'EMPLOYEE.HANDICAP' | translate"
+              ></p-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3 calendar-section">
+          <label class="section-element-title" for="EMP-infoPerso-dateN">{{'EMPLOYEE.DATE_NAISSANCE' | translate}}
+            *</label>
+          <p-calendar rhisStyleForm
+                      [hasError]="formGroup.controls['dateNaissance'].invalid  &&(formGroup.controls['dateNaissance'].touched|| onSubmit)"
+                      [selector]="selectors.calendarSelector" dateFormat="dd/mm/yy" id="EMP-infoPerso-dateN"
+                      [placeholder]="'JJ/MM/AAAA'" formControlName="dateNaissance" [yearNavigator]="true"
+                      yearRange="1950:2050"
+                      [monthNavigator]="true"></p-calendar>
+          <span class="red small-rhis"
+                *ngIf="formGroup.controls['dateNaissance'].errors?.required  && (formGroup.controls['dateNaissance'].touched|| onSubmit)"
+                id="EMP-infoPerso-dateNError">
+            {{'MESSAGE.DATE_NAISSANCE_REQUIRED' | translate}}
+          </span>
+          <span class="red small-rhis"
+                *ngIf="formGroup.controls['dateNaissance'].errors?.maxDate  && (formGroup.controls['dateNaissance'].touched|| onSubmit)"
+                id="EMP-infoPerso-dateNLimitError">
+            {{'MESSAGE.DATE_NAISSANCE_LIMIT' | translate}}
+          </span>
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-villeNaissance">{{'EMPLOYEE.VILLE_NAISSANCE' |
+            translate}}</label>
+          <input rhisStyleForm
+                 type="text"
+                 class="input-general-rhis" formControlName="villeNaissance" id="EMP-infoPerso-villeNaissance">
+          <span
+            *ngIf="formGroup.controls['villeNaissance'].getError('maxlength') && !formGroup.controls['villeNaissance'].valid  && (formGroup.controls['villeNaissance'].touched|| onSubmit)"
+            class="small-rhis red"
+            id="EMP-infoPerso-villeNaissanceLengthError">
+            {{'EMPLOYEE.VILLE_NAISSANCE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-codePostalNaissance">{{'EMPLOYEE.CODE_POSTAL_NAISSANCE'
+            | translate}}</label>
+          <input rhisStyleForm
+                 class="input-general-rhis" formControlName="codePostalNaissance" id="EMP-infoPerso-codePostalNaissance"
+                 type="text">
+          <span
+            *ngIf="formGroup.controls['codePostalNaissance'].getError('maxlength') && !formGroup.controls['codePostalNaissance'].valid  && (formGroup.controls['codePostalNaissance'].touched|| onSubmit)"
+            class="small-rhis red"
+            id="EMP-infoPerso-codePostalNaissanceError">
+            {{'EMPLOYEE.CODE_POSTAL_NAISSANCE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title">{{'EMPLOYEE.PAYS_NAISSANCE' | translate}}</label>
+          <p-dropdown rhisStyleForm
+                      [selector]="selectors.dropDownSelector"
+                      formControlName="paysNaissance"
+                      optionLabel="paysFR" [autoDisplayFirst]="false" [options]="listPays"
+                      class="drop-down-general"
+                      id="EMP-infoPerso-nationnaliteNaissance">
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div [ngClass]="{'email-exist': unicite.emailExist}" class="col-xl-6 col-lg-6 col-6">
+          <label class="section-element-title" for="EMP-infoPerso-email">{{'EMPLOYEE.EMAIL' | translate}}</label>
+          <input rhisStyleForm
+                 [hasError]="formGroup.controls['email'].errors && formGroup.controls['email'].invalid  &&(formGroup.controls['email'].touched|| onSubmit)"
+                 [(ngModel)]="mailAdess" class="input-general-rhis" formControlName="email" id="EMP-infoPerso-email"
+                 type="text">
+          <span class="small-rhis red"
+                *ngIf="formGroup.controls['email'].errors && !formGroup.controls['email'].valid  &&(formGroup.controls['email'].touched|| onSubmit)"
+                id="EMP-infoPerso-emailError">
+            {{'MESSAGE.EMAIL_VALIDATE' | translate}}
+          </span>
+          <span *ngIf="unicite.emailExist" class="small-rhis red"
+                id="EMP-infoPerso-emailExistError">
+            {{'MESSAGE.EMAIL_EXISTE' | translate}}
+          </span>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-6">
+          <label class="section-element-title" for="EMP-infoPerso-numTel">{{'EMPLOYEE.NUM_TELEPH' | translate}}</label>
+          <input class="input-general-rhis" formControlName="numTelephone" id="EMP-infoPerso-numTel" type="text">
+          <span class="small-rhis red"
+                *ngIf="formGroup.controls['numTelephone'].getError('pattern') && !formGroup.controls['numTelephone'].valid  && (formGroup.controls['numTelephone'].touched|| onSubmit)"
+                id="EMP-infoPerso-numTelError">
+            {{'SOCIETE.PHONE_FORMAT' | translate}}
+          </span>
+          <span class="small-rhis red"
+                *ngIf="formGroup.controls['numTelephone'].getError('maxlength') && !formGroup.controls['numTelephone'].valid  && (formGroup.controls['numTelephone'].touched|| onSubmit)"
+                id="EMP-infoPerso-numTelLengthError">
+            {{'SOCIETE.PHONE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title">{{'EMPLOYEE.NATIONALITE' | translate}}*</label>
+          <p-dropdown rhisStyleForm
+                      [hasError]="formGroup.controls['nationalite'].invalid  &&(formGroup.controls['nationalite'].touched|| onSubmit)"
+                      [selector]="selectors.dropDownSelector" (onChange)="onSelectNationalite()"
+                      formControlName="nationalite"
+                      optionLabel="libellePays" [autoDisplayFirst]="false" [options]="listPays"
+                      class="drop-down-general"
+                      id="EMP-infoPerso-nationnalite">
+          </p-dropdown>
+          <span class="red small-rhis"
+                *ngIf="!formGroup.controls['nationalite'].valid  &&(formGroup.controls['nationalite'].touched|| onSubmit)"
+                id="EMP-infoPerso-nationnaliteError">
+            {{'MESSAGE.NATIONALITE_REQUIRED' | translate}}
+          </span>
+        </div>
+        <div [hidden]="!statutAutoTravailTitreSejour.autorisationTravail" class="col-6 col-xl-3 row-margin-bottom-rhis">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-finValiditeAutoTr">{{'EMPLOYEE.DATE_FIN_VALIDITE_AUTORISATION_TRAVAIL' | translate}}</label>
+          <rhis-calendar [placeholder]="'JJ/MM/AAAA'"
+                         dateFormat="dd/mm/yy"
+                         formControlName="finValiditeAutorisationTravail"
+                         id="EMP-infoPerso-finValiditeAutoTr"></rhis-calendar>
+        </div>
+        <div [hidden]="!statutAutoTravailTitreSejour.titreSejour" class="col-6 col-xl-3 row-margin-bottom-rhis">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-finValiditeSejour">{{'EMPLOYEE.DATE_FIN_VALIDITE' | translate}}</label>
+          <rhis-calendar [placeholder]="'JJ/MM/AAAA'" dateFormat="dd/mm/yy" formControlName="finValiditeSejour"
+                         id="EMP-infoPerso-finValiditeSejour"></rhis-calendar>
+        </div>
+        <div *ngIf="statutAutoTravailTitreSejour.titreSejour && statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="statutAutoTravailTitreSejour.titreSejour && statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="statutAutoTravailTitreSejour.titreSejour && !statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="statutAutoTravailTitreSejour.titreSejour && !statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="statutAutoTravailTitreSejour.titreSejour && !statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="!statutAutoTravailTitreSejour.titreSejour && statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="!statutAutoTravailTitreSejour.titreSejour && statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div *ngIf="!statutAutoTravailTitreSejour.titreSejour && statutAutoTravailTitreSejour.autorisationTravail"
+             class="col-6 col-xl-3">
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-nomPermisTravailCarteSejour">{{'EMPLOYEE.NOM_PERMIS_CARTE_SEJOUR_LABEL' | translate}}</label>
+          <input class="input-general-rhis" formControlName="nomPermisTravailCarteSejour"
+                 id="EMP-infoPerso-nomPermisTravailCarteSejour" type="text">
+          <span
+            *ngIf="formGroup.controls['nomPermisTravailCarteSejour'].getError('maxlength') && !formGroup.controls['nomPermisTravailCarteSejour'].valid  && (formGroup.controls['nomPermisTravailCarteSejour'].touched|| onSubmit)"
+            class="small-rhis red"
+            id="EMP-infoPerso-nomPermisTravailCarteSejourLengthError">
+            {{'EMPLOYEE.NOM_PERMIS_CARTE_SEJOUR_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-numPermisTravailCarteSejour">{{'EMPLOYEE.NUM_PERMIS_CARTE_SEJOUR_LABEL' | translate}}</label>
+          <input class="input-general-rhis" formControlName="numPermisTravailCarteSejour"
+                 id="EMP-infoPerso-numPermisTravailCarteSejour" type="text">
+          <span
+            *ngIf="formGroup.controls['numPermisTravailCarteSejour'].getError('maxlength') && !formGroup.controls['numPermisTravailCarteSejour'].valid  && (formGroup.controls['numPermisTravailCarteSejour'].touched|| onSubmit)"
+            class="small-rhis red"
+            id="EMP-infoPerso-numPermisTravailCarteSejourLengthError">
+            {{'EMPLOYEE.NUM_PERMIS_CARTE_SEJOUR_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3"></div>
+
+      </div>
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-adresse">{{'ADRESSE.ADRESSE' | translate}}</label>
+          <input class="input-general-rhis" formControlName="adresse" id="EMP-infoPerso-adresse" type="text">
+        </div>
+        <div class="col-6 col-xl-3">
+          <label for="EMP-infoPerso-compAdresse"
+                 class="section-element-title">{{'COORDONNES.COMPLEMENT_ADRESSE' | translate}}</label>
+          <input class="input-general-rhis" formControlName="complAdresse" id="EMP-infoPerso-compAdresse" type="text">
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-CP">{{'ADRESSE.CODE_POSTAL' | translate}}</label>
+          <input class="input-general-rhis" formControlName="codePostal" id="EMP-infoPerso-CP" type="text">
+        </div>
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title" for="EMP-infoPerso-ville">{{'ADRESSE.VILLE' | translate}}</label>
+          <input class="input-general-rhis" formControlName="ville" id="EMP-infoPerso-ville" type="text">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

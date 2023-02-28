@@ -1,0 +1,166 @@
+.detail-temps-paye {
+  background-color: white;
+  border-top-left-radius: 5px 5px;
+  border-top-right-radius: 5px 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  .detail-temps-paye-header {
+    display: grid;
+    grid-template-columns: 4% auto;
+
+    .arrow-down-planning {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-info {
+      display: grid;
+      grid-template-rows: auto auto;
+      grid-template-columns: 12% 15% 15% 15% 15% 15% 15% auto;
+
+      .header-info-title {
+        color: #414141;
+        font-family: "TT Wellingtons Medium", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+
+      .header-info-second-title {
+        color: #C8C7C4;
+        font-family: "TT Wellingtons Medium", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+        text-align: center;
+      }
+
+      .header-info-values {
+        color: #414141;
+        font-family: "TT Wellingtons Medium", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 17px;
+        text-align: center;
+      }
+    }
+  }
+
+  .detail-temps-paye-grid {
+    display: grid;
+    grid-template-rows: repeat(8, auto);
+    padding-left: 60px;
+
+    .hour {
+      color: #9B9B9B;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 17px;
+    }
+
+    .day-title {
+      color: #414141;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 22px;
+      padding-left: 10px;
+    }
+
+    .day-value {
+      text-align: right;
+      color: #414141;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 17px;
+    }
+
+    .day-total {
+      color: #414141;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 17px;
+    }
+
+    .background-grey {
+      background-color: #F7F7F7;
+    }
+
+    .border-radius-left {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .border-radius-right {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .selected-day {
+      color: #FF9B42;
+    }
+  }
+}
+
+.chart-icon {
+  width: 28px;
+  margin-top: 9px;
+  margin-left: 3px;
+}
+
+.temps-paye-all {
+  display: grid;
+  grid-template-columns: 12% auto;
+  @media screen and (max-width: 1550px) {
+    grid-template-columns: 15% auto;
+  }
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 17% auto;
+  }
+
+  .block-right-temps {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+    border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .loop-block-temps {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: stretch;
+    }
+  }
+}
+
+.opened-menu {
+  .temps-paye-all {
+    grid-template-columns: 12% auto;
+    @media screen and (min-width: 1551px) {
+      grid-template-columns: 15% auto;
+    }
+    @media screen and (max-width: 1550px) {
+      grid-template-columns: 18% auto;
+    }
+    @media screen and (max-width: 1350px) {
+      grid-template-columns: 15% auto;
+    }
+    @media screen and (max-width: 1280px) {
+      grid-template-columns: 21% auto;
+    }
+  }
+}

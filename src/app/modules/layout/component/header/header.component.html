@@ -1,0 +1,132 @@
+<header>
+  <div [ngStyle]="{'width': openedMenu ? '293px':'59px'}" id="logo">
+    <img src="assets/icons/accueil/Logo/{{openedMenu ? 'Logo_MyRHIS_big' : 'Logo_MyRHIS'}}.svg" alt="no logo">
+  </div>
+  <nav class="block-flex-btw-rhis" [ngClass]="{'opened-menu': openedMenu, 'closed-menu': !openedMenu}">
+    <div class="restaurant-name" *ngIf="restaurantName?.length == 0">
+    </div>
+    <div class="restaurant-name" *ngIf="restaurantName?.length>0">
+      <div (click)="showRestaurantListPopUp = true;" *ngIf="!showDropDown" class="dropdown-bloc-name-restaurant">
+        <div>
+          {{restaurantName | uppercase}}
+          <i *ngIf="listRestaurant?.length>0" class="pi pi-angle-down"></i>
+        </div>
+      </div>
+      <div *ngIf="showDropDown" class="all-list-restaurant">
+        <p-dropdown
+          (onChange)="changeCurrentRestaurant()"
+          [(ngModel)]="selectedRestaurant"
+          [options]="listRestaurant"
+          id="dropAllRestaurantByUser"
+          optionLabel="libelle"
+          placeholder="{{restaurantName | uppercase}}"></p-dropdown>
+      </div>
+    </div>
+    <div class="block-flex-btw-rhis">
+      <div class="search">
+        <div class="input-search">
+          <input type="text" [placeholder]="'MENU.RECHERCHE' | translate">
+        </div>
+        <span class="header-icons">
+          <img src="assets/icons/accueil/Bar_Header/Rechercher/ico_search.svg" alt="no search icon">
+        </span>
+        <div class="sep"></div>
+        <span (click)="infoSupportOpen()" class="header-icons">
+          <img src="assets/icons/accueil/Bar_Header/ico_question-circle.svg" alt="no question icon">
+        </span>
+        <ng-container *ngIf="sessionService?.getRestaurant()>0">
+          <div class="sep"></div>
+          <span (click)="toggleAlert()" *ngIf="listGuiAlarme.length !== 0" class="header-icons">
+          <img src="assets/icons/accueil/Bar_Header/ico_Alertes.svg" alt="no question icon">
+        </span>
+          <span (click)="toggleAlert()" *ngIf="listGuiAlarme.length === 0" class="header-icons">
+          <img src="assets/icons/accueil/Bar_Header/empty-alarm-bell.svg" alt="no question icon">
+        </span>
+          <div (click)="closeAlertes()" *ngIf="openedAlertes" class="filter">
+          </div>
+          <rhis-alert (closeAlertes)="closeAlertes()"
+                      (displayAllAlertEvent)="displayAllAlert($event)"
+                      *ngIf="openedAlertes"
+                      [initListeAlerte]="listGuiAlarme"
+                      [openedAlertes]="openedAlertes"
+                      class="alert-postion-style-rhis"
+          ></rhis-alert>
+        </ng-container>
+      </div>
+      <div class="profile block-flex-btw-rhis">
+        <div class="shortcut">
+          {{getFirstFullNameLetters()}}
+        </div>
+        <p-menubar class="menu-bar-rhis" [model]="items" [autoDisplay]="false">
+        </p-menubar>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<rhis-pop-up
+  (closeEvent)="closePopupProfil()"
+  [showPopUp]="showProfilPopup"
+  [title]=showProfilPopupTitle>
+  <rhis-profil-details *ngIf="showProfilPopup"
+                       [showProfilPopup]="showProfilPopup">
+  </rhis-profil-details>
+</rhis-pop-up>
+
+
+<rhis-pop-up
+  (closeEvent)="closeRestaurantListProfil()"
+  [showPopUp]="showRestaurantListPopUp"
+  [title]=showRestaurantListTitle
+  *ngIf="showRestaurantListPopUp && listRestaurant?.length > 15"
+  width="700">
+  <rhis-restaurants-by-user
+    (closeRestaurantListProfil)="closeRestaurantListProfil()"
+    [listRestaurant]="listRestaurant"
+    (setRestaurantName)="setRestaurantName()"
+  >
+  </rhis-restaurants-by-user>
+</rhis-pop-up>
+
+<rhis-pop-up
+  (closeEvent)="closePopupProfil()"
+  [showPopUp]="showProfilPopup"
+  [title]=showProfilPopupTitle>
+
+  <rhis-profil-details *ngIf="showProfilPopup">
+  </rhis-profil-details>
+</rhis-pop-up>
+
+<rhis-pop-up
+  (closeEvent)="infoSupportClose()"
+  [showPopUp]="showInfoSupport"
+  [title]=titleInfoSupport
+  width="600">
+  <div class="support__info">
+    <div class="support__info--img">
+      <img alt="no logo" src="assets/icons/accueil/Logo/Logo_MyRHIS_big.svg">
+    </div>
+    <div class="support__info--detail">
+      <span>{{supportInfo?.tel}} :</span>
+      <span><a class="support--link" href="tel:+33 (0) 1 86 22 28 00">+33 (0) 1 86 22 28 00</a></span>
+    </div>
+    <div class="support__info--detail">
+      <span>{{supportInfo?.horaire}}  :</span>
+      <div>
+        <div>{{supportInfo?.horaire_info_1}}</div>
+        <div>{{supportInfo?.horaire_info_2}}</div>
+        <div>{{supportInfo?.horaire_info_3}}</div>
+      </div>
+    </div>
+    <div class="support__info--detail">
+      <span>{{supportInfo?.mail}} :</span><span (click)="openFormulaire()"><a class="support_Form">support@rhis-solutions.com</a></span>
+    </div>
+    <div class="support__info--detail">
+      <span>{{supportInfo?.guideUser}} :</span><span><a class="support--link" (click)="openGuidePdf()">{{supportInfo?.monGuide}}</a></span>
+    </div>
+    <div class="support__info--CG">
+      <a class="support--link-CG">{{supportInfo?.CGU}}</a>
+      <a (click)="openMyrhisRGPDPdf()" class="support--link-CG actived-link">{{supportInfo?.CGPC}}</a>
+    </div>
+  </div>
+</rhis-pop-up>

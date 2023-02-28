@@ -1,0 +1,81 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+.small-rhis {
+  font-size: 12px;
+}
+
+.width-7 {
+  width: 130px;
+}
+
+.width-10 {
+  width: 15%;
+}
+
+.width-20 {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+
+  &:hover {
+    overflow: visible;
+  }
+}
+
+.width-30 {
+  width: 32%;
+}
+
+:host ::ng-deep {
+  .table-list.bg-gris-avec-border p-table .ui-table table .ui-table-thead > tr > th:nth-child(2) {
+    text-align: left;
+  }
+
+  .table-list.bg-gris-avec-border p-table .ui-table table .ui-table-tbody > tr {
+    td:nth-child(2) {
+      .td-container {
+        justify-content: left;
+        padding-left: 10px;
+      }
+    }
+
+    td:nth-child(3) {
+      .td-container {
+        height: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+}
+
+.test {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: stretch;
+}
+
+.dropdown-restaurant {
+  width: 300px;
+}
+
+.icon-copiage {
+
+}
+
+

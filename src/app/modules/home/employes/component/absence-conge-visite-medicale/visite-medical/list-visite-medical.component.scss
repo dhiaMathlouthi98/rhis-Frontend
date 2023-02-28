@@ -1,0 +1,22 @@
+col:last-child {
+  width: 290px;
+}
+
+.operation {
+  width: 75px;
+  display: flex;
+  margin-left: 187px;
+  top: 4px;
+  margin-top: -4px;
+
+  .item {
+    flex: 1;
+    cursor: pointer;
+
+    &:first-child {
+      img {
+        float: left;
+      }
+    }
+  }
+}

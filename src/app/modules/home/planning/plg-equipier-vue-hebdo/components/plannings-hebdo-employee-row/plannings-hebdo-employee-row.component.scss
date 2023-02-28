@@ -1,0 +1,180 @@
+td {
+  vertical-align: top;
+
+  &:hover {
+    .icon-add {
+      opacity: 1;
+      transition: opacity 500ms;
+      filter: invert(70%) sepia(16%) saturate(7366%) hue-rotate(156deg) brightness(97%) contrast(85%);
+    }
+  }
+}
+
+.empName {
+  color: #414141;
+  font-family: "TT Wellingtons Medium";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  &.manager-leader-style{
+    color: #1E28C0;
+  }
+  @media screen and (max-width: 1366px) {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+.contract {
+  color: #9B9B9B;
+  font-family: "TT Wellingtons Medium";
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 4px;
+  height: 16px;
+  border: 1px solid #AFA899;
+  border-radius: 5px;
+  background-color: rgba(175, 168, 153, 0.15);
+  float: left;
+  padding: 5px;
+  margin-top: 3px;
+}
+
+.employeeCell {
+  padding: 0px !important;
+  cursor: pointer;
+  @media screen and (max-width: 1366px) {
+    padding: 0 8px !important;
+  }
+}
+
+:host.row-selected {
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  background-color: #eeeeee4d;
+  margin-top: 2px;
+  margin-bottom: 3px;
+}
+
+.icon-add {
+  background-image: url(/assets/icons/planning/add-icon/add-small.svg);
+  width: 32px;
+  height: 32px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left: calc((100% - 32px) / 2);
+  margin-top: 10px;
+  display: inline-block;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 200ms;
+  z-index: 999999;
+}
+
+.drop-target {
+  border: 2px dashed #ccc !important;
+}
+
+.conge-planned {
+  width: calc((((100vw - 450px) / 7) * 3) - 20px);
+  position: absolute;
+  margin-left: calc(((100vw - 450px) / 7) + 290px);
+  background-image: url(/assets/images/diagonal-pattern.png);
+  background-size: auto 150%;
+  border-radius: 5px;
+  border: 1px solid #C8C7C4;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  z-index: 9;
+
+  .leave-text {
+    color: #FFFFFF;
+    font-family: "TT Wellingtons Medium";
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 18px;
+    border-radius: 5px;
+    background-color: #C8C7C4;
+    padding: 0 5px;
+    text-transform: uppercase;
+    float: left;
+  }
+}
+
+.employee-hebdo-draggable {
+  padding: 10px 4px;
+  border-radius: 5px;
+  float: left;
+  &.fake-employe-style{
+    margin: 20px 0 20px 0;
+  }
+}
+
+.contract-icon-x {
+  background-image: url(/assets/icons/planning/Ico_X.png);
+  width: 20px;
+  height: 13px;
+  float: left;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+  margin-top: -4px;
+}
+
+.contract-icon-y {
+  background-image: url(/assets/icons/prevision-icons/check.png);
+  width: 20px;
+  height: 13px;
+  float: left;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+  margin-top: -4px;
+}
+
+.td-drop-zone {
+  padding-top: 50px;
+  @media screen and (max-width: 1366px) {
+    padding-top: 10px;
+  }
+}
+
+.hebdo-contrat-rhis {
+  text-transform: uppercase;
+}
+
+:host ::ng-deep {
+  p-dropdown {
+    border: 1px solid #ced4da !important;
+  }
+}
+.test{
+  width: 50%;
+}
+:host ::ng-deep {
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group:has(span.group-propose:empty) {
+    display: none;
+  }
+
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group.hide-groupe-propose-li {
+    display: none !important;
+  }
+
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group.hide-groupe-propose-li,
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group.hide-groupe-propose-li:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+    display: none !important;
+  }
+
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group,
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+    background: #00a2e8 !important;
+    color: #fff;
+    font-size: 11px;
+  }
+
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item {
+    padding: 2px 0.857em;
+    font-size: 10px !important;
+    line-height: 15px;
+  }
+}

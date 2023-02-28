@@ -1,0 +1,16 @@
+<div class="view w-100 h-100 d-flex justify-content-center align-items-center">
+  <div class="w-50 d-flex justify-content-between">
+    <button type="button" [routerLink]="rhisRouter.getRoute('NEW_COMPANY')"
+            class="btn save-add-button-rhis orange-background">
+      <span>{{'SOCIETE.ADD_LABEL' | translate}}</span>
+    </button>
+    <button type="button" [routerLink]="rhisRouter.getRoute('TYPE_RESTAURANT')"
+            class="btn save-add-button-rhis orange-background">
+      <span>{{'TYPE_RESTAURANT.ADD_LABEL' | translate}}</span>
+    </button>
+    <button type="button" [routerLink]="rhisRouter.getRoute('NEW_RESTAURANT')"
+            class="btn save-add-button-rhis orange-background">
+      <span>{{'CREATE_RESTAURANT.ADD_LABEL' | translate}}</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<p-fieldset [toggleable]="true" legend="{{'PROFIL.SOCIETES' | translate}}">
+  <p-pickList [source]="societeDispnibles" [target]="societeChoisies" sourceHeader="disponibles" targetHeader="Choisies"
+              [responsive]="true"
+              emptymessagesource="empty"
+              filterBy="societeName"
+              (onMoveToTarget)="getRestaurantBysocieteOnAdd($event)"
+              (onMoveToSource)="getRestaurantBySocieteOnDelete($event)"
+              dragdrop="true"
+              [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}">
+    <ng-template let-societe pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div style="font-size:14px;float:left;margin:15px 5px 0 0">{{societe.societeName}}</div>
+      </div>
+    </ng-template>
+  </p-pickList>
+</p-fieldset>
+
+<p-fieldset [toggleable]="true"
+            [collapsed]="showRestaurant"
+            legend="{{'PROFIL.RESTAURANTS' | translate}}"
+            class="tttt">
+  <p-pickList [source]="restaurantDispnibles" [target]="restaurantChoisies" sourceHeader="disponibles"
+              targetHeader="Choisies"
+              [responsive]="true" filterBy="libelle"
+              dragdrop="true" sourceFilterPlaceholder="Search" targetFilterPlaceholder="Search"
+              [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}">
+    <ng-template let-societe pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div class="profil-name-societe-rhis">{{societe.libelle}}</div>
+      </div>
+    </ng-template>
+  </p-pickList>
+</p-fieldset>

@@ -1,0 +1,15 @@
+<h1>Anomalies sociales</h1>
+<div class="nbr-anomalies">{{anomalies.length}}</div>
+<div *ngIf="anomalies.length > 0 && !loading" class="rhis-container scroll scroll-general-rhis">
+  <ng-container *ngFor="let anomalie of formattedAnomalies; last as isLast">
+    <rhis-anomalie [anomalie]="anomalie"></rhis-anomalie>
+    <div class="sep" *ngIf="!isLast"></div>
+  </ng-container>
+</div>
+<div *ngIf="anomalies.length <= 0 && !loading" class="no-anomalies">
+  {{rhisTranslateService.translate('Acceuil.NO_ANOMALIES')}}
+</div>
+<p-progressSpinner *ngIf="loading" class="anomalies-in-progress"></p-progressSpinner>
+
+
+

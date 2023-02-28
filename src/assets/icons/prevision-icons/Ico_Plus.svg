@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>53BAF7C7-3DAA-4D8F-9C09-D146FDD9B57C</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="20-Prévisions" transform="translate(-1156.000000, -748.000000)" stroke="#AFA899">
+            <g id="Contenu" transform="translate(74.000000, 74.000000)">
+                <g id="Bloc-Heures-complémentaires" transform="translate(35.000000, 513.000000)">
+                    <g id="Ico_Plus" transform="translate(1062.000000, 176.000000) rotate(45.000000) translate(-1062.000000, -176.000000) translate(1048.000000, 162.000000)">
+                        <circle id="Oval" stroke-width="1.5" cx="14" cy="14" r="14"></circle>
+                        <g id="Group-2" transform="translate(14.500000, 14.000000) rotate(45.000000) translate(-14.500000, -14.000000) translate(10.000000, 10.000000)" stroke-width="2">
+                            <path d="M0,4 L8,4" id="Path"></path>
+                            <path d="M-5.68434189e-14,4 L8,4" id="Path" transform="translate(4.000000, 4.000000) rotate(90.000000) translate(-4.000000, -4.000000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

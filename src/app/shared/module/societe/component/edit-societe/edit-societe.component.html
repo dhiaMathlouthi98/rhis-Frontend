@@ -1,0 +1,79 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-5 col-lg-6">
+      <h1 class="titre-principale-page-rhis">{{title}}</h1>
+    </div>
+    <div class="float-right col-7 col-lg-6 mt-2">
+      <button type="button" (click)="updateContent(activeSection); updateByNavigationAway = false"
+              *ngIf="!isRestaurantBtnHidden || !isParametersBtnHidden"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'CREATE_RESTAURANT.ADD_BUTTON' | translate}}</span>
+      </button>
+      <button type="button" (click)="updateSociete(); updateByNavigationAway = false"
+              *ngIf="!isSocieteBtnHidden"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'SOCIETE.ADD_BUTTON' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="menu-list mt-2 row">
+      <div class="col-xl-12">
+        <span
+          *ngFor="let s of sections; let i=index" (click)="navigateToSection(i)"
+          class="mr-4"
+          [ngClass]="{'active': activeSection == i ,
+         'not-active': activeSection !== i}"
+        >{{s?.name}}</span>
+      </div>
+    </div>
+    <form [formGroup]="restaurantForm" *ngIf="sections[0] != null">
+      <div [hidden]="activeSection !== 0">
+        <rhis-add-form-restaurant
+          formControlName="restaurant"
+          [formConfig]="formConfig "
+          [isFormSubmitted]="isFormSubmitted"
+          [listPays]="listPays"
+          [currentLanguage]="currentLanguage"
+          [badgeNumber]="badgeNumber"
+          [decalMoisJourSign]="decalMoisJourSign"
+          [isLibelleExist]="isLibelleExist"
+          [isMatriculteExist]="isMatriculteExist"
+          [listPeriodeRestaurant]="listPeriodeRestaurant"
+          [listTypeRestaurant]="listTypeRestaurant"
+          [societes]="societes"
+          [franchises]="franchises"
+          [periodeRestaurantMoisDecale]="periodeRestaurantMoisDecale"
+          [periodeRestaurantSemaineCompleteDecale]="periodeRestaurantSemaineCompleteDecale"
+          (setDecalMoisJourSign)="setDecalMoisJourSign($event)"
+          (setBadgeNumber)="setBadgeNumber($event)"
+        ></rhis-add-form-restaurant>
+      </div>
+      <div [hidden]="activeSection !== 1">
+        <!--  parameters section  -->
+        <rhis-parametre-globaux
+          (changesDetector)="isParametersBtnHidden = false">
+        </rhis-parametre-globaux>
+      </div>
+    </form>
+    <form [formGroup]="companyForm" *ngIf="sections[2] != null">
+      <div [hidden]="activeSection !== 2">
+        <rhis-add-form-societe
+          formControlName="company"
+          [isFormSubmitted]="isFormCompanySubmitted"
+          [listPays]="listPays"
+          [currentLanguage]="currentLanguage">
+        </rhis-add-form-societe>
+      </div>
+      <div [hidden]="activeSection !== 3">
+        <rhis-add-form-prefecture
+          formControlName="prefecture"
+          [isFormSubmitted]="isFormCompanySubmitted">
+        </rhis-add-form-prefecture>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

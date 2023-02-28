@@ -1,0 +1,415 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="230">
+</div>
+<div [formGroup]="formGroup" class="view scroll-content-rhis" [ngStyle]="{'height': heightInterface}"
+     [ngClass]="{'menu-ouvert': menuState}">
+  <div class="row">
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label for="libelle" class="section-element-title">{{'CREATE_RESTAURANT.RESTAURANT_NAME' | translate}}*</label>
+        <input type="text"
+               id="libelle"
+               maxlength="255"
+               class="input-general-rhis"
+               rhisStyleForm
+               [hasError]=" (formGroup?.controls?.libelle?.errors && isFormSubmitted) || isLibelleExist"
+               formControlName="libelle">
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.libelle?.errors && isFormSubmitted">
+            {{'CREATE_RESTAURANT.RESTAURANT_ADD_FORM_NAME_REQUIRED_ERROR' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="matricule">{{'CREATE_RESTAURANT.RESTAURANT_MATRICULE' | translate}}*</label>
+        <input type="text"
+               id="matricule"
+               class="input-general-rhis"
+               maxlength="10"
+               rhisStyleForm
+               [hasError]="formGroup?.controls?.matricule?.errors && isFormSubmitted || isMatriculteExist"
+               formControlName="matricule">
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.matricule?.errors && isFormSubmitted">
+          {{'CREATE_RESTAURANT.RESTAURANT_ADD_FORM_MATRICULE_REQUIRED_ERROR' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="codePointeuse">{{'CREATE_RESTAURANT.CODE_POINTEUSE' | translate}}</label>
+        <input type="text"
+               id="codePointeuse"
+               class="input-general-rhis"
+               maxlength="255"
+               rhisStyleForm
+               [hasError]="formGroup?.controls?.codePointeuse?.errors && isFormSubmitted || isCodePointeuseExist"
+               formControlName="codePointeuse">
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 mt-md-4 mt-lg-0">
+      <div class="section-element w-100">
+        <label class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_C_COUNTRY' | translate}}*</label>
+        <p-dropdown
+          [options]="listPays"
+          [readonly]="formConfig?.readOnlyPays"
+          [autoDisplayFirst]="false"
+          [showClear]="!formConfig?.readOnlyPays"
+          [optionLabel]="'paysFR'"
+          formControlName="pays"
+          rhisStyleForm
+          [hasError]="formGroup?.controls?.pays?.errors && isFormSubmitted"
+          selector=".ui-dropdown"
+          class="drop-down-general">
+        </p-dropdown>
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.pays?.errors && isFormSubmitted">
+          {{'CREATE_RESTAURANT.COUNTRY_REQUIRED' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="codeRestaurantExterne">{{'CREATE_RESTAURANT.RESTAURANT_MATRICULE_EXTERNE' | translate}}</label>
+        <input type="text"
+               id="codeRestaurantExterne"
+               class="input-general-rhis"
+               maxlength="10"
+               rhisStyleForm
+               [hasError]="formGroup?.controls?.matricule_externe?.errors && isFormSubmitted "
+               formControlName="codeRestaurantExterne">
+
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="code_debut_matricule">{{'CREATE_RESTAURANT.RESTAURANT_START_CODE_MATRICULE' | translate}}</label>
+        <input type="text"
+               class="input-general-rhis"
+               id="code_debut_matricule"
+               maxlength="10"
+               rhisStyleForm
+               [hasError]=" formGroup?.controls?.codeDebutMatricule?.errors && isFormSubmitted"
+               formControlName="codeDebutMatricule">
+        <div class="invalid-feedback">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.codeDebutMatricule?.errors && isFormSubmitted">
+            {{'CREATE_RESTAURANT.RESTAURANT_START_CODE_MATRICULE_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="societe">{{'CREATE_RESTAURANT.RESTAURANT_COMPANY' | translate}}*</label>
+        <p-dropdown
+          id="societe"
+          [options]="societes"
+          optionLabel="societeName"
+          dataKey="idSociete"
+          [autoDisplayFirst]="societeConfig?.showFirst"
+          [readonly]="societeConfig?.readOnly"
+          showClear="true"
+          rhisStyleForm
+          [hasError]="formGroup?.controls?.societe?.errors && isFormSubmitted && !societeConfig?.readOnly"
+          selector=".ui-dropdown"
+          formControlName="societe"
+          class="drop-down-general">
+        </p-dropdown>
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.societe?.errors && isFormSubmitted && !societeConfig?.readOnly">
+          {{'CREATE_RESTAURANT.FRANCHISE_NAME_REQUIRED' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="franchise"> {{'CREATE_RESTAURANT.FRANCHISE' | translate}}</label>
+        <p-dropdown
+          id="franchise"
+          [options]="franchises"
+          optionLabel="nom"
+          dataKey="idFranchise"
+          [autoDisplayFirst]="franchiseConfig?.showFirst"
+          [readonly]="franchiseConfig?.readOnly"
+          showClear="true"
+          rhisStyleForm
+          [hasError]="formGroup?.controls?.franchise?.errors && isFormSubmitted && !franchiseConfig?.readOnly"
+          selector=".ui-dropdown"
+          formControlName="franchise"
+          class="drop-down-general">
+        </p-dropdown>
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.franchise?.errors && isFormSubmitted && !franchiseConfig?.readOnly">
+              {{'CREATE_RESTAURANT.FRANCHISES' | translate}}
+        </span>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mt-md-4 mt-lg-0">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="type_restaurant">{{"TYPE_RESTAURANT.TYPE_RESTAURANT_NAME" | translate}}*</label>
+        <p-dropdown
+          id="type_restaurant"
+          [options]="listTypeRestaurant"
+          optionLabel="nomType"
+          [autoDisplayFirst]="false"
+          showClear="true"
+          rhisStyleForm
+          [hasError]="formGroup?.controls?.typeRestaurant?.errors && isFormSubmitted"
+          selector=".ui-dropdown"
+          formControlName="typeRestaurant"
+          class="drop-down-general">
+        </p-dropdown>
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.typeRestaurant?.errors && isFormSubmitted">
+          {{'CREATE_RESTAURANT.RESTAURANT_TYPE_REQUIRED' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="adresse">{{'CREATE_RESTAURANT.RESTAURANT_ADDRESS' | translate}}</label>
+        <input type="text"
+               id="adresse"
+               class="input-general-rhis"
+               maxlength="255"
+               formControlName="adresse">
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="zip_code">{{'CREATE_RESTAURANT.RESTAURANT_ZIPCODE' | translate}}</label>
+        <input type="number"
+               id="zip_code"
+               min="0"
+               class="input-general-rhis"
+               formControlName="codePostal">
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 mt-md-4 mt-lg-0">
+      <div class="section-element w-100">
+        <label for="ville" class="section-element-title">{{'CREATE_RESTAURANT.RESTAURANT_VILLE' | translate}}</label>
+        <input type="text"
+               id="ville"
+               class="input-general-rhis"
+               maxlength="255"
+               formControlName="ville">
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title" for="tel">{{'CREATE_RESTAURANT.RESTAURANT_TEL' | translate}}</label>
+        <input type="text"
+               id="tel"
+               class="input-general-rhis"
+               maxlength="20"
+               rhisStyleForm
+               [hasError]="formGroup.controls.telephone.getError('pattern') && isFormSubmitted"
+               formControlName="telephone">
+        <span class="red small-rhis"
+              *ngIf="formGroup.controls.telephone.getError('pattern') && isFormSubmitted">
+          {{'CREATE_RESTAURANT.PHONE_FORMAT' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title" for="tel2">{{'CREATE_RESTAURANT.RESTAURANT_TEL2' | translate}}</label>
+        <input type="text"
+               id="tel2"
+               class="input-general-rhis"
+               maxlength="20"
+               rhisStyleForm
+               [hasError]="formGroup.controls.telephone2.getError('pattern') && isFormSubmitted"
+               formControlName="telephone2">
+        <span class="red small-rhis"
+              *ngIf="formGroup.controls.telephone2.getError('pattern') && isFormSubmitted">
+          {{'CREATE_RESTAURANT.PHONE_FORMAT' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div *ngIf="formConfig?.showNumBadgeField" class="col-lg-6 col-md-6">
+      <div class="section-element w-100 ">
+        <label class="section-element-title"
+               for="badge">{{'CREATE_RESTAURANT.RESTAURANT_NOMBRE_BADGE' | translate}}</label>
+        <input class="input-general-rhis"
+               [formControl]="nombreBadge"
+               id="badge"
+               min="1"
+               type="number"
+               rhisTwoDigitDecimaNumber
+               rhisStyleForm
+               [hasError]="isFormSubmitted && (nombreBadge?.errors || !nombreBadge.value)">
+        <span class="red small-rhis"
+              *ngIf="isFormSubmitted && (nombreBadge?.errors || !nombreBadge.value)">
+            {{'CREATE_RESTAURANT.RESTAURANT_NOMBRE_BADGE_ERROR' | translate}}
+          </span>
+      </div>
+    </div>
+    <div [ngClass]="formConfig?.showNumBadgeField ? 'col-lg-6 col-md-6' : 'col-lg-12'">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 type-periode-list">
+          <div class="section-element w-100 ">
+            <label class="section-element-title"
+                   for="periode">{{'CREATE_RESTAURANT.RESTAURANT_PERIODE_RESTAURANT' | translate}}*</label>
+            <p-dropdown id="periode"
+                        [options]="listPeriodeRestaurant"
+                        [autoDisplayFirst]="false"
+                        showClear="true"
+                        rhisStyleForm
+                        [hasError]="formGroup?.controls?.periodeRestaurant?.errors && isFormSubmitted"
+                        selector=".ui-dropdown"
+                        formControlName="periodeRestaurant"
+                        class="drop-down-general"
+            ></p-dropdown>
+            <span class="red small-rhis"
+                  *ngIf="formGroup?.controls?.periodeRestaurant?.errors && isFormSubmitted">
+          {{'CREATE_RESTAURANT.PERIOD_TYPE_REQUIRED' | translate}}
+        </span>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="row bloc-periode" *ngIf="isDecale">
+            <div class="type-periode-number-jour">
+              <div class="section-element">
+                <input class="input-general-rhis"
+                       formControlName="valeurDebutMois"
+                       min="0"
+                       type="number"
+                       rhisTwoDigitDecimaNumber
+                       rhisStyleForm
+                       [hasError]="formGroup?.controls?.valeurDebutMois?.errors && isFormSubmitted">
+              </div>
+            </div>
+            <div class="padding-top-without-label"> {{'CREATE_RESTAURANT.JOUR_LABEL' | translate}}</div>
+            <div class="padding-top-without-label">
+              <p-inputSwitch [formControl]="decalMoisJourControl"></p-inputSwitch>
+            </div>
+            <div class="padding-top-without-label pl-0">
+              <span *ngIf="!decalMoisJourControl.value">{{'CREATE_RESTAURANT.BEFORE_LABEL' | translate}}</span>
+              <span *ngIf="decalMoisJourControl.value">{{'CREATE_RESTAURANT.AFTER_LABEL' | translate}}</span>
+            </div>
+            <span class="red small-rhis"
+                  *ngIf="formGroup?.controls?.valeurDebutMois?.errors && isFormSubmitted">
+            {{'CREATE_RESTAURANT.RESTAURANT_VALEUR_DEBUT_MOIS_ERROR' | translate}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="numTVA"> {{'CREATE_RESTAURANT.RESTAURANT_NUM_TVA' | translate}}</label>
+        <input type="text"
+               id="numTVA"
+               class="input-general-rhis"
+               formControlName="numTVA">
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title" for="siret"> {{'CREATE_RESTAURANT.RESTAURANT_SIRET' | translate}}</label>
+        <input type="text"
+               id="siret"
+               class="input-general-rhis"
+               formControlName="siret">
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="ape"> {{'CREATE_RESTAURANT.RESTAURANT_CODE_APE' | translate}}</label>
+        <input type="text"
+               class="input-general-rhis"
+               id="ape"
+               formControlName="codeAPE">
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="rassemblement"> {{'CREATE_RESTAURANT.RESTAURANT_POINT_RASSEMBLEMENT' | translate}}</label>
+        <input type="text"
+               class="input-general-rhis"
+               id="rassemblement"
+               formControlName="pointRassemblement">
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="cente_urssaf"> {{'CREATE_RESTAURANT.RESTAURANT_CENTRE_URSSAF' | translate}}</label>
+        <input type="text"
+               id="cente_urssaf"
+               class="input-general-rhis"
+               formControlName="centreURSSAF">
+      </div>
+
+    </div>
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="num_urssaf"> {{'CREATE_RESTAURANT.RESTAURANT_NUM_URSSAF' | translate}}</label>
+        <input type="text"
+               id="num_urssaf"
+               class="input-general-rhis"
+               formControlName="numURSSAF">
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label class="section-element-title"
+               for="code_service_sante_travail"> {{'CREATE_RESTAURANT.OCCUPATIONAL_HEALTH_SERVICE_CODE' | translate}}</label>
+        <input type="text"
+               id="code_service_sante_travail"
+                rhisStyleForm
+               [hasError]="formGroup.controls.occupationalHealthServiceCode?.errors?.max && isFormSubmitted"
+               class="input-general-rhis"
+               formControlName="occupationalHealthServiceCode">
+            <span class="red small-rhis"
+              *ngIf="formGroup.controls.occupationalHealthServiceCode?.errors?.max && isFormSubmitted">
+           {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('CREATE_RESTAURANT.OCCUPATIONAL_HEALTH_SERVICE_CODE' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+                          (submitDataEvent)="submit($event)" *ngIf="displayFranchisePopup"
+                          [dropdownListData]="listRestaurants" [errorMessage]="errorText" [optionLabel]="'label'"
+                          [showPopUp]="displayFranchisePopup" [submitButtonText]="submitButtonText"
+                          [text1]="firstLineText" [displayText1]="true" [displayText2]="true"
+                          [text2]="secondLineText" [title]="popupTitle" [resourceName]="'ajout_restaurant'">
+</rhis-pop-up-gestion-parc>

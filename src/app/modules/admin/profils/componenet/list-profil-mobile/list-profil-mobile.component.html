@@ -1,0 +1,44 @@
+<p-scrollPanel class="scroll-droit">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list">
+
+      <p-table #dt
+               [scrollHeight]="heightInterface"
+               [scrollable]="true"
+               [scrollable]="true"
+               [value]="ecransMobile"
+               dataKey="code">
+        <ng-template pTemplate="header" let-columns>
+          <tr class="header-row">
+            <th>Code</th>
+            <th>Libelle</th>
+            <th>
+              {{Profil?.libelle}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-ecran let-columns="columns">
+          <tr>
+            <td>
+              <div class="td-container td-left-border">
+                {{ecran?.code}}
+              </div>
+            </td>
+            <td>{{ecran.libelle}}</td>
+            <td>
+              <p-checkbox [readonly]="!isEditable" binary="true" [ngModel]="doesProfilHasEcran(ecran)"
+                          (onChange)="changeEcran(ecran)"></p-checkbox>
+            </td>
+
+          </tr>
+
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  </div>
+</p-scrollPanel>

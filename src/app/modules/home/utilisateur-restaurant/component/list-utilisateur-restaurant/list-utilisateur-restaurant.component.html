@@ -1,0 +1,90 @@
+<div class="rhis-container view">
+    <div class="scroll-top-content-openRhis"
+         (rhisHeightScrollableSection)="heightInterface = $event"
+         [offset]="300">
+        <div class="header row justify-content-between scroll-width-TopRhis header-employes-rhis">
+            <h1 class="titre-principale-page-rhis">{{'USER.MANAGE_USERS'|translate}}</h1>
+        </div>
+    </div>
+    <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+        <div class="table-list responsive-table-rhis">
+            <p-tabView>
+                <p-tabPanel *ngIf="showRestaurantControl()" header="{{'USER.RESTAURANT_USER'|translate}}">
+                    <div class="rhis-container" [ngStyle]="{'min-height': (heightInterface + 100) + 'px'}">
+                        <div class="header row d-flex justify-content-end">
+                            <button *ngIf="addButtonControl()" type="button" (click)="affecterUserPopUp()"
+                                    class="btn save-add-button-rhis blue-background">
+                                <span>{{'USER.ADD_NEW_ONE'|translate}}</span>
+                            </button>
+                        </div>
+
+                        <div class="container-fluid change-container-fluid-rhis">
+                            <div class="table-list" *ngIf="ListActifUsers?.length">
+                                <p-table [scrollHeight]="heightInterface + 'px'"
+                                         [scrollable]="true"
+                                         [value]="ListActifUsers">
+                                    <ng-template pTemplate="colgroup">
+                                        <colgroup>
+                                            <col *ngFor="let c of header">
+                                        </colgroup>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr class="header-row">
+                                            <th *ngFor="let h of header">{{('USER.' + h) | translate}}</th>
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-i="rowIndex" pTemplate="body" let-user>
+                                        <tr class="table-row">
+                                            <td>
+                                                {{user?.nom}}
+                                            </td>
+                                            <td> {{user?.prenom}}</td>
+                                            <td>
+                                                {{user?.email}}
+                                            </td>
+                                            <td>
+                                                {{user?.affectations[0]?.profil?.libelle}}
+                                            </td>
+                                            <td>
+                                                <div>
+              <span *ngIf="deleteButtonControl()" (click)=" showConfirmDelete(user,$event)" class="item">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+                                                    <span *ngIf="isSupervisor() && updateButtonControl()"
+                                                          (click)="generatePassword(user)"
+                                                          class="item-password">
+                <img src="assets/icons/login/passgenerator.png" alt="no image">
+              </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <rhis-pop-up
+                            (closeEvent)="closePopup()"
+                            [showPopUp]="showAddUpdateUserPopup"
+                            [title]=showAddUpdateUserPopupTitle>
+
+                        <rhis-affecter-utilisateur *ngIf="showAddUpdateUserPopup"
+                                                   (affecterUserEvent)="affecterEmploye($event)"
+                                                   [listProfil]="listProfil"
+                                                   [ListNotAssocietedEmployes]="ListNotAssocietedEmployes">
+
+                        </rhis-affecter-utilisateur>
+                    </rhis-pop-up>
+                    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+                    <p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+                </p-tabPanel>
+                <p-tabPanel *ngIf="showMobileControl() && isMobileAppEnabled" header="{{'USER.MOBILE_USER'|translate}}">
+                    <rhis-list-utilisateur-mobile></rhis-list-utilisateur-mobile>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</div>
+

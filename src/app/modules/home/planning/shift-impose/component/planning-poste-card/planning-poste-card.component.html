@@ -1,0 +1,60 @@
+<div class="shift-card position-card"
+     [ngStyle]="{'background-color': color,
+     'color': colorTextCard}"
+     [attr.data-idBesoinImpose]="idBesoinImpose"
+     [attr.data-cardDay]="cardDay"
+     [attr.data-posteIndex]="cardPosteIndex"
+     [ngClass]="{'acheval-style-BI': cardDetails?.acheval,
+                  'acheval-fin-week':cardDetails?.acheval && cardDetails?.shiftInLastWeek}">
+  <div class="dropdown">
+    <a class="dropdown-toggle edit-link" id="PLG-P-Edit-dropdown"
+       role="button"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false">
+      <i class="edit-icon"
+         [ngStyle]="{'background-image': imageEditIconCard}"></i>
+    </a>
+
+    <div aria-labelledby="PLG-P-Edit-dropdown" class="dropdown-menu" [ngClass]="{
+          'dropdown-menu-opened': menuOpened,
+          'dropdown-menu-close': !menuOpened}">
+      <a (click)="edit($event)" *ngIf="updateButtonControl()" class="dropdown-item"
+         id="PLG-P-Edit-Icon">{{'BUTTON.UPDATE'|translate}}</a>
+      <a (click)="delete($event)" *ngIf="deleteButtonControl()" class="dropdown-item"
+         id="PLG-P-delete-Icon">{{'BUTTON.SUPPRIMER'|translate}}</a>
+    </div>
+  </div>
+
+  <div class="bloc-condense-hdf-rhis petit-device hour-style">{{cardDetails?.heureDebut | date:'HH:mm'}}
+    - {{cardDetails?.heureFin |
+      date:'HH:mm'}}
+  </div>
+  <div class="emp-count bloc-condense-hdf-rhis">
+    {{cardDetails?.valeur | i18nPlural: messageMapping }}
+  </div>
+  <div *ngIf="cardDetails?.acheval && colorTextCard === '#FFF' " class="arrow-acheval-test not-condensee">
+  </div>
+  <div *ngIf="cardDetails?.acheval && colorTextCard !== '#FFF' " class="arrow-acheval-test-black not-condensee">
+  </div>
+  <div class="date-container" *ngIf="cardDetails?.dateDebut || cardDetails?.dateFin ">
+    <span class="icon-clock"></span>
+    <span>{{'SHIFT_FIXE.DU' | translate}} {{cardDetails?.dateDebut | date: 'dd/MM/yyyy'}}
+      <br>
+    <ng-container *ngIf="cardDetails?.dateFin">
+      {{'SHIFT_FIXE.AU' | translate}} {{cardDetails?.dateFin  |  date: 'dd/MM/yyyy'}}
+    </ng-container>
+    </span>
+  </div>
+  <div class="add-person-shift-fixe">
+    <div class="prod-chexbox">
+      <p-checkbox [(ngModel)]="cardDetails.additionel" binary="true" disabled="true">
+      </p-checkbox>
+      <span>{{'BIMPOSE.ADD'|translate}}</span>
+    </div>
+    <div *ngIf="cardDetails?.acheval && colorTextCard === '#FFF' " class="arrow-acheval-test">
+    </div>
+    <div *ngIf="cardDetails?.acheval && colorTextCard !== '#FFF' " class="arrow-acheval-test-black">
+    </div>
+  </div>
+</div>

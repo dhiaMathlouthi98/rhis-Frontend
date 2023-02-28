@@ -1,0 +1,143 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-6">
+      <h1 *ngIf="ADD" class="titre-principale-page-rhis">{{"PROFIL.ADD_GLOBAL" | translate}}</h1>
+      <h1 *ngIf="!ADD" class="titre-principale-page-rhis">{{"PROFIL.UPDATE_GLOBAL" | translate}}</h1>
+    </div>
+  </div>
+
+  <p-tabView>
+    <p-tabPanel [header]=ongletProfil>
+      <ng-container *ngIf="ADD">
+        <div *ngIf="showSaveButton" class="col-6 float-right">
+          <button type="button" (click)="onSubmit()"
+                  class="btn save-add-button-rhis orange-background">
+            <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+          </button>
+        </div>
+        <br>
+      </ng-container>
+      <ng-container *ngIf="!ADD">
+        <div class="col-6 float-right">
+          <button type="button" (click)="updateProfil()"
+                  class="btn save-add-button-rhis orange-background">
+            <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+          </button>
+        </div>
+      </ng-container>
+      <ng-container [formGroup]="formGroup">
+        <div class="view-section container-fluid change-container-fluid-rhis add-profil-select-general">
+          <div class="section-body">
+            <div class="rhis-row row row-margin-bottom-rhis justify-content-md-center">
+              <div class="col-3">
+                <label for="nom"
+                       class="section-element-title col-12 delete-padding-col-rhis">{{'PROFIL.PROFIL_NAME' | translate}}
+                  *</label>
+                <input
+                  rhisStyleForm
+                  [(ngModel)]="profilLibelle"
+                  [hasError]=""
+                  (change)="changed=true"
+                  type="text"
+                  id="nom"
+                  formControlName="nom"
+                  class="input-general-rhis">
+                <span class="red small-rhis"
+                      *ngIf="(formGroup.get('nom').hasError('required')) && isSubmitted">
+            {{'PROFIL.OBLIGATORY' | translate}}
+          </span>
+                <span class="red small-rhis" *ngIf="profilExistant">
+            {{'PROFIL.DEPLUCATED' | translate}}
+          </span>
+              </div>
+              <div class="col-3">
+                <label for="type" class="section-element-title">{{'PROFIL.TYPE' | translate}}*</label>
+                <p-dropdown
+                  rhisStyleForm
+                  [(ngModel)]="selectedProfil"
+                  (onChange)="choisirProfil()"
+                  [hasError]=""
+                  [selector]=""
+                  [placeholder]="defaultProfil"
+                  [disabled]="profilType"
+                  [autoDisplayFirst]="false"
+                  id="type"
+                  formControlName="type"
+                  optionLabel="libelle"
+                  [options]="listProfil">
+                </p-dropdown>
+                <span class="red small-rhis"
+                      *ngIf="(formGroup.get('type').hasError('required')) && isSubmitted">
+            {{'PROFIL.OBLIGATORY' | translate}}
+          </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <ng-container>
+          <rhis-affectation-franchise *ngIf="isFranchise" [listSocietes]="listSocietes">
+          </rhis-affectation-franchise>
+        </ng-container>
+
+        <ng-container *ngIf=isAdmin>
+          <rhis-affectation-administrateur [listRestaurants]="listRestaurants">
+          </rhis-affectation-administrateur>
+        </ng-container>
+
+      </ng-container>
+    </p-tabPanel>
+    <p-tabPanel [header]=ongletDroit [disabled]="droitDisabled">
+      <rhis-droit-profil-global
+        *ngIf="!droitDisabled"
+        [Profil]="Profil"
+        [ecrans]="ecrans"
+        [droitList]="droitList">
+
+      </rhis-droit-profil-global>
+    </p-tabPanel>
+    <p-tabPanel header="mobile" *ngIf="showMobile()" [disabled]="droitDisabled">
+      <rhis-list-profil-mobile
+        *ngIf="!droitDisabled"
+        [Profil]="Profil"
+        [ecransMobile]="ecransMobile"
+        [droitList]="droitList">
+
+      </rhis-list-profil-mobile>
+
+    </p-tabPanel>
+    <div *ngIf="isFranchise || isAdmin" class="row mt-4">
+      <div class="col-12 pr-0">
+        <ng-container *ngIf="ADD">
+          <div *ngIf="showSaveButton" class="col-6 float-right">
+            <button (click)="onSubmit()" class="btn save-add-button-rhis orange-background"
+                    type="button">
+              <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+            </button>
+          </div>
+          <br>
+        </ng-container>
+        <ng-container *ngIf="!ADD">
+          <div class="col-6 float-right">
+            <button (click)="updateProfil()" class="btn save-add-button-rhis orange-background"
+                    type="button">
+              <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </p-tabView>
+
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-blockUI [blocked]="displaySpinner">
+  <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+    <span class="text-white">{{"BUTTON.IN_PROGRESS" | translate}}</span>
+  </div>
+</p-blockUI>

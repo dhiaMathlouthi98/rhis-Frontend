@@ -1,0 +1,124 @@
+<div class="bloc-header-gestion-paie">
+  <div class="block-title">
+    {{"GESTION_PAIE_PARC.PAIE_PERIOD" | translate}}
+    <div class="block-input-week-rhis ">
+    <span class="img-planning left">
+          <img (click)="previousPeriod()" alt="no image" id="RAPP-RP-GDP-INC-CALEND"
+               src="assets/icons/planning/back-rhis.png">
+        </span>
+      <p-calendar
+        (onSelect)="selectDate($event)"
+        [(ngModel)]="selectedPeriod"
+        [locale]="calendar_fr"
+        [showIcon]="true"
+        [showWeek]="true"
+        appendTo="body"
+        dateFormat="dd/mm/yy"
+        [maxDate]="maxDateValue"
+        id="PARAM-RESUME-DATE"
+        selectionMode="range">
+      </p-calendar>
+      <span class="img-planning right">
+          <img (click)="nextPeriod()" alt="no image" id="RAPP-RP-GDP-DEC-CALEND"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+    </div>
+  </div>
+</div>
+
+<div class="gestion-paie position-relative">
+  <div *ngIf="samePeriodPaie === true" class="left-column-paie" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="275">
+    <p-fieldset  legend="{{'GESTION_PAIE_PARC.LEFT_COLUMN_TITLE' | translate}} ({{nbRestoValide}}/{{listRestaurant?.length}})">
+    <div [ngClass]="nbRestoValide < 14 ? 'fieldset-fixed-heigth' : 'fieldset-max-heigth'">
+      <p-table [value]="listRestaurant"   [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="body" let-restaurant>
+          <tr *ngIf="restaurant?.dateValidation">
+            <td>
+              {{restaurant?.libelle}}
+            </td>
+            <td>
+              <i class="pi pi-check"></i>
+            </td>
+            <td>
+              {{restaurant?.dateValidation | date:'dd/MM/yyyy HH:mm'}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    </p-fieldset>
+  </div>
+
+  <div *ngIf="samePeriodPaie === true" class="right-column-paie">
+    <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="275">
+      <p-fieldset  legend="{{'GESTION_PAIE_PARC.RIGHT_COLUMN_TITLE' | translate}} ({{nbRestoNonValide}}/{{listRestaurant?.length}})">
+      <div  [ngClass]="nbRestoNonValide < 14 ? 'fieldset-fixed-heigth' : 'fieldset-max-heigth'" >
+        <p-table [value]="listRestaurantNonValide"  [scrollable]="true"  [scrollHeight]="heightInterface">
+          <ng-template pTemplate="body" let-restaurant>
+            <tr>
+              <td>
+                {{restaurant?.libelle}}
+              </td>
+              <td>
+                <i class="pi pi-times"></i>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      </p-fieldset>
+    </div>
+  </div>
+
+  <div *ngIf="samePeriodPaie === true" class="bloc-right scroll-general-rhis conf-menu">
+    <p-tabView [activeIndex]="activeIndex">
+      <p-tabPanel [disabled]="disableValidation" *ngIf="this.controlAffichageOngletValidation()"
+                  [header]="'GDH.PAY.VAP_PANEL_TITLE' | translate">
+        <rhis-validation
+          [startPeriod]="selectedPeriodFrom"
+          [endPeriod]="selectedPeriodTo"
+          [restaurants]="listRestaurant"
+          (goToGeneratingTab)="disableValidationAndGoToGenerationTab($event)"
+          (updateValidatedRestaurants)="ngOnInit()">
+        </rhis-validation>
+      </p-tabPanel>
+      <p-tabPanel [header]="'GESTION_PAIE_PARC.DOWNLOAD' | translate">
+        <ng-template pTemplate="content">
+          <rhis-download
+            [startPeriod]="selectedPeriodFrom"
+            [endPeriod]="selectedPeriodTo"
+            [restaurants]="listRestaurant">
+          </rhis-download>
+        </ng-template>
+      </p-tabPanel>
+      <p-tabPanel [header]="'GESTION_PARC_RAPPORT.SECOND_TAB' | translate" [tooltip]="">
+        <rhis-envoi
+          [setStartPeriod]="selectedPeriodFrom"
+          [setEndPeriod]="selectedPeriodTo"
+          [restaurants]="listRestaurant">
+        </rhis-envoi>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+
+
+  <div class="accordion-content-rhis" *ngIf="samePeriodPaie === false">
+    <h6>{{"GESTION_PAIE_PARC.MESSAGE_PERIOD" | translate}}</h6>
+    <div>
+      <div class="scroll-general-rhis accordion-center-rhis">
+        <div>
+          <p-accordion *ngFor="let periodeResto of listRestaurantHasDifferentPeriod">
+            <p-accordionTab>
+              <p-header class="ui-accordion-header-text ui-accordion-toggle-icon"> {{periodeResto.name}}</p-header>
+              <p-header class="sizeOfRestaurant"> {{periodeResto.size}}</p-header>
+              <div class="headerLabel">{{periodeResto.label}}</div>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

@@ -1,0 +1,120 @@
+.planning-body {
+  clear: both;
+  display: grid;
+
+  .date-list {
+    .date-item {
+      height: 30px;
+      padding-bottom: 5px;
+      position: relative;
+
+      .week-day-container {
+        padding-left: 18px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: stretch;
+        width: 95%;
+      }
+
+      .week-day {
+        color: #414141;
+        font-family: "TT Wellingtons Medium";
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 14px;
+      }
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+    }
+
+    .total-day {
+      height: 15px;
+      width: 42px;
+      border-radius: 5px;
+      background-color: #2DC76D;
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      line-height: 9px;
+      text-align: center;
+      padding-left: 6%;
+      margin-right: 5px;
+    }
+  }
+
+  .gridster-container {
+    gridster {
+      height: inherit;
+      background-color: inherit;
+
+      .shift-item {
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: 0.8px;
+        line-height: 11px;
+        color: rgba(255, 255, 255, 0.75);
+        border-radius: 5px;
+        box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+        padding-top: 4px;
+      }
+
+      .strip-lines {
+        opacity: 0.75;
+      }
+
+      gridster-item {
+        text-align: center;
+        font-family: 'TT Wellingtons Medium';
+        overflow: unset;
+      }
+    }
+  }
+}
+
+.inactive-employee-shift-display-style {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.5) 20px, rgba(255, 255, 255, 0.5) 40px) !important;
+}
+
+:host ::ng-deep {
+  .rhis-container .flag-bottom {
+    bottom: 15px !important;
+    left: 70px !important;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 10px !important;
+    border-color: transparent transparent transparent #fff !important;
+  }
+
+  .tooltip-position-right {
+    .rhis-container .flag-bottom {
+      bottom: 15px !important;
+      left: -8px !important;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 5px 10px 5px 0 !important;
+      border-color: transparent #fff transparent transparent !important;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .resize.modifiable {
+    .gridster-item-resizable-handler.handle-e {
+      cursor: unset !important;
+    }
+  }
+  .resize.not-modifiable {
+    .gridster-item-resizable-handler.handle-w {
+      cursor: unset !important;
+    }
+  }
+}

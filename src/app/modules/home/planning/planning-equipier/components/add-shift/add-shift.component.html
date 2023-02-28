@@ -1,0 +1,106 @@
+<div class="rhis-container popup-equipier">
+  <form [formGroup]="shiftform">
+    <div>
+      <label class="section-element-title"
+             for="PLG-Eq-employee-popup">{{"PLANNING_EQUIPIER.FIELD_EMPLOYE" | translate}} </label>
+      <div *ngIf="!actifLoad && !loadEditOrAdd ;else loaderTemplate">
+        <div *ngIf="!idShiftUpdate">
+          <p-dropdown [autoDisplayFirst]="false"
+                      [options]="employees"
+                      appendTo="body"
+                      class="drop-down-general"
+                      formControlName="employee"
+                      id="PLG-Eq-employee-popup"
+                      optionLabel="fullName">
+          </p-dropdown>
+        </div>
+
+
+        <div *ngIf="idShiftUpdate">
+          <p-dropdown (click)="hideListSpan()" [group]="true"
+                      [options]="employeesList"
+                      placeholder="{{selectedEmployeeName}}"
+                      class="update-list-dropdown"
+                      formControlName="employeeDisplay">
+            <ng-template let-group pTemplate="group">
+              <span [ngClass]="{'hide-groupe-propose': !group.label || group.label == 'empty'}" class="group-propose"
+                    style="margin-left:.25em">{{group.label}}</span>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+      <ng-template #loaderTemplate>
+        <div class="spinner-border text-secondary">
+        </div>
+      </ng-template>
+      <span class="form-item-error red small-rhis"
+            *ngIf="shiftform.get('employee').hasError('required') && isSubmitted"
+            id="PLG-Eq-employeeError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+    </div>
+    <div class="mt-3">
+      <label class="section-element-title"
+             for="PLG-Eq-posTr-popup">{{"PLANNING_EQUIPIER.FIELD_LIBELLE" | translate}} * </label>
+      <p-dropdown [autoDisplayFirst]="false"
+                  [options]="positionsDeTravail"
+                  class="drop-down-general"
+                  formControlName="positionTravail"
+                  appendTo="body"
+                  id="PLG-Eq-posTr-popup"
+                  optionLabel="libelle"></p-dropdown>
+      <span class="form-item-error red small-rhis"
+            *ngIf="shiftform.get('positionTravail').hasError('required') && isSubmitted"
+            id="PLG-Eq-posTrError-popup">
+        {{"PLANNING_EQUIPIER.REQUIRED" | translate}}
+      </span>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title"
+               for="PLG-Eq-heureD-popup">{{"PLANNING_EQUIPIER.FIELD_HEURE_DEB" | translate}} * </label>
+        <p-calendar (onClose)="validerHeureNuit(true)" [timeOnly]="true"
+                    appendTo="body"
+                    formControlName="hdd"
+                    id="PLG-Eq-heureD-popup">
+        </p-calendar>
+        <span *ngIf="heureDebutLimitError" class="form-item-error red small-rhis"
+              id="PLG-Eq-heureDLimitError-popup">
+          {{heureDebutLimitErrorMessage | translate}}</span><br>
+        <span class="form-item-error red small-rhis"
+              *ngIf="shiftform.get('hdd').hasError('required') && isSubmitted"
+              id="PLG-Eq-heureDError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title"
+               for="PLG-Eq-heureF-popup">{{"PLANNING_EQUIPIER.FIELD_HEURE_FIN" | translate}} * </label>
+        <p-calendar (onClose)="validerHeureNuit(false)"
+                    [timeOnly]="true"
+                    appendTo="body"
+                    formControlName="hdf"
+                    id="PLG-Eq-heureF-popup">
+        </p-calendar>
+        <span *ngIf="heureFinLimitError" class="form-item-error red small-rhis"
+              id="PLG-Eq-heureFLimiteError-popup">
+          {{heureFinLimitErrorMessage | translate}}</span><br>
+        <span class="form-item-error red small-rhis"
+              *ngIf="shiftform.get('hdf').hasError('required') && isSubmitted"
+              id="PLG-Eq-heureFError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+      </div>
+    </div>
+    <div *ngIf="errorHourMessage != ''" class="form-item-error red small-rhis"
+         id="PLG-Eq-hourDError-popup">
+      {{errorHourMessage}}
+    </div>
+    <div *ngIf="errorMinShiftDelayMessage != ''" class="form-item-error red small-rhis"
+         id="PLG-Eq-shiftError-popup">
+      {{errorMinShiftDelayMessage}}
+    </div>
+    <div>
+      <button (click)="addShift()" id="PLG-Eq-save-popup"
+              class="btn save-add-button-rhis orange-background mt-3 btn-popup-rhis" type="button">
+        <span>{{buttonTitle | uppercase }}</span>
+      </button>
+    </div>
+  </form>
+
+</div>

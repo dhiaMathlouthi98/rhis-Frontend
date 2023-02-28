@@ -1,0 +1,149 @@
+.item-body.block-shift-equipier-rhis {
+  .edit-icon {
+    background-image: url(/assets/icons/planning/edit-icon/icon-edit.svg);
+    width: 5px;
+    height: 22px;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: 65% !important;
+  }
+
+  .item-body.block-shift-equipier-rhis .dropdown-menu.dropdownEdit-condense {
+    top: 0 !important;
+
+    .dropdown-item {
+      padding: 1px 5px;
+    }
+  }
+
+  .edit-link {
+    width: 15px;
+    height: 22px;
+    position: absolute;
+    right: 9px;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+
+  .dropdown-item {
+    font-family: "TT Wellingtons Medium";
+    font-size: 9px;
+    padding: 3px 8px;
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 2px 0;
+    min-width: 5rem !important;
+    top: 3px !important;
+    right: 10px !important;
+    will-change: unset !important;
+    transform: none !important;
+    left: unset !important;
+    margin-top: 0 !important;
+  }
+}
+
+.item-body {
+  img {
+    position: absolute;
+    right: 12px;
+    top: 0;
+    width: 15px;
+  }
+
+  .item-label {
+    padding-top: 1px;
+
+    div {
+      padding-bottom: 2px;
+    }
+  }
+
+  .item-label-minimal-display {
+    padding-top: 3px;
+  }
+
+  .vertical-line-right {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    width: 3px;
+    height: 20px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+
+  .vertical-line-left {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    width: 3px;
+    height: 20px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+
+  .vertical-line-right-minimal-display {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    width: 2px;
+    height: 16px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+
+  .vertical-line-left-minimal-display {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 2px;
+    height: 16px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+}
+
+.item-body {
+  .vertical-line-right.resize-right,
+  .vertical-line-left.resize-left {
+    visibility: hidden;
+  }
+}
+
+.contentSmallShiftHover.deleteArrowTooltip {
+  .rhis-container .flag-bottom {
+    visibility: hidden;
+  }
+}
+
+.contentSmallShiftHover {
+  visibility: hidden;
+}
+
+.block-shift-equipier-rhis:hover .contentSmallShiftHover {
+  visibility: visible;
+  position: absolute;
+  top: 54px;
+  width: 85px !important;
+  right: 10px;
+
+  .rhis-container .rhis-tooltip {
+    width: 87px !important;
+  }
+}

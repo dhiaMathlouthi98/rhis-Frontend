@@ -1,0 +1,247 @@
+<div class="rhis-container rapport-interface" [ngClass]="displayRestoList ? 'view' : 'rapport-interface'">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="290">
+  </div>
+    <div class="align-dropdown" *ngIf="displayRestoList" >
+      <div class="dropdown-text-style">
+        {{"REPORT.RESTAURANT" | translate}} :
+      </div>
+      <div class=" dropdown-width">
+        <p-dropdown [options]="listRestoSource"
+                          [(ngModel)]="restaurantSource"
+                        optionLabel="libelleRestaurant"
+                        (onChange)="changeReports()"
+                          class="drop-down-general">
+        </p-dropdown>
+      </div>
+       <div>
+         <span (click)="showPopupListResto()" class="rhis-tooltip-copy-generique bottom">
+           <img alt="no icon" class="copy-icon-style" src="assets/icons/parc/icon-copy-selected.png">
+            <div class="rhis-tooltip-copy rapport">
+              <span>
+                {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_1" | translate}}
+              </span>
+               <span>
+                 {{"MENU.REPORT" | translate}}
+               </span>
+               <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_2" | translate}}
+               </span>
+               <span>
+                 {{restaurantSource?.libelleRestaurant}}
+               </span>
+               <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_3" | translate}}
+               </span>
+             </div>
+         </span>
+    </div>
+  </div>
+
+  <div class="table-list bg-gris-avec-border">
+    <p-table [columns]="header" [scrollHeight]="heightInterface" [scrollable]="true" [value]="listRapport">
+      <ng-template pTemplate="colgroup" let-columns stickyHeader stickyClass="stickyHeader">
+        <colgroup>
+          <col *ngFor="let c of columns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+          <th *ngFor="let col of columns;" [pSortableColumn]="col.field">
+            {{col.title}}
+            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                        *ngIf="col?.field != 'restaurant'"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </th>
+          <th *ngIf="addButtonControl()"
+              (click)="addRapport()" class="d-flex justify-content-end">
+            <button class="btn save-add-button-rhis orange-background ng-star-inserted position-absolute add-report"
+                    id="EMP-contrat-new-btn" type="button">
+              <span>{{"REPORT.ADD" | translate | uppercase}}</span>
+            </button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rapport>
+        <tr>
+          <td>
+            <div class="td-container td-left-border">
+              {{rapport?.description}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+               <span [ngClass]="{'blue-background': rapport?.categorieType === 'EMBAUCHE_CONTRAT',
+               'orange-background': rapport?.categorieType === 'CONGE',
+               'violet-background': rapport?.categorieType === 'VISITE_MEDICAL',
+               'blackground-color' :rapport?.categorieType === 'DIVERS',
+               'purple-color' :rapport?.categorieType === 'TRAVAILLEURS_ETRANGER',
+               'gray-color' :rapport?.categorieType === 'ENTRETIENT_PROFESSIONEL',
+               'green-color' :rapport?.categorieType === 'FORMATION',
+                'blue-color' :rapport?.categorieType === 'DISCIPLINAIRE'}"
+                     class="label-table btn-personnalise-rhis">
+              {{rapport.categorie}}
+                 </span>
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{rapport?.lastUsed | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td *ngIf="displayRestoList">
+            <div class="td-container">
+             <div *ngIf="rapport?.restaurants?.length>1 else onRestoTemplate">
+              <span (click)="overlaybasic.toggle($event)" #test>...</span>
+              <p-overlayPanel class="overlay-myrhis" #overlaybasic [appendTo]="'body'" [showCloseIcon]="true" [dismissable]="true">
+                <p-scrollPanel [style]="{width: '100%', height: '100px'}">
+                  <div class="restaurant" *ngFor="let resto of rapport?.restaurants">
+                    <span>{{resto}}</span>
+                  </div>
+                  </p-scrollPanel>
+              </p-overlayPanel>
+            </div>
+            <ng-template #onRestoTemplate>
+             {{rapport?.restaurants[0]}}
+            </ng-template>
+            </div>
+          </td>
+          <td>
+            <div class="td-container td-right-border">
+              <div class="operation">
+                <span *ngIf="updateControl()"
+                        (click)="editWord(rapport)" class="item" id="EMP_Rapport-view-icon"
+                      (mouseenter)="showIconHoverText($event, 'EDIT', icon_text_hover_tooltip)"
+                      (mouseleave)="icon_text_hover_tooltip.hide()">
+                  <img alt="" src="assets/icons/employe/edit-word.png">
+                </span>
+                <span *ngIf="!displayRestoList" (click)="viewFile(rapport)" class="item" id="EMP_Rapport-edit-icon">
+                  <img alt="" src="assets/icons/employe/Ico_View.svg">
+                </span>
+                <span *ngIf="!displayRestoList" (click)="downloadFile(rapport)" class="item" id="EMP_Rapport-dl-icon">
+                  <img alt="" src="assets/icons/employe/dl small.svg">
+                </span>
+                <span *ngIf="!displayRestoList" (click)="openPopupMail(rapport)" class="item" id="EMP_Rapport-email-icon">
+                  <img alt="" src="assets/icons/employe/Email Small.svg">
+                </span>
+                <span *ngIf="!displayRestoList" (click)="printFile(rapport)" class="item">
+                  <img alt="" id="EMP_Rapport-print-icon" src="assets/icons/employe/Print Small.svg">
+                </span>
+                <span *ngIf="deleteButtonControl()"
+                      class="item"
+                      (click)="displayRestoList ? showPopupListRestoDelete(rapport) : deleteFile(rapport)"
+                      class="item"
+                      (mouseenter)="showIconHoverText($event, 'DELETE', icon_text_hover_tooltip)"
+                      (mouseleave)="icon_text_hover_tooltip.hide()">
+                  <img alt="" id="EMP_Rapport-delete-icon" src="assets/icons/employe/Btn_Close.svg">
+                </span>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <rhis-pop-up-report
+      (closeEvent)="closeReportShow()"
+      (exportEvent)="downloadFile()"
+      (printEvent)="printFile()"
+      [showPopUp]="isReportShown"
+      [title]="titleReport"
+      [height]="700">
+      <div [ngStyle]="{'max-height': maxHeightRapport()}" class="pdf scroll scroll-rapport">
+        <pdf-viewer [src]="reportViewer"
+        ></pdf-viewer>
+      </div>
+    </rhis-pop-up-report>
+    <rhis-pop-up
+      (closeEvent)="isReportGenerationLoader = false"
+      [showPopUp]="isReportGenerationLoader"
+      [width]="400"
+      [title]="reportGenerationTitle">
+      <div class="container-generate-report">
+        <div>{{"POPUPS.GENERATOR_REPORT_MESSAGE" | translate}}</div>
+        <div class="generation-label text-white text-center d-flex flex-column justify-content-around mt-2"
+             [ngClass]="{
+           'bg-danger': getBackgroundColor(2),
+           'success': getBackgroundColor(0),
+           'progress': getBackgroundColor(1)}">
+          {{reportGenerationLabel}}
+        </div>
+        <div (click)="isReportGenerationLoader = false"
+             class="btn btn-light mt-4 w-50  float-right generation-report-close-btn">
+          {{"BUTTON.CLOSE" | translate}}
+        </div>
+      </div>
+    </rhis-pop-up>
+    <rhis-pop-up
+      (closeEvent)="showMailPopup = false"
+      [showPopUp]="showMailPopup"
+      [title]="mailReposTitle"
+      width="700" *ngIf="!displayRestoList"
+    >
+
+      <div class="container-fluid">
+        <div class="section-body">
+
+          <div class="row block-row-without-margin-rhis">
+            <div class="section-element w-100">
+              <label class="section-element-title w-100">{{"REPORT.SUBJECT" | translate}}</label>
+              <input type="text" class="text-field"
+                     [(ngModel)]="dataReport.mail.subject"
+              >
+            </div>
+          </div>
+          <div class="row block-row-without-margin-rhis">
+            <div class="section-element w-100 mt-3">
+              <label class="section-element-title w-100">{{"REPORT.TEXT" | translate}}</label>
+              <textarea class="mailText text-field"
+                        [(ngModel)]="dataReport.mail.text"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="sendMailSubmit()"
+                class="btn save-add-button-rhis orange-background btn-popup-rhis mt-4">
+          <span>{{"REPORT.ENVOI_BUTT" | translate|uppercase}}</span>
+        </button>
+      </div>
+    </rhis-pop-up>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="popupSelectContratOrAvenant = false"
+  [showPopUp]="popupSelectContratOrAvenant"
+  [width]="400"
+  [height]="400"
+  title="  {{'EMPLOYEE.LIST_CONTRAT' | translate}}"
+>
+  <div class="section-element w-100">
+    <p-listbox [listStyle]="{'max-height':'250px'}" [options]="listContratAndAvenant" [(ngModel)]="contrat"
+               (onClick)="onChange(contrat.uuid)" optionLabel="header"
+               [style]="{'width':'99%', 'box-shadow': 'none !important'}"></p-listbox>
+
+  </div>
+  <button type="button" (click)="validate()"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5">
+    <span>{{'BUTTON.VALIDATE' |translate}}</span>
+  </button>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-overlayPanel #icon_text_hover_tooltip
+                [dismissable]="true"
+                appendTo="body">
+  <div class="icon-hover-container">
+    <span>{{operationIconText}}</span>
+  </div>
+</p-overlayPanel>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+                          (submitDataEvent)="submit($event)" *ngIf="showPopup"
+                          [dropdownListData]="listRestoDestination" [optionLabel]="'libelleRestaurant'"
+                          [deleteRapport]="deleteRapport" [getSelectedRestaurant]="selectedRestaureant"
+                          [showPopUp]="showPopup" [submitButtonText]="submitButtonText" [ecraserMsg]="true" [rapportModule]="true">
+</rhis-pop-up-gestion-parc>

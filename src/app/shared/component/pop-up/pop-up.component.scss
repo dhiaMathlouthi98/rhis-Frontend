@@ -1,0 +1,38 @@
+.pop-up-container-rhis {
+  border-radius: 5px;
+  background-color: #FFFFFF;
+
+  h5.modal-title {
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 26px;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 2rem;
+    @media screen and (max-width: 1366px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  .content {
+    padding: 0 20px 5px 20px;
+    max-height: 415px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    @media screen and (max-width: 991px) {
+      max-width: 485px;
+    }
+  }
+
+  .modal-header {
+    border: none;
+  }
+}

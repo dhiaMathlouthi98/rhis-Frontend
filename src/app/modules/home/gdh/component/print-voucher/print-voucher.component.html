@@ -1,0 +1,37 @@
+<div class="rhis-container" style="margin: 0 auto;">
+  <div id="voucher">
+    <br>    
+    <br>
+  <div class="row flex-grid">
+    <div>{{actualTime}}</div>
+    <div>{{bonInfo?.employe}}</div>
+    <div>{{actualDate}}</div>
+  </div>
+  <hr>
+
+  <div class="row flex-grid-title">
+    <div class="bon-title">{{bonTitle}}</div>
+  </div>
+
+  <hr>
+
+  <div class="row flex-grid-content">
+    <div>{{"GDH.PRINT_BON.CODE_SALARIE" | translate}} :  {{bonInfo?.matricule}}</div>
+    <div>{{"GDH.PRINT_BON.TEXT1" | translate}}, {{bonInfo?.employe}} {{bonContent}} :</div>
+    <div>{{"GDH.PRINT_BON.DE" | translate}} {{bonInfo?.heureDebut | slice:0:5}}   {{"GDH.PRINT_BON.A" | translate}}  {{bonInfo?.heureFin | slice:0:5}} {{"GDH.PRINT_BON.LE" | translate}} {{bonInfo?.dateJournee | date: 'dd-MM-yyyy'}}</div>
+    <div>{{"GDH.PRINT_BON.TEXT3" | translate}} :  ---------------------------------</div>
+  </div>
+<hr>
+
+<div class="row flex-grid">
+  <div>{{"GDH.PRINT_BON.SIGNATURE" | translate}} :</div>
+  <div>{{"GDH.PRINT_BON.EQUIPIER" | translate}} </div>
+  <div>{{"GDH.PRINT_BON.MANAGER" | translate}}</div>
+</div>
+<div class="row flex-grid">
+  <div> ---------------- </div>
+  <div> ---------------- </div>
+  <div> --------------- </div>
+</div>
+</div>
+</div>

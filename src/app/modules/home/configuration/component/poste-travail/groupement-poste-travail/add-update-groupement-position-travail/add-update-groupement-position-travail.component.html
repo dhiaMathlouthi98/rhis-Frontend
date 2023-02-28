@@ -1,0 +1,86 @@
+<div class="rhis-container add-groupement">
+  <div class="section-element width-100" *ngIf="!updateAction">
+    <label class="section-element-title">
+      {{'GROUPEMENT_POST_TRAVAIL.POSITION_TRAVAIL'|translate}}
+    </label>
+    <p-dropdown [options]="positionTravailItemList"
+                [(ngModel)]="selectedPositionTravail"
+                (onChange)="getGroupementFromSelectecPositionTravail()"
+                editable="true"
+                appendTo="body"
+                class="drop-down-general"></p-dropdown>
+  </div>
+
+  <div class="section-element width-100" *ngIf="!updateAction && filtredPositionTravailItemList.length > 0">
+    <label class="section-element-title">
+      {{'GROUPEMENT_POST_TRAVAIL.LIST_GROUPEMENT'|translate}}
+    </label>
+    <p-dropdown [options]="filtredPositionTravailItemList"
+                [(ngModel)]="positionTravailToAdd"
+                editable="true"
+                appendTo="body"
+                class="drop-down-general"></p-dropdown>
+  </div>
+
+  <div class="mt-lg-1 mt-md-1" *ngIf="listeGroupement.length > 0 && updateAction">
+    <div class="section-element width-100">
+      <label class="section-element-title mb-3">
+        {{'GROUPEMENT_POST_TRAVAIL.POSITION_TRAVAIL'|translate}}
+      </label>
+      <div>{{selectedPositionTravail.libelle}}</div>
+    </div>
+    <div class="section-element width-100 mt-lg-5 mt-md-5">
+      <div class="section-element-title mb-3"> {{'GROUPEMENT_POST_TRAVAIL.LIST_GROUPEMENT'|translate}}</div>
+      <p-table [value]="listeGroupement" [responsive]="true">
+        <ng-template let-i="rowIndex" pTemplate="body" let-postTravail>
+          <tr class="table-row">
+            <td pEditableColumn>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="filtredPositionTravailItemList"
+                              (onChange)="updateGroupement($event,listeGroupement[i])"
+                              editable="true"
+                              appendTo="body"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  <div (click)="setRemainingGroupement(postTravail)">{{postTravail?.libelle}}</div>
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+                <span class="item"
+                      (click)="deleteGroupement(postTravail)">
+                  <img
+                    src="assets/icons/employe/Btn_Close.svg"
+                    alt="no image"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="row" *ngIf="!updateAction">
+    <div class="col-6">
+      <button (click)="saveChangesAndClose()" class="btn save-add-button-rhis orange-background btn-personalise-rhis"
+              type="button">
+        <span>{{'GROUPEMENT_POST_TRAVAIL.ADD_NEW' | translate | uppercase }}</span>
+      </button>
+    </div>
+    <div class="col-6">
+      <button type="button" (click)="saveChangesAndContinue()" class="btn save-add-button-rhis orange-background">
+        <span>{{'GROUPEMENT_POST_TRAVAIL.SAVE_AND_CONTINUE_BTN' | translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="updateAction">
+    <button (click)="saveUpdatesAndClose()" class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5 mb-4"
+            type="button">
+      <span>{{'GROUPEMENT_POST_TRAVAIL.UPDATE' | translate | uppercase}}</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+.btn-group {
+  margin: 10px;
+  @media screen and (max-width: 1366px) {
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 8px 11px;
+    line-height: 19px;
+    @media screen and (max-width: 1366px) {
+      padding: 8px;
+    }
+  }
+
+  .btn-light {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.btn-group .btn-light.active {
+  background-color: #F7F7F7;
+}

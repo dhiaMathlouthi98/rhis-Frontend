@@ -1,0 +1,56 @@
+<div class="shift-card position-card"
+     *ngIf="!shift.shiftAchevalHidden"
+     [ngStyle]="{
+     'background-color': !employee?.disableInactifEmployee ? shift?.positionTravail?.couleur : (employee?.disableInactifEmployee ? '' : null) ,
+     'color': colorTextShift,
+     'font-size': sizeShift
+     }"
+     [attr.data-idShift]="idShift"
+     [attr.data-cardDay]="cardDay"
+     [attr.data-EmpIndex]="cardEmpIndex"
+     [ngClass]="{'active-planning-fixe-card': employee?.disableInactifEmployee,'acheval-style-BI': shift?.acheval,
+     'acheval-fin-week': shift?.acheval , 'opened-menu': menuOpened}"
+     (dblclick)="edit(employee)">
+  <div class="dropdown" *ngIf="!employee?.isManagerOrLeader">
+    <a class="dropdown-toggle edit-link"
+       role="button"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       id="PLG-hebdo-Edit-Icon">
+      <i class="edit-icon"
+         [ngStyle]="{'background-image': imageEditIcon}"></i>
+    </a>
+    <div class="dropdown-menu"
+         [ngClass]="{'dropdown-left-position': days[days.length-1].column === cardDay &&
+          shift.shiftIndexInDay % 2 !== 0,
+          'dropdown-menu-opened': menuOpened,
+          'dropdown-menu-close': !menuOpened}">
+      <ng-container *ngIf="!employee?.disableInactifEmployee">
+        <a (click)="edit($event)" class="dropdown-item" *ngIf="updateButtonControl()"
+           id="PLG-fx-edit-shift">{{'SHIFT_FIXE.UPDATE' | translate}}</a>
+      </ng-container>
+      <a (click)="delete($event)" class="dropdown-item" *ngIf="deleteButtonControl()"
+         id="PLG-fx-delete-shift">{{'SHIFT_FIXE.DELETE' | translate}}</a>
+    </div>
+  </div>
+  <div class="hour-style" (mouseenter)="getTooltipPositionTop(shift) && getTooltipPositionRight(shift)">
+    {{shift?.heureDebut | date:'HH:mm'}} - {{shift?.heureFin | date:'HH:mm'}}
+    <rhis-infos-tooltip
+    [buttom]="buttom"
+    [top]="top" class="tooltip-style hebdo-tooltip"
+    [right]=getTooltipPositionRight(shift)
+    style="z-index: 99 !important;">
+    <div style="width: max-content; color: black;">
+      {{shift?.positionTravail?.libelle}}
+    </div>
+  </rhis-infos-tooltip>
+  </div>
+  <div class="title-poste-general">
+    <div *ngIf="shift?.acheval && shift?.modifiable" class="arrow-acheval-week">
+    </div>
+    <div *ngIf="shift?.acheval && !shift?.modifiable" class="arrow-acheval-week-not-modifiable">
+    </div>
+  </div>
+
+</div>

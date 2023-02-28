@@ -1,0 +1,73 @@
+.search {
+  height: 38px;
+  border-radius: 19px;
+  background-color: #FFFFFF;
+  float: left;
+  margin: 0 15px;
+  @media screen and (max-width: 1366px) {
+    margin: 0 5px 0 5px;
+  }
+
+  input {
+    height: inherit;
+    margin-left: 8px;
+    border: none;
+    background-color: transparent;
+    color: #AFA899;
+    font-family: "TT Wellingtons Light";
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    @media screen and (max-width: 1366px) {
+      font-size: 12px;
+      margin-left: 12px;
+    }
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  span {
+    margin-top: 5px;
+    margin-right: 8px;
+    cursor: pointer;
+    @media screen and (max-width: 1400px) {
+      margin-right: 9px;
+    }
+
+    img {
+      width: fit-content;
+      max-width: 18px;
+      @media screen and (max-width: 1400px) {
+        max-width: 16px;
+      }
+    }
+  }
+}
+
+.menu-closed {
+  width: 246px;
+  @media screen and (max-width: 1366px) {
+    width: 205px;
+  }
+
+  input {
+    width: 235px;
+    @media screen and (max-width: 1366px) {
+      width:175px;
+    }
+  }
+}
+
+.menu-open {
+  width: 146px;
+  @media screen and (max-width: 1366px) {
+    width: 105px;
+  }
+
+  input {
+    width: 112px;
+  }
+}
+

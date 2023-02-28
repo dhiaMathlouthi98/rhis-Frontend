@@ -1,0 +1,67 @@
+.rhis-container {
+  height: 503px;
+  width: 415px;
+  background-color: #FFFFFF;
+}
+
+.add-groupement {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.table-row {
+  font-family: "TT Wellingtons Medium", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  color: #9B9B9B;
+  background-color: #fff;
+  text-align: center;
+  &:hover {
+    background-color: #ededed;
+  }
+  td {
+    font-weight: 500;
+    line-height: 20px;
+    border: none !important;
+    padding: 12px 0 !important;
+    vertical-align: middle !important;
+
+    &:first-child {
+      border-radius: 8px 0 0 15px;
+    }
+
+    &:last-child {
+      border-radius: 0 8px 15px 0;
+    }
+  }
+
+  &:not(:first-child) {
+    td {
+      &:first-child {
+        border-radius: 15px 0 0 15px !important;
+      }
+
+      &:last-child {
+        border-radius: 0 15px 15px 0 !important;
+      }
+    }
+  }
+
+  td {
+    &:last-child {
+      padding-right: 34px !important;
+    }
+  }
+}
+
+.rhis-container.add-groupement {
+  height: 280px;
+  .section-element {
+    margin-left: 0;
+  }
+}
+
+.btn-personalise-rhis.save-add-button-rhis {
+  padding: 18px 18px 17px 18px;
+}

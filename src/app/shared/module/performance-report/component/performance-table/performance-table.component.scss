@@ -1,0 +1,65 @@
+.summary-section {
+  padding-left: 1%;
+  background-color: rgb(136, 156, 227);
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  height: 30px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  border-radius: 5px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.performance-section {
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 10% 90%;
+
+  .performance-section-title {
+    background-color: rgb(136, 156, 227);
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+  }
+
+  .performance-section-data {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    margin-left: 10px;
+
+    div {
+      padding-left: 2%;
+      border-bottom: 1px solid black;
+    }
+
+    .reel-data {
+      background-color: #889ce34a;
+    }
+  }
+}
+
+.year-data {
+  font-size: 13px;
+}
+
+.analyse-perf-font {
+   font-size: 12px;
+  @media screen and (max-width: 1300px) {
+    font-size: 11px;
+  }
+  .performance-section {
+    grid-template-columns: 7% 93%;
+  }
+
+  .performance-section .performance-section-data {
+    margin-left: 5px;
+  }
+}

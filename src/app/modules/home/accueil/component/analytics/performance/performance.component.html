@@ -1,0 +1,40 @@
+<div class="p-field p-col-12 header-container">
+  <div><p-calendar [(ngModel)]="selectedDate" dateFormat="D dd M yy" [showIcon]="true" [locale]="calendarSettings"
+                   (onSelect)="getPerformanceByTimeIntervall(displayIntervall)"
+                   id="navigators"></p-calendar></div>
+  <div class="btn-group">
+    <button type="button" (click)="getPerformanceByTimeIntervall(DISPLAY_WEEK)" class="btn btn-light"
+            [class.active]="displayIntervall === DISPLAY_WEEK">
+      {{'Acceuil.JOUR' | translate}}
+    </button>
+    <button type="button" (click)="getPerformanceByTimeIntervall(DISPLAY_MONTH)" class="btn btn-light"
+            [class.active]="displayIntervall === DISPLAY_MONTH">
+      {{'Acceuil.SEMAINE' | translate}}
+    </button>
+    <button type="button" (click)="getPerformanceByTimeIntervall(DISPLAY_YEAR)" class="btn btn-light"
+            [class.active]="displayIntervall === DISPLAY_YEAR">
+      {{'Acceuil.MOIS' | translate}}
+    </button>
+  </div>
+  <div class="title">{{'PERFORMANCES.PERF_TITLE' | translate}}</div>
+  <button [disabled]="loading" (click)="generateExcelOrCSVFile()" class="btn mini-btn"
+          id="GDH-xls-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_XLS.svg">
+              </span>
+  </button>
+</div>
+
+<p-progressSpinner id="spinner-to" *ngIf="loading" class="data-in-progress"></p-progressSpinner>
+<div *ngIf="!loading">
+<rhis-performance-table
+                        [header]="formattedDates"
+                        [filter]="displayIntervall"
+                        [performanceValues]="performanceValues"
+                        [tableTitle]="summaryPeriodDisplay"
+                        [spMode]="mode"
+                        [DISPLAY_YEAR]="'year'"
+                        [ecart]="ecart"
+                        [applyStyle]="true">
+</rhis-performance-table>
+</div>

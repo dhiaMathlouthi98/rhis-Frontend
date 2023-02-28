@@ -1,0 +1,19 @@
+<div class="rhis-container">
+  <div class="content">
+    <p-dropdown
+      [options]="positionTravailItemList"
+      [(ngModel)]="selectedPositionTravail"
+      editable="true"
+      [showClear]="true"
+      appendTo="body"
+      class="drop-down-general"
+      id="EMP_QUALI-dropbox">
+    </p-dropdown>
+    <button type="button" (click)="addNewQualification()"
+            class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+            id="EMP_QUALI-popup-btn">
+      <span>{{'BUTTON.ADD' | translate}}</span>
+    </button>
+  </div>
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

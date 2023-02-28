@@ -1,0 +1,12 @@
+.section-element.delete-mg-style-rhis {
+  margin-left: 0;
+}
+.btn{
+  cursor: pointer;
+}
+
+:host ::ng-deep {
+  .section-element .text-field {
+    margin-top: 0;
+  }
+}

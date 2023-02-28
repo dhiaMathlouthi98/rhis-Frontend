@@ -1,0 +1,55 @@
+<div [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-6">
+      <div class="section-element">
+        <label for="name" class="section-element-title">{{'TYPE_EVENT.TYPE' | translate}}</label>
+        <input type="text" id="name" class="text-field" rhisStyleForm [hasError]=" libelleHasError && isSubmitted"
+               formControlName="libelle">
+        <span class='red small-rhis'
+              *ngIf="!isNameUnique">{{'TYPE_EVENT.TYPE_UNIQUE' | translate}}</span>
+        <span class="red small-rhis"
+              *ngIf=" libelleHasError && isSubmitted">{{'TYPE_EVENT.TYPE_REQUIRED' | translate}}</span>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="section-element">
+        <label for="code" class="section-element-title">{{'TYPE_EVENT.CODE' | translate}}</label>
+        <input type="text" id="code" class="text-field" rhisStyleForm [hasError]="codeHasError && isSubmitted"
+               formControlName="code" maxlength="3">
+        <span class="red small-rhis"
+              *ngIf="codeHasError && isSubmitted">{{'TYPE_EVENT.CODE_REQUIRED' | translate}}</span>
+      </div>
+    </div>
+    <div class="col-6 mt-3">
+      <div class="section-element">
+        <label for="copdepaye" class="section-element-title">{{'TYPE_EVENT.CODE_PAYE' | translate}}</label>
+        <input type="text" id="copdepaye" class="text-field" formControlName="codePaye">
+      </div>
+    </div>
+    <div class="col-6 mt-3">
+      <div class="section-element">
+        <label for="codegdh" class="section-element-title">{{'TYPE_EVENT.CODE_GDH' | translate}}</label>
+        <input type="text" id="codegdh" class="text-field" rhisStyleForm [hasError]="codeGDHHasError&& isSubmitted"
+               formControlName="codeGdh" maxlength="3">
+        <span class="red small-rhis"
+              *ngIf="codeGDHHasError&& isSubmitted">{{'TYPE_EVENT.CODE_GDH_REQUIRED' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4 mt-4">
+    <p-checkbox binary="true" class="col-3" formControlName="payer"
+                label="{{'TYPE_EVENT.PAYE' | translate}}"></p-checkbox>
+    <p-checkbox binary="true" class="col-3"
+                formControlName="travaille"
+                label="{{'TYPE_EVENT.TRAVAILLE' | translate}}"></p-checkbox>
+    <p-checkbox binary="true" class="col-3"
+                formControlName="previsible"
+                label="{{'TYPE_EVENT.PREVISIBLE' | translate}}"></p-checkbox>
+    <p-checkbox binary="true" class="col-3"
+                formControlName="valorise"
+                label="{{'TYPE_EVENT.VALORISER' | translate}}"></p-checkbox>
+  </div>
+  <button (click)="onSubmit()" class="btn save-add-button-rhis btn-popup-rhis orange-background mt-4" type="button">
+    <span>{{buttonLabel | uppercase}}</span>
+  </button>
+</div>

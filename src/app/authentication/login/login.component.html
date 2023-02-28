@@ -1,0 +1,120 @@
+<div class="container-fluid h-100">
+  <div class="language-filter mt-3 mr-5">
+    <div class="d-flex justify-content-end">
+      <span (click)="isOpen = !isOpen" class="language">{{language?.label}}</span>
+      <span (click)="isOpen = !isOpen" *ngIf="!isOpen" class="ml-1"><i class="pi pi-globe mt-0 arrow"></i></span>
+      <span (click)="isOpen = !isOpen" *ngIf="isOpen" class="ml-1"><i class="pi pi-globe mt-0 arrow"></i></span>
+    </div>
+    <div *ngIf="isOpen">
+      <p-listbox (onChange)="onChange(language)"
+                 [(ngModel)]="language"
+                 [options]="languages"
+                 optionLabel="label">
+      </p-listbox>
+    </div>
+  </div>
+  <div class="all-auth-rhis">
+    <div class="backgroud-auth-rhis">
+      <div class="container-auth-rhis">
+        <div class="header-auth-rhis">
+          <img src="assets/icons/accueil/Logo/Logo_MyRHIS_big.svg" alt="">
+        </div>
+        <form name="form" [formGroup]="loginForm">
+          <span *ngIf="blockDelai>0" class="form-item-error red small-rhis m1-1"
+                id="AUTH-userBlocked">
+            {{"LOGIN.USER_BLOCKED" | translate}} {{blockDelai}} {{"LOGIN.MINUTES" | translate}}
+          </span>
+          <div class="form-group">
+            <label class="section-element-title" for="AUTH-email">
+              {{"LOGIN.EMAIL" | translate}} *
+            </label>
+            <input class="form-control text-field"
+                   id="AUTH-email"
+                   pInputText
+                   required="true"
+                   type="email"
+                   formControlName="email"/>
+            <span *ngIf="(loginForm.get('email').hasError('required')) && isSubmitted"
+                  class="form-item-error red small-rhis"
+                  id="AUTH-email-error">
+                {{"LOGIN.emailError" | translate}}
+            </span>
+          </div>
+          <div class="form-group form-group-without-margin">
+            <label class="section-element-title" for="AUTH-pwd">
+              {{"LOGIN.PASSWORD" | translate}} *
+            </label>
+            <input class="form-control text-field"
+                   id="AUTH-pwd"
+                   pInputText
+                   required="true"
+                   type="password"
+                   formControlName="password"/>
+            <span *ngIf="(loginForm.get('password').hasError('required')) && isSubmitted"
+                  class="form-item-error red small-rhis"
+                  id="AUTH-pwd-error">
+                {{"LOGIN.passwordError" | translate}}
+            </span>
+          </div>
+          <span class="form-item-error red small-rhis ml-1"
+                *ngIf="badCredential"
+                id="AUTH-pwd-credential-error">
+            {{"LOGIN.BAD_CREDENTIAL" | translate}}
+          </span>
+
+          <div class="auth-pwd-rhis">
+            <span (click)="showMailPopup()"
+                  class="section-element-title under-auth-rhis"
+                  id="AUTH-pwd-forgot">
+              {{"LOGIN.FORGOT_PWD" | translate}}
+            </span>
+          </div>
+          <div class="form-group d-flex mt-5 w-100 flex-row-reverse">
+            <button (click)="onLogin()"
+                    class="btn btn-connexion-auth-rhis blue-background"
+                    id="AUTH-connexion-btn">
+              {{"LOGIN.CONNECTION" | translate}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<rhis-pop-up (closeEvent)="closePopup()"
+             [showPopUp]="showEmailPopup"
+             [title]=showEmailPopupTitle>
+  <div class="section-element w-100 block-forgot-pwd-rhis">
+    <div class="form-group">
+      <label class="section-element-title"
+             for="AUTH-resaisi-email">
+        {{"LOGIN.MAIL_MSG" | translate}}
+      </label>
+      <input [(ngModel)]="email"
+             class="form-control text-field"
+             id="AUTH-resaisi-email"
+             pInputText required="true"
+             type="email"
+             pInputText
+             required="true">
+      <span class="form-item-error red small-rhis ml-1"
+            *ngIf="emptyMail"
+            id="AUTH-empty-mail">
+        {{"LOGIN.emailError" | translate}}
+      </span>
+      <span class="form-item-error red small-rhis ml-1"
+            *ngIf="validEmail">
+            {{"USER.EMAIL_ERROR"  | translate}}
+      </span>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center row w-100 ml-auto mr-auto block-btn-forgot-pwd-rhis">
+    <button  (click)="motDePasseOublie()"
+            class="btn save-add-button-rhis blue-background"
+            id="AUTH-change-pwd-btn">
+      {{"LOGIN.CHANGE_PASSWORD" | translate}}
+    </button>
+  </div>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

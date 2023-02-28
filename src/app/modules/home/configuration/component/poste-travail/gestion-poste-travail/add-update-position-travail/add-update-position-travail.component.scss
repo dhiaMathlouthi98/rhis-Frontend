@@ -1,0 +1,26 @@
+.position-travail-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.input-switch-h{
+  height: 25px;
+}
+
+:host ::ng-deep {
+  .du {
+    width: 100%;
+  }
+}
+
+.color-style-modify-position {
+  label {
+    width: 100%;
+  }
+
+  input {
+    width: 60%;
+    height: 50px;
+  }
+}

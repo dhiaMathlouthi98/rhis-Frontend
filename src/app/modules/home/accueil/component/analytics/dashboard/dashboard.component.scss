@@ -1,0 +1,98 @@
+@import '../../../../../../../assets/file_import/color';
+
+.home-page {
+  margin-bottom: 50px;
+
+  .block-flex-commun-rhis {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  .chifre-affaire {
+    border-radius: 5px;
+    background-color: #FF9B42;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    padding: 20px;
+    height: 244px;
+    @media screen and (max-width: 1366px) {
+      padding: 10px 20px;
+      height: 207px;
+    }
+    @media screen and (max-width: 1024px) {
+      padding: 10px;
+      height: 200px;
+    }
+  }
+
+  .evolution-productivite {
+    background-color: #FFFFFF;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    border-radius: 5px;
+    padding: 20px;
+    height: 244px;
+    @media screen and (max-width: 1366px) {
+      height: 207px;
+      padding: 10px 20px;
+    }
+    @media screen and (max-width: 1024px) {
+      padding: 10px;
+      height: 200px;
+    }
+  }
+
+  .anomalie-social {
+    padding: 20px 10px 0 20px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    height: 244px;
+    position: relative;
+    @media screen and (max-width: 1366px) {
+      height: 207px;
+      padding: 10px 10px 0 10px;
+    }
+    @media screen and (max-width: 1024px) {
+      height: 200px;
+    }
+  }
+
+  .indicateur-employee-contrat {
+    margin-right: 2%;
+    border-radius: 5px;
+    height: 201px;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+  }
+
+  .turn-over-main-oeuvre-moyen {
+    border-radius: 5px;
+    height: 201px;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+  }
+
+  .prod-main-oeuvre {
+    border-radius: 5px;
+    height: 201px;
+    margin-right: 2%;
+    position: relative;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+  }
+
+  .second-line-block {margin-bottom: 4%}
+
+  .block-left-flex-commun-rhis {
+    width: 53%;
+  }
+
+  .block-right-flex-commun-rhis {
+    width: 47%;
+    height: 201px;
+  }
+
+}

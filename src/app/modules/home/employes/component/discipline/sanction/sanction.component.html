@@ -1,0 +1,15 @@
+<div class="td-container d-flex flex-column justify-content-center">
+              <span
+                (mouseenter)="faisReprochesIsShown = true"
+                (mouseleave)="faisReprochesIsShown = false">
+                {{sanction?.libelle}}
+              </span>
+</div>
+<div>
+  <rhis-infos-tooltip
+    [top]="tooltipStyle?.top"
+    [right]="tooltipStyle?.right"
+    *ngIf="faisReprochesIsShown">
+      {{faisReproches}}
+  </rhis-infos-tooltip>
+</div>

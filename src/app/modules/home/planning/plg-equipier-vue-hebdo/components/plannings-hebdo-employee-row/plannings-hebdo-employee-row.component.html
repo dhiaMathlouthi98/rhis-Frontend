@@ -1,0 +1,152 @@
+<td class="employeeCell" (dblclick)="showConfirmDesaffecterEmployee(employee)" (click)="selectRow($event,employee)">
+
+
+  <div class="employee-hebdo-draggable" [ngClass]="{'fake-employe-style': employee?.idEmployee === 0}"
+  [attr.data-empIndex]="empIndex">
+    <ng-container *ngIf="employee">
+      <div class="empName" [ngClass]="{'manager-leader-style': employee?.isManagerOrLeader}">{{employee?.nom}} {{employee?.prenom}}</div>
+      <div class="contract">
+        <span *ngIf="isContractTimeReached()" class="contract-icon-y"></span>
+        <span *ngIf="!isContractTimeReached()" class="contract-icon-x"></span>
+        <span class="hebdo-contrat-rhis">{{"PLANNING_EQUIPIER.HEURE_SEMAINE" | translate | uppercase}} : {{employee?.totalRowTime}}
+          /{{employee?.hebdoCourant}}</span>
+      </div>
+    </ng-container>
+
+    <ng-container  *ngIf="employee?.contrats?.length ===0 && employee?.idEmployee !== 0">
+      <div *ngIf="activLoader" class="spinner-border text-secondary">
+      </div>
+
+      <p-dropdown (onShow)="getNewEmployees(0, employee)" [(ngModel)]="selectedEmployee"
+        [options]="newEmployeesToDisplay" [group]="true" [emptyFilterMessage]="employeNotFound"
+        [autoWidth]="false" [style]="{'height': '20px'}" filter="true" (onChange)="selectEmployee()"
+        id="PLG_hebdo-employee-list" placeholder="{{'EMPLOYEE.EMPLOYEE_DISPONIBLE' | translate}}" scrollHeight="140px"
+         class="drop-down-general hebdo">
+        <ng-template let-group pTemplate="group">
+          <span [ngClass]="{'hide-groupe-propose': !group.label || group.label == 'empty'}" class="group-propose">
+            {{group?.label}}
+          </span>
+        </ng-template>
+      </p-dropdown>
+    </ng-container>
+  </div>
+</td>
+<td *ngFor="let day of days; let  dayIndex=index" [attr.data-day]="day?.val"
+    class="td-drop-zone">
+  <div *ngFor="let shift of shiftByEmployee">
+    <ng-container *ngIf="shift.jour === (day.val | uppercase)">
+      <rhis-planning-hebdo-shift-card *ngIf="shift.jour === (day.val | uppercase)"
+        [shift]="shift"
+        [employee]="employee"
+        [idShift]="shift.idShift"
+        [cardDay]="day.val"
+        [cardID]="'card-'+dayIndex+'-'+i"
+        [cardEmpIndex]="empIndex"
+        (editCardShift)="showEditShiftCardForm($event)"
+        (deleteCardShift)="deleteShiftCard(shift.idShift)"
+                                      [days]="days">
+      </rhis-planning-hebdo-shift-card>
+
+    </ng-container>
+  </div>
+  <span *ngIf="(!employee?.disableInactifEmployee) && this.addButtonControl() && !employee?.isManagerOrLeader" class="icon-add"
+        (click)="showAddCardForm(employee, day.val)"
+        id="PLG-hebdo-add-icon"></span>
+</td>
+
+<rhis-pop-up (closeEvent)="closePopup($event)"
+             [showPopUp]="showPopUp" [title]="titlePopup" [width]="popUpStyle?.width">
+  <div class="section-body mt-0">
+    <div class="row">
+      <div class="section-element col-md-12">
+        <div>
+          <span class="text-danger text-center" *ngIf="messageConfonduShift"
+            id="PLG-hebdo-posTrError-list">{{messageConfonduShift}}</span>
+        </div>
+        <label class="section-element-title" for="PLG-hebdo-posTr-list">
+          {{"PLANNING_EQUIPIER.FIELD_EMPLOYE" | translate}}
+        </label>
+        <div *ngIf="!loadEditOrAdd ;else loaderTemplate">
+        <div *ngIf="!idShiftUpdate ">
+          <p-dropdown [autoDisplayFirst]="false"
+                      [(ngModel)]="selectedEmployee"
+                      [options]="listEmployeeForAdd"
+                      appendTo="body"
+                      class="drop-down-general"
+                      id="PLG-hebdo-employee-popup"
+                      (onChange)="selectedEmployeeChange(selectedEmployee?.idEmployee)"
+                      optionLabel="fullName">
+          </p-dropdown>
+        </div>
+        <div *ngIf="idShiftUpdate" class="hebdo_shift--modify">
+          <p-dropdown  [group]="true"
+                      [options]="newEmployeesToDisplay"
+                       [(ngModel)]="idSelectedEmployee"
+                      placeholder="{{selectedEmployeeName}}"
+                      class="update-list-dropdown"
+                      (onChange)="selectedEmployeeChange(idSelectedEmployee)">
+            <ng-template let-group pTemplate="group">
+              <span [ngClass]="{'hide-groupe-propose': !group.label || group.label == 'empty'}" class="group-propose"
+                    style="margin-left:.25em">{{group.label}}</span>
+            </ng-template>
+
+          </p-dropdown>
+
+        </div>
+        </div>
+        <ng-template #loaderTemplate>
+          <div class="spinner-border text-secondary">
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="section-element col-md-12 mt-3">
+        <label class="section-element-title" for="PLG-hebdo-posTr-list">
+          {{"PLANNING_EQUIPIER.FIELD_LIBELLE" | translate}} *
+        </label>
+
+        <p-dropdown [options]="listePositionTravail" [(ngModel)]="selectedPosition" optionLabel="libelle"
+          [autoDisplayFirst]="false" name="selectedPosition" id="PLG-hebdo-posTr-list" class="drop-down-general"
+          appendTo="body">
+
+        </p-dropdown>
+        <span class="form-item-error red small-rhis"
+              *ngIf="positionTravailRequiredField"
+              id="PLG-Eq-posTrError-popup-vue-hebdo">
+        {{"PLANNING_EQUIPIER.REQUIRED" | translate}}
+      </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{"PLANNING_EQUIPIER.FIELD_HEURE_DEB" | translate}} *</label>
+        <p-calendar (onClose)="validerHeureNuit(true)" [(ngModel)]="newShift.heureDebut"
+          [disabled]="verificationNightIsRaised" [timeOnly]="true" appendTo="body" id="PLG-hebdo-hD-popup"></p-calendar>
+        <span class="text-danger text-center" *ngIf="heureDebutRequiredField"
+          id="PLG-hebdo-hDError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center" *ngIf="heureDebutLimitError"
+          id="PLG-hebdo-hDLimiteError-popup">{{heureDebutLimitErrorMessage}}</span>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{"PLANNING_EQUIPIER.FIELD_HEURE_FIN" | translate}} *</label>
+        <p-calendar (onClose)="validerHeureNuit(false)" [(ngModel)]="newShift.heureFin"
+          [disabled]="verificationNightIsRaised" [timeOnly]="true" appendTo="body" id="PLG-hebdo-hF-popup"></p-calendar>
+        <span class="text-danger text-center" *ngIf="heureFinRequiredField"
+          id="PLG-hebdo-hFError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center" *ngIf="heureFinLimitError"
+          id="PLG-fx-hFLimiteError-popup">{{heureFinLimitErrorMessage}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="errorHourMessage != '' || errorDateMessage != ''" class="row col-md-12 text-danger text-center"
+        id="PLG-hebdo-addCheckboxError-popup">
+        {{errorHourMessage}} <br>{{errorDateMessage}}
+      </div>
+    </div>
+    <button (click)="saveCard()" class="btn add-button-shift-rhis mt-4 orange-background valid"
+      id="PLG-hebdo-saveCard-popup">
+      <span>{{buttonLabel|uppercase}}</span>
+    </button>
+  </div>
+</rhis-pop-up>

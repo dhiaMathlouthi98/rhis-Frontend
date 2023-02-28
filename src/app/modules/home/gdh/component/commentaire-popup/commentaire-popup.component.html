@@ -1,0 +1,27 @@
+<div [ngClass]="{'filter': openedAlertes}" (click)="hideAlertes()">
+  <div class="comment-container">
+    <div class="triangle"></div>
+    <div class="main" (click)="$event.stopPropagation()">
+      <div class="mb-3 d-flex justify-content-between">
+        <h5 class="comment-title">{{"GDH.COMMENT_TITLE" | translate}} {{localeFormattedDate}}</h5>
+        <div (click)="hideAlertes()" class="close-icon"
+             id="GDH-saveNote-hideAlerte-popup">
+          <img src="assets/icons/gdh/Btn_Close.svg" alt=""/>
+        </div>
+      </div>
+      <div class="mb-1">
+        <textarea [(ngModel)]="note" class="gdh-alertes-textarea form-control scroll"
+                  id="GDH-saveNote-textArea-popup"
+                  rows="3">
+        </textarea>
+      </div>
+      <div class="d-flex justify-content-around">
+        <button (click)="saveNote()" type="button"
+                class="btn save-add-button-rhis blue-background"
+                id="GDH-saveNote-btn">
+          <span>{{"GDH.DAY_VEIW.POPUP.BUTTON_VALIDER" | translate | uppercase}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

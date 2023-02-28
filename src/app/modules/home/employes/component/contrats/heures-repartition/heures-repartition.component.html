@@ -1,0 +1,67 @@
+<div>
+  <div class="view-section section-top">
+    <div class="view-section-title">{{'CONTRAT.HEURE_REPARTITION' | translate}}
+    </div>
+    <div class="section-body">
+      <div class="rhis-row row heure-repart-rhis block-row-without-margin-rhis mb-4">
+        <div class="section-element checkbox-section tri">
+          <div class="section-element-title">{{'CONTRAT.STATUT' | translate}}*</div>
+          <p-checkbox name="Temps plein" label="{{'CONTRAT.TEMPS_PARTIEL' | translate}}" [binary]="true"
+                      [(ngModel)]="tempsPartiel" (onChange)="onSelectTempsPartiel()"
+                      (ngModelChange)="onSelectTempsPartiel()"
+                      id="EMP_Contrat-TpartielSelect"></p-checkbox>
+          <p-checkbox name="Temps partiel" label="{{'CONTRAT.TEMPS_PLEIN' | translate}}" [binary]="true"
+                      (onChange)="onSelectTempsPlein()" [(ngModel)]="tempsPlein"
+                      id="EMP_Contrat-TpleinSelect"></p-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field-set">
+    <rhis-contrat-fieldset-nb-heure
+      [sections]="nbrHeuresSections"
+      [title]="nbrHeuresTitle"
+      [repartitionTime]="repartitionTime"
+      [repartitionTimeDefault]="repartitionTimeDefault"
+      [nbrHeuresSections]="nbrHeuresSections"
+      (updateTempsPartiel)="updateTempsPartiel($event)"
+      [tempsPartiel]="tempsPartiel"
+      [tempsPlein]="tempsPlein"
+      [txHoraireGroupeTravail]="txHoraireGroupeTravail"
+      [contratId]="contratId"
+      [contratUpdateId]="contratUpdateId"
+      [avenantId]="avenantId"
+      [avenantUpdateId]="avenantUpdateId"
+      [complContrat]="complContrat"
+      (fieldsetValue)="sendNbHeure($event)"
+      (confirmUpdateHeureHebdosetValue)="confirmUpdateHeureHebdo($event)"
+      [setValueContrat]="setValueContrat"
+      [dateConstraints]="dateConstraints"
+      [arrondiContratMensuel]="arrondiContratMensuel"
+      [paramMonthWeek]="paramMonthWeek"
+      [prefixId]="prefixId"
+    ></rhis-contrat-fieldset-nb-heure>
+  </div>
+  <div class="field-set">
+    <rhis-contrat-fieldset-total-hebdo
+      [istotalHeuresEquals]="istotalHeuresEquals"
+      [ouvre]="ouvre"
+      [ouvrable]="ouvrable"
+      [sections]="RepartitionSections"
+      [title]="totalHebdoTitle"
+      [contratId]="contratId"
+      [contratUpdateId]="contratUpdateId"
+      [avenantId]="avenantId"
+      [avenantUpdateId]="avenantUpdateId"
+      [repartitionTime]="repartitionTime"
+      [repartitionTimeDefault]="repartitionTimeDefault"
+      [RepartitionSections]="RepartitionSections"
+      (calculTotalHebdo)="calculeTotalHebdo($event)"
+      (confirmUpdateRepartitionsetValue)="confirmUpdateRepartition($event)"
+      (fieldsetValue)="sendTotalHebdo($event)"
+      [isTotalHebdo]="true"
+      [setValueContrat]="setValueContrat"
+      [prefixId]="prefixId"
+    ></rhis-contrat-fieldset-total-hebdo>
+  </div>
+</div>

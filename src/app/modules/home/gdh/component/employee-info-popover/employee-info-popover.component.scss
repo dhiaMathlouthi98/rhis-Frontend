@@ -1,0 +1,22 @@
+.popover-style {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+  align-content: stretch;
+}
+
+.link-style {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+  text-decoration: underline;
+}
+
+.voir-plus-employee-info {
+  cursor: pointer;
+}

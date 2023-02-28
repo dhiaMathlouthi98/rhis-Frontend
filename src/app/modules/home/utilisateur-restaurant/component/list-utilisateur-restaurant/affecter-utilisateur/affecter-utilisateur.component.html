@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <form [formGroup]="utilisateurAffectationform">
+
+
+    <div class="col-md-12 ">
+      <label for="users">{{'USER.EMPLOYE'|translate}}</label>
+      <p-dropdown id="users"
+                  rhisStyleForm
+                  [options]="ListNotAssocietedEmployes"
+                  [autoDisplayFirst]="false"
+                  optionLabel="fullName"
+                  required="true"
+                  appendTo="body"
+                  formControlName="employe">
+
+      </p-dropdown>
+      <br>
+      <span class="form-item-error red small-rhis position-absolute ml-1"
+            *ngIf="(utilisateurAffectationform.get('employe').hasError('required')) && isSubmitted">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+
+    <br>
+    <div class="col-md-12">
+      <label for="profils">{{'PROFIL.NOM'|translate}}</label>
+      <p-dropdown id="profils"
+                  rhisStyleForm
+                  [scrollHeight]="10"
+                  [options]="listProfil"
+                  optionLabel="libelle"
+                  [autoDisplayFirst]="false"
+                  required="true"
+                  appendTo="body"
+                  formControlName="profil">
+      </p-dropdown>
+      <br>
+      <span class="form-item-error red small-rhis position-absolute ml-1"
+            *ngIf="(utilisateurAffectationform.get('profil').hasError('required')) && isSubmitted">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+<br>
+    <div class="col-md-12">
+      <label for="langues">
+        {{"USER.DEFAULT_LANGUAGE" | translate}}
+      </label>
+      <p-dropdown id="langues"
+                  [(ngModel)]="languagedropdown"
+                  [options]="languages"
+                  [placeholder]=language.label
+                  formControlName="langue"
+                  appendTo="body">
+      </p-dropdown>
+      <br>
+      <span class="form-item-error red small-rhis position-absolute ml-1"
+            *ngIf="(utilisateurAffectationform.get('profil').hasError('required')) && isSubmitted">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+
+  </form>
+</div>
+
+<div class="add-button orange-background mt-4" (click)="affecterUser()">
+  <span>{{'USER.ADD_NEW_ONE'|translate}}</span>
+</div>

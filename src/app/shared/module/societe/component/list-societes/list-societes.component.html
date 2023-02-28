@@ -1,0 +1,100 @@
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="190"
+       class="header  row justify-content-between">
+    <div class="col-4 titre">
+      <h1 class="titre-principale-page-rhis">{{"SOCIETE.ALL" | translate}}
+        <span class="nbr d-flex flex-column justify-content-around text-center">{{nbrSocietes}}</span>
+      </h1>
+    </div>
+    <div class="float-right">
+      <button id="1004" type="button" class="btn save-add-button-rhis blue-background"
+              [routerLink]="rhisRouter.getRoute('NEW_COMPANY')">
+        <span>{{"SOCIETE.BTN_CREATE" | translate}}</span>
+      </button>
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder="{{'RESTAURANT.SEARCH_PLACEHOLDER' | translate}}">
+        <span (click)="searchSocietes()">
+        <img src="assets/icons/employe/ico_search_small.svg" alt="">
+      </span>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive mt-4">
+    <div class="table-list responsive-table-rhis" *ngIf="listSocietes?.length">
+      <p-table [columns]="header"
+               [value]="listSocietes"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onSort)="sortRows($event)"
+               [resetPageOnSort]="false"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let col of columns" [pSortableColumn]="(col?.field != 'telephone') ? col?.field : null">
+              {{col?.title}}
+              <p-sortIcon *ngIf="col?.field != 'telephone'" [field]="col?.field"
+                          ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-societe let-i="rowIndex">
+          <tr class="table-row" (click)="showDetails($event, societe)">
+            <td>{{societe?.societeName}}</td>
+            <td>{{societe?.franchise}}</td>
+            <td>{{societe?.telephone1}}</td>
+            <td>
+              <div id="1002" class="d-flex justify-content-end">
+                <div *ngIf="detailsControl()" class="mr-3">
+                  <rhis-actions-societe
+                    [societeName]="societe?.societeName"
+                    [societeUuid]="societe?.uuid"
+                    [listRestaurants]=" selectedSocieteForRestaurantsPopUp === (societe?.idSociete) ? restaurantsNames : null"
+                    (getRestaurants)="getRestaurantName(societe)"
+                    [index]="i"
+                    [totalElement]="listSocietes?.length"
+                    [numberElementPerPage]=numberElementPerPage>
+                  </rhis-actions-societe>
+                </div>
+
+
+                <div class="mr-4">
+                    <span *ngIf="deleteButtonControl()"
+                          (click)="showConfirmDelete(societe?.uuid); $event.stopPropagation()" class="item">
+                      <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+                    </span>
+                </div>
+                <div>
+                  </div>
+
+                  <div>
+                    <span (click)=" navigateToRestaurantCreation(societe?.uuid); $event.stopPropagation()"
+                          class="item">
+                      <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+                    </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

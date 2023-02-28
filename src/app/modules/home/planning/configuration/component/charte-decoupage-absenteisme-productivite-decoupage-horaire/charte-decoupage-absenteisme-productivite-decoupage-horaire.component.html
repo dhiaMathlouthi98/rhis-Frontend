@@ -1,0 +1,57 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="100">
+</div>
+<div [ngStyle]="{'height': heightInterface}"
+     class="rhis-container scroll-content-rhis">
+  <p-accordion>
+    <p-accordionTab  [selected]="true" (selectedChange)="setSelectedTab('decoupage')"
+                    header="{{'MENU.RESTAURANT.SUB_MENU.DECOUPAGE_HORAIRE' | translate}}">
+      <div *ngIf="selectedTab === 'decoupage'">
+        <rhis-decoupage-horaire
+          [initListeJours]="collumns"
+          [initPremierJourSemaine]="firstDayAsInteger">
+        </rhis-decoupage-horaire>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab (selectedChange)="setSelectedTab('productivite')"
+                    header="{{'PRODUCTIVITE.LABEL' | translate}}">
+      <div *ngIf="selectedTab === 'productivite'">
+        <rhis-gestion-productivite
+          [initListeJours]="collumns"
+          [initPremierJourSemaine]="firstDayAsInteger"></rhis-gestion-productivite>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab (selectedChange)="setSelectedTab('absenteisme')"
+                    header="{{'ABSENTEISME.LABEL' | translate}}">
+      <div *ngIf="selectedTab === 'absenteisme'">
+        <rhis-gestion-absenteisme
+          [initListeJours]="collumns"
+          [initPremierJourSemaine]="firstDayAsInteger">
+        </rhis-gestion-absenteisme>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab (selectedChange)="setSelectedTab('charteDecoupage')"
+                    header="{{'SOUSMENU.RESTAURANT_CHARTE_DECOUPAGE' | translate}}">
+      <div *ngIf="selectedTab === 'charteDecoupage'">
+        <rhis-charte-decoupage
+          [initListeJours]="collumns"
+          [initPremierJourSemaine]="firstDayAsInteger"></rhis-charte-decoupage>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab (selectedChange)="setSelectedTab('modeVente')"
+                    header="{{'MENU.RESTAURANT.SUB_MENU.MODE_VENTE_PHASE' | translate}}">
+      <div *ngIf="selectedTab === 'modeVente'">
+        <rhis--mode-vente-par-phase
+          [initListeJours]="collumns"
+          [initPremierJourSemaine]="firstDayAsInteger"></rhis--mode-vente-par-phase>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

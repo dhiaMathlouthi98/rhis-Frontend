@@ -1,0 +1,70 @@
+@import '../../../../../../assets/file_import/table-style-commun';
+
+.rhis-container {
+  width: 100%;
+  height: 100%;
+
+  img {
+    cursor: pointer;
+  }
+
+  .status-select {
+    height: fit-content;
+    position: relative;
+
+    i {
+      font-size: 0.65rem;
+    }
+
+    div {
+      position: absolute;
+      top: 25px;
+      z-index: 1;
+      left: 0;
+      width: 100px;
+    }
+  }
+
+}
+
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+.status-select {
+  height: fit-content;
+  position: relative;
+  cursor: pointer;
+
+  i {
+    font-size: 0.65rem;
+  }
+
+  div {
+    position: absolute;
+    top: 25px;
+    z-index: 1;
+    right: 138px;
+  }
+}
+
+:host ::ng-deep {
+  .table-list {
+    @include nbre-ligne-page();
+  }
+
+  .ui-table-scrollable-header {
+    overflow: initial;
+  }
+
+  .ui-listbox .ui-listbox-list .ui-listbox-item {
+    text-align: left;
+  }
+}

@@ -1,0 +1,34 @@
+<div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+  <div class="table-list responsive-table-rhis" [ngClass]="{'table-specific-style': verifySuperVisor()}" *ngIf="listRestaurantCopy?.length">
+    <p-table [columns]="header"
+             [value]="listRestaurant"
+             [lazy]="true"
+             [scrollable]="true">
+      <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <th>
+            {{'RESTAURANT.NAME' | translate}}
+          </th>
+          <th *ngIf="!verifySuperVisor()">
+            {{'RESTAURANT.SOCIETE' | translate}}
+          </th>
+          <th>
+            <div class="search" [ngClass]="{'table-specific-style': !verifySuperVisor()}">
+              <input [formControl]="searchField" [ngClass]="{'table-specific-style': !verifySuperVisor()}" id="card-table-search-input" placeholder={{searchByName}} type="text">
+              <span (click)="searchRestaurant()" id="card-table-search-click">
+                <img alt="" src="assets/icons/employe/ico_search_small.svg">
+              </span>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-restaurant let-i="rowIndex">
+        <tr class="table-row" (click)="changeRestaurant(restaurant)">
+          <td>{{restaurant?.libelle}}</td>
+          <td *ngIf="!verifySuperVisor()">{{restaurant?.societe?.societeName}}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

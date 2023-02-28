@@ -1,0 +1,105 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="120">
+</div>
+<div [ngStyle]="{'height': heightInterface}" class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"GESTION_BADGE.TITLE" | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list">
+      <p-table [value]="listBadge" [responsive]="true"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true"
+               [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <ng-container *ngIf="listBadge?.length">
+              <th class="text-center" width="10%">{{'GESTION_BADGE.NUM_BADGE' | translate}}</th>
+              <th class="text-center" width="10%">
+                <ng-container>
+                  <div class="status-select">
+                    <span>{{'GESTION_BADGE.STATUT' | translate}}</span>
+                    <i class="pi pi-fw pi-sort-down" (click)="statusAreShown = !statusAreShown"></i>
+                    <div *ngIf="statusAreShown" (rhisClickOutsideTooltip)="statusAreShown = false">
+                      <p-listbox [options]="badgeStatusItem" optionLabel="label"
+                                 (onChange)="OnChangeBadgeStatus($event)"></p-listbox>
+                    </div>
+                  </div>
+                </ng-container>
+              </th>
+              <th class="text-center" width="15%">{{'GESTION_BADGE.EMPL' | translate}}</th>
+              <th class="text-center" width="15%">{{'GESTION_BADGE.DATE_DISPO' | translate}}</th>
+              <th class="text-center" width="50%">{{'GESTION_BADGE.COMMENTAIRE' | translate}}</th>
+            </ng-container>
+            <th width="10%">
+              <button *ngIf="addButtonControl()" type="button"
+                      class="btn save-add-button-rhis button-add-intable-rhis orange-background"
+                      (click)="openAddBadgePopup()">
+                <span>{{'GESTION_BADGE.ADD_BADGE_BUTTON' | translate}}</span>
+              </button>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-badge>
+          <tr class="table-row" (click)="openModal(badge)">
+            <td width="10%">
+              {{badge?.code}}
+            </td>
+            <td *ngIf="badge?.statut === tmpStatutDisponible" width="10%">
+              {{'GESTION_BADGE.BADGE_DISPO' | translate}}
+            </td>
+            <td *ngIf="badge?.statut === tmpStatutIndisponible" width="10%">
+              {{'GESTION_BADGE.BADGE_INDISPO' | translate}}
+            </td>
+            <td *ngIf="badge?.statut === tmpStatutAssigne" width="10%">
+              {{'GESTION_BADGE.BADGE_ASSIGNED' | translate}}
+            </td>
+
+            <td width="15%">
+              {{badge?.employee?.nom || ' '}} {{badge?.employee?.prenom || ' '}}
+            </td>
+
+            <td width="15%">
+              {{badge?.dateDisponible| date:'dd/MM/yyyy' || ' '}}
+            </td>
+
+            <td width="50%">
+              {{badge?.commentaire || ' '}}
+            </td>
+            <td width="10%">
+              <div class="d-flex justify-content-end mr-xl-5 mr-lg-4 mr-md-3 mr-2">
+              <span *ngIf="deleteButtonControl()" (click)="deleteBadge(badge);$event.stopPropagation()">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <rhis-pop-up
+    (closeEvent)="displayDialogUpdateBadge = false"
+    [showPopUp]="displayDialogUpdateBadge"
+    [title]=dialogUpdateBadgeTitle
+    [maxHeight]="450">
+
+    <rhis-update-badge *ngIf="displayDialogUpdateBadge" [initBadge]="selectedBadge"
+                       (updateBadgeEvent)="createOrUpdateBadge($event)"
+                       [buttonLabel]="dialogUpdateBadgeTitle"
+    ></rhis-update-badge>
+  </rhis-pop-up>
+
+  <p-toast [style]="{marginTop: '80px'}"></p-toast>
+</div>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+

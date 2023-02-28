@@ -1,0 +1,31 @@
+.section-element-title {
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+.copy-icon-style{
+  width: 35px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.excluded_restaurant_icon {
+  right: 5px;
+  cursor: pointer;
+}
+
+.excluded_message {
+  max-height: 200px;
+}
+
+.scroll-general-rhis:hover::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.scroll-general-rhis {
+  padding-right: 10px;
+}

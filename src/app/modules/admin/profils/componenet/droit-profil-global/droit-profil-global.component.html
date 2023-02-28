@@ -1,0 +1,61 @@
+<p-scrollPanel class="scroll-droit">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+  </div>
+<div class="container-fluid change-container-fluid-rhis">
+  <div class="table-list">
+
+    <p-table #dt
+             [scrollHeight]="heightInterface"
+             [scrollable]="true"
+             [scrollable]="true"
+             [value]="ecrans"
+             dataKey="code">
+      <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+          <th>Code</th>
+          <th>Libelle</th>
+          <th>
+            {{Profil?.libelle}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template let-i="rowIndex" pTemplate="body" let-ecran let-columns="columns">
+        <tr>
+          <td>
+            <div class="td-container td-left-border">
+              <a href="#" [pRowToggler]="ecran">
+                <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                {{ecran?.code}}
+              </a>
+            </div>
+          </td>
+          <td>{{ecran.libelle}}</td>
+            <td>
+              <p-checkbox binary="true" [ngModel]="doesProfilHasEcran(ecran)" (onChange)="changeEcran(ecran)"></p-checkbox>
+            </td>
+
+        </tr>
+
+      </ng-template>
+
+      <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
+        <tr class="table-row" *ngFor="let droitAccess of permissions">
+          <td class="rhis-invisible"></td>
+          <td>
+            <div class="td-container td-left-border">
+              {{droitAccess.name}}
+            </div>
+          </td>
+
+            <td>
+              <p-checkbox   binary="true" [ngModel]="doesProfilHasDroit(rowData,droitAccess)" (onChange)="changeDroit(rowData,droitAccess)"></p-checkbox>
+            </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+</div>
+</p-scrollPanel>

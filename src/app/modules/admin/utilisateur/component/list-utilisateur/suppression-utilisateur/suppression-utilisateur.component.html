@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="section-element delete-mg-style-rhis w-100 section-body">
+    <label class="section-element-title" class="section-element-title" for="password">{{"USER.PASSWORD" |
+      translate}}</label> <br>
+    <input class="text-field" (change)="onChangePassword()" (keypress)="onChangePassword()" id="password" type="password" [(ngModel)]="password" pInputText>
+    <br>
+    <span class="form-item-error red small-rhis ml-1"
+          *ngIf="passwordVerifier && isSubmitted">{{'USER.WRONG_PASSWORD' | translate}}</span>
+    <span class="form-item-error red small-rhis ml-1"
+          *ngIf="emptyPassword && isVerifierd">{{'USER.OBLIGATORY' | translate}}</span>
+  </div>
+</div>
+<div class="row">
+  <div class="btn save-add-button-rhis orange-background mt-4 btn-popup-rhis" (click)="verifyUserPassword()">
+    <span>{{'USER.VALIDER'|translate}}</span>
+  </div>
+</div>

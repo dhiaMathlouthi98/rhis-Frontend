@@ -1,0 +1,45 @@
+.rhis-container {
+  position: relative;
+
+  .flag-container,
+  .flag,
+  .flag-bottom {
+    display: block;
+    height: 0;
+    position: absolute;
+    width: 0;
+  }
+
+  .flag-container {
+    border-left: 10px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 14px solid rgba(120, 121, 147, 0.3);
+    top: -15px;
+  }
+
+  .flag {
+    border-left: 10px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 14px solid #fff;
+    top: -14px;
+  }
+
+  .flag-bottom {
+    border-left: 10px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 14px solid #fff;
+    bottom: -14px;
+  }
+
+  .rhis-tooltip {
+    cursor: default;
+    z-index: 1;
+    position: absolute;
+    padding: 8px 10px;
+    height: fit-content;
+    border: 1px solid rgba(120, 121, 147, 0.3);
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  }
+}

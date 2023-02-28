@@ -1,0 +1,33 @@
+@mixin nbre-ligne-page() {
+  .ui-dropdown {
+    height: 30px;
+    width: 30px !important;
+    float: left;
+    padding: 15px 20px;
+    margin: 0;
+    .ui-dropdown-label {
+      bottom: 11px;
+      padding-right: 1.5em;
+      z-index: 999;
+    }
+    .ui-dropdown-trigger {
+      width: 3em;
+      .ui-dropdown-trigger-icon {
+        left: 25%;
+      }
+    }
+  }
+  .ui-inputtext {
+    padding: 0.129em;
+  }
+  .ui-paginator {
+    border: none;
+    margin-bottom: 50px;
+    background: none;
+  }
+  p-dropdown {
+    width: 42px;
+    position: relative;
+    display: inline-block;
+  }
+}

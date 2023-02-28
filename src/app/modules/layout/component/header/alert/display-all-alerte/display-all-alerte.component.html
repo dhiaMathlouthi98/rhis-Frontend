@@ -1,0 +1,360 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="130">
+</div>
+<div [ngStyle]="{'height': heightInterface}" class="rhis-container view scroll-general-rhis">
+  <div class="container-fluid change-container-fluid-rhis">
+    <p-accordion *ngIf="listAllAlerte.length > 0">
+      <p-accordionTab *ngFor="let alerte of listPresentCodeName"
+                      [header]="alerte.translatedCodeName"
+                      (selectedChange)="changeDisplay(alerte.codeName,$event)"
+                      [selected]="displayedAlarmeCode === alerte.codeName">
+        <div class="table-list bg-gris-avec-border last-th-center responsive-table-rhis">
+          <p-table [value]="alerteByCodeName.get(alerte.codeName)"
+                   [responsive]="true"
+                   [lazy]="true"
+                   [scrollable]="true"
+                   scrollHeight="400px">
+            <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+              <tr class="header-row">
+
+                <ng-container *ngIf="alerte.codeName === visiteMedicaleCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.VISITE_MEDICAL_JOURS_RESTANT' | translate}}</th>
+                  <th class="text-center">{{'ALARME.VISITE_MEDICAL_DERNIERE_VISITE' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === formationCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.MINEUR' | translate}}</th>
+                  <th class="text-center">{{'ALARME.BLOQUANTE' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === expirationContratCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.CONTRAT_JOURS_RESTANTS' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_FIN_CONTRAT' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === urgenceExpirationContratCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.CONTRAT_JOURS_DEPASSE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_DERNIER_CONTRAT' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === permisEtrangersCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.VISITE_MEDICAL_JOURS_RESTANT' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_FIN_VALIDITE' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte?.codeName === permisUrgencEtrangersCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.VISITE_MEDICAL_JOURS_RESTANT' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_FIN_VALIDITE' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === employeePlannifierSansContratCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_PLG_SANS_CONTRAT_DATE_DEBUT' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_PLG_SANS_CONTRAT_DATE_FIN' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === alarmeQualificationCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === alarmePlanningNonCloture">
+                  <th class="text-center">{{'ALARME.NUM_SEMAINE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_DEBUT' | translate}}</th>
+                  <th class="text-center">{{'ALARME.DATE_FIN' | translate}}</th>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === dureePriodEssaiCodeName">
+                  <th class="text-center">{{'ALARME.EMPLOYEE_NOM_PRENOM' | translate}}</th>
+                  <th class="text-center">{{'ALARME.EMPLOYEE_MATRICULE' | translate}}</th>
+                  <th class="text-center">{{'ALARME.FIN_PERIODE_ESSAI' | translate}}</th>
+                </ng-container>
+              </tr>
+            </ng-template>
+
+            <ng-template let-i="rowIndex" pTemplate="body" let-specAlerte>
+              <tr class="table-row" (click)="redirect(specAlerte)">
+
+
+                <ng-container *ngIf="alerte.codeName === visiteMedicaleCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container">
+                      {{specAlerte?.jourAvantVisiteMedical}}
+                    </div>
+
+                  </td>
+                  <td *ngIf="specAlerte.derniereVisite != null">
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.derniereVisite| date:'dd/MM/yyyy'}}
+
+
+                    </div>
+                  </td>
+                  <td *ngIf="specAlerte.derniereVisite == null">
+                    <div class="td-container td-right-border">
+                      {{'ALARME.NEVER' | translate}}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === dureePriodEssaiCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container"
+                         [ngClass]="{'td-right-border': alerte.codeName === qualificationCodeName}">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.finPeriodeEssai}}
+                    </div>
+                  </td>
+                </ng-container>
+
+
+                <ng-container *ngIf="alerte.codeName === formationCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="td-container">
+                      3
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      4
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="alerte.codeName === expirationContratCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.depassement}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinContrat}}
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="alerte.codeName === urgenceExpirationContratCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.depassement}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinContrat}}
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="alerte.codeName === alarmePlanningNonCloture">
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.numeroSemaine}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateDebutPlanning}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinPlanning}}
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="alerte.codeName === permisEtrangersCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.matriculeEmployee ? (specAlerte?.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.joursAvantPermisTravail?(specAlerte?.joursAvantPermisTravail) : '0'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinValidite?(specAlerte?.dateFinValidite) : '--'}}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="alerte?.codeName === permisUrgencEtrangersCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte?.nomEmployee ? (specAlerte?.nomEmployee) : '--'}} {{specAlerte?.prenomEmployee ?
+                      (specAlerte?.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.matriculeEmployee ? (specAlerte?.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.joursAvantPermisTravail?(specAlerte?.joursAvantPermisTravail) : '0'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinValidite?(specAlerte?.dateFinValidite) : '--'}}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === alarmeQualificationCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                </ng-container>
+
+
+                <ng-container *ngIf="alerte.codeName === employeePlannifierSansContratCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte.matriculeEmployee ? (specAlerte.matriculeEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container">
+                      {{specAlerte?.datePlannifie ? (specAlerte?.datePlannifie) : 'Shift fixe'}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.dateFinPlanifie ? (specAlerte?.dateFinPlanifie) : '-' }}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="alerte.codeName === purgeCodeName">
+                  <td>
+                    <div class="td-container td-left-border">
+                      {{specAlerte.nomEmployee ? (specAlerte.nomEmployee) : '--'}} {{specAlerte.prenomEmployee ?
+                      (specAlerte.prenomEmployee) : '--'}}
+                    </div>
+                  </td>
+                  <ng-container>
+                    <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeEstimationDeVenteType">
+                      <div class="td-container">
+                        {{specAlerte?.dateVenteJournaliere}}
+                      </div>
+                    </td>
+                    <td *ngIf="specAlerte.alarmePurgeType !== alarmePurgeEstimationDeVenteType">----</td>
+                  </ng-container>
+                  <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeEmployeeInactifType">
+                    <div class="td-container">
+                      {{'ALARME.TYPE_PURGE_EMPL_INACTIF' | translate}}
+                    </div>
+                  </td>
+                  <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeEstimationDeVenteType">
+                    <div class="td-container">
+                      {{'ALARME.TYPE_PURGE_ESTIMATION_VENTE' | translate}}
+                    </div>
+                  </td>
+                  <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeTraceType">
+                    <div class="td-container">
+                      {{'ALARME.TYPE_PURGE_TRACE' | translate}}
+                    </div>
+                  </td>
+                  <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeHeurePointeType">
+                    <div class="td-container">
+                      {{'ALARME.TYPE_PURGE_HEURE_POINTE' | translate}}
+                    </div>
+                  </td>
+                  <td *ngIf="specAlerte.alarmePurgeType === alarmePurgeIndisponibiliteAbsenseType">
+                    <div class="td-container">
+                      {{'ALARME.TYPE_PURGE_INDISPO_ABSENCE' | translate}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="td-container td-right-border">
+                      {{specAlerte?.depassement}}
+                    </div>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="rhis-container view">
+  <div class="header">
+    <div>
+      <h3>{{'PREVISION.LABEL' | translate}}</h3>
+      <img src="assets/icons/employe/Arrow right.svg" alt="no icon">
+      <h1>{{'PREVISION.CHARTE_POS' | translate}}</h1>
+    </div>
+    <div>
+      <button (click)="openAddChartePopup()" *ngIf="addButtonControl()"
+              class="btn save-add-button-rhis blue-background"
+              id="PREVISION-CharteP-new-btn"
+              type="button">
+        <span>{{'CHARTE.NEW_CHARTE' | translate}}</span>
+      </button>
+      <button (click)="goToDecoupageHoraire()"
+              class="btn save-add-button-rhis blue-background ml-3"
+              id="PREVISION-CharteP-goDecouprH-btn"
+              type="button">
+        <span>{{'DECOUPAGE_HORAIRE.LABEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="display-type">
+  
+    <div class="switch-button-left"
+         [ngClass]="isGraphicMode ? 'white-background': 'white-grey-background' "
+         (click)="isGraphicMode = false;"
+         id="PREVISION-CharteP-switchTable">
+      <span>{{'PREVISION.TABLE_VIEW_MODE' | translate}}</span>
+    </div>
+    <div class="switch-button-right" [ngClass]="isGraphicMode ? 'white-grey-background': 'white-background' "
+         (click)="isGraphicMode = true;"
+         id="PREVISION-CharteP-switchGraphic">
+      <span>{{'PREVISION.GRAPHIC_VIEW_MODE' | translate}}</span>
+    </div>
+    <div class="select-section">
+      <select [(ngModel)]="selectedCharte" class="dropdown-list" name="chart-type"
+              (change)="getAllpositionnementByCharte()"
+              id="PREVISION-CharteP-type">
+        <option *ngFor="let charteType of listeCharte"
+                [ngValue]="charteType">
+          {{'PREVISION.CHARTE_TYPE' | translate}} "{{charteType.libelle.toUpperCase()}}"
+        </option>
+      </select>
+    </div>
+
+    <div class="validate">
+      <div class="mt-2 mr-3">
+        {{'PREVISION.TAUX_MOYEN_LABEL'| translate}} {{tauxMoyen}}
+      </div>
+      <span>
+        <img (click)="saveAll()" *ngIf="addButtonControl()" alt="no save icon" class="save-icon"
+             id="PREVISION-CharteP-saveAll"
+             src="assets/icons/chart-icon/save.png">
+      </span>
+      <span>
+        <img alt="no print icon" id="PREVISION-CharteP-print"
+             src="assets/icons/employe/print-picture.svg">
+      </span>
+      <span *ngIf="isGraphicMode">
+        <img class="delete-icon ml-2"
+             src="assets/icons/chart-icon/supprimer.png"
+             alt="no delete icon"
+             (click)="deletePositionnement()"
+             id="PREVISION-CharteP-deletePos">
+      </span>
+    </div>
+  </div>
+  <div *ngIf="listeCharte?.length !== 0">
+    <div class="charte-de-positionnement" *ngIf="!isGraphicMode">
+      <rhis-vue-tableau
+        [initListePositionnement]="listPositionnementToDisplay"
+        [initListePositionTravailProductif]="listePositionTravailProductif"
+        [initTauxMOByRestaurant]="tauxMoyen"
+        (deletePositionnementEvent)="deletePositionnement($event)"
+        (displayProveUpdateMessage)="displayProveUpdateMessage($event)">
+      </rhis-vue-tableau>
+    </div>
+    <div class="charte-de-positionnement" *ngIf="isGraphicMode">
+      <rhis-vue-graphique
+        [initGraphicMode]="isGraphicMode"
+        [initListePositionTravailProductif]="listePositionTravailProductif"
+        [initListePositionnement]="listPositionnementToDisplay"
+        [initTauxMOByRestaurant]="tauxMoyen"
+        [initNewLoadData]="newLoadData"
+        (setSelectedPositionnementEvent)="setSelectedPositionnement($event)"
+        (displayProveUpdateMessage)="displayProveUpdateMessage($event)">
+      </rhis-vue-graphique>
+    </div>
+  </div>
+  <div *ngIf="listeCharte?.length === 0" style="text-align: center">
+    <br>
+    <br>
+    {{'CHARTE.PLEASE_INSERT_CHARTE'|translate}}
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="closeAddChartePopup()"
+  [showPopUp]="displayAddChartePopup"
+  [title]=addCharteTitle>
+
+  <rhis-add-charte *ngIf="displayAddChartePopup" [initTitle]=addCharteTitle
+                   [initExistanteCharte]=charteExistante
+                   (addNewCharteEvent)="addNewCharte($event)"></rhis-add-charte>
+</rhis-pop-up>
+
+<!--CONFIRMATION AND TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

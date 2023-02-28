@@ -1,0 +1,38 @@
+<div class="drag-drop-file">
+  <div (click)="fileInput.click()"
+       (fileUploaded)="getFilesFromDragAndDrop($event)"
+       (showExtraInfo)="showUploadFileMessage($event)"
+       class="uploadfilecontainer"
+       [ngClass]="{'file-container-drag-drop': showExtraInfo && !wrongFileTpye}"
+       rhisDragAndDrop>
+    <input #fileInput (change)="uploadFile($event)"
+           accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+           hidden
+           type="file">
+    <div class="texte-deposer">
+      <p>{{'RAPPORT.DEPOSER_VOS_FICHIERS' | translate}}</p>
+      <p>{{'RAPPORT.CLIQUER_SUR' | translate}}</p>
+    </div>
+    <div *ngIf="showExtraInfo" class="upload-file"
+         (click)="$event.stopPropagation()"
+         [ngClass]="{'upload-file-wrong-file-type': wrongFileTpye, 'upload-file-extra-info': showExtraInfo}">
+      <ng-container *ngIf="!wrongFileTpye">
+        <img src="assets/icons/employe/upload.png">
+        <p class="deposer extra-info-bg-c">{{'RAPPORT.DEPOSER_VOTRE_RAPPORT_POUR_IMPORTER' | translate}}</p>
+      </ng-container>
+      <p class="deposer error-extra-info-bg-c" *ngIf="wrongFileTpye">{{'REPORT.ERROR_FILE_TYPE' | translate}}</p>
+    </div>
+    <div class="add-file-plus"
+         (mouseenter)="icon_text_hover_tooltip.show($event)"
+         (mouseleave)="icon_text_hover_tooltip.hide()">
+      <img src="assets/icons/employe/add-file.png">
+    </div>
+  </div>
+</div>
+<p-overlayPanel #icon_text_hover_tooltip
+                [dismissable]="true"
+                appendTo="body">
+  <div class="icon-hover-container">
+    <span>{{"REPORT.NEW" | translate}}</span>
+  </div>
+</p-overlayPanel>

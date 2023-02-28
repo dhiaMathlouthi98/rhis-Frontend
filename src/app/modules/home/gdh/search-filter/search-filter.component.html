@@ -1,0 +1,10 @@
+<div class="search d-flex" [ngClass]="{'menu-open': minSizeEnabled, 'menu-closed': !minSizeEnabled}">
+  <input (keyup.enter)="searchEmployee()"
+         [formControl]="filterName"
+         [placeholder]=" ('GDH.FILTER.'+ (minSizeEnabled ? 'MIN_' : '') + 'SEARCH_PLACEHOLDER') | translate"
+         id="GDH-searchEmp-input"
+         type="text">
+  <span (click)="searchEmployee()" id="GDH-searchEmp-btn">
+         <img alt="" src="assets/icons/employe/ico_search_small.svg">
+      </span>
+</div>

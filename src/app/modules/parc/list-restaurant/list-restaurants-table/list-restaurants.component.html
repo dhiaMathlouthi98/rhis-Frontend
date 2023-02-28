@@ -1,0 +1,72 @@
+<div class="rhis-container view">
+<div  (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="300">
+  <ng-container *ngIf="listRestaurants?.length; else notFoundMsg">
+  <div class="table-list table-list-msg-not-found-position" *ngIf="listRestaurants?.length">
+    <p-table [columns]="header"
+             [value]="listRestaurants"
+             [paginator]="true"
+             [lazy]="true"
+             [rows]="row"
+             [first]="first"
+             [totalRecords]="totalRecords"
+             [rowsPerPageOptions]="rowsPerPageOptions"
+             (onSort)="sortRows($event)"
+             [resetPageOnSort]="false"
+             (onPage)="onLazyLoad($event)"
+             [scrollable]="true" [scrollHeight]="heightInterface"
+    >
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let c of columns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <th *ngFor="let col of columns" [pSortableColumn]="(col?.field == 'libelleRestaurant') ? col?.field : null">
+            {{col?.title}}
+            <p-sortIcon *ngIf="col?.field == 'libelleRestaurant'" [field]="col?.field"
+                        ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-restaurant>
+        <tr class="table-row">
+          <td>{{restaurant?.libelleRestaurant}}</td>
+          <td>{{restaurant?.directeur}}</td>
+          <td>{{restaurant?.franchise}}</td>
+          <td>{{restaurant?.numeroTelephone}}</td>
+          <td>{{restaurant?.nbreEmplyeeActif}}</td>
+          <td>
+            <div class="d-flex justify-content-around">
+              <div>
+                <span (click)="getRestaurant(restaurant)" class="item">
+                <img class="redirect-restaurant" src="assets/icons/employe/icons-porte-ouverte.png" alt="no icon">
+                </span>
+              </div>
+              <div class="ml-3">
+                <rhis-actions-restaurant
+                  [restaurantName]="restaurant?.libelleRestaurant">
+                </rhis-actions-restaurant>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  </ng-container>
+      
+  <ng-template #notFoundMsg>
+    <div class="align-not-found-msg">
+      {{notFoundMsgText}}
+    </div>
+  </ng-template>
+</div>
+
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

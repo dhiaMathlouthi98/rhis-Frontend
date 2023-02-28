@@ -1,0 +1,117 @@
+<div *ngIf="!vuePoste && !planning.shiftAchevalHidden" class="shift-card position-card"
+     [ngClass]="{'active-planning-fixe-card': managerOuLeader.disablePlanningManagerOrLeaderOrFixe,
+     'acheval-style': planning?.acheval,
+     'acheval-week': planning?.achevalWeek && planning?.acheval,
+     'modifiable-week': planning?.modifiable,
+     'not-modifiable-week': !planning?.modifiable,
+     'position-card-blocked': !planning?.periodeManager?.statut,
+     'active-planning-fixe-card': !planning?.periodeManager?.statut}"
+     [attr.data-idPlanningManager]="idPlanningManager"
+     [attr.data-cardDay]="cardDay"
+     [attr.data-EmpIndex]="cardEmpIndex">
+  <div class="dropdown" *ngIf="this.updateButtonControl() || this.deleteButtonControl()">
+    <a class="dropdown-toggle edit-link"
+       role="button"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       id="PLG-MLP-editNotPoste-dropdown">
+      <i class="edit-icon"></i>
+    </a>
+    <div class="dropdown-menu">
+      <ng-container
+        *ngIf="!managerOuLeader?.disablePlanningManagerOrLeaderOrFixe && this.updateButtonControl() && (!planning.achevalWeek || (planning.achevalWeek && planning.modifiable))">
+        <a (click)="edit($event)" class="dropdown-item" id="PLG-MLP-editNotPoste-tooltip">
+          {{'SHIFT_FIXE.UPDATE' | translate}}
+        </a>
+      </ng-container>
+      <a *ngIf="this.deleteButtonControl()" (click)="delete($event)" class="dropdown-item"
+         id="PLG-MLP-deleteNotPoste-tooltip">
+        {{'SHIFT_FIXE.DELETE' | translate}}
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="planning?.periodeManager?.libelle" class="nom-shift">{{planning?.periodeManager?.libelle}}</div>
+
+  <div>{{planning?.heureDebut | date:'HH:mm'}} - {{planning?.heureFin | date:'HH:mm'}}</div>
+  <div class="add-person-shift-fixe">
+    <div class="prod-chexbox">
+      <p-checkbox [(ngModel)]="productif" binary="true" disabled="true" id="PLG-MLP-NotPoste-productif-checkbox">
+      </p-checkbox>
+      <span>{{'PLANNING_MANAGER.PROD' | translate}}</span>
+    </div>
+    <div *ngIf="!planning?.achevalWeek">
+      <div *ngIf="planning?.acheval" class="arrow-acheval-test">
+      </div>
+    </div>
+    <div *ngIf="planning?.achevalWeek && planning?.acheval">
+      <div *ngIf="planning?.modifiable" class="arrow-acheval-week">
+      </div>
+      <div *ngIf="!planning?.modifiable" class="arrow-acheval-week-not-modifiable">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="vuePoste && !planning.shiftAchevalHidden" class="shift-card position-card"
+     [ngClass]="{'active-planning-fixe-card': planning?.managerOuLeader?.disablePlanningManagerOrLeaderOrFixe || !planning?.periodeManager?.statut,
+     'acheval-style': planning?.acheval,
+     'acheval-week': planning?.achevalWeek,
+     'modifiable-week': planning?.modifiable,
+     'not-modifiable-week': !planning?.modifiable}"
+     [attr.data-idPlanningManager]="idPlanningManager"
+     [attr.data-cardDay]="cardDay"
+     [attr.data-periodeIndex]="cardPeriodeIndex">
+  <div class="dropdown" *ngIf="this.updateButtonControl() || this.deleteButtonControl()">
+    <a class="dropdown-toggle edit-link"
+       role="button"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       id="PLG-MLP-editPoste-dropdown">
+      <i class="edit-icon"></i>
+    </a>
+
+    <div class="dropdown-menu" [ngClass]="{
+          'dropdown-menu-opened': menuOpened,
+          'dropdown-menu-close': !menuOpened}">
+
+      <ng-container
+        *ngIf="!planning?.managerOuLeader?.disablePlanningManagerOrLeaderOrFixe && this.updateButtonControl() && (!planning.achevalWeek || (planning.achevalWeek && planning.modifiable))">
+        <a (click)="edit($event,'vuePoste')" class="dropdown-item"
+           id="PLG-MLP-editPoste-tooltip">
+          {{'SHIFT_FIXE.UPDATE' | translate}}
+        </a>
+      </ng-container>
+      <a *ngIf="this.deleteButtonControl()" (click)="delete($event)" class="dropdown-item"
+         id="PLG-MLP-deletePoste-tooltip">
+        {{'SHIFT_FIXE.DELETE' | translate}}
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="planning?.managerOuLeader?.nom " class="nom-shift">{{planning?.managerOuLeader?.nom}}
+    {{planning?.managerOuLeader?.prenom}}
+  </div>
+
+  <div>{{planning?.heureDebut | date:'HH:mm'}} - {{planning?.heureFin | date:'HH:mm'}}</div>
+  <div class="add-person-shift-fixe">
+    <div class="prod-chexbox">
+      <p-checkbox [(ngModel)]="productif" binary="true" disabled="true" id="PLG-MLP-VPoste-productif-checkbox">
+      </p-checkbox>
+      <span>{{'PLANNING_MANAGER.PROD' | translate}}</span>
+    </div>
+    <div *ngIf="!planning?.achevalWeek">
+      <div *ngIf="planning?.acheval" class="arrow-acheval-test">
+      </div>
+    </div>
+    <div *ngIf="planning?.achevalWeek && planning?.acheval">
+      <div *ngIf="planning?.modifiable" class="arrow-acheval-week">
+      </div>
+      <div *ngIf="!planning?.modifiable" class="arrow-acheval-week-not-modifiable">
+      </div>
+    </div>
+
+  </div>
+</div>

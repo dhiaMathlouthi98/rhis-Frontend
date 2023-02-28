@@ -1,0 +1,258 @@
+<div class="header row">
+  <div class="col-md-4 col-lg-6">
+  </div>
+  <div class="float-right col-md-8 col-lg-6">
+    <button *ngIf="updateControl()" type="button" (click)="saveListDecoupageHoraire()"
+            class="btn save-add-button-rhis orange-background">
+      <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+    </button>
+    <button *ngIf="addButtonControl()" type="button" (click)="openAddNewDecoupageHorairePopup()"
+            class="btn save-add-button-rhis blue-background">
+      <span>{{'DECOUPAGE_HORAIRE.ADD_NEW_DECOUPAGE'|translate | uppercase}}</span>
+    </button>
+  </div>
+</div>
+<div class="container-fluid change-container-fluid-rhis">
+  <div class="table-list bg-gris-avec-border">
+    <p-table [value]="listDecoupageHoraire" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <ng-container *ngIf="listDecoupageHoraire?.length">
+            <th>{{'PHASE.LIBELLE_NAME' | translate}}</th>
+          </ng-container>
+          <ng-container *ngFor="let column of listJours">
+            <th class="text-center">{{column.column}}</th>
+          </ng-container>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-i="rowIndex" let-decoupage>
+        <!--        <tr class="table-row">-->
+        <tr *ngIf="decoupage?.phase?.libelle?.length !== 0" class="table-row">
+          <td *ngIf="decoupage?.canDelete" pEditableColumn>
+            <div class="td-container td-left-border">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         [(ngModel)]="decoupage.phase.libelle">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage?.phase?.libelle}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td *ngIf="!decoupage?.canDelete">
+            <div class="td-container td-left-border">
+              {{decoupage?.phase?.libelle}}
+            </div>
+          </td>
+          <!--          <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[0].val))]" [timeOnly]="true"
+                                       (onBlur)="setNewValue('valeur'+(listJours[0].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[0].val),'valeur'+(listJours[1].val),i,0)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[0].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[0].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[1].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[1].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[1].val),'valeur'+(listJours[2].val),i,1)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[1].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[1].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[2].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[2].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[2].val),'valeur'+(listJours[3].val),i,2)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[2].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[2].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[3].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[3].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[3].val),'valeur'+(listJours[4].val),i,3)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[3].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[3].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[4].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[4].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[4].val),'valeur'+(listJours[5].val),i,4)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[4].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[4].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[5].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[5].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[5].val),'valeur'+(listJours[6].val),i,5)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[5].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[5].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[6].val))]" [timeOnly]="true"
+                                      (onBlur)="setNewValue('valeur'+(listJours[6].val),i)"
+                                      (onClose)="verificationNightValue('valeur'+(listJours[6].val),'valeur'+(listJours[0].val),i,6)"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          <div [ngClass]="{'nightValue' : decoupage['valeur'+(listJours[6].val)+'IsNight']}">
+                            {{decoupage[('valeur'+(listJours[6].val))] | date:'HH:mm' }}
+                          </div>
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>-->
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[0]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[0]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[0]?.val),'valeur'+(listJours[1]?.val),i,0)"
+                          [tabindex]="0 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[1]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[1]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[1]?.val),'valeur'+(listJours[2]?.val),i,1)"
+                          [tabindex]="1 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[2]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[2]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[2]?.val),'valeur'+(listJours[3]?.val),i,2)"
+                          [tabindex]="2 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[3]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[3]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[3]?.val),'valeur'+(listJours[4]?.val),i,3)"
+                          [tabindex]="3 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[4]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[4]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[4]?.val),'valeur'+(listJours[5]?.val),i,4)"
+                          [tabindex]="4 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[5]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[5]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[5]?.val),'valeur'+(listJours[6]?.val),i,5)"
+                          [tabindex]="5 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container">
+              <p-calendar [(ngModel)]="decoupage[('valeur'+(listJours[6]?.val))]" [timeOnly]="true"
+                          [disabled]="verificationNightIsRaised"
+                          (onBlur)="setNewValue('valeur'+(listJours[6]?.val),i)"
+                          (onClose)="verificationNightValue('valeur'+(listJours[6]?.val),'valeur'+(listJours[0]?.val),i,6)"
+                          [tabindex]="6 + i * 7"></p-calendar>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container td-right-border pr-4">
+              <div *ngIf="decoupage?.canDelete && deleteButtonControl()" class="operation float-right">
+                   <span class="item" (click)="deleteDecoupageHoraire(i);$event.stopPropagation()">  <img
+                     src="assets/icons/employe/Btn_Close.svg" alt="no image"></span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="row justify-content-end mr-1 mt-4 mb-4">
+    <button *ngIf="updateControl()" (click)="saveListDecoupageHoraire()" class="btn save-add-button-rhis orange-background" type="button">
+      <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+    </button>
+  </div>
+</div>
+
+<!--ADD / UPDATE PERIODE MANAGER-->
+<rhis-pop-up
+  *ngIf="showAddUpdateDecoupageHorairePopup"
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddUpdateDecoupageHorairePopup"
+  [title]=buttonLabel
+  [width]="popUpStyle?.width">
+
+  <rhis-modifier-decoupage-horaire *ngIf="showAddUpdateDecoupageHorairePopup"
+                                   [buttonLabel]="buttonLabel"
+                                   [initListeJours]="listJours"
+                                   [setPremierJourRestaurant]="premierJour"
+                                   [initDuplicatedLibelle]="isDuplicated"
+                                   [initConfendues]="isConfendues"
+                                   [initListeDecoupageHoraire]="listDecoupageHoraire"
+                                   (checkIfNightValueEvent)="emitNightValueEvent()"
+                                   [nightValue]="newValueNightValue"
+                                   (addNewDecoupageHoraireEvent)="addNewDecoupageHoraire($event)"
+  ></rhis-modifier-decoupage-horaire>
+</rhis-pop-up>
+

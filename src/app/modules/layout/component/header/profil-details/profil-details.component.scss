@@ -1,0 +1,32 @@
+:host ::ng-deep {
+  .formulaire-profil-rhis {
+    .section-element {
+      margin-left: 0;
+
+      .text-field {
+        margin-top: 0;
+      }
+    }
+
+    .ui-fieldset {
+      legend.ui-fieldset-legend {
+        font-size: 15px;
+        width: 46%;
+
+        a {
+          border: none;
+          background: none;
+        }
+      }
+      .ui-fieldset-legend-text {
+        width: fit-content;
+        color: #9B9B9B;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+        font-family: "TT Wellingtons Medium", sans-serif;
+      }
+    }
+  }
+}
+

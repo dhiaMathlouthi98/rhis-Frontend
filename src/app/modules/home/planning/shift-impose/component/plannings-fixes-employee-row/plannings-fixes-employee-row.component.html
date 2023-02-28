@@ -1,0 +1,148 @@
+<td class="employeeCell" (click)="selectRow($event,employee)">
+  <div class="conge-planned" *ngIf="congeDisplay?.idAbsenceConge">
+    <span
+      class="leave-text">{{congeDisplay?.typeEvenement?.libelle}} {{'SHIFT_FIXE.DU' | translate}} {{congeDisplay?.dateDebut | date: 'dd/MM/yyyy'}} {{'SHIFT_FIXE.AU' | translate}} {{congeDisplay.dateFin |date: 'dd/MM/yyyy'}}</span>
+  </div>
+
+  <div class="employee-draggable" [attr.data-empIndex]="empIndex">
+    <ng-container *ngIf="employee">
+      <div class="empName">{{employee?.nom}} {{employee?.prenom}}</div>
+      <div class="contract" *ngIf="hebdoContrat">
+        <span *ngIf="isContractTimeReached()" class="contract-icon-y"></span>
+        <span *ngIf="!isContractTimeReached()" class="contract-icon-x"></span>
+        <span class="hebdo-contrat-rhis">{{'SHIFT_FIXE.CONTRAT' | translate}} : {{employee?.totalRowTime}}
+          /{{hebdoContrat}}</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="employee?.contrats?.length ===0">
+      <p-dropdown
+        [options]="employeeList"
+        optionLabel="fullName"
+        placeholder="{{'EMPLOYEE.EMPLOYEE_DISPONIBLE' | translate}} "
+        [(ngModel)]="selectedEmployee"
+        (ngModelChange)="onchangeEmployee()"
+        appendTo="body"
+        class="drop-down-general"
+        id="PLG-fx-employeeDispo-list">
+      </p-dropdown>
+    </ng-container>
+  </div>
+</td>
+<td *ngFor="let day of days; let  dayIndex=index" [attr.data-day]="day?.val"
+    [ngClass]="{'conge-exist' : congeDisplay?.idAbsenceConge }"
+    class="td-drop-zone">
+  <div *ngFor="let shift of shiftFixeByEmployee">
+    <ng-container *ngIf=" shift.jour === (day.val | uppercase)">
+      <rhis-planning-fixes-shift-card
+        [shift]="shift"
+        [employee]="employee"
+        [idShiftFixe]="shift.idShiftFixe"
+        [cardDay]="day.val"
+        [cardID]="'card-'+dayIndex+'-'+i"
+        [cardEmpIndex]="empIndex"
+        (editCardShiftFixe)="showEditShiftFixeCardForm($event)"
+        (deleteCardShiftFixe)="deleteShiftFixeCard(shift.idShiftFixe)">
+      </rhis-planning-fixes-shift-card>
+    </ng-container>
+  </div>
+  <span *ngIf="(!employee?.disablePlanningManagerOrLeaderOrFixe) && this.addButtonControl() " class="icon-add"
+        (click)="showAddCardForm(employee, day.val)"
+        id="PLG-fx-add-icon"></span>
+</td>
+
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="showPopUp"
+  [title]="titlePopup"
+  [width]="popUpStyle?.width">
+
+  <div class="section-body mt-0">
+    <div class="row">
+      <div class="section-element col-md-12">
+        <div>
+          <span class="text-danger text-center"
+                *ngIf="messageConfonduShiftFixe"
+                id="PLG-fx-posTrError-list">{{messageConfonduShiftFixe}}</span>
+        </div>
+        <label class="section-element-title" for="PLG-fx-posTr-list">
+          {{'GROUPEMENT_POST_TRAVAIL.POSITION_TRAVAIL' | translate}}
+        </label>
+        <p-dropdown [options]="listePositionTravail" [(ngModel)]="selectedPosition"
+                    optionLabel="libelle"
+                    [autoDisplayFirst]="false"
+                    name="selectedPosition"
+                    id="PLG-fx-posTr-list"
+                    class="drop-down-general"
+                    appendTo="body"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_DEBUT' | translate}}</label>
+        <p-calendar (onClose)="validerHeureNuit(true)"
+                    [(ngModel)]="newShiftFixe.heureDebut"
+                    [disabled]="verificationNightIsRaised"
+                    [timeOnly]="true"
+                    appendTo="body"
+                    id="PLG-fx-hD-popup"></p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutRequiredField"
+              id="PLG-fx-hDError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutLimitError"
+              id="PLG-fx-hDLimiteError-popup">{{heureDebutLimitErrorMessage}}</span>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_FIN' | translate}}</label>
+        <p-calendar (onClose)="validerHeureNuit(false)"
+                    [(ngModel)]="newShiftFixe.heureFin"
+                    [disabled]="verificationNightIsRaised"
+                    [timeOnly]="true"
+                    appendTo="body"
+                    id="PLG-fx-hF-popup"></p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureFinRequiredField"
+              id="PLG-fx-hFError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureFinLimitError"
+              id="PLG-fx-hFLimiteError-popup">{{heureFinLimitErrorMessage}}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{'BIMPOSE.DATE_DEBUT' | translate}}</label>
+        <p-calendar [(ngModel)]="newShiftFixe.dateDebut"
+                    appendTo="body"
+                    dateFormat="dd-mm-yy"
+                    id="PLG-fx-dateD-popup"
+        ></p-calendar>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="section-element-title">{{'BIMPOSE.DATE_FIN' | translate}}</label>
+        <p-calendar [(ngModel)]="newShiftFixe.dateFin"
+                    appendTo="body"
+                    dateFormat="dd-mm-yy"
+                    id="PLG-fx-dateF-popup"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-3">
+        <label class="section-element-title">{{'SHIFT_FIXE.ADD' | translate}}</label><br>
+        <p-checkbox [(ngModel)]="newShiftFixe.addShiftFixe" binary="true" class="p-checkbox"
+                    id="PLG-fx-addCheckbox-popup"></p-checkbox>
+      </div>
+      <div *ngIf="errorHourMessage != '' || errorDateMessage != ''" class="row col-md-12 text-danger text-center"
+           id="PLG-fx-addCheckboxError-popup">
+        {{errorHourMessage}} <br>{{errorDateMessage}}
+      </div>
+    </div>
+    <button (click)="saveCard()"
+            class="btn add-button-shift-rhis mt-4 orange-background valid" id="PLG-fx-saveCard-popup">
+      <span>{{titlePopup|uppercase}}</span>
+    </button>
+  </div>
+</rhis-pop-up>

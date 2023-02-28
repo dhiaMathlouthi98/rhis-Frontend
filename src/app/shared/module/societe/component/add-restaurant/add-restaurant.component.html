@@ -1,0 +1,68 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"CREATE_RESTAURANT.ADD_LABEL" | translate}}</h1>
+    </div>
+    <div class="float-right col-6">
+      <button type="button" (click)="saveContent(activeSection)"
+              *ngIf="!isRestaurantBtnHidden || !isParametersBtnHidden"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'CREATE_RESTAURANT.ADD_BUTTON' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="menu-list mt-2">
+      <span
+        *ngFor="let s of sections; let f = first; let i=index"
+        class="mr-4"
+        [ngClass]="{'active': activeSection == i ,
+         'not-active': activeSection !== i}"
+      >{{s?.name}}</span>
+    </div>
+    <form [formGroup]="restaurantForm">
+      <ng-container *ngIf="activeSection === 0">
+        <rhis-add-form-restaurant
+          formControlName="restaurant"
+          [isFormSubmitted]="isFormSubmitted"
+          [societeConfig]="societeConfig"
+          [franchiseConfig]="franchiseConfig"
+          [listPays]="listPays"
+          [listFranchise]="listFranchise"
+          [currentLanguage]="currentLanguage"
+          [badgeNumber]="badgeNumber"
+          [isLibelleExist]="isLibelleExist"
+          [isMatriculteExist]="isMatriculteExist"
+          [isCodePointeuseExist]="isCodePointeuseExist"
+          [listPeriodeRestaurant]="listPeriodeRestaurant"
+          [listTypeRestaurant]="listTypeRestaurant"
+          [societes]="societes"
+          [franchises]="franchises"
+          [periodeRestaurantMoisDecale]="periodeRestaurantMoisDecale"
+          [periodeRestaurantSemaineCompleteDecale]="periodeRestaurantSemaineCompleteDecale"
+          (setDecalMoisJourSign)="setDecalMoisJourSign($event)"
+          (setBadgeNumber)="setBadgeNumber($event)"
+          (closeFranchisePopup)="displayFranchisePopup = false;"
+          (submitFranchisePopup)="addRestaurantFromAnotherRestaurant($event)"
+          [displayFranchisePopup]="displayFranchisePopup"
+          [listRestaurants]="listRestaurants"
+        ></rhis-add-form-restaurant>
+      </ng-container>
+    </form>
+    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+    <p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+  </div>
+</div>
+
+<rhis-pop-up
+  [showPopUp]="displayProgressBar"
+  [width]="'333'">
+  <ng-container>
+    <div class="add-restaurant-progress-body-block">
+      <div class="position-relative">
+        <p-progressBar [showValue]="true" [value]="createProgressionRate"></p-progressBar>
+        <span class="position-absolute progress-import-label">{{createdConfig| translate }}</span>
+      </div>
+    </div>
+  </ng-container>
+</rhis-pop-up>

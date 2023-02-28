@@ -1,0 +1,53 @@
+.paramNatSaveButton {
+  float: right;
+  position: relative;
+}
+
+.rhis-row {
+  height: 100%;
+}
+
+.mt-125 {
+  margin-top: 1.25rem !important;
+}
+
+.section-element {
+  margin-left: 0;
+}
+
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  @media screen and (max-width: 991px) {
+    h1 {
+      font-size: 30px;
+    }
+  }
+
+  .col-8.col-lg-8 {
+    padding-left: 0;
+  }
+
+  .float-right.col-4.col-lg-4 {
+    padding-right: 0;
+  }
+}
+
+:host ::ng-deep {
+  .ui-dropdown {
+    margin-top: 10px;
+  }
+
+  .scroll-content-rhis {
+    padding-bottom: 15px;
+  }
+}
+.copy-icon-style{
+  width: 35px;
+  margin-left: 18px;
+  margin-top: 16px;
+  cursor: pointer;
+}

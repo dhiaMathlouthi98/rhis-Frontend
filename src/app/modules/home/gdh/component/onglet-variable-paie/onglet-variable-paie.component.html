@@ -1,0 +1,87 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-md-4 col-lg-6">
+    </div>
+    <div class="float-right col-md-8 col-lg-6">
+      <button (click)="updateListVariablePaye(false)"
+              class="btn save-add-button-rhis orange-background" id="GDH-varPaie-save-btn"
+              type="button">
+        <span>{{'BUTTON.SAVE' | translate | uppercase}}</span>
+      </button>
+      <button *ngIf="showMenuControl()" (click)="generateFile()" class="btn save-add-button-rhis blue-background"
+              id="GDH-generation-paie-btn"
+              type="button">
+        <span>{{'GDH.PAY.GENERATE' | translate | uppercase }}</span>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="addControl()" (click)="addVariablePaie()" class="add-variable-paie mb-3">
+    <img alt="no image" src="assets/icons/employe/Btn_Add.svg">
+    <span> {{'GDH.PAY.VARIABLE' | translate}}</span>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div *ngIf="listVariablePaieByRestaurant?.length "
+         class="table-list variable-paie bg-gris-avec-border last-th-center responsive-table-rhis">
+      <p-table [responsive]="true" [scrollable]="true"
+               [value]="listVariablePaieByRestaurant" scrollHeight="150px">
+        <ng-template pTemplate="header" stickyClass="stickyHeader" stickyHeader>
+          <tr class="header-row">
+            <th scope="col">{{'GDH.PAY.NOM_VARIABLE' | translate}}</th>
+            <th scope="col">{{'GDH.PAY.CODE_VARIABLE' | translate}}</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" let-variablePaie pTemplate="body">
+          <tr *ngIf="variablePaie?.idVariablesPayes !== -1" class="table-row">
+            <td *ngIf="!variablePaie?.newVariable">
+              <div class="td-container td-left-border">
+                {{variablePaie?.codeMyRhis}}
+              </div>
+            </td>
+            <td *ngIf="variablePaie?.newVariable">
+              <div class="td-container td-left-border">
+                <p-dropdown [(ngModel)]="variablePaie.codeMyRhis"
+                            [options]="variablePaieItemList"
+                            appendTo="body"></p-dropdown>
+              </div>
+            </td>
+            <td *ngIf="!updateListControl() && !isNewVariable">
+              <div class="td-container">
+                {{variablePaie?.codePaye}}
+              </div>
+            </td>
+            <td pEditableColumn *ngIf="updateListControl() || isNewVariable">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input [(ngModel)]="variablePaie.codePaye" [maxLength]="50" class="text-field" pInputText
+                         type="text">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  <div class="td-container">
+                    {{variablePaie?.codePaye}}
+                  </div>
+                  <div>
+                    <span *ngIf="variablePaie?.wrongValueDuplicated"
+                          class="form-item-error red small-rhis">{{"GDH.PAY.VARIABLE_DUPLICATED" | translate}}</span>
+                    <span *ngIf="variablePaie?.wrongValueEmpty"
+                          class="form-item-error red small-rhis">{{"GDH.PAY.VARIABLE_EMPTY" | translate}}</span>
+                  </div>
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+                  <span *ngIf="deleteControl()" (click)="deleteVariablePaie(i);$event.stopPropagation()" class="item">
+                    <img alt="no image" src="assets/icons/employe/Btn_Close.svg">
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

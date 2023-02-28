@@ -1,0 +1,113 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="190">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{'SOUSMENU.NEW_TYPE_FORMATION'|translate}}</h1>
+    </div>
+    <div class="float-right col-6">
+      <button type="button" *ngIf="listFormation?.length" (click)="updateFormationsPrioriteByRestaurant()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button id="1004" type="button" (click)="addNewTypeFormation()" class="btn save-add-button-rhis blue-background">
+        <span>{{'FORMATION.ADD_NEW'|translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list last-th-center" *ngIf="listFormation?.length">
+      <p-table [value]="listFormation"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th>{{'FORMATION.CODE' | translate}}</th>
+            <th>{{'FORMATION.DESCRIPTION' | translate}}</th>
+            <th>{{'FORMATION.DUREE_VALIDATION' | translate}}</th>
+            <th>{{'FORMATION.OBLIGATOIRE' | translate}}</th>
+            <th>{{'FORMATION.STATUT' | translate}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-formation>
+          <tr class="table-row" (click)="showFormation(formation)">
+            <td>
+              {{formation?.code}}
+            </td>
+            <td>
+              {{formation?.libelle}}
+            </td>
+            <td>
+              {{formation?.dureeValidite}}
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="formation?.formationObligatoire"></i>
+            </td>
+            <td>
+              <div class="td-container">
+            <span class="label-table" *ngIf="formation?.statut"
+                  [ngStyle]="{'background-color': '#2DC76D'}">
+          {{'GROUPE_TRAVAIL.ACTIF' | translate}}
+        </span>
+                <span class="label-table" *ngIf="!formation?.statut"
+                      [ngStyle]="{'background-color': '#FF9B42'}">
+           {{'GROUPE_TRAVAIL.INACTIF' | translate}}
+        </span>
+              </div>
+            </td>
+            <td>
+              <div class="float-right mr-3">
+                <i *ngIf=" i!=0 && formation?.statut" (click)="augmenterPriorite(formation);$event.stopPropagation()"
+                   class="pi pi-chevron-up"></i>
+                <i *ngIf=" i!=listFormationActif?.length-1 && formation?.statut"
+                   (click)="diminuerPriorite(formation);$event.stopPropagation()"
+                   class="pi pi-chevron-down"></i>
+              </div>
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+            <span *ngIf="formation?.statut && deleteButtonControl()" class="item mr-3"
+                  (click)="showConfirmDeleteFormation(formation,$event)">
+                  <img src="assets/icons/employe/Btn_Close.svg"
+                       alt="no image">
+            </span>
+                  <span (click)="activateFormationAndUpdatePriorite(formation,$event)" class="item mr-3"
+                        *ngIf="!formation?.statut">
+            <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+             <span class="rhis-tooltip">{{'EMPLOYEE.RENDRE_ACTIF_EMPLOYE' | translate}}</span>
+             </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+</div>
+
+
+<!--ADD / UPDATE TYPE FORMATION-->
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddUpdateTypeFormationPopup"
+  [title]=showAddUpdateTypeFormationPopupTitle
+  [width]="popUpStyle?.width">
+
+  <rhis-add-list-formation *ngIf="showAddUpdateTypeFormationPopup"
+                           (addOrUpdateTypeFormationEvent)="addOrUpdateTypeFormation($event)"
+                           (resetErrorMessagesEventLabel)="resetErrorMessagesLabelEvent()"
+                           (resetErrorMessagesEventCode)="resetErrorMessagesEventCode()"
+                           [selectedTypeFormation]="selectedTypeFormation"
+                           [showAddOrUpdateTypeFormationButtons]="showAddOrUpdateTypeFormationButtons"
+                           [libelleExiste]="libelleExiste" [codeExiste]="codeExiste"
+  ></rhis-add-list-formation>
+</rhis-pop-up>
+
+<!--CONFIRMATION AND TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+
+

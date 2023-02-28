@@ -1,0 +1,29 @@
+<div id="menu" class="scroll-perso-rhis scroll-menu-rhis">
+  <p-sidebar visible=true [modal]=false
+             [ngClass]="{'open-menu': openedMenu, 'close-menu': !openedMenu}">
+    <div>
+      <nav #navMenu [ngClass]="{'scroll-general-rhis': displayScrollMenu}">
+        <div *ngIf="openedMenu">
+          <p-panelMenu [multiple]=false [model]="shownMenu" (click)="reuinitialisationScroll()"></p-panelMenu>
+          <div class="open_menu_Rhis" type="text" (click)="openClosePanel()" pButton icon="" label="{{'BUTTON.CLOSE'|translate}}"></div>
+        </div>
+        <div *ngIf="!openedMenu">
+          <p-tieredMenu [hideDelay]="0"
+                        [model]="shownMenu"
+                        [ngClass]="{'parc-menu-showed': parcMenuShowed,
+                                    'other-menu-showed': !parcMenuShowed}">
+          </p-tieredMenu>
+          <div class="close_menu_Rhis" type="text" (click)="openClosePanel()" pButton icon="" label="open"></div>
+        </div>
+      </nav>
+    </div>
+  </p-sidebar>
+</div>
+
+<div (click)="openClosePanel()" class="icon-item">
+    <span>
+      <img src="assets/icons/accueil/Bar_Latéral/Bar_Latéral/Menu_Icon_Principal/{{switchIcon}}"
+           [style.width]="'24px'" alt="">
+    </span>
+  <span class="icon-label" *ngIf="switchIcon=='close.svg' && showedLabels">{{'BUTTON.CLOSE'|translate}}</span>
+</div>

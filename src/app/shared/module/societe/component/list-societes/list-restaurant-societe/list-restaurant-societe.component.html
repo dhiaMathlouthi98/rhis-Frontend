@@ -1,0 +1,21 @@
+<div class="rhis-container">
+  <div class="header">
+    <div class="name">
+      <div class="avatar"><span>{{societeName?.substring(0, 1) | uppercase}}</span></div>
+      <div class="full-name">{{societeName}}</div>
+    </div>
+  </div>
+
+  <div class="title">
+    <span>{{"RESTAURANT.ALL" | translate}}</span>
+    <span
+      [routerLink]="rhisRouter.getRouteAllRestaurantByIdSociete('HOME_SOCIETE', societeUuid)">{{"BUTTON.SEE" | translate}}</span>
+  </div>
+  <div class="restaurants">
+    <div class="list scroll-general-rhis">
+      <div class="restaurant" *ngFor="let restaurant of restaurants">
+        <span>{{restaurant | titlecase}}</span>
+      </div>
+    </div>
+  </div>
+</div>

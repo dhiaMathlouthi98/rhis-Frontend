@@ -1,0 +1,82 @@
+<div class="rhis-container view">
+  <div class="list-restaurant-general">
+    <div class="header row justify-content-between scroll-width-TopRhis header-reports-rhis">
+      <div class="col-5 titre">
+        <h1 class="titre-principale-page-rhis">
+          {{"LIST_RESTAURANT.TITLE" | translate}}
+        </h1>
+      </div>
+      <div class="col-7">
+        <div class="float-right block-list-rest-spec">
+          <div class="search">
+            <input [formControl]="searchField" id="card-table-search-input" placeholder={{searchByName}} type="text">
+            <span (click)="searchRestaurant()" id="card-table-search-click">
+              <img alt="" src="assets/icons/employe/ico_search_small.svg">
+            </span>
+          </div>
+          <button (click)="getAffichage(true);" class="btn btn-light" id="List-franchise-card-btn" type="button">
+          <span>
+            <img alt="no print icon" src="assets/icons/gdh/Ico_Grille_ON.svg">
+          </span>
+          </button>
+          <button (click)="getAffichage(false);" class="btn btn-light" id="List-franchise-table-btn" type="button">
+          <span>
+            <img alt="no print icon" src="assets/icons/gdh/Ico_Analyse_OFF.svg">
+          </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="modeAffichage; else RestoTableTemplate" class="row all-list-restaurant scroll-general-rhis"
+         [style.height.px]="heightBlocListRestaurant">
+      <ng-container *ngIf="listRestaurant?.length; else notFoundMsg">
+        <div class="col-xl-4 col-lg-4 col-6 item-restaurant-col" *ngFor="let restaurant of listRestaurant">
+          <div class="bloc-item-restaurant-list card">
+            <div class="card-header" (click)="redirectToRestaurant(restaurant)">
+              {{restaurant?.libelleRestaurant}}
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item item-flex-btw-list-restaurant">
+                <div>{{"LIST_RESTAURANT.EMPLOYES_ACTIVE" | translate}}</div>
+                <div class="second">
+                  <div class="cercle">
+                    {{restaurant?.nbreEmplyeeActif}}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item item-flex-btw-list-restaurant">
+                <div>{{"LIST_RESTAURANT.CHIFFRE_AFFAIRE_JOUR" | translate}}</div>
+                <div class="second">
+                  <div class="cercle">
+                    {{restaurant?.venteProv}}
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item item-flex-btw-list-restaurant">
+                <div>{{"LIST_RESTAURANT.EMPLOYES_PRESENT" | translate}}</div>
+                <div class="second">
+                  <div class="cercle">
+                    {{restaurant?.nbreemployeePresent}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="bloc-accces" (click)="redirectToRestaurant(restaurant)">
+              <img src="assets/icons/list-restaurant/go.png" [title]='imgTitle'>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #notFoundMsg>
+        <div class="align-not-found-msg">
+          {{notFoundMsgText}}
+        </div>
+      </ng-template>
+    </div>
+    <ng-template #RestoTableTemplate>
+      <rhis-list-restaurants [searchedValue]="searchedValue">
+      </rhis-list-restaurants>
+    </ng-template>
+  </div>
+</div>

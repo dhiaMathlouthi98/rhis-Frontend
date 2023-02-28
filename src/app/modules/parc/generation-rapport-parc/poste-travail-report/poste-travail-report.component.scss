@@ -1,0 +1,70 @@
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 5px;
+}
+
+.wrapper {
+  height: 450px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  font-size: 13px;
+  margin-top: 60px;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    height: 4px;
+    background-color: #F5F5F5;
+  }
+
+  &:hover::-webkit-scrollbar {
+    height: 8px;
+  }
+
+}
+
+.table-jour {
+  width: 150%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.table-semaine {
+  width: 97%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.stick-th {
+  position: sticky !important;
+  left: -1px;
+  z-index: 1000;
+}
+.stick-th-head {
+  position: sticky !important;
+  top: -1px;
+  z-index: 1000;
+}
+.stick-th-2 {
+  position: sticky !important;
+  left: -1px;
+  z-index: 1000;
+}
+
+.postt-cell {
+  width: max-content !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.color1 {
+  background-color: #c0c0c0;
+}
+.color2 {
+  background-color: #d9e2f3;
+}
+

@@ -1,0 +1,177 @@
+{
+  "remarquesCommentaire": "Journée perturbée, faite attention",
+  "date": "2020-04-23",
+  "first": true,
+  "totalElements": 5,
+  "totalPages": 1,
+  "size": 5,
+  "pageNumber": 0,
+  "pageSize": 5,
+  "last": true,
+  "employees": [
+    {
+      "idEmploye": 1000,
+      "matricule": "0001",
+      "nom": "Khemiri",
+      "prenom": "Amine",
+      "shifts": [
+        {
+          "id": 1,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "20:00:00",
+          "heureDebutIsNight": false,
+          "heureFin": "22:00:00",
+          "heureFinIsNight": false,
+          "totalMinutes": 120,
+          "pointages": []
+        },
+        {
+          "id": 2,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "18:00:00",
+          "heureDebutIsNight": false,
+          "heureFin": "19:00:00",
+          "heureFinIsNight": false,
+          "totalMinutes": 60,
+          "pointages": []
+        },
+        {
+          "id": 33,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "11:00:00",
+          "heureDebutIsNight": false,
+          "heureFin": "14:00:00",
+          "heureFinIsNight": false,
+          "totalMinutes": 180,
+          "pointages": [
+            {
+              "id": 2,
+              "dateJournee": "2020-04-23",
+              "heureDebut": "12:30:00",
+              "heureDebutIsNight": false,
+              "heureFin": "13:15:00",
+              "heureFinIsNight": false,
+              "totalMinutes": 45,
+              "sortie": 0,
+              "arrives": 0,
+              "typePointage": {
+                "id": 6137,
+                "libelle": "rs",
+                "statut": false
+              },
+              "modified": false
+            },
+            {
+              "id": 1,
+              "dateJournee": "2020-04-23",
+              "heureDebut": "10:50:00",
+              "heureDebutIsNight": false,
+              "heureFin": "12:00:00",
+              "heureFinIsNight": false,
+              "totalMinutes": 70,
+              "sortie": 0,
+              "arrives": -10,
+              "modified": false,
+              "typePointage": {
+                "id": 5583,
+                "libelle": "Terrain",
+                "statut": true
+              }
+            },
+            {
+              "id": 3,
+              "dateJournee": "2020-04-23",
+              "heureDebut": "13:30:00",
+              "heureDebutIsNight": false,
+              "heureFin": "13:50:00",
+              "heureFinIsNight": false,
+              "totalMinutes": 20,
+              "sortie": -10,
+              "arrives": 0,
+              "modified": false,
+              "typePointage": {
+                "id": 6134,
+                "libelle": "Delegation",
+                "statu": true
+              }
+            }
+          ]
+        },
+        {
+          "id": 3434,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "15:00:00",
+          "heureDebutIsNight": false,
+          "heureFin": "16:00:00",
+          "heureFinIsNight": false,
+          "totalMinutes": 60,
+          "pointages": [
+            {
+              "id": 23,
+              "dateJournee": "2020-04-23",
+              "heureDebut": "14:50:00",
+              "heureDebutIsNight": false,
+              "heureFin": "15:50:00",
+              "heureFinIsNight": false,
+              "totalMinutes": 60,
+              "sortie": -10,
+              "arrives": -10,
+              "typePointage": null,
+              "modified": true
+            }
+          ]
+        }
+      ],
+      "absences": [
+        {
+          "id": 2,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "19:50:00",
+          "heureDebutIsNight": false,
+          "heureFin": "22:00:00",
+          "heureFinIsNight": false,
+          "totalMinutes": 130,
+          "typeEvenement": {
+            "idTypeEvenement": 8214,
+            "code": "FP",
+            "libelle": "Formation",
+            "codeGdh": "FP",
+            "codePaye": null,
+            "payer": true,
+            "travaille": true,
+            "previsible": true,
+            "statut": false,
+            "valorise": false
+          }
+        },
+        {
+          "id": 1,
+          "dateJournee": "2020-04-23",
+          "heureDebut": "01:00:00",
+          "heureDebutIsNight": true,
+          "heureFin": "03:00:00",
+          "heureFinIsNight": true,
+          "totalMinutes": 120,
+          "typeEvenement": {
+            "idTypeEvenement": 8203,
+            "code": "HT",
+            "libelle": "Heure travaillée",
+            "codeGdh": "HT",
+            "codePaye": null,
+            "payer": true,
+            "travaille": true,
+            "previsible": true,
+            "statut": true,
+            "valorise": false
+          }
+        }
+      ],
+      "coupures": 2,
+      "repas": 1,
+      "tempsPlanifies": 180,
+      "tempsPointes": 115,
+      "tempsAbsences": 180
+    }
+  ]
+}
+

@@ -1,0 +1,90 @@
+.rhis-container {
+  width: 100%;
+  height: 100%;
+
+  img {
+    cursor: pointer;
+  }
+
+  .status-select {
+    height: fit-content;
+    position: relative;
+
+    i {
+      font-size: 0.65rem;
+    }
+
+    div {
+      position: absolute;
+      top: 25px;
+      z-index: 1;
+      right: 157px;
+      width: 77%;
+      margin-left: 10px;
+    }
+  }
+
+  :host ::ng-deep {
+    .ui-dropdown {
+      height: 35px;
+      width: 250px !important;
+      max-width: 100% !important;
+
+      .ui-dropdown-label {
+        bottom: 13px;
+      }
+    }
+
+    .parametre-planning-general-rhis {
+      .bloc-taux-parametre-planning {
+        background: #fff;
+        border-radius: 5px;
+        padding: 30px;
+        width: 48%;
+        margin-right: 2%;
+
+        .legend-planning-config-rhis {
+          legend {
+            width: auto;
+          }
+        }
+
+        .form-control-static {
+          margin-left: 5px;
+        }
+      }
+
+      .table-list-parametre-planning {
+        width: 50%;
+        background: #fff;
+        border-radius: 5px;
+        padding: 30px;
+
+        .ui-calendar {
+          position: relative;
+
+          .ui-inputtext {
+            margin-top: 0;
+            text-align: center;
+            padding: auto;
+            width: 20em;
+          }
+        }
+      }
+    }
+
+  }
+
+  .top-10 {
+    top: 10px;
+  }
+
+  th {
+    color: #9E9E9E !important;
+    text-align: center;
+  }
+
+  col:last-child {
+    width: 230px;
+  }
+}

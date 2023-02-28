@@ -1,0 +1,16 @@
+<div class="rhis-progress-bar"
+     mwlResizable
+     [style.width.px]='width'
+     [style.background-color]="backColor"
+     [validateResize]="validate"
+     [enableGhostResize]="true"
+     (resizeEnd)="onResizeEnd($event)"
+>
+  <div class="left-drag"></div>
+  <div class="right-drag"></div>
+  <div
+    class="{{resizeSide}}"
+    mwlResizeHandle
+    [resizeEdges]="edge"
+  ></div>
+</div>

@@ -1,0 +1,33 @@
+<div class="rhis-container">
+  <div class="col-6 col-md-6 col-lg-3 mt-3 font-weight-bold space-between">
+      {{'GDH.PAY.REPORT_LIST' | translate}}
+  </div>
+<div class="align-rapport-list space-between">
+  <div class="row ml-0 mr-0" *ngFor="let report of reportListDisplay">
+    <div class="col-2 pl-0">
+      <p-inputSwitch [(ngModel)]="report.value" [disabled]="report?.disabled" (onChange)="changeReportValue()"
+      [ngClass]="{'green-switch' : report?.value,'grey-switch' : !report?.value}"></p-inputSwitch>
+    </div>
+    <div class="col-10 pr-0 pull-right">
+         <span>{{report?.name | translate}}</span>
+    </div>
+  </div>
+  <div class="align-validation-submit-buttons">
+    <div class="col-6 pop-up-table-rhis">
+      <button (click)="downloadReports()" 
+              class="btn button-popup-rhis orange-background  color-btn-white-rhis btn-save-rhis"
+              id="download_PAIE_POPUP_Gen" type="button">
+        <span> {{'GDH.PAY.DOWNLOAD_BOUTON_POPUP' | translate}}</span>
+      </button>
+      <button (click)="validatePaye()" [hidden]="isPeriodValidated"
+              class="btn button-popup-rhis blue-background color-btn-white-rhis btn-cancel-rhis "
+              id="Validation_PAIE_Popup_Gen" type="button">
+        <span>
+          {{'GDH.PAY.VALIDER_BOUTON_POPUP'  | translate}}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>

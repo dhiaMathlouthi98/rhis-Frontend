@@ -1,0 +1,50 @@
+<form [formGroup]="infosPersonnellesForm">
+  <div class="row">
+    <div class="col-6">
+    </div>
+    <div class="col-6 float-right">
+      <button *ngIf="addButtonControl()" type="button" (click)="onSubmit()"
+              class="btn save-add-button-rhis orange-background"
+              id="EMP-infoPerso-save-h-btn">
+        <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <rhis-coordonnees
+    formControlName="coordonnees"
+    [listBadge]="listBadge"
+    [listPays]="listPays"
+    [hiddenBadge]='hiddenBadge'
+    [onSubmit]="formSubmitted"
+    [Submit]="formSubmittedAndValid"
+    [unicite]="unicite"
+    [statutAutoTravailTitreSejour]="statutAutoTravailTitreSejour"
+    (apiResponse)='getStatutAutoTravailTitreSejour($event)'
+    class="row">
+  </rhis-coordonnees>
+  <rhis-infos-bancaires class="row" formControlName="banque" [unicite]="unicite"></rhis-infos-bancaires>
+  <rhis-sante
+    formControlName="securiteSocial"
+    [unicite]="unicite"
+    [onSubmit]="formSubmitted"
+    class="row">
+  </rhis-sante>
+  <rhis-divers
+    formControlName="divers"
+    [listMoyenTransport]="listMoyenTransport"
+    class="row">
+  </rhis-divers>
+  <div class="row">
+    <div class="col-6">
+    </div>
+    <div class="col-6 float-right">
+      <button *ngIf="addButtonControl()" (click)="onSubmit()" class="btn save-add-button-rhis orange-background"
+              id="EMP-infoPerso-save-b-btn"
+              type="button">
+        <span>{{'EMPLOYEE.ADD_FORM_BTN_ENREGITRER' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</form>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

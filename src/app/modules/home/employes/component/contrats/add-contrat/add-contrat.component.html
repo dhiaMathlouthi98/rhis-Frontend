@@ -1,0 +1,112 @@
+<form [formGroup]="formGroup">
+  <span *ngIf="contratExist" class="form-item-error red small "
+        id="EMP_addContrat-existError-popup">
+    {{"CONTRAT.ERR_DATES_NON_VALIDE" | translate}}
+  </span>
+  <div class="view-section container">
+    <div class="section-body">
+      <div class="row mb-3">
+        <div class="section-element calendar-section width-100">
+          <div class="section-element-title">
+            <label class="section-element-title"
+                   for="EMP_addContrat-gpeTr-popup">{{'CONTRAT.GROUPE_TRAVAIL' | translate}}
+              *</label>
+          </div>
+          <p-dropdown
+            rhisStyleForm
+            [hasError]="groupeTravail.invalid && isSubmitted"
+            [selector]="selectors.dropDownSelector"
+            [autoDisplayFirst]="false"
+            (onChange)="onSelectGroupeTravail()"
+            id="EMP_addContrat-gpeTr-popup"
+            formControlName="groupeTravail"
+            optionLabel="libelle"
+            [options]="listGroupTravail"
+            class="drop-down-general">
+          </p-dropdown>
+        </div>
+        <span class="form-item-error red small"
+              *ngIf="(formGroup.get('groupeTravail').hasError('required') || formGroup.get('groupeTravail').hasError('trimValidator'))  && (formGroup.controls['groupeTravail'].touched || isSubmitted)"
+              id="EMP_addContrat-gpeTrError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <div>
+          <span *ngIf="presenceDirecteur"
+                class="form-item-error red small"
+                id="EMP_addContrat-dirError-popup">{{"GROUPE_TRAVAIL.ERREUR_DIRECTEUR" | translate}} {{groupeTravailSelected}}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="section-element calendar-section width-100">
+          <div class="section-element-title">
+            <label class="section-element-title" for="EMP_addContrat-type-popup">{{'CONTRAT.TYPE' | translate}}*</label>
+          </div>
+          <p-dropdown
+            rhisStyleForm
+            [hasError]="typeContrat.invalid && isSubmitted"
+            (onChange)="onSelectTypeContrat()"
+            [selector]="selectors.dropDownSelector"
+            [autoDisplayFirst]="false"
+            id="EMP_addContrat-type-popup"
+            formControlName="typeContrat"
+            optionLabel="libelle"
+            [options]="listTypeContrat"
+            class="drop-down-general">
+          </p-dropdown>
+        </div>
+        <span class="form-item-error red small "
+              *ngIf="(formGroup.get('typeContrat').hasError('required') || formGroup.get('typeContrat').hasError('trimValidator'))  && (formGroup.controls['typeContrat'].touched || isSubmitted)"
+              id="EMP_addContrat-typeCValidator-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}
+        </span>
+      </div>
+      <div class="row mb-4">
+        <div class="font-medium col-6 pl-0">
+          <div class="section-element-title">
+            <label class="section-element-title" for="EMP_addContrat-dateEff-popup">
+              {{'CONTRAT.DATE_EFF' | translate}}*
+            </label>
+          </div>
+          <rhis-calendar
+            rhisStyleForm
+            [hasError]="dateEffective.invalid && isSubmitted"
+            [selector]="selectors.calendarSelector"
+            (date)="onSelectDateEffective()"
+            dateFormat="dd/mm/yy"
+            [placeholder]="'JJ/MM/AAAA'"
+            formControlName="dateEffective"
+            id="EMP_addContrat-dateEff-popup">
+          </rhis-calendar>
+          <span class="form-item-error red small "
+                *ngIf="(formGroup.get('dateEffective').hasError('required') || formGroup.get('dateEffective').hasError('trimValidator'))  && (formGroup.controls['dateEffective'].touched || isSubmitted)"
+                id="EMP_addContrat-dateEffError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}
+          </span>
+        </div>
+        <div class="font-medium col-6 pr-0">
+          <div class="section-element-title">
+            <label class="section-element-title"
+                   for="EMP_addContrat-dateF-popup">{{'CONTRAT.DATE_FIN_CONTRAT' | translate}}</label>
+          </div>
+          <rhis-calendar
+            [hasError]="datefin.invalid && isSubmitted"
+            rhisStyleForm
+            [selector]="selectors.calendarSelector"
+            id="EMP_addContrat-dateF-popup"
+            dateFormat="dd/mm/yy"
+            (date)="onSelectDateFin()"
+            [placeholder]="'JJ/MM/AAAA'"
+            [minDate]="minDatefinContrat"
+            formControlName="datefin">
+          </rhis-calendar>
+          <span class="form-item-error red small "
+                *ngIf="(formGroup.get('datefin').hasError('required') || formGroup.get('datefin').hasError('trimValidator'))  && (formGroup.controls['datefin'].touched || isSubmitted)"
+                id="EMP_addContrat-dateFError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button (click)="onSubmit()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+          id="EMP_addContrat-save-popup"
+          type="button">
+    <span>{{buttonLabel | uppercase}}</span>
+  </button>
+</form>
+

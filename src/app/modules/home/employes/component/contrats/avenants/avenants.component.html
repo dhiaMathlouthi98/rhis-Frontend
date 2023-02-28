@@ -1,0 +1,102 @@
+<div class="container-fluid mt-4">
+  <p-accordion>
+    <p-accordionTab
+      class="titleHeader"
+      (selectedChange)="getFullAvenant(avenant,$event)"
+      [header]=avenant?.header
+      [selected]="avenant?.selectedAccordion">
+      <div class="row justify-content-end">
+        <button type="button" *ngIf="avenant?.idContrat && deleteButtonControl()"
+                (click)="showConfirmDeleteAvenant(avenant.idContrat, avenant.uuid)"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-delete-btn">
+          <span>{{'CONTRAT.DELETE_AVENANT' | translate}}</span>
+        </button>
+        <button type="button" *ngIf="!avenant?.idContrat || avenant?.updateContratBoolean" (click)="saveAvenant()"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-save-h-btn">
+          <span>{{'CONTRAT.SAVE_AVENANT' | translate}}</span>
+        </button>
+        <button type="button" *ngIf="!avenant?.idContrat || avenant?.updateContratBoolean" (click)="resetAvenant(false)"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-reset-h-btn">
+          <span>{{'CONTRAT.RESET' | translate}}</span>
+        </button>
+      </div>
+      <rhis-infos-principales [contratInfoPrimary]="avenant?.contratInfoPrimary"
+                              [listGroupTravail]="listGroupTravail"
+                              [listTypeContrat]="listTypeContrat"
+                              [hidenGroupTravail]="hidenGroupTravail"
+                              [hidenTypeContrat]="true"
+                              [contratPrincipal]="avenant?.contratPrincipale"
+                              [disablGroupTravail]="disablGroupTravail"
+                              [avenantId]="avenant?.idContrat"
+                              [contratId]="avenant?.idContrat"
+                              [minDateEffectifAvenant]="minDateEffectifAvenant"
+                              [maxDateFinAvenant]="maxDateFinAvenant"
+                              [contratExist]="avenant?.contratExistInfoPrimary"
+                              [avenantUpdateId]="avenantUpdateId"
+                              [setValueContrat]="false"
+                              [maxDateEffectiveAvenant]="maxDateEffectiveAvenant"
+                              (resetErrorMessagesDateEffectifEvent)="resetErrorMessagesDateEffectifAndDateFinInfoPrimary()"
+                              (resetErrorMessagesDateFinEvent)="resetErrorMessagesDateEffectifAndDateFinInfoPrimary()"
+                              (confirmUpdateInfoPrimarysetValue)="showConfirmUpdateAvenant($event)"
+                              (saveInfoPrimarysetValue)="saveInfoPrimaryAvenant($event)">
+
+      </rhis-infos-principales>
+      <rhis-heures-repartition [repartitionTime]="avenant?.repartitionTime"
+                               [repartitionTimeDefault]="repartitionTimeDefault"
+                               [nbrHeuresSections]="nbrHeuresSections"
+                               [RepartitionSections]="RepartitionSections"
+                               [avenantId]="avenant?.idContrat"
+                               [contratId]="avenant?.idContrat"
+                               [avenantUpdateId]="avenantUpdateId"
+                               [nbrHeuresTitle]="nbrHeuresTitle"
+                               [totalHebdoTitle]="totalHebdoTitle"
+                               [istotalHeuresEquals]="avenant?.istotalHeuresEquals"
+                               (calculTotalHebdo)="calculeTotalHebdoAvenant($event)"
+                               (saveNbHeure)="saveNbHeureAvenant($event)"
+                               (saveTotalHebdo)="saveRepartitionAvenant($event)"
+                               [setValueContrat]="false"
+                               [ouvre]="avenant?.ouvre"
+                               [ouvrable]="avenant?.ouvrable"
+                               [arrondiContratMensuel]="arrondiContratMensuel"
+                               (confirmUpdateRepartitionsetValue)="showConfirmUpdateAvenant($event)"
+                               (confirmUpdateHeureHebdosetValue)="showConfirmUpdateAvenant($event)"
+                               [paramMonthWeek]="paramMonthWeek"
+                               [prefixId]="'Avenant-'"
+      ></rhis-heures-repartition>
+      <rhis-disponibilite-container
+        *ngIf="avenant?.idContrat ? avenant?.disponibilite?.jourDisponibilites : true"
+        [isAlternate]="avenant?.disponibilite?.alternate"
+        [data]="avenant?.disponibilite?.jourDisponibilites || []"
+        [openningHours]="openHours"
+        [closureHours]="closeHours"
+        [disponibiliteConfig]="disponibiliteConfig"
+        [id]="avenant?.idContrat"
+        [updatedId]="avenantUpdateId"
+        [hebdo]="getFieldValue('hebdo', avenant)"
+        [partialTime]="getFieldValue('tempsPartiel', avenant)"
+        (saveAlternate)="saveAlternate($event)"
+        (currentDispo)="saveDisponibilite($event)"
+        (confirmUpdateDispoSetValue)="showConfirmUpdateAvenant($event)"
+      >
+      </rhis-disponibilite-container>
+      <div class="row justify-content-end mt-4">
+        <button (click)="saveAvenant()" *ngIf="!avenant?.idContrat || avenant?.updateContratBoolean"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-save-b-btn"
+                type="button">
+          <span>{{'CONTRAT.SAVE_AVENANT' | translate}}</span>
+        </button>
+        <button (click)="resetAvenant(false)" *ngIf="!avenant?.idContrat || avenant?.updateContratBoolean"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-reset-b-btn"
+                type="button">
+          <span>{{'CONTRAT.RESET' | translate}}</span>
+        </button>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+

@@ -1,0 +1,50 @@
+.rhis-container {
+  position: relative;
+}
+
+.absolute-position {
+  position: absolute;
+  z-index: 1;
+}
+
+.top-unset {
+  top: unset;
+}
+
+.z-1 {
+  z-index: 1;
+}
+
+.margin-right-7 {
+  margin-right: 7rem;
+}
+
+.margin-right-7-avenant {
+  margin-right: 20rem;
+}
+
+.new-avenant {
+  width: 164px;
+}
+
+div[class^="avenant-du-contrat-"] {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+  z-index: 9;
+}
+
+.add-new-avenant {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: stretch;
+}

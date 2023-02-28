@@ -1,0 +1,117 @@
+<div class="rhis-container">
+  <form [formGroup]="formGroup">
+    <span *ngIf="formGroup.errors && isSubmitted" class="global-error-position red">
+      {{"DISCIPLINE.SANCTION_ERROR" | translate}}
+    </span>
+    <div [ngClass]="{'section-body-with-error': formGroup.errors && isSubmitted}" class="section-body">
+      <div class="row">
+        <div class="col-4">
+          <label class="section-element-title" for="EMP_Sanction-date-frais">
+            {{'DISCIPLINE.DATE_FAIS' | translate}}*
+          </label>
+          <rhis-calendar rhisStyleForm
+                         [hasError]="dateFais.invalid && isSubmitted"
+                         [selector]="selectors?.calendarSelector"
+                         dateFormat="dd/mm/yy"
+                         id="EMP_Sanction-date-frais"
+                         [placeholder]="'JJ/MM/AAAA'"
+                         formControlName="dateFais"></rhis-calendar>
+          <span class="form-item-error red small"
+                id="EMP_Sanction-date-frais-error"
+                *ngIf="dateFais.hasError('required') && isSubmitted">{{"DISCIPLINE.DATE_FAIS_REQUIRED_MESSAGE" | translate}}</span>
+        </div>
+        <div class="col-4">
+          <label class="section-element-title" for="EMP_Sanction-dateDemandeJustif">
+            {{'DISCIPLINE.DATE_DEMANDE_JUSTIF' | translate}}
+          </label>
+          <rhis-calendar rhisStyleForm
+                         [hasError]="formGroup?.errors?.dateDemandeJustif && isSubmitted"
+                         [selector]="selectors?.calendarSelector"
+                         dateFormat="dd/mm/yy"
+                         [placeholder]="'JJ/MM/AAAA'" id="EMP_Sanction-dateDemandeJustif"
+                         formControlName="dateDemandeJustif"></rhis-calendar>
+        </div>
+        <div class="col-4">
+          <label class="section-element-title" for="EMP_Sanction-dateConvocation">
+            {{'DISCIPLINE.DATE_CONVOCATION' | translate}}
+          </label>
+          <rhis-calendar rhisStyleForm
+                         [hasError]="formGroup?.errors?.dateConvocation && isSubmitted"
+                         [selector]="selectors?.calendarSelector"
+                         dateFormat="dd/mm/yy"
+                         id="EMP_Sanction-dateConvocation"
+                         [placeholder]="'JJ/MM/AAAA'"
+                         formControlName="dateConvocation"></rhis-calendar>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label class="section-element-title margin-top-input-pop-up" for="EMP_Sanction-dateEntretien">
+            {{'DISCIPLINE.DATE_ENTRETIEN' | translate}}
+          </label>
+          <rhis-calendar rhisStyleForm
+                         [hasError]="formGroup?.errors?.dateEntretien && isSubmitted"
+                         [selector]="selectors?.calendarSelector"
+                         dateFormat="dd/mm/yy"
+                         id="EMP_Sanction-dateEntretien"
+                         [placeholder]="'JJ/MM/AAAA'"
+                         formControlName="dateEntretien"></rhis-calendar>
+        </div>
+        <div class="col-4">
+          <label class="section-element-title margin-top-input-pop-up" for="EMP_Sanction-dateNotification">
+            {{'DISCIPLINE.DATE_NOTIFICATION' | translate}}
+          </label>
+          <rhis-calendar rhisStyleForm
+                         [hasError]="formGroup?.errors?.dateNotification && isSubmitted"
+                         [selector]="selectors?.calendarSelector"
+                         dateFormat="dd/mm/yy"
+                         id="EMP_Sanction-dateNotification"
+                         [placeholder]="'JJ/MM/AAAA'"
+                         formControlName="dateNotification"></rhis-calendar>
+        </div>
+        <div class="col-4">
+          <label class="section-element-title margin-top-input-pop-up"
+                 for="EMP_Sanction-type">{{'DISCIPLINE.TYPE_SANCTION' | translate}}*</label>
+          <p-dropdown rhisStyleForm
+                      [hasError]="typeSanction.invalid && isSubmitted"
+                      [selector]="selectors?.dropDownSelector"
+                      id="EMP_Sanction-type"
+                      formControlName="typeSanction"
+                      [autoDisplayFirst]="autoDisplayFirst"
+                      [options]="typeSanctionList"
+                      [style]="{'minWidth':'50px', 'width': '50px'}"
+                      appendTo="body"
+                      scrollHeight="150px"
+                      class="drop-down-general"></p-dropdown>
+          <span class="form-item-error red small"
+                *ngIf="typeSanction.hasError('required') && isSubmitted"
+                id="EMP_Sanction-type-Error">{{ "DISCIPLINE.TYPE_SANCTION_REQUIRED_MESSAGE" | translate}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <div class="row">
+        <div class="section-element col-12">
+          <label class="section-element-title margin-top-input-pop-up"
+                 for="EMP_Sanction-textArea">{{"DISCIPLINE.FAITS_REPROCHES" | translate}}*</label>
+          <textarea
+            rhisStyleForm
+            [hasError]="faisReproches.invalid && isSubmitted"
+            formControlName="faisReproches"
+            id="EMP_Sanction-textArea"></textarea>
+          <span class="textarea-error red small"
+                *ngIf="faisReproches.hasError('required')&& isSubmitted"
+                id="EMP_Sanction-textArea-Error">{{"DISCIPLINE.FAITS_REPROCHES_REQUIRED_MESSAGE" | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <button (click)="onSubmit()" class="btn save-add-button-rhis orange-background btn-popup-rhis"
+              id="EMP_Sanction-add-btn"
+              type="button">
+        <span>{{buttonLabel | uppercase}}</span>
+      </button>
+    </div>
+  </form>
+</div>

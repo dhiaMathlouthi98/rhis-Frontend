@@ -1,0 +1,185 @@
+<div class="rhis-container">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="230"
+       class="header row">
+    <div class="col-5">
+      <h1 class="titre-principale-page-rhis">{{'MENU.RESTAURANT.SUB_MENU.PARAMETERES_NATIONAUX' | translate}}</h1>
+    </div>
+    <div class="col-5">
+      <div class="row" *ngIf="displayRestoList" >
+        <div>
+          <p-dropdown [options]="listRestoSource"
+                            [(ngModel)]="restaurantSource"
+                          optionLabel="libelleRestaurant"
+                          id="dropDownPremierJourSemaineId"
+                          (onChange)="changeParams()"
+                            class="drop-down-general">
+          </p-dropdown>
+        </div>
+         <div>
+           <div (click)="showPopupListResto()" class="rhis-tooltip-copy-generique bottom">
+             <img alt="no icon" class="copy-icon-style" src="assets/icons/parc/icon-copy-selected.png">
+             <div class="rhis-tooltip-copy param-nationaux">
+              <span>
+                {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_1" | translate}}
+              </span>
+               <span>
+                 {{"GESTION_PARC_RAPPORT.PARAM_NAT_RESOURCE" | translate}}
+               </span>
+               <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_2" | translate}}
+               </span>
+               <span>
+                 {{restaurantSource?.libelleRestaurant}}
+               </span>
+               <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_3" | translate}}
+               </span>
+             </div>
+           </div>
+        </div>
+      </div>
+  </div>
+    <div class="float-right col-2">
+      <button *ngIf="SaveButtonControl()" type="button" (click)="updateParamNat()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div [ngStyle]="{'height': heightInterface}"
+       class="container-fluid change-container-fluid-rhis scroll-content-rhis">
+    <!--Premier jour de la semaine-->
+    <div class="row mb-4">
+      <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 mt-125">
+        <label class="section-element-title">{{'PARAM_NAT.PREMIER_JOUR_SEMAINE' | translate}}</label>
+      </div>
+      <div class="col-3 col-md-3 col-lg-3 col-xl-2">
+        <p-dropdown [options]="jourSemaineItemList"
+                    [(ngModel)]="paramNationaux.premierJourSemaine"
+                    id="dropDownPremierJourSemaine1Id"
+                    class="drop-down-general"></p-dropdown>
+      </div>
+    </div>
+
+    <!--Définition du break-->
+    <div class="view-section-title">{{'PARAM_NAT.DEF_BREAK_LABEL' | translate}}</div>
+    <div class="section-body">
+      <div class="row mb-4">
+        <div class="col-12">
+          <p-checkbox [label]="soustraireBreakLabel" [(ngModel)]="paramNationaux.payerLeBreak"
+                      binary="true"></p-checkbox>
+          <p-checkbox [label]="inactiviteBreakLabel" [(ngModel)]="paramNationaux.inactiviteEstBreak"
+                      binary="true"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DURRE_SHIFT1' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeShift1" [tabindex]="1" [timeOnly]="true"></p-calendar>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2 offset-1">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DUREE_BREAK1' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeBreak1" [tabindex]="2" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DURRE_SHIFT2' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeShift2" [tabindex]="3" [timeOnly]="true"></p-calendar>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2 offset-1">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DUREE_BREAK2' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeBreak2" [tabindex]="4" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DURRE_SHIFT3' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeShift3" [tabindex]="5" [timeOnly]="true"></p-calendar>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2 offset-1">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DUREE_BREAK3' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureeBreak3" [tabindex]="6" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <!--Week end-->
+
+    <div class="view-section-title mt-4">{{'PARAM_NAT.WEEK_END_LABEL' | translate}}</div>
+    <div class="section-body">
+      <div class="row ">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'EMPLOYEE.DEPUIS' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-dropdown [options]="jourSemaineItemList"
+                      [(ngModel)]="paramNationaux.premierJourWeekend"
+                      id="dropDownPremierJourWeekendId"
+                      [tabindex]="7" class="drop-down-general"></p-dropdown>
+        </div>
+
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2 offset-1">
+          <label class="section-element-title mt-125 ml-5">{{'EMPLOYEE.AT' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.heureDebutWeekend" [tabindex]="8" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'EMPLOYEE.JUSQUA' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-dropdown [options]="jourSemaineItemList"
+                      [(ngModel)]="paramNationaux.dernierJourWeekend"
+                      id="dropDownDernierJourWeekendId"
+                      [tabindex]="9" class="drop-down-general"></p-dropdown>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2 offset-1">
+          <label class="section-element-title mt-125 ml-5">{{'EMPLOYEE.AT' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.heureFinWeekend" [tabindex]="10" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <!--Periode de travail-->
+
+    <div class="view-section-title mt-4">{{'PARAM_NAT.PERIODE_TRAVAIL_LABEL' | translate}}</div>
+    <div class="section-body">
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-2">
+          <label class="section-element-title mt-125">{{'PARAM_NAT.DUREE_PREF' | translate}}</label>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-3 col-3">
+          <p-calendar [(ngModel)]="paramNationaux.dureePref" [tabindex]="11" [timeOnly]="true"></p-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+             (submitDataEvent)="submit($event)" *ngIf="showPopup"
+             [dropdownListData]="listRestoDestination" [optionLabel]="'libelleRestaurant'"
+             [showPopUp]="showPopup" [submitButtonText]="submitButtonText" [resourceName]=resourceName
+             [restaurantSource]="restaurantSource?.libelleRestaurant">
+</rhis-pop-up-gestion-parc>

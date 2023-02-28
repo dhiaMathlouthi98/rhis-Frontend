@@ -1,0 +1,49 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="160">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"SOUSMENU.NATIONALITE" | translate}}</h1>
+    </div>
+    <div class="float-right col-6">
+      <button type="button" (click)="saveListNationalite()" class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list last-th-center" *ngIf="listNationalite?.length > 0">
+      <p-table [value]="listNationalite"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th>{{'TYPE_EVENT.CODE' | translate}}</th>
+            <th>{{'NATIONALITE.LIBELLE' | translate}}</th>
+            <th>{{'NATIONALITE.CAN_WORK' | translate}}</th>
+            <th>{{'NATIONALITE.CAN_STAY' | translate}}</th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-nationalite>
+          <tr class="table-row">
+            <td>
+              {{nationalite?.code}}
+            </td>
+            <td >
+              {{nationalite?.libelleFR}}
+            </td>
+            <td (click)="setBooleanTitreTravail(nationalite)">
+              <p-checkbox *ngIf="!nationalite?.titreTravail" binary="true"></p-checkbox>
+              <i class="pi pi-check" *ngIf="nationalite?.titreTravail"></i>
+            </td>
+            <td (click)="setBooleanTitreSejour(nationalite)">
+              <p-checkbox *ngIf="!nationalite?.titreSejour" binary="true"></p-checkbox>
+              <i class="pi pi-check" *ngIf="nationalite?.titreSejour"></i>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

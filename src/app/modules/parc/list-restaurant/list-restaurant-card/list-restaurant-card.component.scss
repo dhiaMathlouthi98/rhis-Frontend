@@ -1,0 +1,223 @@
+.list-restaurant-general {
+  .block-list-rest-spec {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-content: stretch;
+  }
+
+  .all-list-restaurant {
+    padding-top: 15px;
+    position: relative;
+    .item-restaurant-col {
+      margin-bottom: 40px;
+    }
+
+    .bloc-item-restaurant-list {
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 0 25px #ddd;
+      border-left: 5px solid #385FE3;
+
+      .card {
+        border: none;
+      }
+
+      .card-header:first-child {
+        text-align: center;
+        font-weight: bold;
+        padding: 20px 5px;
+        cursor: pointer;
+        border-bottom: #F0F0F0;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-family: "TT Wellingtons medium";
+        @media screen and (max-width: 1199px) {
+          font-size: 15px;
+          padding: 10px 5px;
+        }
+        @media screen and (max-width: 1024px) {
+          font-size: 14px;
+        }
+      }
+
+      .item-flex-btw-list-restaurant.list-group-item,
+      .item-flex-btw-list-restaurant {
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: stretch;
+        font-size: 14px;
+        @media screen and (max-width: 1199px) {
+          font-size: 13px;
+        }
+
+        div:first-child {
+          padding: 15px 8px;
+          width: 70%;
+        }
+
+        div.second {
+          padding: 0;
+          text-align: center;
+          width: 30%;
+
+          .cercle {
+            color: #FF9B42;
+            height: 45px;
+            line-height: 20px;
+            margin: 0 auto;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 100%;
+            @media screen and (max-width: 1199px) {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .card-footer.item-flex-btw-list-restaurant {
+        cursor: pointer;
+        color: #fff;
+
+        div.second {
+          width: 100px;
+          padding: 0;
+          text-align: right;
+          padding-right: 10px;
+        }
+
+        img {
+          max-width: 44px;
+          padding-top: 8px;
+          padding-left: 4px;
+        }
+      }
+
+      .bloc-accces {
+        position: absolute;
+        bottom: -20px;
+        right: -15px;
+        background: #ff9b42;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        box-shadow: 0 0 25px #ddd;
+        cursor: pointer;
+        @media screen and (max-width: 1199px) {
+          height: 45px;
+          width: 45px;
+        }
+
+        img {
+          max-width: 44px;
+          padding-top: 8px;
+          padding-left: 4px;
+          @media screen and (max-width: 1199px) {
+            max-width: 38px;
+          }
+        }
+      }
+    }
+  }
+
+  .save-add-button-rhis {
+    margin: 0 auto;
+  }
+
+  .scroll-general-rhis {
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &:hover::-webkit-scrollbar {
+      width: 8px;
+    }
+  }
+}
+.btn-group-class {
+  margin: 10px;
+  margin-left: 240px;
+  @media screen and (max-width: 1366px) {
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 8px 11px;
+    line-height: 19px;
+    @media screen and (max-width: 1366px) {
+      padding: 8px;
+    }
+  }
+
+  .btn-light {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.btn-group .btn-light.active {
+  background-color: #F7F7F7;
+}
+
+.align-listFranchise-btn {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-start;
+	align-content: stretch;
+}
+.align-display-buttons{
+  margin-left: auto;
+  margin-top: 45px;
+}
+.search {
+  height: 38px;
+  width: 296px;
+  border-radius: 19px;
+  background-color: #FFFFFF;
+  border: 1px solid #d1d1d9;
+  margin-right: 13px;
+
+  input {
+    outline: none;
+    height: inherit;
+    width: 235px;
+    margin-left: 20px;
+    border: none;
+    background-color: transparent;
+    color: #AFA899;
+    font-family: "TT Wellingtons Light";
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  span {
+    cursor: pointer;
+  }
+}
+.first-div{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: center;
+	align-content: stretch;
+  margin-top: 37px;
+}

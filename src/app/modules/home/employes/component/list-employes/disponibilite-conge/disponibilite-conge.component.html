@@ -1,0 +1,60 @@
+<div class="rhis-container">
+  <div class="header">
+    <div class="name">
+      <div class="avatar"><span>{{prenom.substring(0, 1) + nom.substring(0, 1) | uppercase}}</span></div>
+      <div class="full-name">{{prenom + ' ' + nom}}</div>
+    </div>
+    <div class="title">
+      {{_employeeDisponibiliteConge?.groupeTravail}}
+    </div>
+  </div>
+  <div class="conge">
+    <span>{{"DEMANDE_CONGE.VIEW" | translate}}</span>
+    <span>{{_employeeDisponibiliteConge?.congeActuel}}</span>
+    <span
+      [routerLink]="rhisRouter.getRouteDetailCongeAndAbsenceEmployee('HOME_EMPLOYEE', uuidEmployee)">{{"BUTTON.SEE_MORE" | translate}}</span>
+  </div>
+  <div class="container-dispo row">
+    <div class="title-dispo">{{"EMPLOYEE.DISPONIBILITES_LABEL" | translate}}</div>
+    <div class="dispo">
+      <div>
+        <p-accordion>
+          <p-accordionTab header={{paires}} [selected]="true">
+            <div class="dispo-journaliere"
+                 *ngFor="let disponibiliteJournaliere of disponibilitePaire">
+              <ng-container
+                *ngTemplateOutlet="dispo; context: {disponibiliteJournaliere: disponibiliteJournaliere}">
+              </ng-container>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header={{impaires}}>
+            <div class="dispo-journaliere"
+                 *ngFor="let disponibiliteJournaliere of disponibiliteImpaire">
+              <ng-container
+                *ngTemplateOutlet="dispo; context: {disponibiliteJournaliere: disponibiliteJournaliere}">
+              </ng-container>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template let-disponibiliteJournaliere="disponibiliteJournaliere" #dispo>
+
+  <span>{{disponibiliteJournaliere?.jourSemain | titlecase}}</span>
+  <span>{{disponibiliteJournaliere?.debut1 | date:'HH:mm'}}
+    <ng-container *ngIf="disponibiliteJournaliere?.fin1">-</ng-container>
+    {{disponibiliteJournaliere?.fin1 | date:'HH:mm'}}
+    <ng-container *ngIf="disponibiliteJournaliere?.debut2">|</ng-container>
+    {{disponibiliteJournaliere?.debut2 | date:'HH:mm'}}
+    <ng-container *ngIf="disponibiliteJournaliere?.fin2">-</ng-container>
+    {{disponibiliteJournaliere?.fin2 | date:'HH:mm'}}
+    <ng-container *ngIf="disponibiliteJournaliere?.debut3">|</ng-container>
+    {{disponibiliteJournaliere?.debut3 | date:'HH:mm'}}
+    <ng-container *ngIf="disponibiliteJournaliere?.fin3">-</ng-container>
+    {{disponibiliteJournaliere?.fin3 | date:'HH:mm'}}
+  </span>
+
+</ng-template>

@@ -1,0 +1,63 @@
+<rhis-affichage-loi-restaurant
+  (sendGroupTravail)="selectedGroupTravail = $event"
+  [selectedRestaurant]="selectedRestaurant"
+  [showEmployees]="false">
+  <div class="col-6 col-md-6 col-lg-3" restaurants>
+    <div class="section-element-title">{{'RESTAURANT.ALL' | translate}}</div>
+    <p-dropdown
+      [(ngModel)]="selectedRestaurant"
+      (onChange)="initializeGroupeTravail($event)"
+      [autoDisplayFirst]="true"
+      [options]="restaurants"
+      class="drop-down-general"
+      optionLabel="libelleRestaurant">
+    </p-dropdown>
+  </div>
+  <div class="col-1 col-md-1 col-lg-1 d-flex align-items-center rhis-tooltip-copy-generique bottom" copy_icon>
+    <img (click)="showPopUpCopy()"
+         [src]="'assets/icons/parc/' + (showPopup ? 'icon-copy-selected' : 'icon-copy-not-selected') + '.png'"
+         alt="no icon"
+         class="copy-icon-style">
+    <div class="rhis-tooltip-copy specifique">
+              <span>
+                {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_1" | translate}}
+              </span>
+      <span>
+                 {{"GESTION_PARC_RAPPORT.LOI_RESTO_RESOURCE" | translate}}
+               </span>
+      <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_2" | translate}}
+               </span>
+      <span>
+                 {{selectedRestaurant?.libelleRestaurant}}
+               </span>
+      <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_3" | translate}}
+               </span>
+    </div>
+  </div>
+</rhis-affichage-loi-restaurant>
+
+<rhis-pop-up-gestion-parc (closeEvent)="showPopup = false"
+                          (submitDataEvent)="copyValues($event)" *ngIf="showPopup"
+                          [dropdownListData]="restaurantsToCopyTo"
+                          [optionLabel]="'libelleRestaurant'"
+                          [showPopUp]="showPopup"
+                          [submitButtonText]="'GESTION_PARC_RAPPORT.SAVE_POPUP' | translate"
+                          [resourceName]=resourceName
+                          [restaurantSource]="selectedRestaurant?.libelleRestaurant">
+  <div (click)="getExcludedRestaurants($event, icon_text_hover_tooltip)"
+       (mouseenter)="showIconHoverText($event, icon_text_hover_tooltip)"
+       *ngIf="selectedGroupTravail?.libelle"
+       class="excluded_restaurant_icon position-absolute">
+    <img
+      [src]="'assets/icons/' + (excludedRestaurants?.length ? 'planning/Ico_Services' : 'parc/item_list_grey') + '.png'"
+      alt="">
+  </div>
+</rhis-pop-up-gestion-parc>
+<p-overlayPanel #icon_text_hover_tooltip
+                [dismissable]="true"
+                appendTo="body">
+  <div [innerHTML]="operationIconText" class="excluded_message scroll-general-rhis "></div>
+</p-overlayPanel>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

@@ -1,0 +1,59 @@
+.grey {
+  //background-color: rgba(92, 92, 92, 0.25) !important;
+  background-color: #bcc4cc !important;
+}
+
+:host ::ng-deep {
+  .table-list {
+    p-table {
+      .ui-table table {
+        .ui-table-thead {
+          > tr {
+            th {
+              padding: 10px 0 5px 0;
+              border: 1px solid #efefef;
+            }
+
+            > th:not(.colspan-3) {
+              width: 100px !important;
+
+              &:last-child {
+                text-align: center;
+              }
+            }
+
+            > th.colspan-3 {
+              width: 300px !important;
+
+              &:last-child {
+                text-align: center;
+              }
+            }
+          }
+        }
+
+        .ui-table-tbody {
+          > tr {
+            > td {
+              width: 100px;
+            }
+          }
+        }
+      }
+    }
+
+    .ui-table-scrollable-body {
+      overflow-x: auto;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+
+      &:hover::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+}

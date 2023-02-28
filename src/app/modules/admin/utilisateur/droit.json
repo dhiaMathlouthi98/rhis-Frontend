@@ -1,0 +1,10 @@
+{"permissions": [
+  { "permission": 1, "name": "visualisation" },
+  { "permission": 2, "name": "detailler" },
+  { "permission": 4,"name": "ajout" },
+  { "permission": 8, "name": "suppression" },
+  { "permission": 16, "name": "modification" },
+  { "permission": 32, "name": "activation/desactivation" },
+  { "permission": 64, "name": "duplication" }
+]
+}

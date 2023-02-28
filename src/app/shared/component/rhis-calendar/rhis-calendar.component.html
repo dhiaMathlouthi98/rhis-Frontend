@@ -1,0 +1,15 @@
+<p-calendar #calendar [(ngModel)]="model"
+            [dataType]="dataType"
+            [dateFormat]="dateFormat"
+            [showIcon]="showIcon"
+            [disabled]="disabled"
+            (onInput)="setDate($event)"
+            [minDate]="minDate"
+            [maxDate]= "maxDate"
+            (onSelect)="setDate($event)"
+            (onClose)="onTouched()"
+            [defaultDate]="defaultDate"
+            [placeholder]="placeholder"
+            appendTo="body"
+            autoZIndex="true">
+</p-calendar>

@@ -1,0 +1,84 @@
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="170" class="header row">
+    <div class="col-md-5 col-lg-6">
+      <h1 class="titre-principale-page-rhis">{{'TYPE_RESTAURANT.TYPE_RESTAURANT_NAME'|translate}}</h1>
+    </div>
+    <div class="float-right col-md-7 col-lg-6" *ngIf="addButtonControl()">
+      <button id="1004" type="button"
+              [routerLink]="rhisRouter.getRoute('TYPE_RESTAURANT')"
+              class="btn save-add-button-rhis blue-background">
+        <span>{{'LIST_TYPE_RESTAURANT.ADD_BTN_LABEL'|translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list" *ngIf="listTypeRestaurant?.length">
+      <p-table [scrollHeight]="heightInterface"
+               [scrollable]="true"
+               [value]="listTypeRestaurant">
+        <ng-template pTemplate="colgroup">
+          <colgroup>
+            <col *ngFor="let c of header">
+            <col>
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr class="header-row">
+            <th *ngFor="let h of header">{{h?.title}}</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-typeRestaurant>
+          <tr class="table-row" (dblclick)="modifyTypeRestaurant(typeRestaurant, i)">
+            <td>
+              {{typeRestaurant?.nomType}}
+            </td>
+            <td>
+              {{typeRestaurant?.typeComportementRestaurant}}
+            </td>
+            <td>
+              <div class="logo-container" *ngIf="imagesCoordinations[i]?.url">
+                <img [src]="imagesCoordinations[i]?.url" class="small-logo">
+                <span class="logo-tooltip">
+                    <img [src]="imagesCoordinations[i]?.url" class="middle-logo">
+                  </span>
+              </div>
+              <img src="assets/icons/shared/image-not-found.png" alt="" class="small-logo"
+                   *ngIf="!imagesCoordinations[i]?.url">
+            </td>
+            <td *ngIf="deleteButtonControl()">
+              <span class="item float-right mr-4" *ngIf="typeRestaurant?.statut "
+                    (click)=" showConfirmDelete(typeRestaurant?.uuid, i); $event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/Btn_Close.svg"
+                    alt="no image">
+              </span>
+              <span class="item float-right mr-4" *ngIf="!typeRestaurant?.statut"
+                    (click)="showConfirmActivation(typeRestaurant); $event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/subtract-circle-ADD.svg"
+                    alt="no image">
+               </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- popup to modify restaurant type -->
+<rhis-pop-up
+  (closeEvent)="popupVisibility = false"
+  [showPopUp]="popupVisibility"
+  title="{{'TYPE_RESTAURANT.MODIFY_RESTAURANT_TYPE_TITLE' | translate}}"
+>
+  <rhis-type-restaurant
+    [data]="selectedTypeRestaurant"
+    (savedTypeRestaurant)="updateList($event)"
+  ></rhis-type-restaurant>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+
+

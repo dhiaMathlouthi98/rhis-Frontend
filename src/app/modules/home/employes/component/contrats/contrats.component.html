@@ -1,0 +1,304 @@
+<div class="rhis-container">
+  <div class="row">
+    <div class="col align-self-end">
+      <button (click)="addNewContrat()"
+              *ngIf="addButtonControl()" [hidden]="newContratHidden"
+              class="btn save-add-button-rhis orange-background"
+              id="EMP-contrat-new-btn"
+              type="button">
+        <span>{{'CONTRAT.NOUVEAU_CONTRAT' | translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+  <p-accordion *ngIf="listContratDisplay?.length > 0">
+    <p-accordionTab *ngFor="let contrat of listContratDisplay; index as i"
+                    (selectedChange)="getFullContrat(contrat,$event)"
+                    [header]=contrat.header [selected]="contrat.selectedAccordion">
+      <div class="row justify-content-end mb-2">
+        <button type="button" *ngIf="contrat?.idContrat && deleteButtonControl()"
+                (click)="showConfirmDeleteContrat(contrat.idContrat, contrat.uuid)"
+                class="btn save-add-button-rhis orange-background"
+                id="EMP-avenant-delete-btn">
+          <span>{{'CONTRAT.SUPPRIMER_CONTRAT' | translate}}</span>
+        </button>
+        <button type="button" *ngIf="!contrat?.idContrat || contrat?.updateContratBoolean && updateButtonControl()"
+                (click)="saveContrat()" class="btn save-add-button-rhis orange-background"
+                id="EMP-contrat-save-btn">
+          <span>{{'CONTRAT.Save' | translate}}</span>
+        </button>
+        <button *ngIf="!contrat?.idContrat || contrat?.updateContratBoolean"
+                (click)="resetContrat()" class="btn save-add-button-rhis orange-background mr-3"
+                id="EMP-contrat-reset-btn">
+          <span>{{'CONTRAT.RESET' | translate}}</span>
+        </button>
+      </div>
+      <rhis-infos-principales [contratInfoPrimary]="contrat?.contratInfoPrimary"
+                              [listGroupTravail]="listGroupTravail"
+                              [dateFinPeriodEssai]="dateFinPeriodEssai"
+
+                              [listTypeContrat]="listTypeContrat"
+                              [hidenGroupTravail]="contrat?.contratPrincipale"
+                              [hidenTypeContrat]="contrat?.contratPrincipale"
+                              [contratExist]="contrat?.contratExistInfoPrimary"
+                              [contratId]="contrat?.idContrat"
+                              [contratUuid]="contrat?.uuid"
+                              [contratUpdateId]="contratUpdate?.idContrat"
+                              (resetErrorMessagesDateEffectifEvent)="resetErrorMessagesDateEffectifAndDateFinInfoPrimary($event)"
+                              (resetErrorMessagesDateFinEvent)="resetErrorMessagesDateEffectifAndDateFinInfoPrimary($event)"
+                              (saveInfoPrimarysetValue)="saveInfoPrimary($event)"
+                              (confirmUpdateInfoPrimarysetValue)="showConfirmUpdateContrat($event)"
+                              [dateConstraints]="dateConstraints"
+                              [setValueContrat]="true"
+                              [duplicateContrat]="contrat?.duplicateContrat"
+                              (openPopupListMotifSortie)="openPopupListMotifSortie($event)"
+                              [listmotifSorties]="listmotifSorties"
+                              [presenceDirecteur]="contrat?.presenceDirecteurInfoprimary"
+                              (getPresentConratHasGroupeTravailDirecteur)="getPresentConratHasGroupeTravailDirecteur($event)"
+                              (sendTxHoraireOfGroupeTravailToTxHoraireOfContrat)="sendTxHoraireOfGroupeTravailToTxHoraireOfContrat($event)"
+                              (setPresenceDirecteurToFalse)="setPresenceDirecteurToFalse($event)"
+                              (activeDesactiveContrat)="activeDesactiveContrat(contrat.idContrat)"
+                              (disactiveContratCDIHasMotifSortie)="disactiveContratCDIHasMotifSortie(contrat.idContrat)"
+                              class="row"
+      ></rhis-infos-principales>
+      <rhis-heures-repartition [repartitionTime]="contrat?.repartitionTime"
+                               [txHoraireGroupeTravail]="contrat?.txHoraireGroupeTravail"
+                               [contratId]="contrat?.idContrat"
+                               [contratUpdateId]="contratUpdate?.idContrat"
+                               [nbrHeuresSections]="nbrHeuresSections"
+                               [RepartitionSections]="RepartitionSections"
+                               [nbrHeuresTitle]="nbrHeuresTitle"
+                               [totalHebdoTitle]="totalHebdoTitle"
+                               [complContrat]="compl"
+                               (calculTotalHebdo)="calculeTotalHebdo($event)"
+                               (saveNbHeure)="saveNbHeure($event)"
+                               (saveTotalHebdo)="saveRepartition($event)"
+                               (confirmUpdateRepartitionsetValue)="showConfirmUpdateContrat($event)"
+                               (confirmUpdateHeureHebdosetValue)="showConfirmUpdateContrat($event)"
+                               [istotalHeuresEquals]="contrat?.istotalHeuresEquals"
+                               [ouvre]="contrat?.ouvre"
+                               [ouvrable]="contrat?.ouvrable"
+                               [dateConstraints]="dateConstraints"
+                               [setValueContrat]="true"
+                               [arrondiContratMensuel]="arrondiContratMensuel"
+                               [paramMonthWeek]="paramMonthWeek"
+                               [prefixId]="'Contrat-'"
+                               class="row heures-repartition-rhis"
+      ></rhis-heures-repartition>
+      <div class="{{ 'contrat-courant' + i }}">
+        <rhis-disponibilite-container *ngIf="contrat?.idContrat ? contrat?.disponibilite?.jourDisponibilites : true"
+                                      [isAlternate]="contrat?.disponibilite?.alternate"
+                                      [data]="contrat?.disponibilite?.jourDisponibilites || []"
+                                      [openningHours]="openHours"
+                                      [closureHours]="closeHours"
+                                      [disponibiliteConfig]="disponibiliteConfig"
+                                      [id]="contrat?.idContrat"
+                                      [hebdo]="getFieldValue('hebdo', contrat)"
+                                      [partialTime]="getFieldValue('tempsPartiel', contrat)"
+                                      [updatedId]="contratUpdate?.idContrat"
+                                      (confirmUpdateDispoSetValue)="showConfirmUpdateContrat($event)"
+                                      (currentDispo)="saveDisponibilite($event)"
+                                      (saveAlternate)="saveAlternate($event)"
+        ></rhis-disponibilite-container>
+        <div class="row justify-content-end mb-2 mt-4">
+          <button (click)="saveContrat()"
+                  *ngIf="(!contrat?.idContrat || contrat?.updateContratBoolean) && updateButtonControl()"
+                  class="btn save-add-button-rhis orange-background" id="EMP-contrat-save-update-btn"
+                  type="button">
+            <span>{{'CONTRAT.Save' | translate}}</span>
+          </button>
+          <button (click)="resetContrat()"
+                  *ngIf="!contrat?.idContrat || contrat?.updateContratBoolean"
+                  class="btn save-add-button-rhis orange-background mr-3"
+                  id="EMP-contrat-reset-update-btn">
+            <span>{{'CONTRAT.RESET' | translate}}</span>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="contrat?.avenantContrats?.length ===0" class="row block-row-without-margin-rhis">
+        <h3> {{'CONTRAT.PAS_AVENANT' | translate}}</h3>
+      </div>
+
+      <div class="add-new-avenant">
+        <button *ngIf="contrat?.idContrat && !newAvenantHidden  && addButtonControl()" type="button"
+                class="btn save-add-button-rhis orange-background mt-3"
+                (click)="addNewAvenant(contrat)"
+                id="EMP-contrat-newAvenant-btn">
+          <span>{{'CONTRAT.NEW_AVENANT' | translate}}</span>
+        </button>
+      </div>
+      <div class="row">
+        <ng-container *ngIf="contrat?.avenantContrats">
+          <ng-container *ngFor="let avenant of contrat?.avenantContrats; let firstElement = first ; index as av">
+            <div *ngIf="firstElement && isActiveAvenant(avenant) && avenant?.idContrat" class="first-avenant"></div>
+            <div class="{{ 'avenant-' + av + '-contrat-' + i }}">
+              <rhis-avenants [listGroupTravail]="listGroupTravail"
+                             [listTypeContrat]="listTypeContrat"
+                             [nbrHeuresSections]="nbrHeuresSections"
+                             [RepartitionSections]="RepartitionSections"
+                             [nbrHeuresTitle]="nbrHeuresTitle"
+                             [avenant]="avenant"
+                             [avenantUpdateId]="avenantUpdateId"
+                             [contratId]="contrat?.idContrat"
+                             [uuidContrat]="contrat?.uuid"
+                             [employee]="employee"
+                             [contratAvenant]="contrat?.avenantContrats"
+                             [dateFinContrat]="contrat?.datefin"
+                             [dateEffectiveContrat]=" contrat?.dateEffective"
+                             (setUpdateAvenantId)="setUpdateAvenantId($event)"
+                             (resetAvenantContrat)="resetAvenantContrat($event)"
+                             [avenantUpdate]="avenantUpdate"
+                             (deleteAvenantContrat)="deleteAvenantContrat($event)"
+                             (setAvenantContratDefault)="setAvenantContratDefault($event)"
+                             (setNewAvenantContratOrUpdateAvenantInListContrat)="setNewAvenantContratOrUpdateAvenantInListContrat($event)"
+                             [totalHebdoTitle]="totalHebdoTitle"
+                             [openHours]="openHours"
+                             [closeHours]="closeHours"
+                             [disponibiliteConfig]="disponibiliteConfig"
+                             [indexContrat]="i"
+                             [indexAvenant]="av"
+                             [ouvrableParama]="ouvrableParama"
+                             [arrondiContratMensuel]="arrondiContratMensuel"
+                             [paramMonthWeek]="paramMonthWeek"
+              ></rhis-avenants>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+    </p-accordionTab>
+  </p-accordion>
+</div>
+<!-- pupup pour ajpouter info principale deu contrat -->
+<rhis-pop-up
+  (closeEvent)="showPopUp = false"
+  [showPopUp]="showPopUp"
+  [title]="actionTitle"
+  [width]="popUpStyle?.width"
+>
+  <rhis-add-contrat-form *ngIf="showPopUp"
+                         [listGroupTravail]="listGroupTravail"
+                         [listTypeContrat]="listTypeContrat"
+                         [buttonLabel]="actionTitle"
+                         [contratExist]="contratExist"
+                         (resetErrorMessagesDateEffectifEvent)="resetErrorMessagesDateEffectifAndDateFin()"
+                         (resetErrorMessagesDateFinEvent)="resetErrorMessagesDateEffectifAndDateFin()"
+                         (addContratInfoPrimary)="addContratInfoPrimary($event)"
+                         [presenceDirecteur]="presenceDirecteur"
+                         (getPresentConratHasGroupeTravailDirecteur)="getPresentConratHasGroupeTravailDirecteur($event)"
+  ></rhis-add-contrat-form>
+</rhis-pop-up>
+<!-- pupup pour desactiver un employe -->
+<rhis-pop-up
+  (closeEvent)="popupVisibility = false"
+  [showPopUp]="popupVisibility"
+  title="  {{'POPUPS.CONFIRMATION_HEADER' | translate}}"
+>
+  <div class="section-element w-100">
+    <label for="EMP_Contrat-MotifSortie-popup"
+           class="section-element-title w-100"> {{'EMPLOYEE.SAISIR_MOTIF_SORTI' | translate}}</label>
+    <p-dropdown
+      id="EMP_Contrat-MotifSortie-popup"
+      [autoDisplayFirst]="false"
+      [options]="listmotifSorties"
+      [(ngModel)]="motifSortie"
+      optionLabel="libelle"
+      (onChange)="onSelectMotifSortie()"
+      appendTo="body"
+      class="drop-down-general">
+    </p-dropdown>
+    <div><span class="form-item-error red small "
+               *ngIf="presenceMotifSorite">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+    <div *ngIf="dateFinDisplay">
+      <div class="section-element-title mt-3">
+        <label class="section-element-title">{{'CONTRAT.DATE_FIN_CONTRAT' | translate}}</label>
+      </div>
+      <rhis-calendar
+        [(ngModel)]="datefinCDI"
+        [minDate]="getMinDateFinCdi | memoize: dateEffectifCDI "
+        [placeholder]="'JJ/MM/AAAA'"
+        dateFormat="dd/mm/yy"
+        id="EMP_Contrat-DateFin-popup">
+      </rhis-calendar>
+    </div>
+
+  </div>
+  <button type="button" (click)="confirmMakeContratInactive()"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+          id="EMP_Contrat-validate-btn">
+    <span>{{'BUTTON.VALIDATE' |translate}}</span>
+  </button>
+</rhis-pop-up>
+<!-- pupup pour ajouter badge a un employe -->
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="popupAddBadgeToEmployee"
+  title="  {{'GESTION_BADGE.ADD_BADGE_BUTTON' | translate}}"
+>
+  <div class="section-element w-100">
+    <label for="EMP_Contrat-numBadge-popup"
+           class="section-element-title w-100"> {{'COORDONNES.NUMERO_BADGE' | translate}} *</label>
+    <p-dropdown
+      rhisStyleForm
+      [autoDisplayFirst]="false"
+      id="EMP_Contrat-numBadge-popup"
+      [(ngModel)]="badge"
+      optionLabel="code"
+      [options]="listBadge"
+      (onChange)="onSelectBadge()"
+      appendTo="body"
+      class="drop-down-general"></p-dropdown>
+    <div>
+      <span *ngIf="presenceBadge" class="form-item-error red small "
+            id="EMP_Contrat-typeError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+  </div>
+  <button type="button" (click)="checkEmployeeHasBadgeAndSaveContrat()" *ngIf="updateButtonControl()"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+          id="EMP_Contrat-checkbadgeEmp-popup">
+    <span>{{'BUTTON.VALIDATE' |translate}}</span>
+  </button>
+</rhis-pop-up>
+
+
+<rhis-pop-up
+  (closeEvent)="popupUpdateDateFinContrat = false"
+  [showPopUp]="popupUpdateDateFinContrat"
+  title=" {{'CONTRAT.UPDATE_DATE' |translate}} "
+>
+  <div class="section-element w-100">
+    <label class="section-element-title w-100">
+    </label>
+
+    <rhis-calendar
+      [(ngModel)]="datefin"
+      [minDate]="addDaysToDateEffective | memoize: contratUpdate?.dateEffective "
+      [placeholder]="'JJ/MM/AAAA'"
+      dateFormat="dd/mm/yy"
+      id="EMP_Contrat-dateEffectiv-popup">
+    </rhis-calendar>
+    <div>
+      <span *ngIf="presenceDateFin" class="form-item-error red small "
+            id="EMP_Contrat-typeContratError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+    </div>
+  </div>
+  <button type="button" (click)="saveContrat()" *ngIf="updateButtonControl()"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+          id="EMP_Contrat-save-popup">
+    <span>{{'BUTTON.VALIDATE' |translate}}</span>
+  </button>
+</rhis-pop-up>
+
+<!--  dpae pop-up -->
+<rhis-pop-up
+  (closeEvent)="popupVisibilityDPAE = false"
+  [showPopUp]="popupVisibilityDPAE"
+  [title]="pop_up_dape_title"
+  [width]="popUpStyle">
+  <rhis-dpae-popup [dpaeStatut]="dpaeStatut" (close)="popupVisibilityDPAE = false; closeDPAE();" (afterDepot)="updateDPAE($event)" ></rhis-dpae-popup>
+</rhis-pop-up>
+<!--  dpae pop-up -->
+
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

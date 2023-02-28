@@ -1,0 +1,17 @@
+<div id="rhis-container-id" class="scroll" rhisResize
+     [ngClass]="{
+     'rhis-container' : areMenuAndHeaderDisplayed,
+     'rhis-container-rapport': !areMenuAndHeaderDisplayed,
+     'opened-menu': openedMenu,
+     'closed-menu': !openedMenu && areMenuAndHeaderDisplayed,
+     'closed-menu-rapport': !openedMenu && !areMenuAndHeaderDisplayed,
+     'vertical-scroll-all-content-planning-equipier-pdf': !openedMenu && verticalScrollingPlanningEquipierPdf,
+  'menu-open-vertical-scroll-content-planning-equipier-pdf': openedMenu && verticalScrollingPlanningEquipierPdf}">
+  <router-outlet></router-outlet>
+</div>
+<p-blockUI [blocked]="notificationService.displaySpinner">
+  <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+    <span class="text-white">{{"BUTTON.IN_PROGRESS" | translate}}</span>
+  </div>
+</p-blockUI>

@@ -1,0 +1,179 @@
+<div class="rhis-container view">
+  <div class="scroll-top-content-openRhis"
+       (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="200">
+    <div class="header row justify-content-between scroll-width-TopRhis header-employes-rhis">
+      <div class="col-4 titre">
+        <h1 class="titre-principale-page-rhis">{{"EMPLOYEE.ALL" | translate}}
+          <span class="nbr d-flex flex-column justify-content-around text-center"
+                id="EMP-nbre-employees">
+            {{nbreEmploye}}
+          </span>
+        </h1>
+      </div>
+      <div class="float-right">
+        <button *ngIf="addButtonControl()" type="button" (click)="addEmploye()"
+                class="btn save-add-button-rhis blue-background"
+                id="EMP-add-btn">
+          <span>{{"EMPLOYEE.ADD_NEW_ONE" | translate}}</span>
+        </button>
+        <div class="search">
+          <input [formControl]="filterName" id="EMP-search-input" placeholder={{rechercheNomOrPrenom}}
+                 type="text">
+          <span (click)="searchEmployee()" id="EMP-search-click">
+            <img alt="" src="assets/icons/employe/ico_search_small.svg">
+          </span>
+        </div>
+        <div class="imprimer-icon">
+          <span (click)="toogleDownloadEmployeeFilter(); $event.stopPropagation();" id="EMP-download-list">
+            <img alt="no print icon" src="assets/icons/employe/print-picture.svg">
+          </span>
+        </div>
+        <div class="imprimer-icon download-excel-icon ml-2">
+          <span (click)="importEmployeeExcelFile()"
+                *ngIf="isSuperviseur()"
+                id="EMP-filter-importExcel">
+            <img src="assets/icons/chart-icon/Download.png">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div class="table-list responsive-table-rhis">
+      <p-table #dt [columns]="header"
+               [value]="listEmplyees"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               (onSort)="sortData($event)"
+               [resetPageOnSort]="false"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let col of columns; let l = last"
+                [pSortableColumn]="(col?.field != 'numTelephone' && col?.field != 'statut') ? col?.field : null">
+              <ng-container *ngIf="!l">
+                {{col?.title}}
+              </ng-container>
+              <ng-container *ngIf="l">
+                <div class="status-select" >
+                  <span (click)="statusAreShown = !statusAreShown ; showStatutpopUp();">{{col?.title}}</span>
+                  <i class="pi pi-fw pi-sort-down" (click)="statusAreShown = !statusAreShown ; showStatutpopUp();"></i>
+                  <div *ngIf="statusAreShown" (rhisClickOutsideTooltip)="statusAreShown = false">
+                    <p-listbox id="statutShowBox" (onChange)="changeStatus($event)" [(ngModel)]="selectedStatut"
+                               [options]="statutOptions" multiple="multiple" checkbox="checkbox"
+                               optionLabel="label" optionvalue="status">
+                    </p-listbox>
+                  </div>
+                </div>
+              </ng-container>
+              <p-sortIcon *ngIf="col?.field != 'numTelephone' && col?.field != 'statut'" [field]="col?.field"
+                          ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+
+              <!-- filtre sur le statut -->
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employe let-i="rowIndex">
+          <tr class="table-row" [pSelectableRow]="employe" (click)="showDetails(employe,$event)">
+            <td>{{employe.matricule}}</td>
+            <td>{{employe.carte}}</td>
+            <td>
+              <div>
+                {{employe.nom}}
+              </div>
+            </td>
+            <td>
+              <div>
+                {{employe.prenom}}
+              </div>
+            </td>
+            <td>
+              <div>
+                {{employe.numTelephone}}
+              </div>
+            </td>
+            <td>
+              <ng-container *ngIf="employe?.statut">
+                {{employe?.hebdoCourant}}
+              </ng-container>
+            </td>
+            <td>
+            <span class="label-table top-10 left-side span-statut-empl-rhis"
+                  [ngStyle]="{'background-color': employe.statutEmbauche === 'Embauche' ? '#FF9B42': employe.statut===true ? '#2DC76D' : '#fc2a2a'}"
+                  (click)="getContratEmployee(employe)">
+              {{employe.etat}}
+            </span>
+              <rhis-actions-employe
+                (setStatut)='setStatut($event,employe)'
+                (getDisponibilites)="getDisponibilites(employe?.uuid)"
+                [disponibilites]="idSelectedEmployeeForDisponibilites == employe?.uuid ? disponibilites : null"
+                [nom]="employe?.nom"
+                [prenom]="employe?.prenom"
+                [uuidEmployee]="employe?.uuid"
+                [activated]="employe?.statut"
+                [index]="i"
+                [totalElement]="listEmplyees?.length">
+              </rhis-actions-employe>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<div>
+  <p-fileUpload #fileUpload (onSelect)="afterSelectingExcelFile()" id="aze"
+                [hidden]="true"
+                [showCancelButton]="false" [showUploadButton]="false"
+                accept=".xlsx,.xls"
+                mode="basic"
+                name="uploadExcel">
+  </p-fileUpload>
+</div>
+
+<!-- popup pour desactiver un employe -->
+<rhis-pop-up
+  (closeEvent)="popupVisibility = false"
+  [showPopUp]="popupVisibility"
+  [title]="motifSortieHeader"
+>
+  <rhis-motif-sortie
+    (confirmEvent)="confirmMakeEmployeeInactive($event)"
+    [listmotifSorties]="listmotifSorties">
+  </rhis-motif-sortie>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-confirmDialog *ngIf="displayDialogUploadExcel" [appendTo]="'body'" [key]="'dialogTelechargerRapport'">
+  <p-footer>
+    <button (click)="hideDialog()" label="{{'IMPORT_EMPLOYE_EXCEL.CLOSE'|translate}}" pButton
+            type="button"></button>
+    <button (click)="downloadRapportFile()" label="{{'IMPORT_EMPLOYE_EXCEL.DOWNLOAD'|translate}}" pButton
+            type="button"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<rhis-employee-fields-checkbox (rhisClickOutsideTooltip)="closeEmployeeFilter()"
+                               [filterNameValue]="getFilterNameValue()"
+                               [filterStatus1Value]="filterStatut1"
+                               [filterStatusValue]="filterStatut"
+                               [filterStatusFinalValue]="filterStat"
+                               [hidden]="!openedFilterPopup">
+</rhis-employee-fields-checkbox>
+
+

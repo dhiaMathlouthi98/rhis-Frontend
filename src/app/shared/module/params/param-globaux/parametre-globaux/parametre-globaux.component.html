@@ -1,0 +1,262 @@
+<div>
+  <div class="header row" *ngIf="isParc">
+    <div class="col-4">
+      <h1 class="titre-principale-page-rhis">{{title}}</h1>
+    </div>
+    <div class="col-5">
+      <div class="test">
+        <label for="type" class="section-element-title">{{'RESTAURANT.ALL' | translate}}*</label>
+        <p-dropdown
+          class="dropdown-restaurant"
+          rhisStyleForm
+          [(ngModel)]="restaurantSelected"
+          (onChange)="changeRestaurant()"
+          [hasError]=""
+          [selector]=""
+          [autoDisplayFirst]="true"
+          id="type"
+          optionLabel="libelleRestaurant"
+          [options]="listRestaurant">
+        </p-dropdown>
+        <div class="icon-copiage rhis-tooltip-copy-generique bottom">
+          <img *ngIf="updateListControl()" src="assets/icons/shared/icon-copy-not-selected.png" (click)="copyParams()"
+               alt="no icon">
+          <div class="rhis-tooltip-copy specifique-param-glbx">
+              <span>
+                {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_1" | translate}}
+              </span>
+            <span>
+                 {{"GESTION_PARC_RAPPORT.PARAM_RESTO_RESOURCE" | translate}}
+               </span>
+            <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_2" | translate}}
+               </span>
+            <span>
+                 {{restaurantSourceLibelle}}
+               </span>
+            <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_3" | translate}}
+               </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="float-right col-3 mt-2">
+      <button type="button" *ngIf="updateListControl()" (click)="updateParams(); updateByNavigationAway = false"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'SOCIETE.ADD_BUTTON_PARAMS' | translate}}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="rhis-container view" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="380">
+    <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+      <div class="table-list bg-gris-avec-border responsive-table-rhis" *ngIf="listeParametres?.length">
+        <p-table [value]="listeParametres" [responsive]="true" (onSort)="sortRows($event)" [scrollable]="true"
+                 [scrollHeight]="heightInterface" [columns]="header">
+          <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+            <tr class="header-row">
+              <th *ngFor="let col of columns"
+                  [ngStyle]="{'width': col?.field == 'rubrique' ? '160px' : col?.field == 'param' ? '150px' : col?.field == 'description' ? '42%' : col?.field == 'valeur' ? '9%' : ''}"
+                  [pSortableColumn]="((col?.field != 'description') && (col?.field != 'valeur') && (col?.field != 'param')) ? col?.field : null">
+                {{col?.title}}
+                <p-sortIcon
+                  *ngIf="((col?.field !='description') && (col?.field != 'valeur') && (col?.field != 'param'))"
+                  [field]="col?.field" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order">
+                </p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template let-i="rowIndex" pTemplate="body" let-param>
+            <tr class="table-row">
+              <td class="width-7">
+                <div class="td-container td-left-border">
+                  {{param?.rubrique}}
+                </div>
+              </td>
+              <td class="width-20">
+                <div class="td-container">
+                  {{param?.param}}
+                </div>
+              </td>
+              <td class="width-30">
+                <div class="td-container">
+                  {{param?.description}}
+                </div>
+              </td>
+              <td *ngIf="param?.booleanValue" (click)="setBooleanValue(param)" class="width-10">
+                <div class="td-container td-right-border">
+                  <i *ngIf="param?.valeur === 'true'" class="pi pi-check"></i>
+                </div>
+              </td>
+              <td *ngIf="param?.isTime" pEditableColumn class="width-10">
+                <div class="td-container td-right-border">
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <p-calendar
+                        [(ngModel)]="param.valeur"
+                        [timeOnly]="true">
+                      </p-calendar>
+                    </ng-template>
+                    <ng-template pTemplate="output" class="text-center">
+                      {{param?.valeur | date:'HH:mm' }}
+                    </ng-template>
+                  </p-cellEditor>
+                </div>
+              </td>
+              <td *ngIf="param?.isDate" class="width-10" pEditableColumn>
+                <ng-container *ngIf="param?.param === 'DERNIER'">
+                  <div class="td-container td-right-border">
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <p-calendar
+                          [(ngModel)]="param.valeur"
+                          dateFormat="dd-mm-yy">
+                        </p-calendar>
+                      </ng-template>
+                      <ng-template class="text-center" pTemplate="output">
+                        {{param?.valeur | date:'dd-MM-yyyy' }}
+                      </ng-template>
+                    </p-cellEditor>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="param?.param === 'GDH_BLOCK'">
+                  <div class="td-container td-right-border">
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <p-calendar
+                          [(ngModel)]="param.valeur"
+                          dateFormat="dd/mm/yy">
+                        </p-calendar>
+                      </ng-template>
+                      <ng-template class="text-center" pTemplate="output">
+                        {{param?.valeur | date:'dd/MM/yyyy' }}
+                      </ng-template>
+                    </p-cellEditor>
+                  </div>
+                </ng-container>
+              </td>
+              <td
+                *ngIf="(param?.param === 'ENCODAGE' || param?.param === 'PERFORM_MODE' ) && !param?.isTime && !param?.booleanValue && !param?.isDate"
+                pEditableColumn>
+                <div class="td-container td-right-border">
+                  <p-cellEditor>
+                    <ng-template pTemplate="input" *ngIf="param?.param === 'ENCODAGE'">
+                      <p-dropdown [(ngModel)]="param.valeur"
+                                  [options]="listEncodage" class="drop-down-general">
+                      </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="input" *ngIf="param?.param === 'PERFORM_MODE'">
+                      <p-dropdown [(ngModel)]="param.valeur"
+                                  [options]="listPerformCode" class="drop-down-general">
+                      </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output" class="text-center">
+                      {{param?.valeur}}
+                    </ng-template>
+                  </p-cellEditor>
+                </div>
+              </td>
+              <td *ngIf="param?.param === 'LANGUE_SONS' || param?.param === 'LANGUE_AFFICHAGE'" pEditableColumn>
+                <div class="td-container td-right-border">
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <p-dropdown [(ngModel)]="param.valeur" [options]="languesList" class="drop-down-general">
+                      </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output" class="text-center">
+                      {{param?.valeur}}
+                    </ng-template>
+                  </p-cellEditor>
+                </div>
+              </td>
+              <td
+                *ngIf="!excludeParams.includes(param.param) && !param?.isTime && !param?.booleanValue && !param?.isDate"
+                class="width-10" pEditableColumn>
+                <div class="td-container td-right-border">
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input (input)="detectChanges(param)" *ngIf="!param?.floatValue && !param?.stringValue"
+                             [(ngModel)]="param.valeur" pInputText
+                             rhisIntegerNumbers
+                             type="text">
+                      <input (input)="detectChanges(param)" *ngIf="param?.floatValue  && !param?.stringValue"
+                             [(ngModel)]="param.valeur"
+                             pInputText
+                             rhisTwoDigitDecimaNumber
+                             type="text">
+                      <input *ngIf="param?.stringValue && param?.param === 'SYSTEMECAISSE'" [(ngModel)]="param.valeur"
+                             maxlength="50" pInputText
+                             type="text"
+                             (input)="detectChanges(param)">
+                      <input (input)="detectChanges(param)" *ngIf="param?.stringValue && param?.param === 'NOMFICHIER'"
+                             [(ngModel)]="param.valeur" maxlength="100"
+                             pInputText
+                             type="text">
+                      <input (input)="detectChanges(param)"
+                             *ngIf="param?.stringValue && param?.param !== 'NOMFICHIER' && param?.param !== 'SYSTEMECAISSE'"
+                             [(ngModel)]="param.valeur"
+                             pInputText
+                             type="text">
+                    </ng-template>
+                    <ng-template pTemplate="output" class="text-center">
+                      {{param?.valeur}}
+                      <div *ngIf="param?.param === PALIER1_CODE_NAME && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_LESS' | translate}} {{getOtherParamValue(PALIER1_CODE_NAME)}}
+                      </div>
+                      <div *ngIf="param?.param === PALIER2_CODE_NAME && param?.leftBorderWrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_SUP_EQUAL' | translate}}
+                        {{getOtherParamValue(PALIER2_CODE_NAME)}}
+                      </div>
+                      <div *ngIf="param?.param === PALIER2_CODE_NAME && param?.rightBorderWrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_LESS' | translate}} {{+this.listeParametres[this.PALIER3_INDEX].valeur}}
+                      </div>
+                      <div *ngIf="param?.param === PALIER3_CODE_NAME && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_SUP_EQUAL' | translate}}
+                        {{getOtherParamValue(PALIER3_CODE_NAME)}}
+                      </div>
+                      <div *ngIf="param?.param === JOUR_DECALAGE_CODE_NAME && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_BETWEEN_0_6' | translate}}
+                      </div>
+                      <div *ngIf="param?.param === MIN_DAY_REF_CODE_NAME && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_SUP_0' | translate}}
+                      </div>
+                      <div *ngIf="param?.param === STC_CODE_NAME && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_0_OR_1' | translate}}
+                      </div>
+                      <div *ngIf="param?.param === GESTION_DEFAUT && param?.wrongValue" class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_0_OR_1_ONLY' | translate}}
+                      </div>
+                      <div *ngIf="param?.param === MINUTE_INTERVALE_CODE_NAME && param?.wrongValue"
+                           class="red small-rhis">
+                        {{'PARAMS_GLOBAL.VALEUR_ATTENDUE_BETWEEN_0_AND_1440' | translate}}
+                      </div>
+                    </ng-template>
+                  </p-cellEditor>
+                </div>
+              </td>
+              <td *ngIf="param?.param === 'ENTREPRISE'">
+                <div class="text-center">
+                  {{param?.valeur}}
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+                          (submitDataEvent)="submit($event)" *ngIf="showPopup"
+                          [dropdownListData]="listRestaurantsWitoutCurrent" [optionLabel]="'libelleRestaurant'"
+                          [showPopUp]="showPopup" [submitButtonText]="'Enregistrer'"
+                          [resourceName]=resourceName
+                          [restaurantSource]="restaurantSourceLibelle">
+</rhis-pop-up-gestion-parc>
+<p-toast *ngIf="isParc" [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog *ngIf="isParc" [appendTo]="'body'"></p-confirmDialog>
+

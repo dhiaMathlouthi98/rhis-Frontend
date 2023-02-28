@@ -1,0 +1,13 @@
+<div class="rhis-container">
+  <p-accordion>
+    <p-accordionTab [selected]="congeDisplayed" header="{{'DETAIL_EMPLOYEE_SECTION.ABSENCES_CONGE' | translate}}">
+      <rhis-absences-conges [idEmployee]="idEmployee"></rhis-absences-conges>
+    </p-accordionTab>
+    <p-accordionTab [selected]="!congeDisplayed" class="view-section-title"
+                    header="{{'EMPLOYEE.VISITE_MEDICALE' | translate}}">
+      <rhis-visite-medical [idEmployee]="idEmployee"></rhis-visite-medical>
+    </p-accordionTab>
+  </p-accordion>
+  <p-toast [style]="{marginTop: '80px'}"></p-toast>
+  <p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+</div>

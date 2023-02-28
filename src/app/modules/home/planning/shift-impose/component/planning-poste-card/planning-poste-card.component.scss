@@ -1,0 +1,203 @@
+.shift-card {
+  width: calc(100% - 20px);
+  border-radius: 5px;
+  background-color: #F3B442;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  font-family: "TT Wellingtons Bold";
+  font-size: 10px;
+  line-height: 16px;
+  padding: 10px;
+  margin: 10px;
+  @media screen and (max-width: 1400px) {
+    width: calc(100% - 10px);
+    margin: 10px 5px 5px 5px;
+    padding: 5px;
+  }
+
+  .date-container {
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+
+  .icon-clock {
+    background-image: url(/assets/icons/planning/clock-icon/clock.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 14px;
+    height: 28px;
+    margin: 0 10px 0 0;
+    float: left;
+  }
+
+  .edit-icon {
+    background-image: url(/assets/icons/planning/edit-icon/icon-edit.svg);
+    background-size: 90%;
+    width: 5px;
+    height: 22px;
+    display: inline-block;
+    background-repeat: no-repeat;
+  }
+
+  .edit-link {
+    width: 15px;
+    height: 22px;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    right: -3px;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .emp-count {
+    line-height: 30px;
+  }
+
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+
+  .dropdown-item {
+    font-family: "TT Wellingtons Medium";
+    font-size: 11px;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    min-width: unset;
+    top: -22px !important;
+    left: 5px !important;
+    padding: 0;
+
+    .dropdown-item.active, .dropdown-item:active {
+      background-color: #385FE3;
+    }
+  }
+
+  .add-person-shift-fixe {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+
+    .prod-chexbox {
+      width: 50%;
+
+      span {
+        font-size: 12px;
+      }
+    }
+
+    .arrow-acheval-week {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 22px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+
+    .arrow-acheval-week-not-modifiable {
+      background-image: url(/assets/icons/planning/arrow-left.png);
+      background-size: 22px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+  }
+}
+
+.shift-card.hidden-style-BI {
+  visibility: hidden;
+
+  .hour-style {
+    padding-top: 6px;
+  }
+}
+
+.listBesoinsCondense {
+  .shift-card {
+    @media screen and (max-width: 1500px) {
+      .edit-icon {
+        width: 4px;
+      }
+      .edit-link {
+        left: -5px !important;
+      }
+    }
+  }
+}
+
+:host ::ng-deep {
+  .ui-chkbox {
+    .ui-chkbox-box {
+      height: 16px !important;
+      width: 16px !important;
+      background-color: #eee !important;
+      border-radius: 3px;
+
+      &.ui-state-disabled {
+        opacity: 0.9;
+      }
+    }
+
+    .ui-state-active {
+      background-color: #eee !important;
+      border: 1px solid #C8C7C4 !important;
+    }
+
+    .ui-state-focus {
+      border: 1px solid #C8C7C4 !important;
+      box-shadow: none !important;
+      background-color: #eee !important;
+
+    }
+
+    .ui-chkbox-icon {
+      margin-top: 2px;
+
+      &::before {
+        font-size: 17px;
+        position: relative;
+        bottom: 3px;
+        right: 1px;
+        color: #aaa;
+      }
+    }
+  }
+}
+
+.dropdown-menu-close.dropdown-menu.show {
+  @media screen and (max-width: 1920px) {
+    transform: translate3d(107px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1680px) {
+    transform: translate3d(73px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1600px) {
+    transform: translate3d(59px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1366px) {
+    transform: translate3d(41px, 22px, 0px) !important;
+  }
+}
+
+.dropdown-menu-opened.dropdown-menu.show {
+  @media screen and (max-width: 1920px) {
+    transform: translate3d(81px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1680px) {
+    transform: translate3d(46px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1600px) {
+    transform: translate3d(35px, 22px, 0px) !important;
+  }
+  @media screen and (max-width: 1366px) {
+    transform: translate3d(15px, 22px, 0px) !important;
+  }
+}
+

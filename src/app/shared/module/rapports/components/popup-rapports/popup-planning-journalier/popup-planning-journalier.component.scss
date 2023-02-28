@@ -1,0 +1,88 @@
+.flex-between-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  width: 92%;
+}
+
+.label-periode-debut {
+  padding-right: 10px;
+}
+
+.filtrage-style {
+  padding-right: 35px;
+}
+
+.flex-start-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+}
+
+.popup-planning-journalier {
+  height: 340px;
+}
+
+.bloc-flex-center-journalier {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.section-element .section-element-title {
+  padding-right: 30px;
+}
+
+.second-element.section-element {
+  margin-left: 0;
+}
+
+.date-journee-calendar {
+  width: 65%;
+}
+
+.ckeckbox-style {
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep {
+  .ui-datepicker {
+    padding: 2px !important;
+    min-width: 12em !important;
+
+    .ui-timepicker {
+      padding: 0;
+    }
+  }
+
+  .last-element-label-semaine .ui-chkbox-label {
+    margin: 0 !important;
+  }
+
+  .ui-chkbox-label {
+    max-width: 230px !important;
+    margin-right: 5px !important;
+  }
+}
+
+.col-5.no-padding-spec {
+  padding: 0;
+}
+
+.bloc-date_journee {
+  position: relative;
+  .date-journee_obl {
+    bottom: -20px;
+    left: 0;
+  }
+}
+

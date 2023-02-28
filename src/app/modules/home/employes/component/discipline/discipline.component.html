@@ -1,0 +1,95 @@
+<div class="container-fluid change-container-fluid-rhis discipline-table">
+  <div class="table-list bg-gris-avec-border">
+    <p-table [columns]="header" [scrollable]="true" [value]="disciplines" scrollHeight="180px">
+      <ng-template pTemplate="colgroup" let-columns stickyHeader stickyClass="stickyHeader">
+        <colgroup>
+          <ng-container *ngIf="disciplines && disciplines?.length">
+            <col *ngFor="let c of columns">
+          </ng-container>
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+          <ng-container *ngIf="disciplines && disciplines?.length">
+            <th *ngFor="let col of columns" [pSortableColumn]="getSortableField(col.field)">
+              {{col.title}}
+              <p-sortIcon *ngIf="getSortableField(col.field)" [field]="getSortableField(col.field)"
+                          ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </ng-container>
+          <th>
+            <button (click)="addDiscipline()" *ngIf="addButtonControl()"
+                    class="btn save-add-button-rhis orange-background" id="EMP_Disciline-add-btn"
+                    type="button">
+              <span>{{"DISCIPLINE.ADD_BUTTON" | translate | uppercase}}</span>
+            </button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-discipline>
+        <tr (click)="showDiscipline(discipline)">
+          <td>
+            <div class="td-container td-left-border center d-flex flex-column justify-content-center">
+              {{discipline?.dateFais | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container d-flex flex-column justify-content-center">
+              {{discipline?.dateDemandeJustif | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container d-flex flex-column justify-content-center">
+              {{discipline?.dateConvocation | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container d-flex flex-column justify-content-center">
+              {{discipline?.dateEntretien | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container d-flex flex-column justify-content-center">
+              {{discipline?.dateNotification | date: 'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <rhis-sanction
+              [sanction]="discipline?.typeSanction"
+              [faisReproches]="discipline?.faisReproches"
+              [tooltipStyle]="tooltipStyle"
+            ></rhis-sanction>
+          </td>
+          <td>
+            <div class="td-container td-right-border d-flex flex-column justify-content-center">
+            <span (click)=" showConfirmDelete(discipline?.uuid); $event.stopPropagation()" *ngIf="deleteButtonControl()"
+                  class="item">
+              <img src="assets/icons/employe/Btn_Close.svg" alt="no image" class="float-right mr-4">
+            </span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="showPopUp = false"
+  [showPopUp]="showPopUp"
+  [title]="actionTitle"
+  [height]="popUpStyle?.height"
+  [width]="popUpStyle?.width"
+>
+  <rhis-sanction-form *ngIf="showPopUp"
+                      [isDesactivated]="isDesactivated"
+                      [discipline]="selectedDiscipline"
+                      [typeSanctionList]="dropDownListTypeSanction"
+                      [buttonLabel]="actionTitle"
+                      (sanctionEvent)="saveFormData($event)"
+  ></rhis-sanction-form>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

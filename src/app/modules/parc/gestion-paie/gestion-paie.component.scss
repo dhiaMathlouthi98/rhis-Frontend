@@ -1,0 +1,483 @@
+.block-title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+  align-content: space-between;
+  flex-direction: row;
+}
+
+.bloc-header-gestion-paie {
+  .block-input-week-rhis:not(.year-specific) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+    max-width: 285px;
+    padding-left: 3px;
+    position: relative;
+
+    .img-planning {
+      position: absolute;
+      z-index: 999;
+
+      img {
+        width: 18px;
+        height: auto;
+        cursor: pointer;
+        margin-top: 0px;
+      }
+    }
+
+    .img-planning.left {
+      left: 10px;
+    }
+
+    .img-planning.right {
+      left: 175px;
+    }
+  }
+
+  .ui-calendar .ui-datepicker {
+    min-width: 315px;
+  }
+
+  .ui-calendar.ui-calendar-w-btn {
+    .ui-inputtext,
+    .ui-inputtext:hover {
+      border: 1px solid #DEDEDE;
+    }
+
+    .ui-datepicker-trigger.ui-button,
+    .ui-datepicker-trigger.ui-button:enabled:hover,
+    .ui-datepicker-trigger.ui-button:enabled:active {
+      background: none;
+      color: #DEDEDE;
+      border: 1px solid #DEDEDE;
+      padding: 0 3px 3px 0;
+      border-left: none;
+      outline: none;
+
+      .pi {
+        font-size: 2.25em;
+      }
+    }
+
+    .ui-inputtext:enabled:focus:not(.ui-state-error) {
+      border: 1px solid #DEDEDE;
+    }
+
+  }
+}
+
+.gestion-paie {
+  height: 85vh;
+  float: left;
+  width: 100%;
+
+  .bloc-right {
+    width: 30%;
+    height: 78vh;
+    float: left;
+    background: #fff;
+    position: relative;
+  }
+
+  .left-column-paie {
+    width: 34%;
+    height: 78vh;
+    float: left;
+    margin-right: 10px;
+  }
+
+  .barre {
+    width: 10%;
+    height: 85vh;
+    float: left;
+    overflow-y: auto;
+    position: relative;
+    margin-right: 1%;
+  }
+
+
+  .right-column-paie {
+    width: 34%;
+    height: 78vh;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+  }
+
+
+  .column-paie-title {
+    color: black;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 52px;
+    text-align: center;
+  }
+
+  .pi.pi-times {
+    color: red;
+    margin-left: 55px;
+  }
+
+  .pi.pi-check {
+    color: hsl(133, 90%, 49%);
+    margin-left: 55px;
+  }
+
+  .align-right-table {
+    margin-left: 10px;
+  }
+
+}
+
+.calendar-text-style {
+  margin-top: 16px;
+  color: black;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+:host ::ng-deep {
+  .ui-table .ui-table-tbody > tr > td {
+    border: none !important;
+    text-align: center;
+  }
+
+  .bloc-header-gestion-paie {
+    align-self: center;
+
+    .ui-calendar .ui-inputtext {
+      width: 82%;
+      min-width: 150px;
+      height: 35px;
+      border: none;
+      margin-bottom: 10px;
+      text-align: center;
+      width: 196px;
+    }
+
+    .ui-datepicker:not(.ui-datepicker-inline) {
+      top: 47px !important;
+      left: 0;
+    }
+
+    .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
+      padding: 3px;
+    }
+
+    .block-input-week-rhis:not(.year-specific) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: stretch;
+      max-width: 285px;
+      padding-left: 3px;
+      position: relative;
+
+      .img-planning {
+        position: absolute;
+        z-index: 999;
+
+        img {
+          width: 18px;
+          height: auto;
+          cursor: pointer;
+          margin-top: 0px;
+        }
+      }
+
+      .img-planning.left {
+        left: 10px;
+      }
+
+      .img-planning.right {
+        left: 175px;
+      }
+    }
+
+    .ui-calendar .ui-datepicker {
+      min-width: 315px;
+    }
+
+    .ui-calendar.ui-calendar-w-btn {
+      .ui-inputtext,
+      .ui-inputtext:hover {
+        border: 1px solid #DEDEDE;
+      }
+
+      .ui-datepicker-trigger.ui-button,
+      .ui-datepicker-trigger.ui-button:enabled:hover,
+      .ui-datepicker-trigger.ui-button:enabled:active {
+        background: none;
+        color: #DEDEDE;
+        border: 1px solid #DEDEDE;
+        padding: 0 3px 3px 0;
+        border-left: none;
+        outline: none;
+
+        .pi {
+          font-size: 2.25em;
+        }
+      }
+
+      .ui-inputtext:enabled:focus:not(.ui-state-error) {
+        border: 1px solid #DEDEDE;
+      }
+
+    }
+  }
+
+  .ui-datepicker {
+    display: none !important;
+  }
+  @media screen and (max-width: 1366px) {
+    .ui-tabview.ui-tabview-top .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-bottom .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-left
+    .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-right .ui-tabview-nav li a {
+      font-size: 11px;
+      padding: 0.571em 2px;
+    }
+  }
+  .ui-fieldset {
+    .fieldset-fixed-heigth{
+      height: 66vh;
+    }
+    .fieldset-max-heigth{
+      height: max-content;
+    }
+    background-color: #f7f7f7;
+    legend.ui-fieldset-legend {
+      font-size: 15px;
+      width: max-content;
+    }
+    .ui-fieldset-legend-text {
+      color: black;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 52px;
+      text-align: center;
+    }
+  }
+  .ui-table-scrollable-body {
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    padding-right: 5px;
+    min-height: 300px;
+  }
+
+  .ui-table-scrollable-body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+   .ui-table-scrollable-body::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+  }
+
+  .ui-table-scrollable-body:hover::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .ui-table-scrollable-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+    background-color: #AFA899;
+  }
+
+  .discipline-table {
+    .ui-table-scrollable-body {
+      min-height: 255px;
+    }
+  }
+}
+
+.ui-datepicker:not(.ui-datepicker-inline), .ui-datepicker {
+  display: none !important;
+}
+
+.sizeOfRestaurant {
+  width: 27px;
+  height: 27px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #FF9B42;
+  color: #fff;
+  border-radius: 50%;
+  display: inline-grid;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.headerLabel {
+  margin-left: 30px;
+  padding: 10px 0 5px;
+}
+
+
+.ui-accordion-header-text {
+  float: none;
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 35px;
+}
+
+.ui-accordion-toggle-icon {
+  vertical-align: text-top;
+  margin-right: auto;
+  margin-left: 1px;
+}
+
+.accordion-content-rhis {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  width: 100%;
+
+  h6 {
+    width: 100%;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 15px 0;
+  }
+}
+
+.accordion-center-rhis {
+  padding: 10px;
+  height: 65vh;
+}
+
+.calender-text {
+  width: 96px;
+  margin-top: 16px;
+  height: 36px;
+  color: #9B9B9B;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+:host ::ng-deep {
+  .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active,
+  .ui-tabview.ui-tabview-bottom .ui-tabview-nav li.ui-state-active,
+  .ui-tabview.ui-tabview-left .ui-tabview-nav li.ui-state-active,
+  .ui-tabview.ui-tabview-right .ui-tabview-nav li.ui-state-active {
+    background: #fff;
+    border: none;
+    width: 49%;
+
+    &:hover {
+      background: #fff;
+      border: none;
+
+      a {
+        color: #9B9B9B;
+      }
+    }
+
+    a {
+      color: #9B9B9B;
+    }
+  }
+
+  .ui-tabview.ui-tabview-top .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled),
+  .ui-tabview.ui-tabview-bottom .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled),
+  .ui-tabview.ui-tabview-left .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled),
+  .ui-tabview.ui-tabview-right .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled) {
+    width: 49%;
+    max-width: 115px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    word-break: break-all;
+
+    &:hover {
+      width: 49%;
+    }
+  }
+
+  .ui-tabview.ui-tabview-top .ui-tabview-nav {
+    display: flex;
+
+    li {
+      width: 49%;
+    }
+  }
+
+  .ui-tabview {
+    padding: 0;
+
+    .ui-tabview-panels {
+      border: none;
+    }
+  }
+
+  .ui-tabview.ui-tabview-top .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover,
+  .ui-tabview.ui-tabview-bottom .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover,
+  .ui-tabview.ui-tabview-left .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover,
+  .ui-tabview.ui-tabview-right .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover {
+    border-top: none;
+    border-right: none;
+  }
+
+  .ui-tabview {
+    padding: 0 .25em;
+  }
+
+  .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-disabled:hover,
+  .ui-tabview.ui-tabview-bottom .ui-tabview-nav li.ui-state-disabled:hover,
+  .ui-tabview.ui-tabview-left .ui-tabview-nav li.ui-state-disabled:hover,
+  .ui-tabview.ui-tabview-right .ui-tabview-nav li.ui-state-disabled:hover {
+    cursor: not-allowed !important;
+
+    a {
+      cursor: not-allowed !important;
+    }
+  }
+
+  .ui-tabview.ui-widget.ui-widget-content.ui-corner-all.ui-tabview-top {
+    height: 78vh;
+  }
+}
+
+.conf-menu {
+  top: 0;
+  right: 0;
+}
+
+:host ::ng-deep {
+  .conf-menu {
+    .ui-tabview.ui-tabview-top .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-bottom .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-left .ui-tabview-nav li a,
+    .ui-tabview.ui-tabview-right .ui-tabview-nav li {
+      padding: 5px !important;
+    }
+  }
+}
+
+h5.title-gestion-paie {
+  font-family: "TT Wellingtons Medium", sans-serif;
+}
+

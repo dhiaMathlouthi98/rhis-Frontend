@@ -1,0 +1,42 @@
+<div class="planning-body">
+  <div class="date-list">
+    <div class="date-item" *ngFor="let dateItem of datesAxis; let i = index">
+      <div class="week-day-container">
+        <div class="week-day">
+          {{dateItem?.date | titlecase}}
+        </div>
+        <div class="total-day">
+          <span>{{dateItem?.tempsPlanifie}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gridster-container" [ngStyle]="{'height': gridsterHeight}">
+    <gridster [options]="options" id="employee-details-grid">
+      <gridster-item [item]="item" *ngFor="let item of data"
+                     [ngClass]="{'strip-lines': item?.isOverIndisponibilte,'inactive-employee-shift-display-style': item?.notPlgEquipier,
+                     'shift-signe' :item?.sign ,'resize': item?.acheval,
+                     'modifiable': item?.modifiable && item?.acheval,
+                     'not-modifiable': !item?.modifiable && item?.acheval}"
+                     class="shift-item"
+                     [ngStyle]="{'background-color': item.color, 'color' : item?.textColor,
+                     'border-left': item?.sign ? '7px solid ' + item?.colorSign : '0px solid',
+                     'border-right':item?.sign ? '7px solid ' + item?.colorSign : '0px solid'}">
+        <rhis-data-gridster-semaine-item
+                [item]="item"
+                [tooltipStyleRight]="tooltipStyleRight"
+                [tooltipStyle]="tooltipStyle"
+                [canDelete]="deleteButtonControl | memoize : domControlService: ecran"
+                [canUpdate]="updateButtonControl |memoize: domControlService: ecran"
+                [isSmallShiftHover]="smallShiftHover | memoize: item"
+
+                (onRemoveItem)="removeItem($event, item)">
+        </rhis-data-gridster-semaine-item>
+      </gridster-item>
+    </gridster>
+  </div>
+</div>
+<rhis-recapitulatif-employe [employee]="employee" [weekEmployeeSummary]="weekEmployeeSummary"
+                            [debutPeriode]="debutPeriode" [finPeriode]="finPeriode"
+                            [monthEmployeeSummary]="monthEmployeeSummary" [updatetdDateJournee]="updatetdDateJournee">
+</rhis-recapitulatif-employe>

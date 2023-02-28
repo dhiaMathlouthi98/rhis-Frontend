@@ -1,0 +1,688 @@
+.panel {
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+.rhis-container {
+  margin-bottom: 40px;
+}
+
+.panel-header {
+  padding: 15px 0;
+  color: #414141;
+  font-size: 20px;
+  font-family: "TT Wellingtons medium";
+
+  h1 {
+    font-size: 20px;
+    font-weight: bold;
+    @media screen and (max-width: 1366px) {
+      font-size: 18px;
+    }
+    @media screen and (max-width: 1199px) {
+      font-size: 16px;
+    }
+  }
+
+  h3 {
+    font-size: 14px;
+    color: #aaaaaa;
+    text-transform: uppercase;
+  }
+}
+
+/******************************************************************************************/
+/*----------------------------------- Planning équipiers --------------------------------*/
+/*______________________________________________________________________________________*/
+
+.calendar-container,
+.plan-equip-container {
+  .panel {
+    height: 410px;
+    @media screen and (max-width: 1366px) {
+      height: 335px;
+    }
+  }
+}
+
+.plan-equip-container .row {
+  margin: 0 15px;
+  @media screen and (max-width: 1280px) {
+    margin: 0 8px;
+  }
+}
+
+.stats-bloc {
+  background-color: #385FE3;
+  border-radius: 5px;
+  color: #fff;
+  padding: 15px;
+  height: 305px;
+  font-family: "TT Wellingtons medium";
+  @media screen and (max-width: 1366px) {
+    padding: 5px;
+    height: 235px;
+  }
+  @media screen and (max-width: 1199px) {
+    height: auto;
+    padding: 0;
+  }
+
+  .emp-number, .anom-number {
+    font-size: 34px;
+    text-align: right;
+    padding: 0 10px;
+    @media screen and (max-width: 1366px) {
+      font-size: 26px;
+    }
+  }
+
+  .emp-label, .anom-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 10px;
+    @media screen and (max-width: 1366px) {
+      padding: 0 5px;
+    }
+  }
+
+  .anom-label {
+    margin-top: 20px;
+  }
+
+  .emp-icon, .anom-icon {
+    height: 40px;
+    width: 40px;
+    float: left;
+  }
+
+  a.title-left-planning {
+    float: left;
+    vertical-align: middle;
+    margin-left: 10px;
+    background-size: contain;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  img {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.affect-bloc {
+  border-radius: 5px;
+  color: #414141;
+  border: 1px solid #DEDEDE;
+
+  .left-bloc {
+    .sep {
+      display: block;
+      width: 1px;
+      height: 220px;
+      float: right;
+      background-color: #D8D8D8;
+      margin-top: 40px;
+      @media screen and (max-width: 1366px) {
+        height: 155px;
+      }
+      @media screen and (max-width: 1199px) {
+        display: none;
+      }
+    }
+
+    .left-bloc-content {
+      margin-top: 60px;
+      float: left;
+      width: 90%;
+      font-family: "TT Wellingtons medium";
+
+      @media screen and (max-width: 1366px) {
+        margin-top: 45px;
+      }
+
+      p-inputswitch {
+        float: right;
+      }
+
+      span {
+        line-height: 26px;
+        font-size: 15px;
+        @media screen and (max-width: 1366px) {
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 1199px) {
+        margin-top: 15px;
+        width: 100%;
+      }
+
+      .btn {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .bloc-right-planning-equipier {
+    display: table-cell;
+    vertical-align: middle;
+
+    @media screen and (max-width: 1199px) {
+      margin-top: 0 !important;
+      .row {
+        margin: 0;
+      }
+    }
+
+    .bloc-flex-perso-rhis {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: stretch;
+
+      a.planning-equi-liste {
+        color: #414141;
+        font-size: 12px;
+        font-family: "TT Wellingtons medium";
+        line-height: 12px;
+        margin-left: 10px;
+        font-weight: 600;
+        @media screen and (max-width: 1280px) {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    .bloc-right-separation {
+      padding-top: 10px;
+
+      &-icon {
+        padding-bottom: 0.7rem;
+        padding-left: 0;
+        padding-right: 0;
+        @media screen and (max-width: 1199px) {
+          padding-bottom: 0.4rem;
+        }
+
+        &:nth-child(1) {
+          padding-top: 1rem;
+          @media screen and (max-width: 1199px) {
+            padding-top: 0;
+          }
+        }
+      }
+
+      .bloc-flex-perso-rhis {
+        cursor: pointer;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1199px) {
+    .btn-row {
+      margin-top: 10px !important;
+    }
+  }
+}
+
+.switch-locked span {
+  font-size: 12px;
+  font-family: "TT Wellingtons medium";
+  width: 100px;
+  line-height: 16px;
+}
+
+p-inputswitch {
+  float: right;
+}
+
+.btn {
+  text-transform: uppercase;
+}
+
+.row.bottom-panels {
+  .btn {
+    width: 100%;
+  }
+}
+
+.btn-row {
+  margin-top: 70px !important;
+  @media screen and (max-width: 1366px) {
+    margin-top: 40px !important;
+  }
+}
+
+.btn-primary {
+  background-color: #385FE3;
+}
+
+.btn-raz {
+  background-color: #ff0000;
+  color: white;
+}
+
+.btn.outline {
+  background-color: transparent;
+  color: #385FE3;
+  border-color: #385FE3;
+}
+
+/******************************************************************************************/
+/*---------------- Planning fixe & Planning manager & planning leaders ------------------*/
+/*______________________________________________________________________________________*/
+
+
+.bottom-panels {
+  .panel {
+    height: 180px;
+    padding: 10px 40px;
+  }
+
+  .btn {
+    text-transform: uppercase;
+    @media screen and (max-width: 1366px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .btn-primary {
+    background-color: #2DC76D;
+    border-color: #2DC76D;
+  }
+
+  .btn-row {
+    margin-top: 10px !important;
+  }
+}
+
+.plannig-icon-title {
+  position: relative;
+
+  .title {
+    font-size: 14px;
+    color: #aaaaaa;
+    text-transform: uppercase;
+  }
+}
+
+.img-planning-div {
+  position: absolute;
+
+  img {
+    margin-left: 13px;
+  }
+}
+
+/******************************************************************************************/
+/*----------------------------------- Calendrier Planning -------------------------------*/
+/*______________________________________________________________________________________*/
+
+:host ::ng-deep {
+  .ui-datepicker table td.ui-datepicker-today > a {
+    background: #fff;
+  }
+
+  .ui-datepicker-calendar td {
+    text-align: center;
+  }
+
+  .ui-datepicker-calendar td a {
+    display: inline !important;
+  }
+
+  .ui-datepicker-calendar th span {
+    font-family: "TT Wellingtons light";
+    color: #C8C7C4;
+    font-size: 14px;
+  }
+
+  .ui-datepicker-title {
+    color: #414141;
+    font-family: "TT Wellingtons Medium";
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    text-align: center;
+    @media screen and (max-width: 1366px) {
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+
+  .ui-datepicker-weeknumber {
+    opacity: 1 !important;
+    border-right: none !important;
+  }
+
+  .ui-datepicker-weekheader {
+    border-right: none !important;
+  }
+
+  .ui-datepicker-weeknumber span {
+    border-radius: 50% !important;
+    color: #C8C7C4 !important;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    font-family: "TT Wellingtons Medium";
+    margin: 0 auto;
+    @media screen and (max-width: 1366px) {
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+    }
+    @media screen and (max-width: 1244px) {
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+    }
+  }
+
+  .ui-datepicker-weeknumber span:hover, .current-week .ui-datepicker-weeknumber span {
+    background-color: #FF9B42;
+    color: #fff !important;
+  }
+
+  .ui-state-default {
+    width: 2vw;
+    height: 2vw;
+    padding: 0 !important;
+    line-height: 2vw;
+    font-family: "TT Wellingtons Medium";
+    font-size: 0.8vw;
+  }
+
+  .ui-state-default span, .ui-state-disabled {
+    border-radius: 5px;
+    display: inline-block !important;
+    font-family: "TT Wellingtons Medium";
+    background-color: inherit;
+    color: #FF9B42;
+    border: 1px solid #FF9B42;
+    height: 32px;
+    width: 32px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 33px;
+    text-align: center;
+    padding-top: 5px;
+    @media screen and (max-width: 1366px) {
+      height: 28px;
+      width: 28px;
+      line-height: 28px;
+    }
+    @media screen and (max-width: 1244px) {
+      height: 24px;
+      width: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .ui-state-default span {
+    line-height: 25px;
+    @media screen and (max-width: 1366px) {
+      line-height: 15px;
+    }
+  }
+
+  tr .ui-state-disabled:first-child {
+    padding: 0.6vw;
+
+    span {
+      padding: 0.3vw;
+    }
+  }
+
+  .current-week > td > a > span, .current-week > td .ui-state-disabled {
+    background-color: #FF9B42;
+    color: #fff;
+  }
+
+  .calculated-week > td > a > span, .calculated-week > td .ui-state-disabled {
+    background-color: #DEDEDE;
+    color: #414141;
+    border: none;
+  }
+
+  .non-calculated-week > td > a > span, .non-calculated-week > td .ui-state-disabled {
+    background-color: transparent;
+    border: 1px solid #FF9B42;
+    color: #FF9B42;
+  }
+
+  .calculated-week-other {
+    background-color: #DEDEDE;
+    color: #414141;
+    opacity: 0.5;
+  }
+
+  .non-calculated-week-other {
+    background-color: transparent;
+    border: 1px solid #FF9B42;
+    color: #FF9B42;
+    opacity: 0.5;
+  }
+
+  .ui-datepicker-inline {
+    border: none !important;
+  }
+
+  .ui-corner-all {
+    border-radius: 5px !important;
+  }
+
+  .ui-inputswitch-slider {
+    background-color: #ccc !important;
+    border: 1px solid #ccc;
+  }
+
+  .ui-inputswitch {
+    width: 56px !important;
+    height: 28px !important;
+  }
+
+  .ui-inputswitch .ui-inputswitch-slider:before {
+    height: 22px !important;
+    width: 22px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+  }
+
+  .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+    -webkit-transform: translateX(27px) !important;
+    transform: translateX(27px) !important;
+  }
+
+  .ui-inputswitch {
+    width: 56px !important;
+    height: 28px !important;
+  }
+
+  .ui-inputswitch .ui-inputswitch-slider:before {
+    height: 22px !important;
+    width: 22px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+  }
+
+  .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+    -webkit-transform: translateX(27px) !important;
+    transform: translateX(27px) !important;
+  }
+
+  .green-switch .ui-inputswitch-slider {
+    background-color: #ea4648 !important;
+    border: 1px solid #ea4648;
+  }
+
+  .green-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #2DC76D !important;
+    border: 1px solid #2DC76D;
+  }
+
+  .blue-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #ccc !important;
+    border: 1px solid #ccc;
+  }
+
+  .ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
+    margin-left: 14%;
+  }
+
+  .pi-chevron-left:before, .pi-chevron-right:before {
+    color: #E4E1DC;
+    font-size: 14px;
+  }
+
+  .ui-datepicker table td {
+    text-align: center;
+    border-top: 6px solid;
+    border-bottom: 10px solid;
+    border-color: transparent;
+    @media screen and (max-width: 1300px) {
+      border-top: 4px solid;
+      border-color: transparent;
+    }
+  }
+
+  .ui-datepicker table td.ui-datepicker-weeknumber {
+    border-right: none;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    @media screen and (max-width: 1366px) {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
+    @media screen and (max-width: 1244px) {
+      padding-right: 10px !important;
+      padding-left: 5px !important;
+    }
+  }
+
+  .ui-datepicker a:not([href]):not([tabindex]):hover,
+  .ui-datepicker a:not([href]):not([tabindex]):focus {
+    color: #fff !important;
+    background-color: transparent !important;
+  }
+
+  .block-calendar-planning-rhis.col-4 {
+    width: 30%;
+    border-radius: 5px;
+    height: 415px;
+    @media screen and (max-width: 1366px) {
+      height: 375px;
+      padding-right: 0;
+    }
+    @media screen and (max-width: 1244px) {
+      height: 350px;
+    }
+
+    .panel {
+      background: #fff;
+      height: 415px;
+      @media screen and (max-width: 1366px) {
+        height: 335px;
+      }
+    }
+
+    .calendar-container {
+      border-radius: 5px;
+      width: 98%;
+
+      .calendar-panel {
+        height: 415px;
+        @media screen and (max-width: 1366px) {
+          height: 335px;
+        }
+      }
+    }
+  }
+
+  .ui-datepicker-weeknumber span {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    font-family: "TT Wellingtons Medium";
+    margin: 0 auto;
+    @media screen and (max-width: 1366px) {
+      height: 28px;
+      width: 28px;
+      line-height: 28px;
+    }
+    @media screen and (max-width: 1244px) {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+
+}
+
+.col-popup-anomalie-1 {
+  width: 15%;
+}
+
+.col-popup-anomalie-2 {
+  width: 30%;
+}
+
+.col-popup-anomalie-3 {
+  width: 48%;
+}
+
+.wrongLoiValueColor {
+  background-color: #dc3545 !important;
+}
+
+.wrongLoiValueColor > td {
+  color: #fff !important;
+}
+
+.plan-equip-container {
+  .left-bloc-content {
+    .row.style-specfic {
+      margin: 0;
+
+      .btn-top-calcul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: inherit;
+        align-content: stretch;
+        width: 100%;
+
+        .btn.btn-primary {
+          width: 89%;
+          @media screen and (max-width: 1152px) {
+            width: 90%;
+          }
+        }
+
+        .btn {
+          padding: 0.375rem 5px;
+        }
+      }
+
+      .btn.outline {
+        width: 100%;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,93 @@
+.rhis-container {
+  height: fit-content;
+
+  .formation {
+    margin-bottom: 30px;
+  }
+
+  .view-section:not(:first-child) {
+    margin-top: 50px;
+  }
+
+  .label-list {
+    left: 0;
+    margin-bottom: 15px;
+  }
+
+  .competences {
+    &:not(&:first-child) {
+      margin-top: 10px;
+    }
+  }
+
+  .add-block-plus-rhis {
+    display: flex;
+    align-items: center;
+    height: 51px;
+    width: 100%;
+    margin-top: 38px;
+    border: 1px dashed #385FE3;
+    border-radius: 5px;
+    color: #385FE3;
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+
+    img {
+      margin-left: 15px;
+    }
+
+    span {
+      margin-left: 10px;
+    }
+
+    img, span {
+      cursor: pointer;
+    }
+  }
+
+  .add-formation {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-left: 0;
+
+    span {
+      height: 17px;
+      color: #9B9B9B;
+      font-family: "TT Wellingtons Regular", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 17px;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .rhis-tooltip {
+    top: 10px !important;
+    left: 35px !important;
+    max-width: 300px;
+
+    .flag-container {
+      right: 0;
+      left: 25px;
+    }
+
+    .flag {
+      right: 0;
+      left: 25px;
+    }
+  }
+
+  .btn.save-add-button-rhis {
+    margin-right: 15px;
+  }
+}
+
+.item-formation-rhis {
+  margin-right: 5px;
+}

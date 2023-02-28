@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>15A14F21-5575-4948-AE26-78D24F598A55</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="23-Semaine-1" transform="translate(-360.000000, -211.000000)" fill="#C8C7C4">
+            <g id="Contenu" transform="translate(74.000000, 74.000000)">
+                <g id="Btn_Listes" transform="translate(276.000000, 127.000000)">
+                    <g id="Ico_Clock_ON" transform="translate(10.000000, 10.000000)">
+                        <g id="time-clock-circle">
+                            <g fill-rule="nonzero">
+                                <path d="M9,0 C4.02943725,-3.04359188e-16 6.08718376e-16,4.02943725 0,9 C-6.08718376e-16,13.9705627 4.02943725,18 9,18 C13.9705627,18 18,13.9705627 18,9 C17.9946264,4.03166479 13.9683352,0.00537363571 9,0 Z M12.9,12.91575 C12.6172936,13.2149423 12.1480756,13.2355308 11.84025,12.96225 L8.121,9.55275 C7.96502428,9.41121503 7.87574915,9.21061816 7.875,9 L7.875,4.875 C7.875,4.46078644 8.21078644,4.125 8.625,4.125 C9.03921356,4.125 9.375,4.46078644 9.375,4.875 L9.375,8.67 L12.8505,11.856 C12.9978632,11.9899674 13.0858924,12.177045 13.0951782,12.3759846 C13.1044639,12.5749242 13.0342436,12.7693883 12.9,12.9165 L12.9,12.91575 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

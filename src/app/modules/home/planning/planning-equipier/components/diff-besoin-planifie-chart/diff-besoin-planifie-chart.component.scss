@@ -1,0 +1,112 @@
+.main {
+  height: 86px;
+  display: grid;
+  clear: both;
+  position: relative;
+
+  img:first-child {
+    left: 7px;
+    top: 4px;
+  }
+}
+
+.chart-title-block {
+  background-color: white;
+  height: inherit;
+  padding-left: 50px;
+
+  span {
+    color: #7F7F7F;
+    font-size: 12px;
+  }
+}
+
+.chart-block {
+  background-color: white;
+  height: inherit;
+}
+
+canvas {
+  background-color: transparent;
+}
+
+.full-width-inherited-height {
+  width: 100% !important;
+  height: inherit !important;
+}
+
+.hour {
+  width: 1px;
+  background-color: #bbbbbb7d;
+  z-index: 2;
+}
+
+.center-axe {
+  height: 3.2px;
+  background-color: black;
+  z-index: 1;
+}
+
+.dashed-hour {
+  width: 0.8px;
+  background: repeating-linear-gradient(180deg, #cecece, #cecece, transparent 6px, transparent 10px);
+  z-index: 2;
+}
+
+.chart-height {
+  height: 84px;
+}
+
+.level {
+  height: 1.6px;
+  background-color: #000000a1;
+  z-index: 2;
+}
+
+.main_container-menu_is_open {
+  @media screen and (min-width: 1551px) {
+    grid-template-columns: 15% auto !important;
+  }
+  @media screen and (max-width: 1550px) {
+    grid-template-columns: 18% auto !important;
+  }
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 15% auto !important;
+  }
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: 21% auto !important;
+  }
+}
+
+.main_container-chart {
+  grid-template-columns: 12% auto;
+  @media screen and (max-width: 1550px) {
+    grid-template-columns: 15% auto;
+  }
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 17% auto;
+  }
+}
+
+.chart-container {
+  position: relative;
+  width: 100% !important;
+  height: inherit !important;
+}
+
+.loading {
+  background-color: #949494;
+  opacity: 0.5;
+}
+
+.spinner-container {
+  z-index: 3;
+}
+
+:host::ng-deep {
+  p-progressSpinner {
+    .ui-progress-spinner {
+      height: 84px !important;
+    }
+  }
+}

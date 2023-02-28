@@ -1,0 +1,110 @@
+.rhis-container {
+  min-width: 330px;
+}
+
+.header {
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  height: 28px;
+  width: 28px;
+  background-color: #385FE3;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  span {
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 15px;
+    text-align: center;
+  }
+}
+
+.full-name {
+  color: #414141;
+  font-family: "TT Wellingtons Regular", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 17px;
+  margin-left: 10px;
+}
+
+.title {
+  margin-top: 25px;
+  border-bottom: 1px #F0F0F0 solid;
+  height: 30px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 17px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+
+  span:first-child {
+    color: #414141;
+    float: left;
+  }
+
+  span:last-child {
+    color: #626262;
+    cursor: pointer;
+    outline: 0;
+    font-size: 10px;
+    line-height: 14px;
+    border-bottom: 1px #414141 solid;
+    padding-bottom: 3px;
+    float: right;
+  }
+}
+
+.restaurants {
+  margin-top: 12px;
+  clear: both;
+  display: flex;
+  justify-content: space-between;
+
+  & > span {
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+    width: 80px;
+  }
+
+  .list {
+    width: 100%;
+    height: auto;
+    max-height: 90px;
+    overflow-y: auto;
+  }
+
+  .restaurant:not(:first-child) {
+    margin-top: 5px;
+  }
+
+  .restaurant {
+    display: flex;
+    justify-content: space-between;
+
+    span:first-child {
+      color: #9B9B9B;
+      font-family: "TT Wellingtons Light", sans-serif;
+      font-size: 12px;
+      line-height: 17px;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<div class="complementaire">
+  <div *ngIf="!loading">
+    <div class="indicateur-pourcentage">
+      <rhis-percentage-cercle [value]="heuresSuppComp?.pourcentageHeures" [colors]="colorConfig"></rhis-percentage-cercle>
+    </div>
+    <div class="nbr-heures-complementaire">
+      <span>{{getFormattedNbOfHours(heuresSuppComp?.nbHeures)}}</span>
+      <h4 *ngIf="heuresSupp">{{'Acceuil.SUPPLEMENTAIRES' | translate}}</h4>
+      <h4 *ngIf="!heuresSupp">{{'Acceuil.COMPLEMENTAIRES' | translate}}</h4>
+    </div>
+    <div class="cout-total">
+      <h4>{{'Acceuil.COUT_TOTAL' | translate}}</h4>
+      <span>{{heuresSuppComp?.coutHeures}}&euro;</span>
+    </div>
+    <div class="description">
+      {{'Acceuil.REPRESENTE' | translate}} <span *ngIf="colorConfig" [style.color]="colorConfig[0]">{{heuresSuppComp?.pourcentageHeures}}%</span>
+      {{'Acceuil.COUT_EMP' | translate}} {{heuresSupp ? '35' : '24' }}{{'Acceuil.HEURES_SEMAINE' | translate}}
+    </div>
+  </div>
+  <div class="spinner-container"><p-progressSpinner id="spinner-tx" *ngIf="loading"></p-progressSpinner></div>
+</div>

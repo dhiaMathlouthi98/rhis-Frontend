@@ -1,0 +1,112 @@
+<p-dialog [showHeader]="false"
+          [(visible)]="showPopUp"
+          [modal]="true"
+          [responsive]="true"
+          [maximizable]="true"
+          [appendTo]="'body'"
+          [dismissableMask]="true"
+          (onHide)="closePopUp()">
+
+  <div class="pop-up-container-rhis pop-up-style-generique">
+    <div class="modal-header">
+      <h5 class="modal-title">{{title}}</h5>
+      <div class="close-btn-modal-rhis">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePopUp()">
+          <img src="assets/icons/employe/Btn_Close_Beige.svg" alt="">
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div
+        class="content pop-up-content align-popup-content"
+        [style.width.px]="width">
+        <div [formGroup]="formGroup">
+
+          <div class="row space-between">
+            <div *ngIf="displayText1 else radioButtonTemplate" class="col-12">
+              {{text1}}
+            </div>
+            <ng-template #radioButtonTemplate>
+              <div>
+                <label [ngStyle]="{'margin-right': isDeleteRapport?'75px':'30px'}" class="text-radio-button"
+                       for="all_restaurants">
+                  {{msgRadioSelectAll}}
+                </label>
+                <p-radioButton name="all_restaurants"
+                               [(ngModel)]="selectAll" [value]="true" [ngModelOptions]="{standalone: true}"
+                               label="{{'GESTION_PARC_RAPPORT.ALL_RESTAURANTS'| translate}}"
+                               id="all_restaurants-radio-Btn"></p-radioButton>
+              </div>
+            </ng-template>
+          </div>
+          <div class="row space-between">
+            <div class="mx-auto">
+              <div *ngIf="displayText1 else multiSelectTemplate">
+                <p-dropdown
+                  [options]="dropdownListData"
+                  [optionLabel]="optionLabel"
+                  [autoDisplayFirst]="true"
+                  showClear="true"
+                  formControlName="selectedElement"
+                  rhisStyleForm
+                  [hasError]="formGroup?.controls?.selectedElement?.errors && isSubmitted"
+                  selector=".ui-dropdown"
+                  class="drop-down-general">
+                </p-dropdown>
+                <span class="red small-rhis"
+                      *ngIf="formGroup?.controls?.selectedElement?.errors && isSubmitted">
+              {{errorMessage | translate}}
+          </span>
+              </div>
+              <ng-template #multiSelectTemplate>
+                <div class="row">
+                  <div class="col-5 resto-text-style">
+                    {{'GESTION_PARC_RAPPORT.RESTAURANTS' | translate}}
+                  </div>
+                  <div class="col-6">
+                    <p-multiSelect (onChange)="changeValues($event)" [(ngModel)]="selectedRestaurants"
+                                   [ngModelOptions]="{standalone: true}"
+                                   [disabled]="dropdownListData!=null && dropdownListData.length===1 && isDeleteRapport"
+                                   [options]="dropdownListData" [optionLabel]="optionLabel" appendTo="body"
+                                   [pTooltip]="labelSelect"
+                                   (mouseenter)="disableDefaultTooltip()"
+                                   [defaultLabel]="defaultLabel"
+                                   [style]="{'minWidth':'50px', 'width': '200px'}"
+                                   id="RAPP-GDP-multiselect"
+                                   selectedItemsLabel="{0} {{'GESTION_PARC_RAPPORT.SELECTED_RESTAURANTS' | translate}}"
+                                   title="">
+                    </p-multiSelect>
+                  </div>
+                  <ng-content></ng-content>
+                </div>
+
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="displayText2" class="row space-between">
+            <div class="col-12">
+              {{text2}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="ecraserMsg && !isDeleteRapport" class="align-ecraser-msg">
+          {{'REPORT.RAPPORT_ECRASEMENT_MSG' | translate}}
+        </div>
+        <div *ngIf="editButtonHidden && docEditMode" class="align-ecraser-msg">
+          {{messageIfEditButtonIsHidden}}
+        </div>
+        <!-- Submit Button -->
+        <div>
+          <button (click)="submitMethod()"
+                  *ngIf="!editButtonHidden"
+                  class="btn save-add-button-rhis orange-background mt-3 btn-popup-rhis"
+                  type="button">
+            <span *ngIf="!isDeleteRapport">{{submitButtonText | uppercase}}</span>
+            <span *ngIf="isDeleteRapport">{{submitButtonText | uppercase}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+

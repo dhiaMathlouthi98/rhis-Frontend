@@ -1,0 +1,55 @@
+<div [ngClass]="{'filter': openedAlertes}" (click)="hideAlertes()">
+  <div class="rhis-container">
+    <div class="triangle"></div>
+    <div class="main" (click)="$event.stopPropagation()">
+      <table cellpadding=3 cellspacing=3>
+        <tr *ngIf="!viewDay">
+          <td>
+            <p-checkbox name="group2" value="TempsContrat" [label]="contratLabel" (click)="toggleColumnFn()"
+                        [(ngModel)]="contratCol" inputId="TempsContrat" binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr *ngIf="!viewDay">
+          <td>
+            <p-checkbox name="group2" value="HeuresCompl" [label]="heuresComplLabel" (click)="toggleColumnFn()"
+                        [(ngModel)]="heuresComplCol" inputId="HeuresCompl" binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr *ngIf="!viewDay">
+          <td>
+            <p-checkbox name="group2" value="HeuresSuppl" [label]="heuresSupplLabel" (click)="toggleColumnFn()"
+                        [(ngModel)]="heuresSupplCol" inputId="HeuresSuppl" binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr *ngIf="!viewDay">
+          <td>
+            <p-checkbox name="group2" value="HeuresNuit" [label]="heuresNuitLabel" (click)="toggleColumnFn()"
+                        [(ngModel)]="heuresNuitCol" inputId="HeuresNuit" binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr *ngIf="!viewDay">
+          <td>
+            <p-checkbox name="group2" value="HeuresFerie" [label]="heuresFerieLabel" (click)="toggleColumnFn()"
+                        [(ngModel)]="heuresFerieCol" inputId="HeuresFerie" binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-checkbox name="group2" value="Coupures" [label]="'GDH.DAY_VEIW.TABLE_HEADER.COUPURES' | translate"
+                        (click)="toggleColumnFn()" [(ngModel)]="coupureCol" inputId="Coupures"
+                        binary="true"></p-checkbox>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-checkbox name="group2" value="Repas" [label]="'GDH.DAY_VEIW.TABLE_HEADER.REAPS' | translate"
+                        (click)="toggleColumnFn()" [(ngModel)]="repasCol" inputId="Repas" binary="true"></p-checkbox>
+          </td>
+        </tr>
+
+
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="185">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"MENU.RESTAURANT.SUB_MENU.PERIODES_MANAGERS" | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list">
+      <p-table [value]="listPeriodeManager"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <ng-container *ngIf="listPeriodeManager?.length">
+              <th class="text-center">{{'PERIODE_MANAGER.NOM' | translate}}</th>
+              <th class="text-center">{{'PERIODE_MANAGER.HEURE_DEB' | translate}}</th>
+              <th class="text-center">{{'PERIODE_MANAGER.HEURE_FIN' | translate}}</th>
+            </ng-container>
+            <th>
+              <button *ngIf="addButtonControl()" type="button" (click)="openPopupToAddOrUpdatePeriodeManager()"
+                      class="btn save-add-button-rhis orange-background">
+                <span>{{'PERIODE_MANAGER.ADD_NEW_PERIODE_MANAGER_LABEL'|translate | uppercase}}</span>
+              </button>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-periodeManager>
+          <tr class="table-row" (click)="openPopupToAddOrUpdatePeriodeManager(periodeManager)">
+            <td>
+              <div class="td-container td-left-border">
+                {{ periodeManager?.libelle}}
+              </div>
+            </td>
+            <td>
+              <div class="td-container" [ngClass]="{'nightValue' : periodeManager?.dateDebutIsNight}">
+                {{ periodeManager?.dateDebut | date:'HH:mm'}}
+              </div>
+            </td>
+            <td>
+              <div class="td-container" [ngClass]="{'nightValue' : periodeManager?.dateFinIsNight}">
+                {{ periodeManager?.dateFin | date:'HH:mm'}}
+              </div>
+            </td>
+            <td *ngIf="deleteButtonControl()">
+              <div class="td-container td-right-border pr-4">
+                <div class="operation float-right">
+                <span class="item" *ngIf="periodeManager?.statut"
+                      (click)="deletePeriodeManager(periodeManager);$event.stopPropagation()">
+                  <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+                </span>
+                  <span class="con-tooltip bottom"
+                        (click)="showConfirmActivation(periodeManager); $event.stopPropagation()"
+                        *ngIf="!periodeManager?.statut">
+                    <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!--ADD / UPDATE PERIODE MANAGER-->
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddUpdatePeriodeManagerPopup"
+  [title]=addUpdatePeriodeManagerPopupTitle>
+
+  <rhis-add-update-periode-manager *ngIf="showAddUpdatePeriodeManagerPopup"
+                                   [initPeriodeManager]="selectedPeriodeManager"
+                                   [buttonLabel]='buttonLabel'
+                                   [limitHeureDebut]="limiteHeureDebut"
+                                   [limitHeureFin]="limiteHeureFin"
+                                   [initDuplicatedLibelle]="isDuplicatedLibelle"
+                                   (addOrUpdatePeriodeManagerEvent)="addOrUpdatePeriodeManager($event)"
+                                   (checkIfNightValueEvent)="checkIfNightValue()"
+                                   [nightValue]="setNightValue"
+  ></rhis-add-update-periode-manager>
+</rhis-pop-up>
+
+<!--CONFIRMATION AND TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

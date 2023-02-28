@@ -1,0 +1,192 @@
+.rhis-container {
+  height: 350px;
+  width: 1300px;
+  border-radius: 5px;
+
+  .dl-button {
+    position: absolute;
+    top: 0;
+    right: 20px;
+  }
+
+  .planning-header {
+    display: grid;
+    grid-template-columns: 10% auto;
+    text-align: center;
+    font-family: 'TT Wellingtons Medium';
+    height: 100px;
+
+    .planning-title {
+      font-weight: bold;
+      font-size: 25px;
+    }
+
+    .restaurant-logo {
+      height: 60px;
+      width: 60px;
+    }
+  }
+
+  hr {
+    margin-top: 2rem;
+    border-top: 1px solid black;
+  }
+
+  .planning-body {
+    clear: both;
+    display: grid;
+    grid-template-columns: 18% 7% auto;
+
+    .employees-list {
+      .employee-item {
+        width: 262px;
+        padding-top: 4px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: 'TT Wellingtons Medium';
+        line-height: 15px;
+
+        .shifts-time-label {
+          font-family: 'TT Wellingtons Medium';
+          font-size: 10px;
+          font-weight: initial;
+          font-weight: bold;
+          line-height: 11px;
+          padding-top: 5px;
+        }
+      }
+    }
+
+    .am-pm-list {
+      .am-pm-item {
+        padding-top: 20px;
+        font-family: 'TT Wellingtons Medium';
+        font-size: 12px;
+        text-align: right;
+        padding-right: 5px;
+        font-weight: bold;
+      }
+    }
+
+    .pdf-gridster-container {
+      gridster {
+        height: inherit;
+        background-color: inherit;
+
+        .shift-item {
+          font-size: 10px;
+          font-weight: bold;
+          letter-spacing: 0.8px;
+          line-height: 12px;
+          color: #000000;
+          border-radius: 5px;
+          box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+          margin-top: 4px !important;
+          height: 35px !important;
+        }
+
+        .hour-item {
+          color: #000000;
+          border-left: 1px solid #dee2e6;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 17px;
+        }
+
+        gridster-item {
+          transition: unset !important;
+          text-align: center;
+          font-family: 'TT Wellingtons Medium';
+
+          .item-body {
+            position: relative;
+
+            img {
+              position: absolute;
+              right: 12px;
+              top: 0;
+              width: 15px;
+            }
+
+            .vertical-line-right {
+              position: absolute;
+              top: 0;
+              right: 5px;
+              width: 3px;
+              height: 20px;
+              background-color: #FFFFFF;
+              opacity: 0.75;
+              border-radius: 1.5px;
+            }
+
+            .vertical-line-left {
+              position: absolute;
+              top: 0;
+              left: 5px;
+              width: 3px;
+              height: 20px;
+              background-color: #FFFFFF;
+              opacity: 0.75;
+              border-radius: 1.5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .grid-title {
+    font-family: 'TT Wellingtons Medium';
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .ca-infos {
+    .ventes-am-pm {
+      clear: both;
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      text-align: right;
+    }
+
+    .ca-details {
+      clear: both;
+      display: grid;
+      grid-template-rows: auto auto auto auto auto auto;
+      margin-top: 50px;
+      font-family: 'TT Wellingtons Medium';
+      font-size: 12px;
+
+      .align-right {
+        text-align: right;
+      }
+
+      .values {
+        text-align: center;
+        border-right: 1px solid #dee2e6;
+      }
+
+      .bottom-border {
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  }
+
+  .text-bold {
+    font-weight: bold;
+  }
+}
+
+:host ::ng-deep {
+  gridster .gridster-column {
+    border: 1px dashed #dee2e6;
+    transition: unset !important;
+  }
+
+  gridster .gridster-row {
+    border: 1px solid #dee2e6;
+  }
+}
+.inactive-employee-shift-display-style {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.5) 20px, rgba(255, 255, 255, 0.5) 40px) !important;
+}

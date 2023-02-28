@@ -1,0 +1,38 @@
+<div class="rhis-container" [style.float]="position" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
+  <div class="period-list">
+    <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_JOUR,
+  'periode': filter != FILTER_JOUR
+  }" (click)="setFilter(FILTER_JOUR)">{{'Acceuil.J_1' | translate}}</h1>
+  </div>
+  <div class="period-list">
+    <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_WEEK,
+  'periode': filter != FILTER_WEEK
+  }" (click)="setFilter(FILTER_WEEK)">{{'Acceuil.S_1' | translate}}</h1>
+  </div>
+  <div class="period-list">
+    <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_MONTH,
+  'periode': filter != FILTER_MONTH
+  }" (click)="setFilter(FILTER_MONTH)"
+    >{{'Acceuil.M_1' | translate}}</h1>
+  </div>
+  <div class="center-block" *ngIf="!loadingTx">
+    <span class="center-block-text">{{'Acceuil.TAUX_MOE' | translate}} {{getDateLabel()}}</span>
+    <div class="center-block-values">
+      <span>
+        <div class="center-block-value">{{tauxMainOeuvrePrev}} <span class="center-block-unity">%</span></div>
+        <div class="center-block-text">{{'Acceuil.PREVISIONNEL' | translate}}</div>
+      </span>
+      <span><img [src]="'assets/icons/accueil/Indicateur_Prev_Reel/' + getIcon()" alt=""></span>
+      <span>
+        <div class="center-block-value">{{tauxMainOeuvreReel}} <span class="center-block-unity">%</span></div>
+        <div class="center-block-text">{{'Acceuil.REAL' | translate}}</div>
+      </span>
+    </div>
+    <div class="center-block-display-rapp"><span>{{'Acceuil.DISPLAY_REPORT' | translate}}</span></div>
+  </div>
+</div>
+<p-progressSpinner id="spinner-tx" *ngIf="loadingTx" class="data-in-progress"></p-progressSpinner>

@@ -1,0 +1,250 @@
+td {
+  vertical-align: top;
+  &:hover {
+    .icon-add {
+      opacity: 1;
+      transition: opacity 500ms;
+      filter: invert(70%) sepia(16%) saturate(7366%) hue-rotate(156deg) brightness(97%) contrast(85%);
+    }
+  }
+}
+
+.empName {
+  color: #414141;
+  font-family: "TT Wellingtons Medium";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 290px;
+  @media screen and (max-width: 1680px) {
+    max-width: 260px;
+  }
+  @media screen and (max-width: 1600px) {
+    max-width: 240px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  @media screen and (max-width: 1440px) {
+    max-width: 210px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+  @media screen and (max-width: 1366px) {
+    max-width: 202px;
+  }
+
+  &:hover {
+    overflow: unset;
+    max-width: 100%;
+    white-space: unset;
+  }
+}
+
+.employee-cell-hour {
+  font-size: 14px;
+  @media screen and (max-width: 1366px) {
+    font-size: 12px;
+  }
+}
+
+.contract {
+  color: #9B9B9B;
+  font-family: "TT Wellingtons Medium";
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 11px;
+  height: 22px;
+  border: 1px solid #AFA899;
+  border-radius: 5px;
+  background-color: rgba(175, 168, 153, 0.15);
+  float: left;
+  padding: 5px;
+}
+.contractFull {
+  color: #2DC76D;
+  font-family: "TT Wellingtons Medium";
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 11px;
+  height: 22px;
+  border: 1px solid #2DC76D;
+  border-radius: 5px;
+  background-color: rgba(45, 199, 109, 0.15);
+  float: left;
+  padding: 5px;
+}
+.employeeCell {
+  padding: 15px;
+  cursor: pointer;
+  @media screen and (max-width: 1366px) {
+    padding: 0 8px !important;
+  }
+}
+
+:host.row-selected {
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  box-shadow: 0px 0px 7px 0px rgba(53, 53, 240, 1);
+  background-color: #eeeeee4d;
+  margin-top: 2px;
+  margin-bottom: 3px;
+}
+
+.icon-add {
+  background-image: url(/assets/icons/planning/add-icon/add-small.svg);
+  width: 32px;
+  height: 32px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left: calc((100% - 32px) / 2);
+  margin-top: 10px;
+  display: inline-block;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 200ms;
+  z-index: 0;
+}
+
+.drop-target {
+  border: 2px dashed #ccc !important;
+}
+
+.conge-planned {
+  position: absolute;
+  background-image: url(/assets/images/diagonal-pattern.png);
+  background-size: auto 150%;
+  border-radius: 5px;
+  border: 1px solid #C8C7C4;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  top: 8px;
+  left: 10px;
+  padding: 4px;
+  z-index: 9;
+  .leave-text {
+    color: #FFFFFF;
+    font-family: "TT Wellingtons Medium";
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 18px;
+    border-radius: 5px;
+    background-color: #C8C7C4;
+    padding: 0 5px;
+    text-transform: uppercase;
+    float: left;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    @media screen and (max-width: 1680px) {
+      max-width: 125px;
+    }
+    @media screen and (max-width: 1600px) {
+      max-width: 115px;
+    }
+    @media screen and (max-width: 1366px) {
+      max-width: 85px;
+    }
+    @media screen and (max-width: 1280px) {
+      max-width: 78px;
+    }
+    @media screen and (max-width: 1024px) {
+      max-width: 75px;
+    }
+  }
+}
+
+.employee-draggable {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  float: left;
+}
+
+.contract-icon-x {
+  background-image: url(/assets/icons/planning/Ico_X.png);
+  width: 20px;
+  height: 13px;
+  float: left;
+  background-repeat: no-repeat;
+}
+
+.contract-icon-y {
+  background-image: url(/assets/icons/prevision-icons/check.png);
+  width: 20px;
+  height: 13px;
+  float: left;
+  background-repeat: no-repeat;
+}
+
+.td-drop-zone {
+  padding-top: 50px;
+  @media screen and (max-width: 1366px) {
+    padding-top: 10px;
+  }
+}
+
+.add-button {
+  width: 100%;
+  text-align: center;
+}
+
+::ng-deep {
+  p-dropdown {
+    border: 1px solid #ced4da !important;
+  }
+  .modif-shift-fixe-popup-rhis {
+    border: 1px solid #C8C7C4;
+    border-radius: 3px;
+    padding: 10px;
+    .ui-calendar .ui-inputtext {
+      margin-top: 0;
+    }
+    .col-6.heure-fin-rhis {
+      margin-left: -15px;
+    }
+
+    .col-6.block-heure-planning-manager {
+      padding-right: 0;
+    }
+
+    .col-1.block-delete-icon-panning-manager {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 37px;
+      margin-left: -4px;
+      cursor: pointer;
+      height: 28px;
+      max-width: 28px;
+    }
+
+    .ui-timepicker > div {
+      margin-left: 0;
+    }
+    .ui-datepicker .ui-timepicker {
+      padding: 0;
+      span {
+        font-size: 14px;
+      }
+    }
+
+  }
+  .add-competence-planning-manager {
+    color: #385FE3;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    margin-top: 38px;
+    border: 1px dashed #385FE3;
+    border-radius: 5px;
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-weight: 600;
+    line-height: 22px;
+  }
+}

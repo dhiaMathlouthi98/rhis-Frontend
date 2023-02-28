@@ -1,0 +1,24 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="120">
+</div>
+<div [ngStyle]="{'height': heightInterface}" class="rhis-container view scroll-content-rhis">
+  <p-accordion *ngIf="showAllowed(posteTravail)" (onClose)="closeTab(0)" (onOpen)="openTab(0)">
+    <p-accordionTab #positionTab
+                    [selected]="true"
+                    header="{{'MENU.RESTAURANT.SUB_MENU.POSITIONS_TRAVAIL' | translate}}">
+      <div *ngIf="!goToGroupement">
+        <rhis-gestion-poste-travail></rhis-gestion-poste-travail>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+  <p-accordion *ngIf="showAllowed(groupementPosteTravail)" (onClose)="closeTab(1)" (onOpen)="openTab(1)">
+    <p-accordionTab #groupementTab header="{{'MENU.RESTAURANT.SUB_MENU.GROUPEMENT_POSITIONS_TRAVAIL' | translate}}">
+      <div *ngIf="goToGroupement">
+        <rhis-groupement-poste-travail></rhis-groupement-poste-travail>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

@@ -1,0 +1,15 @@
+<div class="control-section">
+  <div class="header block-left-header-rhis">
+
+    <a [routerLink]="rhisRouter.getRoute('HOME_EMPLOYEE')" *ngIf="employeHeader">
+      <h3>{{"MENU.EMPLOYEE" | translate}}</h3>
+    </a>
+    <span class="icon-arrow-right-rhis" *ngIf="employeHeader">
+                  <img src="assets/icons/employe/Arrow%20right.svg" alt="no icon">
+              </span>
+    <h1 *ngIf="employeHeader">{{'REPORT.MY_RH_DOCUMENTS' | translate | uppercase}}</h1>
+
+  </div>
+</div>
+<router-outlet></router-outlet>
+<p-confirmDialog [appendTo]="'body'" key="edit-doc"></p-confirmDialog>

@@ -1,0 +1,93 @@
+<div>
+  <form [formGroup]="modeVenteFormGroup">
+    <div class="row">
+      <div class="col-6">
+        <div class="section-element w-100">
+          <label class="section-element-title" for="nom">{{'MODE_VENTE.NOM' | translate}}*</label>
+          <input [hasError]=" submitted && (nomHasError || nomExist)" class="text-field" formControlName="nom" id="nom"
+                 rhisStyleForm type="text">
+          <span *ngIf="submitted && nomExist"
+                class='position-absolute red small-rhis error-position'>{{'MODE_VENTE.ERR_NAME_EXIST' | translate}}</span>
+          <span *ngIf="submitted && nomHasError"
+                class="position-absolute red small-rhis error-position">{{'MODE_VENTE.REQUIRED' | translate}}</span>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="section-element ml-0 w-100">
+          <label class="section-element-title" for="libelle">{{'MODE_VENTE.LIBELLE' | translate}}*</label>
+          <input [hasError]=" submitted && (libelleHasError || libelleExist)" class="text-field"
+                 formControlName="libelle" id="libelle"
+                 maxlength="5"
+                 rhisStyleForm type="text">
+          <span *ngIf="submitted && libelleExist"
+                class="position-absolute red small-rhis error-position ">{{'MODE_VENTE.ERR_LABEL_EXIST' | translate}}</span>
+          <span *ngIf="submitted && libelleHasError"
+                class="position-absolute red small-rhis error-position ">{{'MODE_VENTE.REQUIRED' | translate}}</span>
+        </div>
+      </div>
+      <ng-container *ngIf="hasSystemCaisse">
+        <div class="col-6 mt-3">
+          <div class="section-element ml-0 w-100">
+            <label class="section-element-title" for="lignesMontant">{{'MODE_VENTE.LIGNES_MONTANT' | translate}}</label>
+            <input [additionnalSpecialKeys]="additionnalSpecialKeys" [placeholder]="placeholderText" class="text-field"
+                   formControlName="lignesMontant" id="lignesMontant" rhisRegexValidator
+                   type="text">
+            <span *ngIf="lignesMontantError && submitted"
+                  class="form-item-error red small"> {{"MODE_VENTE.VALUE_SUP_ONE_REQUIRED" | translate}}</span>
+          </div>
+        </div>
+        <div class="col-6 mt-3">
+          <div class="section-element ml-0 w-100">
+            <label class="section-element-title"
+                   for="lignesTransaction">{{'MODE_VENTE.LIGNES_TRANSACTION' | translate}}</label>
+            <input [additionnalSpecialKeys]="additionnalSpecialKeys" [placeholder]="placeholderText"
+                   class="text-field" formControlName="lignesTransaction" id="lignesTransaction"
+                   rhisRegexValidator
+                   type="text">
+            <span *ngIf="lignesTransactionError && submitted"
+                  class="form-item-error red small">{{"MODE_VENTE.VALUE_SUP_ONE_REQUIRED" | translate}}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="hasMaitreDSystemCaisse">
+        <div class="col-6 mt-3">
+          <div class="section-element ml-0 w-100">
+            <label class="section-element-title"
+                   for="centreRevenu">{{'MODE_VENTE.CENTRE_REVENU_LABEL' | translate}}</label>
+            <input [additionnalSpecialKeys]="additionnalSpecialKeys" [placeholder]="placeholderText" class="text-field"
+                   formControlName="centreRevenu" id="centreRevenu" rhisRegexValidator
+                   type="text">
+          </div>
+        </div>
+        <div class="col-6 mt-3">
+          <div class="section-element ml-0 w-100">
+            <label class="section-element-title"
+                   for="filtre">{{'MODE_VENTE.FILTRE_LABEL' | translate}}</label>
+            <input [additionnalSpecialKeys]="additionnalSpecialKeys" [placeholder]="placeholderText"
+                   class="text-field" formControlName="filtre" id="filtre"
+                   rhisRegexValidator
+                   type="text">
+          </div>
+        </div>
+      </ng-container>
+      <div class="col-6 mt-3" *ngIf="hasZeltySystemCaisse">
+        <div class="section-element ml-0 w-100">
+          <label class="section-element-title"
+                 for="code_source">{{'MODE_VENTE.CODE_SOURCE' | translate}}</label>
+          <input [additionnalSpecialKeys]="additionnalSpecialKeys" [placeholder]="placeholderText" class="text-field"
+                 formControlName="codeSource" id="code_source" rhisRegexValidator
+                 type="text">
+        </div>
+      </div>
+      <div class="mt-4 col-12">
+        <p-checkbox label="{{'MODE_VENTE.M_O' | translate}}"
+                    formControlName="mainOeuvre"
+                    binary="true">
+        </p-checkbox>
+      </div>
+    </div>
+    <button type="button" (click)="submit()" class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5">
+      <span>{{buttonLabel | uppercase}}</span>
+    </button>
+  </form>
+</div>

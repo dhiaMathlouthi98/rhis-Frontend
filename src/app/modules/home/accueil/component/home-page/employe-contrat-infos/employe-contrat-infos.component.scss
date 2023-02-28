@@ -1,0 +1,147 @@
+.rhis-container {
+  .nbr-employe {
+    float: left;
+    height: 201px;
+    width: 31%;
+    text-align: center;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+    & > div {
+      border-radius: 5px;
+      background-color: #385FE3;
+      box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+      height: inherit;
+      padding-top: 25px;
+      @media screen and (max-width: 1366px) {
+        padding-top: 10px;
+      }
+      span {
+        display: block;
+        &:nth-of-type(2) {
+          height: 20px;
+          color: #FFFFFF;
+          font-family: "TT Wellingtons Light";
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          line-height: 17px;
+          text-align: center;
+          margin-top: 12px;
+          @media screen and (max-width: 991px) {
+            margin-top: 8px;
+          }
+        }
+
+        &:nth-of-type(3) {
+          color: #FFFFFF;
+          font-family: "TT Wellingtons DemiBold";
+          font-size: 36px;
+          font-weight: 600;
+          line-height: 50px;
+          margin-top: 3px;
+          @media screen and (max-width: 1366px) {
+            font-size: 30px;
+          }
+          @media screen and (max-width: 1024px) {
+            line-height: 22px;
+            font-size: 22px;
+          }
+        }
+      }
+
+      div {
+        height: 30px;
+        width: 145px;
+        border: 1px solid #FFFFFF;
+        border-radius: 5px;
+        text-align: center;
+        margin: 16px auto 0 auto;
+        @media screen and (max-width: 1199px) {
+          margin: 0 15px;
+          width: auto;
+        }
+        @media screen and (max-width: 991px) {
+          margin: 0 40px;
+          height: 25px;
+        }
+        span {
+          margin-top: 6%;
+          color: #FFFFFF;
+          font-family: "TT Wellingtons Bold";
+          font-size: 10px;
+          font-weight: bold;
+          letter-spacing: 1px;
+          line-height: 10px;
+          &:hover{
+            cursor: pointer;
+          }
+        }
+      }
+
+      @media screen and (max-width: 991px) {
+        padding-top: 0px;
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      width: 52%;
+      height: 108px;
+    }
+  }
+  .nbr-cdi {
+    float: left;
+    height: 201px;
+    width: 23%;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+    @media screen and (max-width: 991px) {
+      width: 48%;
+      height: 108px;
+    }
+  }
+
+  .nbr-cdd {
+    float: left;
+    height: 201px;
+    width: 23%;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+    @media screen and (max-width: 991px) {
+      width: 52%;
+      margin-top: 15px;
+      height: 100px;
+    }
+    @media screen and (max-width: 991px) {
+      :host ::ng-deep .rhis-container {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .nbr-ce {
+    float: right;
+    height: 201px;
+    width: 23%;
+    @media screen and (max-width: 1366px) {
+      height: 180px;
+    }
+    @media screen and (max-width: 991px) {
+      width: 48%;
+      margin-top: 15px;
+      height: 100px;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .nbr-cdd {
+    @media screen and (max-width: 991px) {
+      .rhis-container {
+        width: 100% !important;
+      }
+    }
+  }
+}

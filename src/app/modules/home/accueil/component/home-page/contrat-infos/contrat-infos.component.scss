@@ -1,0 +1,71 @@
+.rhis-container {
+  height: 100%;
+  width: 90%;
+  float: right;
+  padding: 20px 0 0 15px;
+  border-radius: 5px;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+  @media screen and (max-width: 1199px) {
+    padding: 20px 0 0 10px;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 10px 0 0 10px;
+  }
+
+  .type-contrat {
+    line-height: 1;
+    span {
+      background-color: #2DC76D;
+      display: initial;
+      border-radius: 5px;
+      font-family: "TT Wellingtons Light";
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 14px;
+      padding: 3px 12px;
+      text-align: center;
+      @media screen and (max-width: 1366px) {
+        font-size: 9px;
+        line-height: 12px;
+      }
+    }
+  }
+
+  .nbr-contrat {
+    margin-top: 10px;
+    font-family: "TT Wellingtons DemiBold";
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 50px;
+    @media screen and (max-width: 1366px) {
+      font-size: 30px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 22px;
+      line-height: 22px;
+      margin-top: 10px;
+    }
+  }
+
+  .description-contrat {
+    width: 80px;
+    font-family: "TT Wellingtons Light";
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 10px;
+    @media screen and (max-width: 1199px) {
+      width: 75px;
+      font-size: 11px;
+    }
+    @media screen and (max-width: 1024px) {
+      width: 90px;
+      margin-top: 3px;
+    }
+  }
+
+  span {
+    display: block;
+  }
+}

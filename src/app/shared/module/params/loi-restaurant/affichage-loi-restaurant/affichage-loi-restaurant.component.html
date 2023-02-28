@@ -1,0 +1,282 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="280">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"SOUSMENU.RESTAURANT_LAW" | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="row block-row-without-margin-rhis mb-3">
+      <div class="col-6 col-md-6 col-lg-3" *ngIf="showEmployees">
+        <div class="section-element-title">{{'LOI_EMPLOYEE.LIST_OF_ACTIVE_EMPLOYEE' | translate}}</div>
+        <p-dropdown
+          (onChange)="onSelectEmployee()"
+          [(ngModel)]="selectedEmployee"
+          optionLabel="displayedName"
+          [autoDisplayFirst]="false"
+          [options]="listActiveEmployee"
+          class="drop-down-general"></p-dropdown>
+      </div>
+      <ng-content select="[restaurants]"></ng-content>
+      <div class="col-6 col-md-6 col-lg-3">
+        <div class="section-element-title">{{'LOI_GROUPE_TRAVAIL.LIST_OF_ACTIVE_GROUPE_TRAVAIL' | translate}}</div>
+        <p-dropdown
+          (onChange)="onSelectGroupeTravail($event)"
+          [(ngModel)]="selectedGroupeTravail"
+          optionLabel="libelle"
+          [autoDisplayFirst]="false"
+          [options]="activeGroupeTravail"
+          class="drop-down-general"></p-dropdown>
+      </div>
+      <ng-content select="[copy_icon]"></ng-content>
+      <div class="col-10 mt-md-4 mt-4 mt-lg-0"
+           [ngClass]="{'col-md-10 col-lg-6' : showEmployees, 'col-md-5': !showEmployees}">
+        <h1 class="section-element-title col-12">{{'LOI_PAYS.CHOOSE_TEMPS_TRAVAIL' | translate}}</h1>
+        <div class="row block-row-without-margin-rhis loi-restaurant-check-rhis">
+          <div class="col-6 col-md-6 col-lg-5">
+            <p-checkbox
+              name="choix"
+              [label]="tempsPleinLabel"
+              [value]="tempsPlein"
+              [(ngModel)]="selectedTempsTravail"
+              (onChange)="setTempTravail($event, tempsPlein)">
+            </p-checkbox>
+          </div>
+          <div class="col-6 col-md-6 col-lg-6">
+            <p-checkbox
+              name="choix"
+              [label]="tempstempsPartielLabel"
+              [value]="tempsPartiel"
+              [(ngModel)]="selectedTempsTravail"
+              (onChange)="setTempTravail($event, tempsPartiel)"
+            >
+            </p-checkbox>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="listLoiAfficher?.length > 0" class="table-list">
+      <p-table [value]="listLoiAfficher" [responsive]="true"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th class="text-center">{{'LABELS.LAW' | translate}}</th>
+            <th class="text-center">{{'LABELS.MAJEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.MINEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.POINTEUSE_MAJEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.POINTEUSE_MINEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.BLOQUANTE' | translate}}</th>
+            <th class="text-center">{{'LABELS.POINTEUSE' | translate}}</th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-loi>
+          <tr class="table-row" (click)="displayUpdateLoiPopup(loi)">
+            <td>{{loi?.translatedLibelle}}</td>
+            <td class="text-center">
+              <div (mouseenter)="showOrHideToolTip(loi,true,false)"
+                   (mouseleave)="showOrHideToolTip(loi,true,false)">
+                <div *ngIf="loi?.majeurForbiddenChanges; else majeurChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+                <ng-template #majeurChanges>
+              <span *ngIf="loi?.valeurMajeurAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate }}
+              </span>
+                  <span *ngIf="loi?.valeurMajeurAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                  <span
+                    *ngIf="(loi?.valeurMajeurAfficher !== 'false' && loi?.valeurMajeurAfficher !== 'true') && !loi?.loiRef?.majeurForbiddenChanges">
+                              {{loi?.valeurMajeurAfficher }}
+              </span>
+                </ng-template>
+              </div>
+              <div *ngIf="loi?.toolTipShowMajeur">
+                <rhis-infos-tooltip
+                  [top]="tooltipStyle.top"
+                  [buttom]="tooltipStyle.buttom"
+                  [isFlagTop]="tooltipStyle.isFlagTop"
+                  [right]="tooltipStyle.right">
+                  <div *ngIf="loi?.majeurForbiddenChanges;else majeurChangesToolTip">
+                    <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                  </div>
+                  <ng-template #majeurChangesToolTip>
+                    <div *ngIf="loi?.loiRef?.valeurMajeurAfficher === 'true'">
+                      {{'LABELS.LAW' | translate}}: {{'COMMON_LOI.TRUE' | translate}}
+                    </div>
+                    <div *ngIf="loi?.loiRef?.valeurMajeurAfficher === 'false'">
+                      {{'LABELS.LAW' | translate}}: {{'COMMON_LOI.FALSE' | translate}}
+                    </div>
+                    <div
+                      *ngIf="(loi?.valeurMajeurAfficher !== 'false' && loi?.valeurMajeurAfficher !== 'true')&& !loi?.loiRef?.majeurForbiddenChanges">
+                      {{'LABELS.LAW' | translate}}: {{loi?.loiRef?.valeurMajeurAfficher }}
+                    </div>
+                  </ng-template>
+                </rhis-infos-tooltip>
+              </div>
+            </td>
+
+            <td class="text-center">
+              <div (mouseenter)="showOrHideToolTip(loi,false,false)"
+                   (mouseleave)="showOrHideToolTip(loi,false,false)">
+                <div *ngIf="loi?.mineurForbiddenChanges; else mineurChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+                <ng-template #mineurChanges>
+              <span *ngIf="loi?.valeurMineurAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate}}
+              </span>
+                  <span *ngIf="loi?.valeurMineurAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                  <span
+                    *ngIf="(loi?.valeurMineurAfficher !== 'false' && loi?.valeurMineurAfficher !== 'true')&& !loi?.loiRef?.mineurForbiddenChanges">
+                              {{loi?.valeurMineurAfficher}}
+              </span>
+                </ng-template>
+              </div>
+              <div *ngIf="loi?.toolTipShowMineur">
+                <rhis-infos-tooltip
+                  [top]="tooltipStyle.top"
+                  [buttom]="tooltipStyle.buttom"
+                  [isFlagTop]="tooltipStyle.isFlagTop"
+                  [right]="tooltipStyle.right">
+                  <div *ngIf="loi?.mineurForbiddenChanges;else mineurChangesToolTip">
+                    <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                  </div>
+                  <ng-template #mineurChangesToolTip>
+                    <i *ngIf="loi?.loiRef.valeurMineurAfficher === 'true'">
+                      {{'COMMON_LOI.TRUE' | translate}}
+                    </i>
+                    <i *ngIf="loi?.loiRef.valeurMineurAfficher === 'false'">
+                      {{'COMMON_LOI.FALSE' | translate}}
+                    </i>
+                    <div
+                      *ngIf="(loi?.valeurMineurAfficher !== 'false' && loi?.valeurMineurAfficher !== 'true')&& !loi?.loiRef?.mineurForbiddenChanges">
+                      {{'LABELS.LAW' | translate}}: {{loi?.loiRef.valeurMineurAfficher }}
+                    </div>
+                  </ng-template>
+                </rhis-infos-tooltip>
+              </div>
+            </td>
+            <td class="text-center">
+              <div (mouseenter)="showOrHideToolTip(loi,true,true)"
+                   (mouseleave)="showOrHideToolTip(loi,true,true)">
+                <div *ngIf="loi?.majeurForbiddenChanges; else majeurPointeuseChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+                <ng-template #majeurPointeuseChanges>
+              <span *ngIf="loi?.valeurMajeurPointeuseAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate}}
+              </span>
+                  <span *ngIf="loi?.valeurMajeurPointeuseAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                  <span
+                    *ngIf="(loi?.valeurMajeurPointeuseAfficher !== 'false' && loi?.valeurMajeurPointeuseAfficher !== 'true') && !loi?.loiRef?.majeurForbiddenChanges">
+                              {{loi?.valeurMajeurPointeuseAfficher}}
+              </span>
+                </ng-template>
+              </div>
+              <div *ngIf="loi?.toolTipShowMajeurPointeuse">
+                <rhis-infos-tooltip
+                  [top]="tooltipStyle.top"
+                  [buttom]="tooltipStyle.buttom"
+                  [isFlagTop]="tooltipStyle.isFlagTop"
+                  [right]="tooltipStyle.right">
+                  <div *ngIf="loi?.majeurPointeuseForbiddenChanges; else majeurPointeuseChangesToolTip">
+                    <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                  </div>
+                  <ng-template #majeurPointeuseChangesToolTip>
+                    <div *ngIf="loi?.loiRef?.valeurMajeurPointeuseAfficher === 'true'">
+                      {{'LABELS.LAW' | translate}}: {{'COMMON_LOI.TRUE' | translate}}
+                    </div>
+                    <div *ngIf="loi?.loiRef?.valeurMajeurPointeuseAfficher === 'false'">
+                      {{'LABELS.LAW' | translate}}: {{'COMMON_LOI.FALSE' | translate}}
+                    </div>
+                    <div
+                      *ngIf="(loi?.valeurMajeurPointeuseAfficher !== 'false' && loi?.valeurMajeurPointeuseAfficher !== 'true')&& !loi?.loiRef?.majeurForbiddenChanges">
+                      {{'LABELS.LAW' | translate}}: {{loi?.loiRef?.valeurMajeurPointeuseAfficher }}
+                    </div>
+                  </ng-template>
+                </rhis-infos-tooltip>
+              </div>
+            </td>
+
+            <td class="text-center">
+              <div (mouseenter)="showOrHideToolTip(loi,false,true)"
+                   (mouseleave)="showOrHideToolTip(loi,false,true)">
+                <div *ngIf="loi?.mineurForbiddenChanges; else mineurPointeuseChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+                <ng-template #mineurPointeuseChanges>
+              <span *ngIf="loi?.valeurMineurPointeuseAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate}}
+              </span>
+                  <span *ngIf="loi?.valeurMineurPointeuseAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                  <span
+                    *ngIf="(loi?.valeurMineurPointeuseAfficher !== 'false' && loi?.valeurMineurPointeuseAfficher !== 'true')&& !loi?.loiRef?.mineurForbiddenChanges">
+                              {{loi?.valeurMineurPointeuseAfficher}}
+              </span>
+                </ng-template>
+              </div>
+              <div *ngIf="loi?.toolTipShowMineurPointeuse">
+                <rhis-infos-tooltip
+                  [top]="tooltipStyle.top"
+                  [buttom]="tooltipStyle.buttom"
+                  [isFlagTop]="tooltipStyle.isFlagTop"
+                  [right]="tooltipStyle.right">
+                  <div *ngIf="loi?.mineurPointeuseForbiddenChanges;else mineurPointeuseChangesToolTip">
+                    <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                  </div>
+                  <ng-template #mineurPointeuseChangesToolTip>
+                    <i *ngIf="loi?.loiRef.valeurMineurPointeuseAfficher === 'true'">
+                      {{'COMMON_LOI.TRUE' | translate}}
+                    </i>
+                    <i *ngIf="loi?.loiRef.valeurMineurPointeuseAfficher === 'false'">
+                      {{'COMMON_LOI.FALSE' | translate}}
+                    </i>
+                    <div
+                      *ngIf="(loi?.valeurMineurPointeuseAfficher !== 'false' && loi?.valeurMineurPointeuseAfficher !== 'true')&& !loi?.loiRef?.mineurForbiddenChanges">
+                      {{'LABELS.LAW' | translate}}: {{loi?.loiRef.valeurMineurPointeuseAfficher }}
+                    </div>
+                  </ng-template>
+                </rhis-infos-tooltip>
+              </div>
+            </td>
+            <td>
+              <i *ngIf="loi?.bloquante" class="pi pi-check"></i>
+            </td>
+            <td>
+              <i *ngIf="loi?.loiPointeuse" class="pi pi-check"></i>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="hideUpdateLoiPopup()"
+  [showPopUp]="displayPopup"
+  [title]="updateLoiPopupTitle">
+  <rhis-modification-loi-restaurant *ngIf="displayPopup" [initListePeriodicite]="listPeriodicite"
+                                    [initLoiRestaurant]="selectedLoi"
+                                    [initTitle]="updateLoiPopupTitle"
+                                    (updateLoiEvent)="updateLoi($event)"
+  ></rhis-modification-loi-restaurant>
+</rhis-pop-up>
+
+<!--TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

@@ -1,0 +1,293 @@
+<form [formGroup]="groupeTravailform"
+      class="groupe-travail-form">
+  <div class="row">
+    <div class="col-6">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="libelle">{{'GROUPE_TRAVAIL.LIBELLE' | translate}}</label>
+            <input [hasError]="libelle.invalid && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="libelle"
+                   id="libelle"
+                   name="libelle"
+                   rhisStyleForm
+                   type="text">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+          <span
+            *ngIf="(groupeTravailform.get('libelle').hasError('required') || groupeTravailform.get('libelle').hasError('trimValidator'))  && (groupeTravailform.controls['libelle'].touched || isSubmitted)"
+            class="form-item-error red small-rhis position-absolute ml-1">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+            <span *ngIf="libelleExiste"
+                  class="form-item-error red small-rhis position-absolute ml-1">{{libelleExiste}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="codeEmploi">{{'GROUPE_TRAVAIL.CODE_EMPLOI' | translate}}</label>
+            <input [hasError]="codeEmploi.invalid && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="codeEmploi"
+                   id="codeEmploi"
+                   name="codeEmploi"
+                   rhisStyleForm
+                   type="text">
+          </div>
+          <div class="col-12">
+            <span
+              *ngIf="(groupeTravailform.get('codeEmploi').hasError('required') || groupeTravailform.get('codeEmploi').hasError('trimValidator')) && (groupeTravailform.controls['codeEmploi'].touched || isSubmitted)"
+              class="form-item-error red small-rhis position-absolute ml-1">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+            <span *ngIf="codeExiste"
+                  class="form-item-error red small-rhis position-absolute ml-1">{{codeExiste}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="tauxhoraire">{{'GROUPE_TRAVAIL.TAUX_HORAIRE' | translate}}</label>
+            <input [hasError]="tauxhoraire.invalid && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="tauxhoraire"
+                   id="tauxhoraire"
+                   min="0"
+                   name="tauxhoraire"
+                   rhisStyleForm
+                   rhisTwoDigitDecimaNumber
+                   type="number">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="(groupeTravailform.get('tauxhoraire').hasError('required') || groupeTravailform.get('tauxhoraire').hasError('trimValidator')) && (groupeTravailform.controls['tauxhoraire'].touched || isSubmitted)"
+              class="form-item-error red small-rhis">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="dureePeriodEssai">{{'GROUPE_TRAVAIL.PERIODE_ESSAI' |
+              translate}}</label>
+            <input rhisIntegerNumbers [hasError]="dureePeriodEssai.invalid && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="dureePeriodEssai"
+                   id="dureePeriodEssai"
+                   min="0"
+                   name="dureePeriodEssai"
+                   rhisStyleForm
+                   rhisTwoDigitDecimaNumber
+                   type="number">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="(groupeTravailform.get('dureePeriodEssai').hasError('required') || groupeTravailform.get('dureePeriodEssai').hasError('trimValidator')) && (groupeTravailform.controls['dureePeriodEssai'].touched || isSubmitted)"
+              class="form-item-error red small-rhis">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="codeGdh">{{'GROUPE_TRAVAIL.CODE_GDH' | translate}}</label>
+            <input [hasError]="codeGdh.invalid && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="codeGdh"
+                   id="codeGdh"
+                   name="codeGdh"
+                   rhisStyleForm
+                   type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="(groupeTravailform.get('codeGdh').hasError('required') || groupeTravailform.get('codeGdh').hasError('trimValidator')) && (groupeTravailform.controls['codeGdh'].touched || isSubmitted)"
+              class="form-item-error red small-rhis position-absolute ml-1">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="codeGdh">{{'GROUPE_TRAVAIL.LEVEL' | translate}}</label>
+            <input [hasError]="groupeTravailform.get('level')?.errors?.max && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="level"
+                   id="level"
+                   name="level"
+                   rhisStyleForm
+                   type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="groupeTravailform.get('level')?.errors?.max && (groupeTravailform.controls['level'].touched || isSubmitted)"
+              class="form-item-error red small-rhis ml-1">
+              {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.LEVEL' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="echelon">{{'GROUPE_TRAVAIL.ECHELON' | translate}}</label>
+            <input [hasError]="groupeTravailform.get('echelon')?.errors?.max && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="echelon"
+                   id="echelon"
+                   name="echelon"
+                   rhisStyleForm
+                   type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="groupeTravailform.get('echelon')?.errors?.max && (groupeTravailform.controls['echelon'].touched || isSubmitted)"
+              class="form-item-error red small-rhis ml-1">
+               {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.ECHELON' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 margin-top">
+      <div class="section-element w-100">
+        <div class="row">
+          <div class="col-12">
+            <label class="section-element-title" for="codeGdh">{{'GROUPE_TRAVAIL.COEFFICIENT' | translate}}</label>
+            <input [hasError]="groupeTravailform.get('coefficient')?.errors?.max && isSubmitted"
+                   class="form-control text-field"
+                   formControlName="coefficient"
+                   id="coefficient"
+                   name="coefficient"
+                   rhisStyleForm
+                   type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span
+              *ngIf="groupeTravailform.get('coefficient')?.errors?.max && (groupeTravailform.controls['coefficient'].touched || isSubmitted)"
+              class="form-item-error red small-rhis ml-1">
+                     {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.COEFFICIENT' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="separateur-add-groupe-travail"/>
+  <div class="row margin-top">
+    <div class="col-12 align-self-end mb-3">
+      <p-checkbox
+        [label]="'GROUPE_TRAVAIL.DIRECTEUR_DROIT' | translate"
+        binary="true"
+        formControlName="directeur"
+        id="directeur"
+        name="directeur"
+        rhisStyleForm></p-checkbox>
+    </div>
+
+    <div class="col-12 align-self-end mb-3">
+      <p-checkbox
+        [label]="'GROUPE_TRAVAIL.MAIN_OEUVRE_DROIT' | translate"
+        binary="true"
+        formControlName="mainOeuvre"
+        id="mainOeuvre"
+        name="mainOeuvre"
+        rhisStyleForm
+      ></p-checkbox>
+    </div>
+    <div class="col-12 align-self-end mb-3">
+      <p-checkbox
+        [label]="'GROUPE_TRAVAIL.POINTEUSE_DROIT' | translate"
+        binary="true"
+        formControlName="pointeuse"
+        id="pointeuse"
+        name="pointeuse"
+        rhisStyleForm></p-checkbox>
+    </div>
+  </div>
+  <hr class="separateur-add-groupe-travail"/>
+  <div class="section-element w-100">
+    <div class="row">
+      <div class="col-12 mb-2 pl-0">
+        <label class="section-element-title">{{'GROUPE_TRAVAIL.DISPLAY_SCHEDUELE_LEVEL' | translate}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-top block-affichage-plng">
+    <div class="col-4 pr-0">
+      <p-checkbox
+        (onChange)="onChangePlgEquip()"
+        [label]="'GROUPE_TRAVAIL.PLGEQUIP_FIXE' | translate"
+        binary="true"
+        formControlName="plgEquip"
+        id="plgEquip"
+        name="plgEquip"
+        rhisStyleForm
+      ></p-checkbox>
+    </div>
+    <div class="col-4 align-self-end mb-2">
+      <p-checkbox
+        (onChange)="onChangePlgMgr()"
+        [label]="'GROUPE_TRAVAIL.PLGEMGR_DISPLAY' | translate"
+        binary="true"
+        formControlName="plgMgr"
+        id="plgMgr"
+        name="plgMgr"
+        rhisStyleForm
+      ></p-checkbox>
+    </div>
+    <div class="col-4">
+      <p-checkbox
+        (onChange)="onChangePlgLeader()"
+        [label]="'GROUPE_TRAVAIL.PLGELEADER_DISPLAY' | translate"
+        binary="true"
+        formControlName="plgLeader"
+        id="plgLeader"
+        name="plgLeader"
+        rhisStyleForm>
+      </p-checkbox>
+    </div>
+  </div>
+</form>
+<button (click)="addOrUpdateGroupTravail()" class="btn save-add-button-rhis btn-popup-rhis orange-background mt-5"
+        type="button">
+  <span>{{showAddOrUpdateGroupeTravailButtons}}</span>
+</button>

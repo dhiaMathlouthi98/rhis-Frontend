@@ -1,0 +1,354 @@
+<div class="previsions-container" *ngIf="datesPlanifies">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="130"
+       class="header row">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"PREVISION.LABEL"| translate}}</h1>
+    </div>
+    <div class="float-right col-6">
+      <div class="header-month-ca">
+        <span>{{monthNameToDisplay}}</span>: {{"PREVISION.PLANIFIED_CA" | translate}} {{repartitionMensuelleCa?.CAPlanifie | number:'1.0-2' }}
+        €
+        / {{("PREVISION.REAL" | translate) + " " + ("PREVISION.CA" | translate)}}
+        {{repartitionMensuelleCa?.CAReel | number:'1.0-2' }} €
+      </div>
+    </div>
+  </div>
+  <div [ngStyle]="{'height': heightInterface}" class="scroll-general-rhis">
+    <div class="row">
+      <div class="col-4 block-calendar-previsions-rhis">
+        <div class="panel">
+          <div class="calendar-container">
+            <div class="calendar-panel">
+              <p-calendar
+                [utc]="true" inline="true"
+                selectOtherMonths="true"
+                [showWeek]="true"
+                [locale]="previsionsService?.calendrierFrConfig"
+                [readonlyInput]="true"
+                [defaultDate]="defaultDate"
+                [ngModel]="defaultDate"
+                (onMonthChange)="loadMonthData($event)"
+                (onSelect)="selectWeekendByClickingDate($event)"
+                id="PREVISION-date-calendar">
+                <ng-template pTemplate="date" let-date>
+                  <span
+                    [ngClass]="{'filled-date': checkDate(date), 'empty-date': !checkDate(date)}">{{date?.day}}</span>
+                </ng-template>
+              </p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8 repartition-container">
+        <div class="repartition-month">
+          {{startOfMonth}} - {{endOfMonth}}
+        </div>
+        <div class="chart-title">
+          <div class="chart-title-repartition">
+            <div>{{"PREVISION.REPARTITION" | translate}}</div>
+            <div class="pie-chart">
+              <span (click)="loadPreviousData()" *ngIf="displayPreviousButton" class="previous-data-button"
+                    id="PREVISION-prevDate-btn"></span>
+              <canvas baseChart *ngIf="chartDatasets?.length"
+                      [datasets]="chartDatasets"
+                      [labels]="chartLabels"
+                      [options]="chartOptions"
+                      [chartType]="chartType">
+              </canvas>
+              <span (click)="loadNextData()" *ngIf="displayNextButton" class="next-data-button"
+                    id="PREVISION-nextDate-btn"></span>
+            </div>
+          </div>
+          <div class="chart-title-ca">
+            <div>{{"PREVISION.TOTAL_PLANIFIED_CA" | translate}}</div>
+            <div class="ca-amount">
+              {{repartitionMensuelleCa?.CAPlanifie}} €
+            </div>
+            <div class="chart-legend">
+              <ul class="legend-left">
+                <li *ngFor="let label of chartLabelsToDisplay; let i = index">
+                  <div>
+                    <div [ngStyle]="{'background-color': chartColours[i+(pageModeVente*maxDataToDisplay)]}"
+                         class="legend-circle">
+                      <span class="legend-label">{{label}}</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul *ngIf="chartDatasetsToDisplay?.length" class="legend-right">
+                <li *ngFor="let value of chartDatasetsToDisplay[0]?.data">
+                  <div>{{value | number:'1.0-2'}}%</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div [routerLink]="rhisRouter.getRoute('CHARTE_POSITIONNEMENT')" class="chart-positionnement-button"
+             id="PREVISION-CharteP-btn">
+          <span>{{"PREVISION.SEE_POSITIONS_CHART" | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="jours-ref-container">
+          <div class="row d-flex justify-content-between">
+            <div>
+              <button *ngIf="this.updateControl()" (click)="validateDay()"
+                      class="btn save-add-button-rhis blue-background"
+                      id="PREVISION-ValidatePJ-btn"
+                      type="button">
+                <span>{{"PREVISION.VALIDATE_PROVISION_OF" | translate}} {{getDayToValidate()}}</span>
+              </button>
+            </div>
+            <div>
+              <button *ngIf="this.addButtonControl()" (click)="selectFiles()"
+                      class="btn save-add-button-rhis blue-background"
+                      id="PREVISION-import-VR-btn"
+                      type="button">
+                <span>{{"PREVISION.IMPORT_REAL_SALE" | translate | uppercase}}</span>
+              </button>
+              <p-fileUpload (onSelect)="afterSelectingRealSaleFiles()" *ngIf="!hasSystemCaisse && !hasAutoSystemCaisse"
+                            [hidden]="true"
+                            [showCancelButton]="false" [showUploadButton]="false"
+                            accept="text/xml"
+                            mode="basic" multiple="multiple"
+                            name="sale">
+              </p-fileUpload>
+              <p-fileUpload (onSelect)="afterSelectingRealSaleFiles()" *ngIf="hasSystemCaisse && !hasAutoSystemCaisse"
+                            [hidden]="true" [showCancelButton]="false"
+                            [showUploadButton]="false"
+                            accept=".csv"
+                            mode="basic" multiple="multiple"
+                            name="sale">
+              </p-fileUpload>
+            </div>
+          </div>
+          <div class="prevision-grid">
+            <div class="row prevision-grid-list-week">
+              <div class="grid-week">
+                <span>{{"PREVISION.WEEK" | translate}} {{selectedWeekNumber}}</span>
+                <!-- 78689898.67890 | 78,689,898.68 | 78689898.68 -->
+                <br>{{ caWeek | number:'1.0-2' | noComma }}
+                €
+              </div>
+              <div *ngFor="let j of previsionsService?.weekOrderedDays; let i = index"
+                   [ngClass]="{'grid-day-clicked': clickedDayOfWeek === j.val}"
+                   [id]="'PREVISION-' + j.val"
+                   class="grid-day">
+          <span>
+            <div (click)="getJoursDeReference(j?.val, i)"
+                 (dblclick)="goToVenteHoraire(j?.val, i)">
+            {{j?.day}}
+          </div>
+            <div *ngIf="isPrevisionSectionReady"
+                 [contentEditable]="clickedDayOfWeek === j?.val"
+                 [textContent]="getVentesByDay(j?.val)"
+                 (focusout)="getNewVentesValue($event, j?.val, i)"
+                 (keypress)="controlNewValue($event)">
+            </div>
+          </span>
+                <span *ngIf="isDayValide(j?.val)" class="icon-day"><img
+                  alt="" src="assets/icons/prevision-icons/check.png"></span>
+                <span *ngIf="!isDayValide(j?.val)" class="icon-day">
+              <img src="assets/icons/prevision-icons/x.png" alt=""></span>
+              </div>
+            </div>
+            <div #target class="row grid-elements references-section">
+              <div class="grid-left-elements">
+                <div class="ui-g">
+                  <div class="ui-g-3 grid-header">
+                    <p-multiSelect (onChange)="updateRefSelection($event)"
+                                   (onPanelHide)="scroll(target)"
+                                   [(ngModel)]="selectedRefDays"
+                                   [options]="refCheckList"
+                                   [panelStyle]="{minWidth:'12em'}"
+                                   [showHeader]=false [ngClass]="{'specific-lang-de-style': applyTextStyle}">
+                      <ng-template let-value pTemplate="selectedItems">
+                    <span
+                      class="grid-header ref-prevision ui-g-3">{{"PREVISION.REF" | translate}}</span>
+                      </ng-template>
+                      <ng-template let-ref pTemplate="item">
+                        <span style="padding-left: 7px;">{{ref?.label}}</span>
+                      </ng-template>
+                    </p-multiSelect>
+                  </div>
+                  <div (click)="statusAreShown = !statusAreShown" class="ui-g-3 grid-header statut-style-rhis">
+                    <span>{{"PREVISION.STATUS" | translate}}</span>
+                    <i class="pi pi-angle-down" style="font-size: 2em"></i>
+                    <div (rhisClickOutsideTooltip)="statusAreShown = false" *ngIf="statusAreShown"
+                         class="list-boxPrevisions-rhis">
+                      <p-listbox (onChange)="OnChangeStatut($event)" [options]="statutOptions"
+                                 id="PREVISION-statut-select"
+                                 optionLabel="label"></p-listbox>
+                    </div>
+                  </div>
+                  <div *ngFor="let title of titles" class="grid-header ui-g-3">{{title}}</div>
+                </div>
+                <div (click)="onRefClick(jour)" (dblclick)="goToVenteHorairerefClicked(refClicked)"
+                     (onDragStart)="dragStart($event,jour)"
+                     *ngFor="let jour of joursDeReference;let i=index "
+                     [ngClass]="{'day-ref-field-wrapper-left-clicked': refClicked && jour?.idVenteJournaliere === refClicked?.idVenteJournaliere}"
+                     class="day-ref-field-wrapper-left ui-g" dragEffect="move"
+                     id="target" pDraggable="joursDeRef">
+                  <div class="day-ref-field padding-top-17 ui-g-3">{{jour?.dateVente | date:'dd-MM-yyyy'}}</div>
+                  <div class="day-ref-field switch-container ui-g-3">
+                    <div *ngIf="jour?.realVentes" class="switch-container-reel-prev">
+                      <img alt="" src="assets/icons/prevision-icons/Switch_Green.svg">
+                      <span>{{"PREVISION.REAL" | translate}}</span>
+                    </div>
+                    <div *ngIf="!jour?.realVentes" class="switch-container-reel-prev">
+                      <img alt="" src="assets/icons/prevision-icons/Switch_Grey.svg">
+                      <span>{{"PREVISION.PREVISIONS" | translate}}</span>
+                    </div>
+                  </div>
+                  <div class="day-ref-field padding-top-17 color-414141 ui-g-3">{{jour?.ventes | number:'1.0-2'}}</div>
+                  <div class="day-ref-field padding-top-17 color-414141 ui-g-3">
+                    <img alt="" class="ico-message" src="assets/icons/prevision-icons/Ico_Message.svg">
+                  </div>
+                </div>
+
+                <p-paginator (onPageChange)="onLazyLoad($event)"
+                             [first]="first"
+                             [rowsPerPageOptions]="rowsPerPageOptions"
+                             [rows]="rows"
+                             [totalRecords]="totalRecords"
+                             id="PREVISION-pagination">
+                </p-paginator>
+              </div>
+              <div class="grid-right-elements">
+                <div class="grid-header">
+                  <div class="header-right">{{"PREVISION.SELECTED_REFERENCES" | translate}}</div>
+                  <img (click)="addSelectedRef()" alt="" class="plus-icon"
+                       id="PREVISION-addSelectedRef"
+                       src="assets/icons/prevision-icons/Ico_Plus.svg">
+                </div>
+                <div (onDragEnter)="dragEnter($event)" (onDrop)="drop($event)" class="grid-droppable-zone"
+                     pDroppable="joursDeRef">
+                  <div *ngFor="let droppedJour of droped" class="day-ref-field-wrapper-right">
+                    <div class="day-selec-ref-field">{{droppedJour?.dateVente | date:'dd-MM-yyyy'}}</div>
+                    <div class="day-selec-ref-field switch-container">
+                      <div class="switch-container-reel-prev">
+                        <img *ngIf="droppedJour?.realVentes" alt="" src="assets/icons/prevision-icons/Switch_Green.png">
+                        <img *ngIf="!droppedJour?.realVentes" alt="" src="assets/icons/prevision-icons/Switch_Grey.png">
+                        <span *ngIf="droppedJour?.realVentes">{{"PREVISION.REAL" | translate}}</span>
+                        <span *ngIf="!droppedJour?.realVentes">{{"PREVISION.PREVISIONS" | translate}}</span>
+                      </div>
+                    </div>
+                    <div class="day-selec-ref-field">{{droppedJour?.ventes}}</div>
+                    <div class="day-selec-ref-field" id="PREVISION-removeRefDay">
+                      <img (click)="removeRefDay(droppedJour)" alt="" src="assets/icons/prevision-icons/Ico_Close.svg">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast [style]="{marginTop: '80px'}"></p-toast>
+</div>
+<!-- popup for importing real sales -->
+<rhis-pop-up
+  [title]="popUpTitle"
+  (closeEvent)="closePopUpAndClearFiles()"
+  [showPopUp]="importPopUpSaleIsShown"
+  [width]="popUpStyle?.width">
+  <ng-container *ngIf="selectionFileMode">
+    <div class="row d-flex justify-content-between body-block">
+      <ul *ngIf="files?.length" class="files w-100">
+        <li *ngFor="let file of files; index as index" class="d-flex justify-content-between mb-3">
+          <div>
+            <div>
+              <span>{{file?.name}}</span>
+              <span (click)="removeFile(index)" class="ml-3 btn-exclude-file">
+          <img alt="no image" src="assets/icons/employe/Btn_Close.svg">
+        </span>
+            </div>
+            <div *ngIf="wrongDateFormatFileIndexes[index]">
+              <span
+                class="form-item-error red small-rhis" id="PREVISION-dateFormatError">
+                {{"PREVISION.WRONG_DATE_FORMAT" | translate }} {{acceptableDateFormat | uppercase}}
+              </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button (click)="uploadFiles()" *ngIf="!hasSystemCaisse && !hasAutoSystemCaisse"
+              class="btn save-add-button-rhis blue-background"
+              id="PREVISION-upload-btn-popup"
+              type="button">
+        <span>{{"PREVISION.IMPORT" | translate | uppercase}}</span>
+      </button>
+      <button (click)="checkCaisseFilesToBeUpload()" *ngIf="hasSystemCaisse && !hasAutoSystemCaisse"
+              class="btn save-add-button-rhis blue-background"
+              id="PREVISION-import-btn-popup"
+              type="button">
+        <span>{{"PREVISION.IMPORT" | translate | uppercase}}</span>
+      </button>
+    </div>
+  </ng-container>
+  <!-- import real sales with progress bar-->
+  <ng-container *ngIf="!selectionFileMode">
+    <div class="body-block">
+      <div class="position-relative">
+        <p-progressBar [value]="importProgressionRate" [showValue]="false"></p-progressBar>
+        <span class="position-absolute progress-import-label">{{importProgressionLabel}}</span>
+      </div>
+      <div class="mt-2">
+        {{("PREVISION.NUMBER_IMPORTED_FILES" | translate) + " " + this.nbrSuccessImport}}
+      </div>
+      <div class="d-flex justify-content-center mt-5 ">
+        <button (click)="closePopUpAndClearFiles()" class="btn btn-light w-50 light-background"
+                id="PREVISION-close-btn-popup"
+                type="button">
+          <span>{{"BUTTON.CLOSE" | translate}}</span>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</rhis-pop-up>
+<rhis-pop-up
+  (closeEvent)="closePopUpAndClearFiles()"
+  [showPopUp]="displayAutoImportPopup"
+  [title]="popUpNCRUploadTitle">
+  <ng-container>
+    <div *ngIf="hasAutoSystemCaisse">
+      <div class="mb-4 flex-between-block">
+        <div class="label-periode-debut">
+          <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+        </div>
+        <div class="position-relative">
+          <p-calendar [(ngModel)]="dateDebutNCR" dateFormat="dd/mm/yy"
+                      id="PREVISION-dateDebutNCR-popup" [maxDate]="dateNow"></p-calendar>
+        </div>
+        <div>
+          <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+        </div>
+        <div class="position-relative">
+          <p-calendar [(ngModel)]="dateFinNCR" dateFormat="dd/mm/yy"
+                      id="PREVISION-dateFinNCR-popup" [maxDate]="dateNow"></p-calendar>
+        </div>
+        <span *ngIf="correctNCRDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="PREVISION-dateFinNCRError-popup">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+      <button (click)="checkNCRCaisseFilesToBeUpload()"
+              class="btn save-add-button-rhis orange-background btn-popup-rhis mt-3" id="PREVISION-importRealSale-popup"
+              type="button">
+        <span>{{"PREVISION.IMPORT_REAL_SALE" | translate | uppercase}}</span>
+      </button>
+    </div>
+  </ng-container>
+</rhis-pop-up>
+<p-blockUI [blocked]="displaySpinner">
+  <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+    <span class="text-white">{{"BUTTON.IN_PROGRESS" | translate}}</span>
+  </div>
+</p-blockUI>
+

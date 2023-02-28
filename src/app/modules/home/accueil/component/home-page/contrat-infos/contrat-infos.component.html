@@ -1,0 +1,13 @@
+<div class="rhis-container" [style.background-color]="color">
+  <div class="type-contrat">
+    <span>{{data?.label}}</span>
+  </div>
+  <span class="nbr-contrat">
+    <ng-container *ngIf="data?.total > 0">+</ng-container>
+    {{data?.total}}
+  </span>
+  <span class="description-contrat">
+    {{data?.description}}
+  </span>
+</div>
+

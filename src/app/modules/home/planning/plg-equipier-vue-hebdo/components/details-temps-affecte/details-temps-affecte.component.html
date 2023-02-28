@@ -1,0 +1,99 @@
+<div class="Scroll-horizontal-detail-temps-paie" [ngClass]="{'opened-menu': menuOpened}">
+  <div *ngIf="calculateWidthDetailsTemps()" class="detail-temps-paye-minimalist temps-paye-all">
+    <div class="block-left-temps">
+      <div class="block-1">
+        <img (click)="showMoreData()"
+             *ngIf="!showDetailedView" alt="no icon" class="pointer-cursor mb-1"
+             id="PLG-Eq-DetailTemps-showmore"
+             src="assets/icons/arrow-icons/arrow-top.png">
+        <img (click)="showLessData()" *ngIf="showDetailedView" alt="no icon" id="PLG-Eq-DetailTemps-showLess"
+             src="assets/icons/arrow-icons/arrow-down.png" class="pointer-cursor">
+      </div>
+      <div class="block-2">
+        <div *ngIf="!displayMoeProd;else prodRefrenceTitle"
+             class="taux-moe">
+          {{"PLANNING_EQUIPIER.TAUX_MOE" | translate}}
+          <img alt="no icon" src="assets/icons/planning/percentage.png">
+        </div>
+        <ng-template #prodRefrenceTitle>
+          <div [ngClass]="{'taux-moe-openedMenu': menuOpened }" class="taux-moe">
+            {{"PLANNING_EQUIPIER.PRODUCTIVITY" | translate}}
+            <img alt="no icon" src="assets/icons/planning/euro.png">
+          </div>
+        </ng-template>
+      </div>
+      <div class="block-3">
+
+      </div>
+      <div class="block-4">
+        <div [ngClass]="{'taux-moe-openedMenu': menuOpened}"
+             class="ca-previsionnel">
+          {{"PLANNING_EQUIPIER.CA_PREVISIONNEL" | translate}}
+          <img alt="no icon" src="assets/icons/planning/euro.png">
+        </div>
+      </div>
+      <div class="block-5">
+        <div [ngClass]="{'taux-moe-openedMenu': menuOpened}"
+             class="temps-paye">
+          {{"PLANNING_EQUIPIER.TEMPS_AFFECTE_PLANIFIE" | translate}}
+          <img alt="no icon" src="assets/icons/planning/hours.png">
+        </div>
+      </div>
+    </div>
+    <div class="block-right-temps bg-white">
+      <div class="loop-block-temps">
+        <!-- Display TAUX MOE -->
+        <ng-container *ngIf="!displayMoeProd;else prodRefrenceValues">
+          <div *ngFor="let tm of moeValues" [ngClass]="{'taux-moe-openedMenu': menuOpened }"
+          [ngStyle]="{'width': calculateWidthDetailsTemps()}" class="taux-moe details-temps-paye-values">
+            {{tm}} %
+          </div>
+        </ng-container>
+        <!-- Display PRODUCTIVITY -->
+        <ng-template #prodRefrenceValues>
+          <div *ngFor="let prod of prodValues"
+               [ngStyle]="{'width': calculateWidthDetailsTemps()}"
+               class="taux-moe details-temps-paye-values">
+            {{prod}} €/h
+          </div>
+        </ng-template>
+      </div>
+      <div class="loop-block-temps">
+        <div *ngFor="let ca of caValues" [ngStyle]="{'width': calculateWidthDetailsTemps()}"
+             class="ca-previsionnel details-temps-paye-values">{{ca | number:'1.0-0'}} €
+        </div>
+      </div>
+      <div class="loop-block-temps">
+        <div *ngFor="let tp of tempsAffectePlanifie" [ngStyle]="{'width': calculateWidthDetailsTemps()}"
+             class="temps-paye details-temps-paye-values">{{tp}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-temps-paye" *ngIf="showDetailedView">
+    <hr class="style_hr">
+    <div class="detail-temps-paye-header">
+      <div class="arrow-down-planning">
+
+      </div>
+      <div class="header-info">
+        <div class="header-info-title">{{"PLANNING_EQUIPIER.DETAILS" | translate}} {{"PLANNING_EQUIPIER.SAVE_SEMAINE" | translate}} {{weekNumber}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_PAYE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_ABSENCE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_PLANIFIE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_CA_PREVISIONNEL" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TAUX_MOE_MOYEN" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.PROD_MOYENNE" | translate}}</div>
+        <div></div>
+        <div class="header-info-title"></div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalTempsPaye}} h</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalTempsAbsence}} h</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalPlanifie}} h</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalCA}} €</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.tauxMOEMoyen}} %</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.prodMoyenne}} €/h</div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

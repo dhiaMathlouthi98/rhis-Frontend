@@ -1,0 +1,42 @@
+<div class="row ">
+  <div class="col-12 d-flex mb-3 mt-5">
+    <div class="mr-5">
+      <h1>{{"EMPLOYEE.DISPONIBILITES_LABEL" | translate}}</h1>
+    </div>
+    <div>
+      <p-checkbox [(ngModel)]="showAlternate" (onChange)="doAlternate($event)" binary="true" [label]="'EMPLOYEE.ALTERNATE' | translate"></p-checkbox>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="!isOnlyPairDispo">
+  <p-accordion multiple="true">
+    <p-accordionTab [header]="'EMPLOYEE.PAIR_WEEK' | translate" selected="true">
+      <ng-container *ngTemplateOutlet="dispo; context: pairContext"></ng-container>
+    </p-accordionTab>
+    <p-accordionTab [header]="'EMPLOYEE.ODD_WEEK' | translate" selected="true">
+      <ng-container *ngTemplateOutlet="dispo; context: oddContext"></ng-container>
+    </p-accordionTab>
+  </p-accordion>
+</ng-container>
+
+<ng-container *ngIf="isOnlyPairDispo">
+  <ng-container *ngTemplateOutlet="dispo; context: pairContext">
+  </ng-container>
+</ng-container>
+
+<ng-template let-data="data" let-isOdd="isOdd" let-prefix="prefix" #dispo>
+    <rhis-disponibilite-contrat
+      [data]="data"
+      [isOdd]="isOdd"
+      [prefix]="prefix"
+      [openningHours]="openningHours"
+      [closureHours]="closureHours"
+      [disponibiliteConfig] ="disponibiliteConfig"
+      [id]="id"
+      [updatedId]="updatedId"
+      [hebdo]="hebdoContrat"
+      [partialTime]="isPartialTime"
+      (confirmUpdateDispoSetValue)="showConfirmUpdateContrat($event)"
+      (currentDispo)="saveDisponibilite($event)"
+    ></rhis-disponibilite-contrat>
+</ng-template>

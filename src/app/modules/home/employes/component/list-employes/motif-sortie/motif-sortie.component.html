@@ -1,0 +1,17 @@
+<div class="section-element w-100">
+  <label class="section-element-title w-100"
+         for="EMP-motifSortie-popup"> {{'EMPLOYEE.SAISIR_MOTIF_SORTI' | translate}}
+  </label>
+  <p-dropdown
+    id="EMP-motifSortie-popup"
+    [autoDisplayFirst]="false"
+    [options]="listmotifSorties"
+    [(ngModel)]="motifSortie"
+    optionLabel="libelle"
+    appendTo="body"
+    class="drop-down-general"></p-dropdown>
+</div>
+<button type="button" (click)="confirm()"
+        class="btn save-add-button-rhis orange-background mt-4 btn-popup-rhis popup-list-employe-rhis">
+  <span>{{'BUTTON.VALIDATE' |translate}}</span>
+</button>

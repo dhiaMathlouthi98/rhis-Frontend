@@ -1,0 +1,65 @@
+<div class="w-100 d-flex flex-column justify-content-between download-container">
+    <div>
+        <div>
+            <div class="bold-text mt-3">
+                {{"GDH.PAY.REPORT_LIST" | translate}} :
+            </div>
+            <div class="width-100 mt-3">
+                <div class="row ml-0 mr-0 " *ngFor="let report of reportList">
+                    <div class="col-2 pl-0">
+                        <p-inputSwitch [(ngModel)]="report.value"
+                                       [ngClass]="{'green-switch' : report?.value,'grey-switch' : !report?.value}"></p-inputSwitch>
+                    </div>
+                    <div class="col-10 pr-0 pull-right">
+                        <span>{{report?.name | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="bold-text mt-3">
+                {{"GESTION_PARC_RAPPORT.RESTAURANTS_LIST_TEXT" | translate}}
+            </div>
+            <div class="section-element-title mb-3 mt-3">
+                <p-multiSelect #multiSelect
+                               [filter]="false"
+                               [showToggleAll]="false"
+                               [options]="displayedRestaurants"
+                               (onChange)="setSelectedRestaurants($event)"
+                               [(ngModel)]="selectedRestaurants"
+                               appendTo="body"
+                               [emptyFilterMessage]="'NO_RESULT_FOUND' | translate"
+                               optionLabel="libelle"
+                               id="RAPP-Download-multiselect">
+                    <p-header>
+                        <div class="bold-text">
+                            <p-checkbox [binary]="'true'" [(ngModel)]="isAllRestaurantSelected"
+                                        (onChange)="multiSelect.toggleAll($event)"></p-checkbox>
+                            {{"BUTTON.SELECT_ALL" | translate}}</div>
+                    </p-header>
+                    <ng-template let-selectedOptions pTemplate="selectedItems" >
+                        <div title="" id="choice-header">
+                            {{getSelectedOptions | memoize : selectedOptions: rhisTranslateService}}
+                        </div>
+                    </ng-template>
+                    <ng-template let-option let-i="index" pTemplate="item">
+                        <div class="item-selection"
+                             [ngClass]="{'title-option': checkOption | memoize : option?.value?.idRestaurant}"
+                             [id]="option?.value?.idRestaurant">{{option?.label}}</div>
+                    </ng-template>
+                </p-multiSelect>
+            </div>
+        </div>
+    </div>
+    <div class="center-flex-block bloc-btn-generation-rapport mt-3">
+      <span class="con-tooltip bottom">
+          <button (click)="downloadFiles()"
+                  [ngClass]="{'change-cursor': !(canDownload(reportList, selectedRestaurants))}"
+                  class="btn save-add-button-rhis blue-background"
+                  id="RAPP-RP-GENERATE"
+                  type="button">
+              <span>{{"BUTTON.DOWNLOAD" | translate}}</span>
+          </button>
+      </span>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+.item-body {
+  position: relative;
+
+  img {
+    position: absolute;
+    right: 12px;
+    top: 0;
+    width: 12px;
+  }
+
+  .item-label {
+    padding-top: 0;
+  }
+
+  .vertical-line-right {
+    position: absolute;
+    top: -1px;
+    right: 5px;
+    width: 2px;
+    height: 14px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+
+  .vertical-line-left {
+    position: absolute;
+    top: -1px;
+    left: 5px;
+    width: 2px;
+    height: 14px;
+    background-color: #FFFFFF;
+    opacity: 0.75;
+    border-radius: 1.5px;
+  }
+}
+
+.item-body {
+  .vertical-line-right.resize-right {
+    visibility: hidden;
+  }
+}
+
+.contentSmallShiftHover {
+  visibility: hidden;
+}
+
+.block-shift-equipier-rhis:hover .contentSmallShiftHover {
+  visibility: visible;
+  position: absolute;
+  top: 54px;
+  width: 85px !important;
+  right: 10px;
+}
+
+.shift-signe-texte {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  clip-path: polygon(0% 0%, 34% 0, 100% 50%, 34% 100%, 0% 100%);
+  width: 12px;
+  height: 10px;
+
+  span {
+    font-size: 6px;
+    font-weight: bold;
+    left: -2px;
+  }
+
+}
+
+.shift-item .hiddenTexteShift {
+  visibility: hidden;
+}

@@ -1,0 +1,43 @@
+.table-row {
+  font-family: "TT Wellingtons Medium", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  color: #9B9B9B;
+  background-color: #fff;
+  text-align: center;
+  &:hover {
+    background-color: #ededed;
+  }
+  td {
+    font-weight: 500;
+    line-height: 20px;
+    border: none !important;
+    padding: 12px 0 !important;
+    vertical-align: middle !important;
+
+    &:first-child {
+      border-radius: 8px 0 0 15px;
+    }
+
+    &:last-child {
+      border-radius: 0 8px 15px 0;
+    }
+  }
+  td {
+    &:last-child {
+      padding-right: 34px !important;
+    }
+  }
+}
+
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+

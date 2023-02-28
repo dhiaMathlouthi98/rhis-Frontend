@@ -1,0 +1,28 @@
+.decoupage-horaire-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  .section-element {
+    width: 100%;
+  }
+}
+
+:host ::ng-deep {
+  .ui-datepicker {
+    padding: 0 !important;
+    min-width: 7em !important;
+
+    .ui-timepicker {
+      padding: 0.857em 0;
+    }
+  }
+
+  .ui-datepicker .ui-timepicker span {
+    font-size: 20px;
+  }
+
+  .ui-timepicker > div {
+    margin-left: 0;
+  }
+}

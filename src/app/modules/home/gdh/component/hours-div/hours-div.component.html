@@ -1,0 +1,66 @@
+<!-- if we display ``pointage`` not associated with a shift (shift?.id = null)
+ or an absence that does precede a shift((absence != null) && (intersection = false)
+ it is offset from the top with ${top} px
+ -->
+<div class="flex-container"
+     (mouseenter)="showMiniShiftFormat( $event, shift_mini_format_tooltip, shift, widthTotal, isPlanif)"
+     (mouseleave)="shift_mini_format_tooltip.hide()"
+     [style.width.px]="widthTotal"
+     [id]="id"
+     [style.left.px]="left">
+  <div class="time" [style.width.px]="widthLeft"
+       *ngIf="(!isPlanif && pointage && widthLeft > 0 && pointage?.arrives <= 0 ) || (pointage?.arrives > 0 && pointagePosition?.isFirst)"
+       (click)="startAbsenceData(pointage, shift)"
+       [ngClass]="{'red-block' : pointage?.arrives > 0 && pointagePosition?.isFirst , 'yellow-block' : pointage?.arrives < 0}">
+  </div>
+  <div *ngIf="color != undefined" class="time small-font" [style.width.px]="width" (click)="innerPointingClicked(innerShiftAbsence)"
+       [ngClass]="{
+       'pointage-border': !isPlanif && pointage,
+       'inner-absence-border': innerShiftAbsence,
+       'shiftSmallThan30': width <= 30,
+       'ShiftSmallThan60': width <= 60}"
+       [ngStyle]="{'background-color' : color, 'min-width': width, 'min-height': '22px'}">
+      <span *ngIf="!isPlanif && pointage">
+        <span class="{{cssClassDebut}}"> {{((pointage?.acheval && !pointage?.modifiable) ? pointage?.heureDebutCheval : pointage?.heureDebut) | slice:0:5}}</span>
+        <span *ngIf="width > 60" class="{{cssClassTiret}}">  -  </span>
+        <span class="{{cssClassFin}}"> {{((pointage?.acheval && pointage?.modifiable) ? pointage?.heureFinCheval : pointage?.heureFin) | slice:0:5}}</span>
+      </span>
+    <span *ngIf="absence">
+      {{((absence?.acheval && !absence?.modifiable) ? absence?.heureDebutCheval : absence?.heureDebut) | slice:0:5}}-{{((absence?.acheval && absence?.modifiable) ? absence?.heureFinCheval : absence?.heureFin) | slice:0:5}}
+      <small class="type-absence">{{absence?.typeEvenement?.codeGdh}}</small></span>
+    <ng-container *ngIf="!(isShiftMiniFormatIsShown | memoize: isPlanif: shift: widthTotal)">
+        <ng-container *ngTemplateOutlet="shift_structure"></ng-container>
+    </ng-container>
+  </div>
+  <div class="time" [style.width.px]="widthRight"
+       *ngIf="(!isPlanif && pointage && widthRight>0 && (pointage?.sortie >= 0)) || (pointage?.sortie < 0 && pointagePosition?.isLast) "
+       (click)="endAbsenceData(pointage, shift)"
+       [ngClass]="{'red-block' : pointage?.sortie < 0 , 'yellow-block' : pointage?.sortie > 0 }">
+  </div>
+  <ng-container *ngFor="let part of parts">
+    <div class="time green-block" [style.width.px]="getDuration | memoize:minuteMesure:part[0]:dateService" *ngIf="part[0]">
+    </div>
+    <div class="time red-block" [style.width.px]="getDuration | memoize:minuteMesure:part[1]:dateService" *ngIf="part[1] && pointagePosition?.isLast"  (click)="endAbsenceData(part[1]?.interval, part[1]?.shift)">
+    </div>
+    <div class="time yellow-block" [style.width.px]="getDuration | memoize:minuteMesure:part[2]:dateService" *ngIf="part[2]">
+    </div>
+  </ng-container>
+</div>
+<p-overlayPanel #shift_mini_format_tooltip
+                [dismissable]="true"
+                appendTo="body">
+  <div class="shift_mini_format_container">
+       <ng-container *ngTemplateOutlet="shift_structure"></ng-container>
+  </div>
+</p-overlayPanel>
+
+<ng-template #shift_structure>
+    <ng-container *ngIf="isPlanif">
+       <span *ngIf="shift?.acheval && !shift?.modifiable"
+             class="acheval-start-hour-arrow"><i class="pi pi-arrow-left"></i> &nbsp;</span>
+        <span>{{((shift?.acheval && !shift?.modifiable) ? shift?.heureDebutCheval : shift?.heureDebut) | slice:0:5}}</span>
+        <span> - </span>
+        <span>{{((shift?.acheval && shift?.modifiable) ? shift?.heureFinCheval : shift?.heureFin) | slice:0:5}}</span>
+        <span *ngIf="shift?.acheval && shift?.modifiable" class="acheval-end-hour-arrow">&nbsp;<i class="pi pi-arrow-right"></i></span>
+    </ng-container>
+</ng-template>

@@ -1,0 +1,115 @@
+.rhis-container {
+  height: 245px;
+  width: 358px;
+  border-radius: 5px;
+  background-color: transparent;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  .triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 13px 11px 13px;
+    border-color: transparent transparent #ffffff transparent;
+    line-height: 0;
+    _border-color: #000000 #000000 #1380f5 #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    float: right;
+    margin-right: 35px;
+  }
+  .main {
+    border-radius: 5px;
+    padding: 32px 20px 16px 20px;
+    height: -webkit-calc(100% - 11px);
+    height: -moz-calc(100% - 11px);
+    height: calc(100% - 11px);
+    background-color: #fff;
+    width: 100%;
+    float: left;
+    & > div:nth-of-type(1) {
+      width: 100%;
+      h1 {
+        float: left;
+        margin: 0;
+        height: 28px;
+        width: 74px;
+        color: #414141;
+        font-family: "TT Wellingtons Medium";
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+      }
+      div {
+        float: right;
+        width: fit-content;
+        margin-top: 7px;
+        text-align: right;
+        height: 17px;
+        color: #9B9B9B;
+        font-family: "TT Wellingtons Light";
+        font-size: 12px;
+        line-height: 17px;
+        border-bottom: 1px solid #9B9B9B;;
+      }
+    }
+    .alertes {
+      overflow-y: auto;
+      overflow-x: hidden;
+      clear: both;
+      width: 318px;
+      margin: 0 auto;
+      position: relative;
+      height: 62%;
+      top: 26px;
+      p {
+        position: relative;
+        height: 17px;
+        width: 318px;
+        color: #414141;
+        font-family: "TT Wellingtons Medium";
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+        margin: 0;
+      }
+      .sep {
+        height: 1px;
+        margin: 6px 0 10px 0;
+        width: 100%;
+        background-color: #F0F0F0;
+        clear: both;
+        float: none;
+      }
+    }
+
+    .all-alerte {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.countAlarme {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.nbrAlarme {
+  width: 27px;
+  height: 27px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #FF9B42;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+  margin-top: 4px;
+}

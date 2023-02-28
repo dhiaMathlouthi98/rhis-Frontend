@@ -1,0 +1,110 @@
+:host ::ng-deep {
+  .ui-listbox {
+    float: right;
+
+    .ui-listbox-list .ui-listbox-item.ui-state-highlight {
+      background-color: #385FE3;
+    }
+  }
+}
+
+.all-auth-rhis {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .backgroud-auth-rhis {
+    background: #ffd0a6;
+    border-radius: 10px;
+    padding: 40px 220px;
+    @media screen and (max-width: 991px) {
+      padding: 40px 150px;
+    }
+    @media screen and (max-width: 800px) {
+      padding: 40px 100px;
+    }
+  }
+
+  .container-auth-rhis {
+    width: 460px;
+    border-radius: 25px;
+    background: #fff;
+    padding: 45px;
+    box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+
+    .header-auth-rhis {
+      margin: 20px auto 40px;
+      text-align: center;
+    }
+
+    .section-element-title {
+      width: fit-content;
+      color: #9B9B9B;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 17px;
+      font-family: "TT Wellingtons Medium", sans-serif;
+    }
+
+    .under-auth-rhis {
+      text-decoration: underline
+    }
+
+    .form-control.text-field {
+      height: 51px;
+      width: 100%;
+      font-family: "TT Wellingtons DemiBold";
+      border: 1px solid #C8C7C4;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 17px;
+      padding: 17px;
+      outline: none;
+    }
+
+    .btn.btn-connexion-auth-rhis {
+      cursor: pointer;
+      height: 38px;
+      width: -moz-fit-content;
+      width: fit-content;
+      padding: 0 25px;
+      border-radius: 5px;
+      color: #FFFFFF;
+      font-family: "TT Wellingtons DemiBold", sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      line-height: 14px;
+      text-align: center;
+    }
+
+    .auth-pwd-rhis {
+      margin-bottom: 30px;
+      float: right;
+      cursor: pointer;
+    }
+  }
+
+  .form-group.form-group-without-margin {
+    margin-bottom: 0;
+  }
+}
+
+.section-element.block-forgot-pwd-rhis {
+  .text-field {
+    margin-top: 0;
+  }
+}
+
+.block-btn-forgot-pwd-rhis {
+  margin-top: 20px;
+
+  .btn.save-add-button-rhis {
+    text-transform: initial;
+    margin-left: 0;
+  }
+}
+
+

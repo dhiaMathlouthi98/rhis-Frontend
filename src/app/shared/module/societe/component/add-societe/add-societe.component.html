@@ -1,0 +1,47 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"SOCIETE.ADD_LABEL" | translate}}</h1>
+    </div>
+    <div class="float-right col-6 mt-2">
+      <button type="button" (click)="addSociete()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'SOCIETE.ADD_BUTTON' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+
+    <div class="menu-list mt-5">
+      <span
+        *ngFor="let s of sections; let i=index" (click)="activeSection = i"
+        class="mr-4"
+        [ngClass]="{'active': activeSection == i ,
+         'not-active': activeSection !== i}"
+      >{{s?.name}}</span>
+    </div>
+
+    <form [formGroup]="societeFormGroup">
+      <div [hidden]="activeSection !== 0">
+        <rhis-add-form-societe
+          formControlName="company"
+          [isFormSubmitted]="isFormSubmitted"
+          [listPays]="listPays"
+          [currentLanguage]="currentLanguage">
+        </rhis-add-form-societe>
+      </div>
+      <div [hidden]="activeSection !== 1">
+        <rhis-add-form-prefecture
+          formControlName="prefecture"
+          [isFormSubmitted]="isFormSubmitted">
+        </rhis-add-form-prefecture>
+      </div>
+    </form>
+
+    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+  </div>
+</div>
+
+
+
+

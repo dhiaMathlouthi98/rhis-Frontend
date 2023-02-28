@@ -1,0 +1,232 @@
+@import '../../../../../../assets/file_import/table-style-commun';
+
+.gdh-container {
+  poisition: relative;
+
+  .arrow-right {
+    float: left;
+    margin: 10px;
+  }
+
+  .btn-group {
+    margin: 10px;
+
+    button {
+      padding: 8px 11px;
+      line-height: 19px;
+    }
+
+    .btn-light {
+      color: #9B9B9B;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      background-color: #fff;
+      border: 1px solid #DEDEDE;
+    }
+  }
+
+  .btn-group .btn-light.active {
+    background-color: #F7F7F7;
+  }
+
+  .search {
+    float: left;
+    height: 38px;
+    width: 296px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    margin: 0 20px 0 20px;
+    border: 1px solid #cccccc;
+    font-family: "TT Wellingtons Medium";
+
+    input {
+      float: left;
+      outline: none;
+      height: inherit;
+      width: 235px;
+      margin-left: 10px;
+      border: none;
+      background-color: transparent;
+      color: #AFA899;
+      font-family: "TT Wellingtons Light", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 10px;
+      border-right: 1px solid #cccccc;
+      text-align: center;
+
+      &::placeholder {
+        color: inherit;
+      }
+    }
+
+    span {
+      float: right;
+      margin-top: 4px;
+      margin-right: 15px;
+    }
+  }
+
+  /************************************/
+  /***********TABLE**********/
+  /************************************/
+
+
+  .vue-day-header:last-child {
+    text-align: center !important;
+  }
+
+  /******************* icons ******************/
+  .shape-filter {
+    height: 28px;
+    width: 28px;
+    border: 1px solid #AFA899;
+    box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .oval-plus {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 20px;
+    width: 20px;
+    border: 0.5px solid #AFA899;
+    border-radius: 50%;
+    font-size: 17px;
+    color: #AFA899;
+    line-height: 20px;
+    margin: 2px;
+    text-align: center;
+  }
+
+  .btn-filter-column {
+    position: relative;
+    right: 2%;
+    z-index: 999;
+  }
+
+  .pointage-column {
+    width: 300px
+  }
+
+  .gdh-column-pointage {
+    text-align: justify;
+  }
+
+  .gdh-header-popover {
+    top: 5px;
+    color: #7a7a7a;
+    left: 150px;
+    display: inline-block;
+    text-align: right;
+  }
+
+  .valider-popover {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .pointage-tiret {
+    display: inline-block;
+    padding-right: 15px;
+  }
+
+  .mrg-top-10 {
+    margin-top: 10px;
+  }
+
+  .empl-prenom {
+    text-transform: uppercase;
+  }
+}
+
+:host ::ng-deep {
+  .table-list {
+    p-paginator {
+      @include nbre-ligne-page();
+    }
+  }
+
+  .ui-table-scrollable-header.ui-widget-header {
+    padding-right: 5px;
+
+    .ui-table-scrollable-header-box {
+      margin-right: 0px !important;
+    }
+  }
+
+  .table-list p-table .ui-table table .ui-table-thead > tr > th {
+    padding: 0 0 10px 0;
+    width: 150px;
+  }
+  .table-list p-table .ui-table table {
+    border-spacing: 0 5px;
+  }
+}
+
+.gdh-total-title {
+  margin-left: 10px;
+
+  span {
+    background: #1d7bd9;
+    color: white;
+    border-radius: 5px;
+    font-size: 11px;
+    line-height: 16px;
+    padding: 5px;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.repas {
+  width: 100px;
+}
+
+.block-filter-gdh {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.scroll-table-menu-close-gdh {
+  width: 100%;
+}
+
+.scroll-table-menu-open-gdh {
+  width: calc(100% - 300px);
+}
+
+:host ::ng-deep {
+  .table-list p-table .ui-table table .ui-table-tbody > tr:nth-child(1) > td {
+    padding: 6px 0;
+  }
+}
+
+.container-generate-report {
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.generation-label {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: rgb(45, 199, 109);
+}
+
+.progress {
+  background-color: rgb(255, 155, 66);
+}
+
+.generation-report-close-btn {
+  background-color: #e2e6ea;
+  cursor: pointer;
+}

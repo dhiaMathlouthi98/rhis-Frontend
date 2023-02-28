@@ -1,0 +1,695 @@
+:host ::ng-deep {
+  /*//////////////////////////////////////////////////////////////////////////////////////////////*/
+  /***************************************** SIDEBAR  ********************************************/
+  /*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+  .ui-sidebar {
+    margin-top: 60px;
+    border: none;
+    border-top: 1px solid #F0F0F0;
+    box-shadow: none;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    padding: 15px 0 0 0;
+    z-index: 0 !important;
+
+    .ui-sidebar-close {
+      display: none;
+    }
+  }
+
+  /*//////////////////////////////////////////////////////////////////////////////////////////////*/
+  /************************************** DESIGN PANEL MENU  *************************************/
+  /*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+  .ui-panelmenu {
+    .ui-panelmenu-header {
+      padding: 0 25px 0 0 !important;
+      height: 40px;
+      margin: 32px 0;
+      @media screen and (max-height: 1024px) {
+        margin: 32px 0;
+      }
+      @media screen and (max-height: 780px) {
+        margin: 25px 0;
+      }
+      @media screen and (max-height: 720px) {
+        margin: 14px 0;
+      }
+
+      > a {
+        .ui-panelmenu-icon {
+          float: right;
+        }
+      }
+
+      &:hover {
+        border-right: 4px solid #385fe3;
+
+        a .ui-menuitem-text {
+          opacity: 1;
+        }
+      }
+    }
+
+    .ui-panelmenu-header.ui-state-active {
+      border-right: 4px solid #385fe3;
+    }
+
+    .ui-panelmenu-header.ui-state-default.ui-state-active {
+      > a, a:hover, a:focus {
+        border: none;
+        color: #535353;
+        background: none;
+      }
+    }
+
+    .ui-panelmenu-content {
+      border: none;
+
+      .ui-menuitem {
+        .ui-menuitem-link {
+          padding: 10px 5px 0 5px;
+          font-size: 12px;
+
+          &:hover {
+            background: none;
+
+            .ui-menuitem-text {
+              opacity: 1;
+            }
+          }
+
+          &:hover {
+            border-right: 4px solid #385fe3;
+          }
+        }
+
+        .ui-menuitem-link.ui-state-active {
+          color: #333333;
+          opacity: 1;
+          border-right: 4px solid #385fe3;
+
+          .ui-menuitem-text {
+            opacity: 1;
+          }
+        }
+      }
+
+      > .ui-panelmenu-root-submenu > .ui-submenu-list {
+        margin-left: 1.5em;
+
+        .ui-menuitem {
+          padding-right: 30px;
+        }
+      }
+    }
+
+    .ui-menuitem-text {
+      vertical-align: super;
+      -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+      -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+      animation-name: example;
+      animation-duration: 1s;
+      animation-delay: 0.4s;
+      animation-iteration-count: infinite;
+      visibility: hidden;
+    }
+
+    /* Safari 4.0 - 8.0 */
+    @-webkit-keyframes example {
+      from {
+        visibility: hidden;
+      }
+      to {
+        visibility: visible;
+      }
+    }
+    /* Standard syntax */
+    @keyframes example {
+      from {
+        visibility: hidden;
+      }
+      to {
+        visibility: visible;
+      }
+    }
+
+    .ui-menuitem-icon {
+      padding-right: 15px;
+    }
+
+    .ui-submenu-list .ui-menuitem.ui-menuitem-active > .ui-menuitem-link {
+      padding: 18px 0;
+    }
+
+    .ui-panelmenu-header.ui-state-active > a {
+      .ui-menuitem-text {
+        opacity: 1;
+      }
+    }
+  }
+
+  /*//////////////////////////////////////////////////////////////////////////////////////////////*/
+  /************************************** DESIGN TIERED MENU  ************************************/
+  /*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+  .ui-panelmenu, .ui-tieredmenu {
+    .ui-panelmenu-header > a,
+    .ui-menuitem-link {
+      border: none;
+      background: none;
+      border-bottom: 1px solid #F0F0F0 !important;
+      padding: 14px 0 18px 0;
+      color: #8E8E8E;
+      font-family: "TT Wellingtons Medium";
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 13px;
+
+      .ui-menuitem-text {
+        opacity: 0.35;
+      }
+    }
+
+    .ui-panelmenu-header > a {
+      @media screen and (max-height: 720px) {
+        padding: 6px 0 6px 0;
+      }
+      @media screen and (max-height: 720px) {
+        padding: 5px 0 5px 0;
+      }
+    }
+  }
+
+  /*//////////////////////////////////////////////////////////////////////////////////////////////*/
+  /************************************** DESIGN TIERED MENU  ************************************/
+  /*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+  .ui-tieredmenu {
+    border: none;
+
+    .ui-menuitem {
+      .ui-menuitem-link {
+        padding: 15px 0 22px 0;
+        @media screen and (max-height: 720px) {
+          padding: 2px 0 18px 0;
+        }
+        @media screen and (max-height: 720px) {
+          padding: 0 0 16px 0;
+        }
+
+        > .ui-menuitem-text {
+          display: none;
+        }
+      }
+    }
+
+    ul .ui-menuitem.ui-menuitem-active:hover:nth-child(8) {
+      > .ui-menuitem-link {
+        > .ui-menuitem-text {
+          display: block;
+          position: absolute;
+          width: 270px;
+          left: -25px;
+          top: 0;
+          background: #dedcd5;
+          padding-left: 75px;
+          line-height: 24px;
+          color: #535353;
+          opacity: 1;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
+    }
+
+    ul.ui-submenu-list .ui-menuitem.ui-menuitem-active:hover:nth-child(8) {
+      > .ui-menuitem-link {
+        > .ui-menuitem-text {
+          position: relative;
+          left: 0;
+          top: 0;
+          background: none;
+          padding: 0 0 0 22px;
+          line-height: 7px;
+        }
+      }
+    }
+
+    .ui-menuitem.ui-menuitem-active:hover:nth-child(8) {
+      > .ui-menuitem-link {
+        > .ui-menuitem-text .ui-submenu .ui-menuitem-text {
+          background: none;
+        }
+      }
+    }
+
+    .ui-menuitem-active > .ui-submenu > .ui-submenu-list {
+      .ui-menuitem-text {
+        display: block;
+      }
+    }
+
+    .ui-menuitem.ui-menuitem-active {
+      background: none;
+
+    }
+
+    .ui-submenu-list {
+      box-shadow: none;
+      border: none;
+      margin-left: 54px;
+      margin-top: 44px;
+    }
+
+    .ui-menuitem-link {
+      line-height: 0;
+    }
+  }
+
+  .parc-menu-showed {
+    .ui-tieredmenu {
+      ul .ui-menuitem.ui-menuitem-active:hover:nth-child(5) {
+        > .ui-menuitem-link {
+          > .ui-menuitem-text {
+            display: block;
+            position: absolute;
+            width: 270px;
+            left: -25px;
+            top: 0;
+            background: #dedcd5;
+            padding-left: 75px;
+            line-height: 24px;
+            color: #535353;
+            opacity: 1;
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+
+    ul.ui-submenu-list .ui-menuitem.ui-menuitem-active:hover:nth-child(5) {
+      > .ui-menuitem-link {
+        > .ui-menuitem-text {
+          position: relative;
+          left: 0;
+          top: 0;
+          background: none;
+          padding: 0 0 0 22px;
+          line-height: 7px;
+        }
+      }
+    }
+
+    .ui-menuitem.ui-menuitem-active:hover:nth-child(5) {
+      > .ui-menuitem-link {
+        > .ui-menuitem-text .ui-submenu .ui-menuitem-text {
+          background: none;
+        }
+      }
+    }
+
+  }
+
+  /*//////////////////////////////////////////////////////////////////////////////////////////////*/
+  /************************************* ICON CLOSE OPEN MENU  ***********************************/
+  /*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+  .close-menu {
+    .ui-sidebar-left,
+    .ui-tieredmenu {
+      width: 60px;
+    }
+  }
+
+  .open-menu {
+    .ui-sidebar-left {
+      width: 17em;
+    }
+  }
+
+  .ui-panelmenu {
+    .ui-panelmenu-header:not(.ui-state-active) > a:hover {
+      background: none;
+      border: none;
+      border-bottom: 1px solid #F0F0F0;
+      color: rgb(65, 65, 65);
+    }
+
+    .ui-panelmenu-panel {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      padding: 0 0 0 15px;
+      @media screen and (max-height: 720px) {
+        margin: 13px 0;
+      }
+    }
+
+    .ui-panelmenu-header.ui-state-active > a:hover .ui-panelmenu-icon,
+    .ui-panelmenu-header.ui-state-active > a .ui-panelmenu-icon {
+      color: #848484;
+      opacity: 1;
+    }
+  }
+
+  .open_menu_Rhis, .close_menu_Rhis {
+    background: none;
+    border: none;
+    color: #8E8E8E;
+    padding: 18px;
+    display: inline-block;
+    text-align: left;
+    @media screen and (max-height: 720px) {
+      padding-top: 0;
+    }
+  }
+
+  .open_menu_Rhis {
+    padding: 0 15px !important;
+    @media screen and (max-height: 720px) {
+      margin-top: -10px;
+    }
+
+    &::before {
+      content: url("/assets/icons/accueil/side_bar/close.svg");
+    }
+  }
+
+  .close_menu_Rhis {
+    &::before {
+      content: url("/assets/icons/accueil/side_bar/open.svg");
+    }
+  }
+
+  .close_menu_Rhis.ui-button.ui-button-text-only .ui-button-text {
+    display: none;
+  }
+
+  .open_menu_Rhis.ui-button.ui-button-text-only .ui-button-text {
+    display: inline-block;
+    padding: 4px 15px;
+    vertical-align: top;
+    color: #8E8E8E;
+    font-family: "TT Wellingtons Medium";
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 13px;
+    opacity: 0.35;
+
+    &:hover {
+      opacity: 1;
+      color: #535353;
+    }
+  }
+}
+
+:host ::ng-deep .ui-tieredmenu .ui-menuitem-link {
+  background: none;
+
+  .ui-menuitem-icon {
+    margin-right: 0;
+  }
+}
+
+:host ::ng-deep {
+  .close-menu .ui-tieredmenu {
+    .ui-menuitem {
+      padding: 0 16px;
+      height: 40px;
+      margin: 32px 0;
+      @media screen and (max-height: 1024px) {
+        margin: 33px 0;
+      }
+      @media screen and (max-height: 780px) {
+        margin: 25px 0;
+      }
+      @media screen and (max-height: 720px) {
+        margin: 14px 0;
+      }
+
+      .ui-submenu-list {
+        .ui-menuitem {
+          padding: 0;
+
+          .ui-menuitem-link {
+            &:hover {
+              border-right: 4px solid #385fe3;
+            }
+          }
+
+          .ui-menuitem-link.ui-state-active {
+            border-right: 4px solid #385fe3;
+          }
+        }
+      }
+
+      .ui-menuitem-link .ui-submenu-icon {
+        display: none;
+      }
+
+      .ui-submenu-list {
+        .ui-menuitem {
+          height: 22px;
+          margin: 17px 0;
+
+          &:nth-child(1) {
+            margin: 12px 0;
+          }
+        }
+      }
+    }
+
+    .ui-menuitem:hover,
+    .ui-menuitem.active {
+      border-right: 4px solid #385fe3;
+    }
+
+    .ui-menuitem:hover {
+      .ui-menuitem:hover {
+        border: none;
+      }
+    }
+  }
+}
+
+:host ::ng-deep {
+  .ui-tieredmenu p-tieredmenusub.ui-submenu ul {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    height: auto;
+    max-height: 190px;
+    width: 200px;
+    left: 7px !important;
+
+    .ui-menuitem-link {
+      padding: 8px 0;
+      border: none;
+      font-size: 12px;
+
+      .ui-menuitem-text {
+        padding: 0 0 10px 16px;
+        position: relative;
+
+        &:hover {
+          color: #333333;
+          opacity: 1;
+        }
+      }
+    }
+
+    .ui-menuitem-link.ui-state-active {
+      .ui-menuitem-text {
+        opacity: 1;
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: #F5F5F5;
+    }
+
+    &:hover::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+      background-color: #AFA899;
+    }
+  }
+
+  .parc-menu-showed {
+    .ui-tieredmenu p-tieredmenusub.ui-submenu ul {
+      max-height: 180px;
+      @media screen and (max-height: 720px) {
+        max-height: 150px;
+      }
+    }
+  }
+
+  .ui-panelmenu-header, .ui-menuitem-link {
+    @for $i from 1 through 8 {
+      .icon_#{$i}::before {
+        content: url("/assets/icons/accueil/side_bar/icon_OFF_#{$i}.svg");
+        position: relative;
+        top: 0;
+        z-index: 1;
+        @media screen and (max-height: 720px) {
+          top: -6px;
+        }
+      }
+    }
+    @for $i from 9 through 12 {
+      .icon_#{$i}::before {
+        background-image: url("/assets/icons/accueil/side_bar/supervisor/icon_OFF_#{$i}.png");
+        content: '';
+        position: relative;
+        top: 0;
+        display: inline-block;
+        background-size: 100% 100%;
+        width: 27px;
+        height: 27px;
+        @media screen and (max-height: 720px) {
+          top: -6px;
+        }
+      }
+    }
+
+    &:hover, &:focus {
+      @for $i from 1 through 8 {
+        .icon_#{$i}::before {
+          content: url("/assets/icons/accueil/side_bar/icon_ON_#{$i}.svg");
+          position: relative;
+          top: 0;
+          @media screen and (max-height: 720px) {
+            top: -6px;
+          }
+        }
+      }
+      @for $i from 9 through 12 {
+        .icon_#{$i}::before {
+          background-image: url("/assets/icons/accueil/side_bar/supervisor/icon_ON_#{$i}.png");
+          content: '';
+          position: relative;
+          top: 0;
+          display: inline-block;
+          background-size: 100% 100%;
+          width: 27px;
+          height: 27px;
+          @media screen and (max-height: 720px) {
+            top: -6px;
+          }
+        }
+      }
+    }
+  }
+
+  .ui-panelmenu-header.ui-state-active {
+    @for $i from 1 through 8 {
+      .icon_#{$i}::before {
+        content: url("/assets/icons/accueil/side_bar/icon_ON_#{$i}.svg");
+        position: relative;
+        top: 0;
+        @media screen and (max-height: 720px) {
+          top: -6px;
+        }
+      }
+    }
+    @for $i from 9 through 12 {
+      .icon_#{$i}::before {
+        background-image: url("/assets/icons/accueil/side_bar/supervisor/icon_ON_#{$i}.png");
+        content: '';
+        position: relative;
+        top: 0;
+        display: inline-block;
+        background-size: 100% 100%;
+        width: 27px;
+        height: 27px;
+        @media screen and (max-height: 720px) {
+          top: -6px;
+        }
+      }
+    }
+  }
+
+  .ui-tieredmenu .ui-menuitem.ui-menuitem-active > .ui-menuitem-link,
+  .ui-tieredmenu .ui-menuitem-link:hover {
+    background: none;
+  }
+
+  .ui-tieredmenu .active.ui-menuitem .ui-menuitem-link {
+    @for $i from 1 through 8 {
+      .icon_#{$i}::before {
+        content: url("/assets/icons/accueil/side_bar/icon_ON_#{$i}.svg") !important;
+        position: relative;
+        top: 0;
+        z-index: 1;
+      }
+    }
+    @for $i from 9 through 12 {
+      .icon_#{$i}::before {
+        background-image: url("/assets/icons/accueil/side_bar/supervisor/icon_ON_#{$i}.png") !important;
+        content: '';
+        position: relative;
+        top: 0;
+        display: inline-block;
+        background-size: 100% 100%;
+        width: 27px;
+        height: 27px;
+      }
+    }
+  }
+
+  @media screen and (max-height: 720px) {
+    .ui-tieredmenu .ui-menuitem-link {
+      @for $i from 1 through 8 {
+        .icon_#{$i}::before {
+          top: 0;
+        }
+      }
+      @for $i from 9 through 12 {
+        .icon_#{$i}::before {
+          top: 0;
+        }
+      }
+
+      &:hover, &:focus {
+        @for $i from 1 through 8 {
+          .icon_#{$i}::before {
+            top: 0;
+          }
+        }
+        @for $i from 9 through 12 {
+          .icon_#{$i}::before {
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-height: 800px) {
+    .ui-tieredmenu .ui-menuitem-active > .ui-submenu > .ui-submenu-list {
+      top: unset !important;
+      bottom: 40px !important;
+    }
+  }
+}
+
+
+
+
+
+

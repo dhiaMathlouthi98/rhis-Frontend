@@ -1,0 +1,26 @@
+<div *ngIf="updateButtonControl()" class="rhis-container">
+  <span (click)="switchState()" *ngIf="!isActive" class="con-tooltip bottom"
+        id="EMP-action-notActive">
+    <img alt="no icon" src="assets/icons/employe/subtract-circle-ADD.svg">
+    <span class="rhis-tooltip">{{'EMPLOYEE.RENDRE_ACTIF_EMPLOYE' | translate}}</span>
+  </span>
+  <span (click)="switchState()" *ngIf="isActive" class="con-tooltip bottom" id="EMP-action-active">
+  <img alt="no icon" id="EMP-action-switchInactive" src="assets/icons/employe/subtract-circle.svg">
+    <span class="rhis-tooltip">{{'EMPLOYEE.RENDRE_INACTIF_EMPLOYE' | translate}}</span>
+  </span>
+  <span (click)="showDisponibilites($event)" id="EMP-action-disponibilite">
+    <img src="assets/icons/employe/Ico_View.svg" alt="no icon">
+  </span>
+</div>
+
+<p-overlayPanel *ngIf="showHide"
+                [dismissable]="true"
+                [style]="{'margin-top': 0}"
+                appendTo="body">
+  <rhis-disponibilite-conge *ngIf="_disponibilites"
+                            [disponibilitesJournalieres]='_disponibilites'
+                            [uuidEmployee]='uuidEmployee'
+                            [nom]="nom"
+                            [prenom]="prenom">
+  </rhis-disponibilite-conge>
+</p-overlayPanel>

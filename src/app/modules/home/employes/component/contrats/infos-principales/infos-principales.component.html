@@ -1,0 +1,201 @@
+<div class="container-fluid change-container-fluid-rhis">
+  <form [formGroup]="formGroup">
+    <span class="form-item-error red  " *ngIf="contratExist">{{"CONTRAT.ERR_DATES_NON_VALIDE" | translate}}</span>
+    <div class="view-section">
+      <div class="view-section-title">{{'CONTRAT.INFORMATION' | translate}}</div>
+      <div class="section-body">
+        <div class="rhis-row row block-row-without-margin-rhis" [hidden]="hidenGroupTravail">
+          <div class="section-element calendar-section width-60 type-poste-rhis">
+            <div class="section-element-title">
+              <label class="section-element-title"
+                     for="EMP_CONTRAT-groupeTravail">{{'CONTRAT.GROUPE_TRAVAIL' | translate}}
+                *</label>
+            </div>
+            <p-dropdown
+              rhisStyleForm
+              [selector]="selectors.dropDownSelector"
+              [autoDisplayFirst]="false"
+              id="EMP_CONTRAT-groupeTravail"
+              formControlName="groupeTravail"
+              (onChange)="onSelectGroupeTravail()"
+              optionLabel="libelle"
+              [options]="listGroupTravailDisplay"
+              class="drop-down-general"></p-dropdown>
+            <span class="form-item-error red small-rhis"
+                  *ngIf="(formGroup.get('groupeTravail').hasError('required') || formGroup.get('groupeTravail').hasError('trimValidator'))  && (formGroup.controls['groupeTravail'].touched)"
+                  id="EMP_CONTRAT-groupeTravailError">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+            <div>
+              <span *ngIf="presenceDirecteur"
+                    class="form-item-error red small"
+                    id="EMP_CONTRAT-groupeTravailDirError">{{"GROUPE_TRAVAIL.ERREUR_DIRECTEUR" | translate}} {{groupeTravailSelected}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="rhis-row row block-row-without-margin-rhis mt-4">
+          <div class="section-element width-22">
+            <div class="section-element-title">
+              <label class="section-element-title" for="EMP_CONTRAT-niveau">{{'CONTRAT.NIVEAU' | translate}}
+              </label>
+            </div>
+            <input type="text"
+                   rhisStyleForm
+                   class="form-control input-style-contract"
+                   formControlName="level"
+                   (keyup)="valueChangesOfAvenant()"
+                   id="EMP_CONTRAT-niveau"
+                   [hasError]="formGroup.get('level')?.errors?.max">
+            <span
+              *ngIf="formGroup.get('level')?.errors?.max && (formGroup.controls['level'].touched)"
+              class="form-item-error red small-rhis ml-1">
+              {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.LEVEL' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+          </div>
+          <div class="section-element width-22">
+            <div class="section-element-title">
+              <label class="section-element-title" for="EMP_CONTRAT-echelon">{{'CONTRAT.ECHELON' | translate}}
+              </label>
+            </div>
+            <input type="text"
+                   rhisStyleForm
+                   class="form-control input-style-contract"
+                   formControlName="echelon"
+                   id="EMP_CONTRAT-echelon"
+                   (keyup)="valueChangesOfAvenant()"
+                   [hasError]="formGroup.get('echelon')?.errors?.max">
+            <span
+              *ngIf="formGroup.get('echelon')?.errors?.max && (formGroup.controls['echelon'].touched)"
+              class="form-item-error red small-rhis ml-1">
+              {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.ECHELON' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+
+          </div>
+          <div class="section-element width-22">
+            <div class="section-element-title">
+              <label class="section-element-title" for="EMP_CONTRAT-coefficient">{{'CONTRAT.COEFFICIENT' | translate}}
+              </label>
+            </div>
+            <input type="text"
+                   rhisStyleForm
+                   class="form-control input-style-contract"
+                   formControlName="coefficient"
+                   id="EMP_CONTRAT-coefficient"
+                   (keyup)="valueChangesOfAvenant()"
+                   [hasError]="formGroup.get('coefficient')?.errors?.max">
+            <span
+              *ngIf="formGroup.get('coefficient')?.errors?.max && (formGroup.controls['coefficient'].touched)"
+              class="form-item-error red small-rhis ml-1">
+              {{
+              ('GROUPE_TRAVAIL.FIELD' | translate) + " " +
+              ('GROUPE_TRAVAIL.COEFFICIENT' | translate | lowercase) + " " +
+              ('GROUPE_TRAVAIL.MUST_HAVE' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+        <div class="rhis-row row block-row-without-margin-rhis mt-4">
+          <div class="section-element width-34" [hidden]="hidenTypeContrat">
+            <div class="section-element-title">
+              <label class="section-element-title" for="EMP_CONTRAT-typeContrat">{{'CONTRAT.TYPE' | translate}}*</label>
+            </div>
+            <p-dropdown
+              rhisStyleForm
+              [selector]="selectors.dropDownSelector"
+              [autoDisplayFirst]="false"
+              (onChange)="onSelectTypeContrat()"
+              id="EMP_CONTRAT-typeContrat"
+              formControlName="typeContrat"
+              optionLabel="libelle"
+              [options]="listTypeContratDisplay"
+              class="drop-down-general"></p-dropdown>
+            <span class="form-item-error red small-rhis"
+                  *ngIf="(formGroup.get('typeContrat').hasError('required') || formGroup.get('typeContrat').hasError('trimValidator'))  && (formGroup.controls['typeContrat'].touched)"
+                  id="EMP_CONTRAT-typeError">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          </div>
+          <div class="section-element width-22">
+            <div class="section-element-title">
+              <label class="section-element-title" for="EMP_CONTRAT-dateEffective">{{'CONTRAT.DATE_EFF' | translate}}
+                *</label>
+            </div>
+            <rhis-calendar
+              rhisStyleForm
+              [hasError]="dateEffective.invalid"
+              [selector]="selectors.calendarSelector"
+              id="EMP_CONTRAT-dateEffective"
+              [minDate]="minDateEffectifAvenant"
+              [maxDate]="maxDateEffectiveAvenant"
+              (date)="onSelectDateEffective()"
+              dateFormat="dd/mm/yy"
+              [placeholder]="'JJ/MM/AAAA'"
+              formControlName="dateEffective"></rhis-calendar>
+            <span class="form-item-error red small-rhis"
+                  *ngIf="(formGroup.get('dateEffective').hasError('required') || formGroup.get('dateEffective').hasError('trimValidator'))  && (formGroup.controls['dateEffective'].touched)"
+                  id="EMP_CONTRAT-dateEffectiveError">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+
+          </div>
+          <div class="section-element width-22">
+            <div class="section-element-title">
+              <label for="EMP_CONTRAT-dateFin"
+                     class="section-element-title">{{'CONTRAT.DATE_FIN_CONTRAT' | translate}}</label>
+            </div>
+            <rhis-calendar
+              [hasError]="datefin.invalid"
+              rhisStyleForm
+              [selector]="selectors.calendarSelector"
+              id="EMP_CONTRAT-dateFin"
+              dateFormat="dd/mm/yy"
+              [placeholder]="'JJ/MM/AAAA'"
+              (date)="onSelectDateFin()"
+              [minDate]="minDatefinContrat"
+              [maxDate]="maxDateFinAvenant"
+              formControlName="datefin"></rhis-calendar>
+            <span class="form-item-error red small-rhis"
+                  *ngIf="(formGroup.get('datefin').hasError('required') || formGroup.get('datefin').hasError('trimValidator'))  && (formGroup.controls['datefin'].touched)"
+                  id="EMP_CONTRAT-dateFinError">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          </div>
+
+          <div class="section-element checkbox-section width-16">
+            <div class="section-element-title">{{'CONTRAT.STATUT' | translate}}</div>
+            <p-checkbox name="statut" class="checkbox-active-contrat" label="{{'CONTRAT.ACTIF' | translate}}"
+                        [binary]="true"
+                        (click)="activeDesactiveContratwithChekbox(contratId)" formControlName="actif"
+                        id="EMP_CONTRAT-activeDesactiv">
+            </p-checkbox>
+          </div>
+        </div>
+        <div [hidden]="hiddenMotifSortie" class="rhis-row row block-row-without-margin-rhis mt-4 specific-block-sortie">
+          <div class="section-element width-22 align-self-end">
+            <div class="section-element-title">
+              <label class="section-element-title"
+                     for="EMP_CONTRAT-motifSortie">{{'MOTIF_SORTIE.TYPE' | translate}}</label>
+            </div>
+            <input type="text"
+                   rhisStyleForm
+                   class="form-control"
+                   id="EMP_CONTRAT-motifSortie"
+                   formControlName="motifSortie">
+          </div>
+        </div>
+        <div [hidden]="hiddenDateFinPeriodeEssai" [ngClass]="{'add-margin-motifS': !hiddenMotifSortie}"
+             class="rhis-row block-row-without-margin-rhis mt-2 specific-block-info">
+          <div class="section-element align-self-end">
+            <div class="section-element-title">
+              <label class="section-element-title"
+              >{{dateFinPeriodEssaiDisplay}}</label>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+

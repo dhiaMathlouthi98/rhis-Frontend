@@ -1,0 +1,94 @@
+<div class="control-section">
+  <div class="editor-container">
+    <div class="btn-control-add-report">
+      <button (click)="confirmAndSelectRestoBeforeSave()"
+              class="btn save-add-button-rhis blue-background btn-add-employee" type="button">{{'BUTTON.SAVE' |
+        translate}}
+      </button>
+      <button (click)="goToListRapport()" class="btn save-add-button-rhis blue-background btn-add-employee"
+              type="button">{{'BUTTON.CANCEL' | translate}}
+      </button>
+    </div>
+    <div class="view-section container-fluid change-container-fluid-rhis" [formGroup]="formGroup">
+      <div class="section-body">
+        <div class="rhis-row row row-margin-bottom-rhis">
+          <div class="col-8">
+            <label for="EMP-report-fileName"
+                   class="section-element-title col-12 delete-padding-col-rhis">{{"REPORT.DYNAMIC_FILE_NAME" |
+              translate}}
+              *</label>
+            <input rhisStyleForm
+                   [hasError]="formGroup.controls['name'].invalid && (formGroup.controls['name'].touched || submitted) || duplicateName"
+                   formControlName="name"
+                   id="EMP-report-fileName" type="text"
+                   class="input-general-rhis">
+            <span class="red small-rhis"
+                  *ngIf="formGroup.controls['name'].invalid  && (formGroup.controls['name'].touched || submitted)"
+                  id="EMP-Report-docNameError">
+                              {{'REPORT.DOCUMENT_NAME_REQUIRED' | translate}}
+                        </span>
+          </div>
+          <div class="col-4">
+            <label class="section-element-title"
+                   for="EMP-report-category">{{"REPORT.CATEGORY" | translate}}*</label>
+            <p-dropdown [autoDisplayFirst]="false"
+                        rhisStyleForm
+                        selector=".ui-dropdown"
+                        [hasError]="formGroup.controls['category'].invalid && (formGroup.controls['category'].touched || submitted)"
+                        formControlName="category"
+                        id="EMP-report-category"
+                        [options]="categories"
+                        class="drop-down-general"></p-dropdown>
+            <span class="red small-rhis"
+                  *ngIf="formGroup.controls['category'].invalid  && (formGroup.controls['category'].touched || submitted)"
+                  id="EMP-report-docCategoryError">
+                              {{'REPORT.DOCUMENT_CATEGORY_REQUIRED' | translate}}
+                        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <label for="EMP-report-fileName"
+               class="section-element-title col-12 delete-padding-col-rhis">{{"REPORT.DOC_CONTENT" | translate}}
+          *</label>
+        <ejs-documenteditorcontainer #editor_container
+                                     (created)="onCreate()"
+                                     [enableToolbar]=true
+                                     [locale]="culture"
+                                     [showPropertiesPane]="false"
+                                     height="550px" style="display:block;">
+        </ejs-documenteditorcontainer>
+      </div>
+      <div class="col-md-3">
+        <div id='treeparent'>
+          <div class="search-input">
+            <ejs-maskedtextbox #maskObj
+                               id="search" placeholder='Rechercher'
+                               (change)="searchNodes($event)">
+            </ejs-maskedtextbox>
+          </div>
+          <div class="tree-view-container">
+            <ejs-treeview #treeviewObj id="default" [fields]='field'
+                          [allowDragAndDrop]=true
+                          (nodeDragStop)='nodeDragStopHandler($event)'
+                          (nodeSelected)="onSelectTreeNode($event)"
+                          (nodeClicked)='nodeCheck()'>
+            </ejs-treeview>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+                          (submitDataEvent)="submit($event)" *ngIf="showPopup"
+                          (submitAfterNameChanged)="submitAfterNameChanged($event)"
+                          [dropdownListData]="listRestoDestination" [optionLabel]="'libelleRestaurant'"
+                          [showPopUp]="showPopup" [submitButtonText]="submitButtonText" [ecraserMsg]="false"
+                          [getSelectedRestaurant]="selectedRestaureant"
+                          [resourceName]="'ajout_rapport'" [selectedRestosBeforeEdit]="listRestaurantsHaveRapport"
+                          [docEditMode]="true" [rapportModule]="true" [oldName]="rapportOldName" [newName]="rapportNewName"
+>
+</rhis-pop-up-gestion-parc>

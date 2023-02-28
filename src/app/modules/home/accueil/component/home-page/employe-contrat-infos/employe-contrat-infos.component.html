@@ -1,0 +1,34 @@
+<div class="rhis-container">
+  <div class="nbr-employe">
+    <div>
+      <span><img src="assets/icons/accueil/Contenu/Bloc_Nombre d'employés/ico_single-man-actions.svg"
+                 alt="no icon"></span>
+      <span>{{"EMPLOYEE.ALL" | translate}}</span>
+      <span>
+        <ng-container *ngIf="employeesNumbers?.nbrEmployees > 0">+</ng-container>
+        {{employeesNumbers?.nbrEmployees}}
+      </span>
+      <div (click)="seeListOfActiveEmployees()">
+        <span>{{"BUTTON.SEE" | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="nbr-cdi">
+    <rhis-contrat-infos
+      [data]="employeesNumbers?.CDD"
+      [color]="'#5B7AE3'">
+    </rhis-contrat-infos>
+  </div>
+  <div class="nbr-cdd">
+    <rhis-contrat-infos
+      [data]="employeesNumbers?.avenant"
+      [color]="'#889CE3'">
+    </rhis-contrat-infos>
+  </div>
+  <div class="nbr-ce">
+    <rhis-contrat-infos
+      [data]="employeesNumbers?.CDI"
+      [color]="'#B6BFE3'">
+    </rhis-contrat-infos>
+  </div>
+</div>

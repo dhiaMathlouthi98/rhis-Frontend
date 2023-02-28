@@ -1,0 +1,39 @@
+.rhis-container {
+    height: 350px;
+    width: 910px;
+    border-radius: 5px;
+    font-family: 'TT Wellingtons Medium';
+  
+    .flex-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            align-items: baseline;
+            align-content: stretch;
+    }
+    .flex-grid-title {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+    .flex-grid-content{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: flex-start;
+        align-content: stretch;
+        margin-left: 125px;
+    }
+  
+    .bon-title {
+      font-family: 'TT Wellingtons Medium';
+      font-weight: bold;
+      font-size: 20px;
+    }
+  
+  }

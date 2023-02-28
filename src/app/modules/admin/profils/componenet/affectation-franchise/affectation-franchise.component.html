@@ -1,0 +1,13 @@
+<p-fieldset [toggleable]="true" legend="{{'PROFIL.SOCIETES' | translate}}">
+  <p-pickList  [source]="listSociete" [target]="societeChoisies" sourceHeader="disponibles" targetHeader="Choisies"
+              [responsive]="true"
+              filterBy="societeName"
+              dragdrop="true"
+              [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+    <ng-template let-societe pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div class="name-society-style">{{societe.societeName}}</div>
+      </div>
+    </ng-template>
+  </p-pickList>
+</p-fieldset>

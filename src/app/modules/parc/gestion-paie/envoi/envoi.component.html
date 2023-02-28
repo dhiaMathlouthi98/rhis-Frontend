@@ -1,0 +1,120 @@
+<div class="envoi-rapport">
+  <div>
+    <div class="bold-text mt-3">
+      {{"GDH.PAY.REPORT_LIST" | translate}} :
+    </div>
+    <div class="width-100 mt-3">
+      <div class="row ml-0 mr-0 " *ngFor="let report of reportList">
+        <div class="col-2 pl-0">
+          <p-inputSwitch [(ngModel)]="report.value" [disabled]="report?.disabled"
+                         [ngClass]="{'green-switch' : report?.value,'grey-switch' : !report?.value}"></p-inputSwitch>
+        </div>
+        <div class="col-10 pr-0 pull-right">
+          <span>{{report?.name | translate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="bold-text mt-3">
+      {{"GESTION_PARC_RAPPORT.RESTAURANTS_LIST_TEXT" | translate}}
+    </div>
+    <div class="section-element-title mb-3 mt-3">
+      <p-multiSelect #multiSelect
+                     [filter]="false"
+                     [showToggleAll]="false"
+                     [options]="displayedRestaurants"
+                     (onChange)="setSelectedRestaurants($event)"
+                     [(ngModel)]="selectedRestaurants"
+                     appendTo="body"
+                     [emptyFilterMessage]="'NO_RESULT_FOUND' | translate"
+                     optionLabel="libelle"
+                     id="RAPP-Download-multiselect">
+        <p-header>
+          <div class="bold-text">
+            <p-checkbox [binary]="'true'" [(ngModel)]="isAllRestaurantSelected"
+                        (onChange)="multiSelect.toggleAll($event);updateList()"></p-checkbox>
+            {{"BUTTON.SELECT_ALL" | translate}}</div>
+        </p-header>
+        <ng-template let-selectedOptions pTemplate="selectedItems" >
+          <div title="" id="choice-header">
+            {{getSelectedOptions | memoize : selectedOptions: rhisTranslateService}}
+          </div>
+        </ng-template>
+        <ng-template let-option let-i="index" pTemplate="item">
+          <div class="item-selection"
+               [ngClass]="{'title-option': checkOption | memoize : option?.value?.idRestaurant}"
+               [id]="option?.value?.idRestaurant">{{option?.label}}</div>
+        </ng-template>
+      </p-multiSelect>
+    </div>
+  </div>
+
+  <div class="mt-3 p-field">
+    <div class="bold-text">{{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.DESTINATAIRES"|translate}}*</div>
+    <p-autoComplete (completeMethod)="filterReceiver($event)"
+                    (onKeyUp)="addReceiverByEmail($event)"
+                    (onSelect)="selectReceiver($event)"
+                    (onUnselect)="verifierEmailsReceivers()"
+                    [(ngModel)]="selectedReceivers"
+                    [suggestions]="filteredReceiver"
+                    class="center-flex-block mt-3"
+                    multiple="true">
+      <ng-template let-value pTemplate="selectedItem">
+        <span class="selected-text" *ngIf="value.prenom && value.nom">{{value?.prenom }} {{value?.nom }}
+          ({{value?.email }}) </span>
+        <span *ngIf="!value.prenom && !value.nom"
+              class="selected-text">{{value?.email }}</span>
+      </ng-template>
+    </p-autoComplete>
+    <p *ngIf="selectedReceivers.length==0">
+      <small
+        class="p-error">{{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.DESTINATAIRES_ERROR"|translate}}</small>
+    </p>
+    <p *ngIf="errorReceiver">
+      <small class="p-error">{{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.DESTINATAIRES_ERROR_INVALIDE"|translate}}</small>
+    </p>
+  </div>
+
+  <div class="mt-3">
+    <div class="bold-text">{{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.OBJET"|translate}}</div>
+    <div class="center-flex-block mt-3">
+      <input
+             [(ngModel)]="parametreEnvoi.objectMail"
+             [class.invalid]="parametreEnvoi.objectMail==null || parametreEnvoi.objectMail==''"
+             class="input-rapport-rhis"
+             pInputText
+             type="text">
+    </div>
+    <p *ngIf="parametreEnvoi.objectMail==null || parametreEnvoi.objectMail==''">
+      <small class="p-error">
+        {{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.OBJET_ERROR"|translate}}
+      </small>
+    </p>
+  </div>
+
+  <div class="mt-3">
+    <div class="bold-text">{{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.MESSAGE"|translate}}</div>
+    <textarea
+              [(ngModel)]="parametreEnvoi.message"
+              [ngStyle]="{'height': parametreEnvoi.listRestaurantDispaly.length>10 ? '160px' : '80px'}"
+              class="input-rapport-rhis "
+              pInputTextarea></textarea>
+  </div>
+
+  <div class="mt-3 center-flex-block">
+    <button (click)="envoyer()"
+            [disabled]="verifierAvantEnvoi()"
+            class="btn save-add-button-rhis blue-background mb-2"
+            type="button">
+    <span>
+      {{"PARAMETRE_ENVOI_RAPPORT_FRANCHISE.BUTTON_ENVOYER"|translate}}
+    </span>
+    </button>
+
+
+
+  </div>
+
+
+</div>

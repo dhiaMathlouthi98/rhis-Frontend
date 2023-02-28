@@ -1,0 +1,166 @@
+<script src="list-utilisateur.component.ts"></script>
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="190"
+       class="header row header-flex-between">
+    <div class="titre">
+      <h1 class="titre-principale-page-rhis">{{"USER.ALL" | translate}}
+        <span class="nbr d-flex flex-column justify-content-around text-center">{{nbreUtilisateur}}</span>
+      </h1>
+    </div>
+    <div class="float-right" *ngIf="addCOntroll()">
+      <button id="1004" type="button" (click)="showAddPopup()" class="btn save-add-button-rhis blue-background">
+        <span>{{"USER.CREATE" | translate}}</span>
+      </button>
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder={{searchEmail}}>
+        <span (click)="searchUilisateur()">
+          <img src="assets/icons/employe/ico_search_small.svg" alt="">
+        </span>
+      </div>
+      <div class="imprimer-icon">
+        <span (click)="downloadUtilisateurList()">
+          <img src="assets/icons/employe/print-picture.svg" alt="no print icon">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div class="table-list responsive-table-rhis" *ngIf="this.listUtilisateursFinal?.length">
+      <p-table #dt [columns]="header"
+               [value]="listUtilisateursFinal"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               (onSort)="sortRows($event)"
+               [resetPageOnSort]="false"
+               [totalRecords]="nbreUtilisateur"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollHeight]="heightInterface"
+               [scrollable]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr class="header-row">
+            <th *ngFor="let col of columns"
+                [pSortableColumn]="(col?.field != 'delete' && col?.field != 'restaurant' && col?.field != 'societe') ?  col?.field : null">
+              <ng-container *ngIf="!l">
+                {{col?.title}}
+                <p-sortIcon
+                  *ngIf="(col?.field != 'delete' && col?.field != 'restaurant' && col?.field != 'societe') ?  col?.field : null"
+                  ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order">
+                </p-sortIcon>
+              </ng-container>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user let-i="rowIndex">
+          <tr class="table-row" [pSelectableRow]="user" (dblclick)="showUserDetails(user)">
+            <td>{{user?.nom}}</td>
+            <td>{{user?.prenom}}</td>
+            <td>{{user?.email}}</td>
+            <td>
+              <div>
+                {{user?.profil}}
+              </div>
+            </td>
+            <td>
+              <div *ngIf="user.restaurant.length===1">
+                {{user?.restaurant[0].libelle}}
+              </div>
+              <div *ngIf="user.restaurant.length===0">
+                -
+              </div>
+
+              <div *ngIf="user.restaurant.length>1 && user.restaurant[0]!== null">
+                <span (click)="overlaybasic.toggle($event)" #test>...</span>
+                <p-overlayPanel class="overlay-myrhis" #overlaybasic [appendTo]="'body'" [showCloseIcon]="true"
+                                [dismissable]="true">
+                  <p-scrollPanel [style]="{width: '100%', height: '100px'}">
+                    <div class="restaurant" *ngFor="let restaurant of user.restaurant">
+                      <span>{{restaurant.libelle}}</span>
+                    </div>
+                  </p-scrollPanel>
+                </p-overlayPanel>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="user.societe.length===1">
+                {{user?.societe[0].societeName}}
+              </div>
+
+              <div *ngIf="user.societe.length===0">
+                -
+              </div>
+
+              <div *ngIf="user.societe.length>1 && user.societe[0]!== null">
+                <span (click)="op.toggle($event)">...</span>
+                <p-overlayPanel #op [autoZIndex]="true" [appendTo]="'body'" [showCloseIcon]="true"
+                                [dismissable]="false">
+                  <p-scrollPanel [style]="{width: '100%', height: '100px'}">
+                    <div class="societe" *ngFor="let societe of user.societe">
+                      <span>{{societe.societeName}}</span>
+                    </div>
+                  </p-scrollPanel>
+
+                </p-overlayPanel>
+              </div>
+            </td>
+
+            <td>
+              <div id="1001">
+              <span *ngIf="!isCurrent(user) && deleteButtonControl()" (click)="showConfirmDelete(user)" class="item">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+                <span *ngIf="updateControl()" (click)="generatePassword(user)" class="item-password">
+                <img src="assets/icons/login/passgenerator.png" alt="no image">
+              </span>
+              </div>
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddUserPopup"
+  [title]=showAddUserPopupTitle>
+
+  <rhis-add-utilisateur *ngIf="showAddUserPopup"
+                        (AddUserEvent)="addOrUpdateUser($event)"
+                        [listProfil]="listProfil"
+                        [selectedUser]="selectedUser"
+                        [selectedProfil]="selectedProfil"
+                        [buttonLabel]="buttonLabel"
+                        [mailExistatnt]="mailExistatnt">
+  </rhis-add-utilisateur>
+</rhis-pop-up>
+
+<rhis-pop-up
+  (closeEvent)="closePopupDelete()"
+  [showPopUp]="showDeletePopUp"
+  [title]=suppressionConfirm>
+  <rhis-suppression-utilisateur
+    (verifyUserPasswordEvent)="verifyUserPassword($event)">
+  </rhis-suppression-utilisateur>
+</rhis-pop-up>
+
+<rhis-pop-up
+  (closeEvent)="closePopupPassword()"
+  [showPopUp]="showPasswordPopUp"
+  [title]="passwordPopUp">
+  <label class="password-rhis">{{password}}</label>
+</rhis-pop-up>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

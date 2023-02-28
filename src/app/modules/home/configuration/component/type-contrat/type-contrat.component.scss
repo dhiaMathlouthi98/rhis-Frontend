@@ -1,0 +1,16 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+.rhis-container {
+  col:last-child {
+    width: 200px !important;
+  }
+}

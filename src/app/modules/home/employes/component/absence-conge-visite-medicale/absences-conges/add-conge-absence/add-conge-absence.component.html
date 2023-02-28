@@ -1,0 +1,73 @@
+<div class="rhis-container">
+  <div class="row">
+    <div class="start-date col-6">
+      <div class="calendar-section">
+        <label class="section-element-title">{{'DEMANDE_CONGE.DATE_DEBUT'|translate}}</label>
+        <rhis-calendar (date)="setNewDateDebut()" [(ngModel)]="absence.dateDebut" [placeholder]="'JJ/MM/AAAA'"
+                       dateFormat="dd/mm/yy"
+                       id="EMP_absConge-dateDebut-popup"></rhis-calendar>
+      </div>
+    </div>
+    <div class="end-date col-6">
+      <div class="calendar-section">
+        <label class="section-element-title">{{'DEMANDE_CONGE.DATE_FIN'|translate}}</label>
+        <rhis-calendar (date)="setNewDateFin()" [(ngModel)]="absence.dateFin" [placeholder]="'JJ/MM/AAAA'"
+                       dateFormat="dd/mm/yy"
+                       id="EMP_absConge-finDebut-popup"></rhis-calendar>
+      </div>
+    </div>
+  </div>
+  <div class="duration row mt-2">
+    <div class="col-12">
+      {{'DEMANDE_CONGE.DUREE'|translate}}:
+      {{(decompteAbsencePipe.transform(absence?.dateDebut, absence?.dateFin, selectedTypeEvenement?.code, parameters,
+      listJourFeries)) || '--'}}
+      {{'DEMANDE_CONGE.DUREE_JOURS'|translate}}
+    </div>
+  </div>
+  <div class="row mt-4 mb-4">
+    <div class="section-element col-12 mode_calc_duration d-flex flex-column justify-content-between">
+      <p-radioButton name="duration_group"
+                     [value]="radioValues?.plan_rep"
+                     label="{{(parameters?.isInRepartitionMode ? 'PREVISION.REPARTITION' :  'PLANNING_EQUIPIER.PLANNING_LABEL')| translate}}"
+                     [(ngModel)]="modeCalc"
+                     id="EMP_absConge-radio-1-popup-btn"></p-radioButton>
+      <div class="d-flex align-items-center">
+        <p-radioButton [(ngModel)]="modeCalc" [label]="'EMPLOYEE.DUREE' | translate" [value]="radioValues?.manuel"
+                       id="EMP_absConge-radio-2-popup-btn"
+                       name="duration_group"></p-radioButton>
+        <div class="align-items-baseline d-flex ml-5">
+          <input type="number" class="m-0 mb-2 text-field w-75-px" min="0"
+                 [(ngModel)]="duration.hours"
+                 (ngModelChange)="checkDurationNullity(hours, 'hours')"
+                 (click)="selectDurationRadioButton()" #hours>
+          <span class="ml-1 mr-1">:</span>
+          <input type="number" class="m-0 mb-2 text-field w-75-px" max="59" min="0"
+                 [(ngModel)]="duration.minutes"
+                 (ngModelChange)="checkMinutes(minutes)"
+                 (click)="selectDurationRadioButton()" #minutes>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showDurationErrorMessage">
+      <span class="small red duration-error-message">{{"DEMANDE_CONGE.LONG_DURATION_WARNING" | translate}}</span>
+    </div>
+  </div>
+  <div class="row mt-4 mb-4">
+    <div class="section-element col-12">
+      <label class="section-element-title"> {{'DEMANDE_CONGE.TYPE_CONGE_ABSENCE'|translate}}</label>
+      <p-dropdown
+        [(ngModel)]="selectedTypeEvenement"
+        [options]="typeEvenementItemList"
+        class="drop-down-general"
+        appendTo="body"
+        editable="true"
+        id="EMP_absConge-typeAbs-popup"></p-dropdown>
+    </div>
+  </div>
+  <button (click)="addOrUpdateAbsence()" class="btn save-add-button-rhis btn-popup-rhis orange-background mt-4"
+          id="EMP_absConge-add-btn-popup"
+          type="button">
+    <span>{{buttonLabel | uppercase}}</span>
+  </button>
+</div>

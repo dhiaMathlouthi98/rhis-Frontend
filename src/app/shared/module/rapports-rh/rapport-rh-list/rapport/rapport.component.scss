@@ -1,0 +1,141 @@
+.rhis-container {
+  .operation {
+    justify-content: space-between;
+    position: relative;
+    top: -4px;
+    float: right;
+    padding-right: 30px;
+
+    @media screen and (max-width: 1366px) {
+      padding-right: 15px;
+    }
+
+    @media screen and (max-width: 1280px) {
+      padding-right: 8px;
+    }
+
+    @media screen and (max-width: 1220px) {
+      padding-right: 6px;
+    }
+
+    @media screen and (max-width: 1100px) {
+      padding-right: 4px;
+    }
+
+    span {
+      cursor: pointer;
+      margin: 0 7px;
+      @media screen and (max-width: 1366px) {
+        margin: 0 3px;
+      }
+    }
+  }
+}
+
+.pdf {
+  height: inherit;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.mailText.text-field {
+  height: 100px;
+}
+
+.success {
+  background-color: rgb(45, 199, 109);
+}
+
+.progress {
+  background-color: rgb(255, 155, 66);
+}
+
+.container-generate-report {
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.generation-report-close-btn {
+  background-color: #e2e6ea;
+  cursor: pointer;
+}
+
+.generation-label {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.label-table.blue-background.btn-personnalise-rhis {
+  display: block;
+  max-width: 215px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep {
+  .ui-listbox {
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+.scroll-rapport {
+  height: 100%;
+}
+
+.add_report_icon {
+  top: -3px;
+  cursor: pointer;
+}
+
+.add-report {
+  margin-top: -13px;
+}
+
+:host ::ng-deep {
+  .ui-dropdown {
+    margin-top: 10px;
+  }
+
+  .scroll-content-rhis {
+    padding-bottom: 15px;
+  }
+}
+
+.dropdown-text-style {
+  width: 96px;
+  margin-top: 16px;
+  height: 36px;
+  color: #9B9B9B;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+.align-dropdown {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.dropdown-width {
+  width: 20% !important;
+}
+
+.copy-icon-style {
+  width: 35px;
+  margin-left: 18px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.disabledList{
+  background: grey;
+  cursor: not-allowed;
+}

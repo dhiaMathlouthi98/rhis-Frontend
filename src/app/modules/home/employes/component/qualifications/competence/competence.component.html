@@ -1,0 +1,23 @@
+<div class="rhis-container">
+  <div class="compentence-name">
+    <div class="compentence-name">{{qualification.positionTravail.libelle}}</div>
+  </div>
+  <div class="note-container" (rhisWidthOnResize)="setWidth($event)">
+    <div class="competence-container">
+      <rhis-progress-bar
+        [backColor]="backColor"
+        [width]="competenceWidth"
+        [edge]="edge"
+        (onResizeEndEvent)="onResizeEnd($event)"
+        [resizeSide]="resizeSide+this.updateControl()"
+        [validate]="validate"
+      ></rhis-progress-bar>
+    </div>
+    <div class="note" [ngStyle]="{'color': isFullNote ? '#F7F7F7': '#385FE3'}">{{qualification.valeurQualification}}% -
+      {{comment}}
+    </div>
+  </div>
+  <div *ngIf="this.deleteButtonControl()" (click)="remove()" class="delete-competence" id="EMP_Quali-delete-btn">
+    <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+  </div>
+</div>

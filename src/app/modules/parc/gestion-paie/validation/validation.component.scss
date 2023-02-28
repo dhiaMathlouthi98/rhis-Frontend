@@ -1,0 +1,15 @@
+.bold-text {
+  font-weight: bold;
+}
+
+:host ::ng-deep {
+  .ui-multiselect {
+    max-width: 245px;
+    width: 100%;
+    min-width: 200px;
+  }
+}
+
+.negatif-delta-list-header {
+  font-size: 14px !important;
+}

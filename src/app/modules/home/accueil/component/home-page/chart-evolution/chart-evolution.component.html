@@ -1,0 +1,24 @@
+<div class="rhis-container" [style.color]="headerParams?.headerColor">
+  <h1>{{title}}</h1>
+  <div class="periode-block">
+    <h1 [ngClass]="{
+  'selected-periode': index === 1,
+  'periode': index!==1
+  }" [style.border-bottom]="getBorderStyle(1)" (click)="setIndex(1)">{{'MASSE_SAL.WEEK' | translate}}</h1>
+    <h1 [ngClass]="{
+  'selected-periode': index === 2,
+  'periode': index!==2
+  }" [style.border-bottom]="getBorderStyle(2)" (click)="setIndex(2)">{{'MASSE_SAL.MONTH' | translate}}</h1>
+    <h1 [ngClass]="{
+  'selected-periode': index === 3,
+  'periode': index!==3
+  }" [style.border-bottom]="getBorderStyle(3)" (click)="setIndex(3)">{{'MASSE_SAL.YEAR' | translate}}</h1>
+  </div>
+  <canvas baseChart *ngIf="lineChartColors && options"
+          [data]="lineChartData"
+          [labels]="lineChartLabels"
+          [chartType]="lineChartType"
+          [options]="options"
+          [colors]="lineChartColors"
+  ></canvas>
+</div>

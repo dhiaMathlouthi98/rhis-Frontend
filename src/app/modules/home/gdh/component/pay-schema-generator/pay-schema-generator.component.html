@@ -1,0 +1,76 @@
+<div class="container ml-4">
+  <div class="row">
+    <div class="float-right col-md-12 mb-2">
+      <button (click)="saveSchema()"
+              class="btn save-add-button-rhis orange-background" id="GDH_paye-saveSchema-btn"
+              type="button">
+        <span>{{'BUTTON.SECOND_SAVE' | translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="row pl-2">
+    <div class="section-element d-flex justify-content-around w-auto align-items-baseline">
+      <label
+        class="h-auto mr-4 pt-3 section-element-title w-auto text-body">{{"GDH.PAY.ANOTHER_ELEMENT" | translate}}</label>
+      <input #element (keyup.enter)="addToSchema(element)" class="text-field w-auto h-25" id="GDH_paye-addSchema"
+             type="text">
+    </div>
+  </div>
+  <div class="row d-flex justify-content-arruound">
+    <hr class="border border-light bg-light w-75 mt-0">
+  </div>
+  <div class="row">
+    <div #rowLayout cdkDropListGroup class="schema-container">
+      <div (cdkDropListDropped)="reorderDroppedItem($event)"
+           *ngFor="let itemsRow of getItemsTable(rowLayout); let j = index"
+           [cdkDropListData]="itemsRow"
+           cdkDropList
+           cdkDropListOrientation="horizontal"
+           class="position-relative pointer-cursor"
+           fxLayout="row"
+      >
+        <div *ngFor="let item of itemsRow; let i = index" cdkDrag>
+          <div *cdkDragPlaceholder class="drag-placeholder"></div>
+          <div (click)="openLengthPopUp(add_length)"
+               [popoverOnHover]="false"
+               [popover]="add_length"
+               class="position-relative item-box"
+               fxLayoutAlign="center center"
+               popoverPlacement="top">
+            <span *ngIf="item?.length !== ''"
+                  class="badge bg-success position-absolute rounded-pill text-light length-badge">
+              {{item?.length}}
+            </span>
+            {{ item?.label }}
+            <span (click)="delete(j, i, $event)" class="pointer-event ml-2" id="GDH_paye-deleteSchema-btn">
+              <img alt="no image" class="delete_icon" src="assets/icons/employe/Btn_Close.svg">
+            </span>
+          </div>
+          <popover-content
+            #add_length
+            [appendToBody]="false"
+            [closeOnClickOutside]="true">
+            <div (click)="$event.stopPropagation()" class="section-element w-auto length-section">
+              <label class="text-body mr-2"> {{"GDH.PAY.LENGTH" | translate}} </label>
+              <input (keyup.enter)="add_length.hide()" [(ngModel)]="item.length" class="m-0 mb-2 text-field"
+                     min="0"
+                     type="number">
+            </div>
+          </popover-content>
+        </div>
+      </div>
+      <img (click)="add_schema.show($event)" alt="no image" class="pointer-event"
+           src="assets/icons/employe/Btn_Add.svg">
+      <div *ngIf="isErrorWhenUpdatingSchema" class="red width-100 mt-4 d-flex justify-content-center">
+        {{("GDH.PAY.MINIMUM_ITEMS" | translate) + " " + (minStructureCodes[0]?.label)}}
+      </div>
+    </div>
+    <p-overlayPanel #add_schema
+                    [appendTo]="'body'"
+                    [dismissable]="true">
+      <p-listbox (onChange)="add($event.value, add_schema)" [(ngModel)]="selectedItem"
+                 [options]="selectedItems"
+                 id="GDH_paye-addListSchema-btn"></p-listbox>
+    </p-overlayPanel>
+  </div>
+</div>

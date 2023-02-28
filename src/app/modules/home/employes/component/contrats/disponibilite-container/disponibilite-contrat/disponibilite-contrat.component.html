@@ -1,0 +1,49 @@
+<div class="availability mt-5">
+  <div class="row">
+    <div class="col-12">
+      <p-checkbox [(ngModel)]="sameAvailabilityCheckbox" binary="true" (onChange)="sameAvailabilityForAllDays($event)"
+                  [label]="'EMPLOYEE.SAME_DISPONIBILITE_FOR_ALL' | translate"></p-checkbox>
+      <ng-container *ngIf="isPartialTime">
+        <span class="position-absolute dispo-Week mt-1">
+        {{'EMPLOYEE.MINI_DISPONIBILITES_LABEL' | translate}}  {{'EMPLOYEE.SEMAINE' | translate | lowercase}}
+          = {{dispoHebdo}}H
+      </span>
+        <span *ngIf="maxDispoWeek < dispoHebdo" class="position-absolute dispo-Week mt-4 max-dispo small red">
+        {{'EMPLOYEE.MAX_TEMPS_WEEK_ERROR' | translate}} {{maxDispoWeek}}H
+      </span>
+      </ng-container>
+      <span class="position-absolute ratio mt-1">
+        {{"EMPLOYEE.RATIO" | translate}}: {{dispoHebdo}} <i class="pi pi-arrow-right mr-1 ml-1"></i>
+        <span *ngIf="contratHebdo" [ngClass]="{'red': ((getRatio | memoize: dispoHebdo: contratHebdo)) < contratDispoHebdoRate}">
+          {{getRatio | memoize: dispoHebdo : contratHebdo}}%
+        </span>
+        <span *ngIf="!contratHebdo" class="ml-2">--</span>
+      </span>
+    </div>
+  </div>
+  <div id="availability-container" class="row noselect {{availabilityPrefix}} mt-5 block-dispo-rhis">
+    <div class="col-2 pt-2 days-block">
+      <div class="row slots-row" *ngFor="let day of availabilityData; let i = index">
+        <div class="titleHeader" id="{{availabilityPrefix}}-employee-details">
+          <div class="d-flex align-items-center"><h3>{{day?.day}}</h3>
+            <span *ngIf="isPartialTime" class="position-absolute dispo-day">
+              {{'EMPLOYEE.MINI_DISPONIBILITES_LABEL' | translate}}: {{getDayDispo | memoize:  (getConcernedDay | memoize: day?.day: weekDays): dispoDays}}H
+            </span>
+          </div>
+          <p-checkbox [(ngModel)]="availableAllDayCheckbox[i]" binary="true"
+                      (onChange)="availableAllDay($event, availabilityPrefix+'-day-'+i)"
+                      [label]="'EMPLOYEE.DISPONIBLE_ALL_DAY' | translate"></p-checkbox>
+          <span *ngIf="isPartialTime && (maxDispoDay < (getDayDispo | memoize:  (getConcernedDay | memoize: day?.day: weekDays): dispoDays))" class="day-error max-dispo small red mt-1">
+            {{'EMPLOYEE.MAX_TEMPS_DAY_ERROR' | translate}} {{maxDispoDay}}H
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="pt-2 dispo-block" [style.width.px]="availabilityContainerWidth" [ngClass]="{'horizontal-scroll pl-4': dispoScrollable}">
+      <div class="row slots-row" *ngFor="let day of availabilityData; let i = index">
+        <div class="col-xl-10 col-12" [style.max-width.px]="availabilityContainerWidth"
+             id="{{availabilityPrefix}}-day-{{i}}"></div>
+      </div>
+    </div>
+  </div>
+</div>

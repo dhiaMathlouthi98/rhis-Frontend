@@ -1,0 +1,24 @@
+<div class="rhis-container">
+  <div class="triangle"></div>
+  <div class="main" (click)="$event.stopPropagation()">
+    <div>
+      <h1>{{'ALARME.TITLE' | translate}}</h1>
+      <div (click)="displayAllAlerte()" class="all-alerte">{{'ALARME.VOIR_TOUT' | translate}}</div>
+    </div>
+    <div class="alertes scroll-general-rhis">
+      <ng-template ngFor let-alerte [ngForOf]="listAlerte">
+        <div class="countAlarme" (click)="displayAllDetailedAlerte(alerte)">
+          <div>
+            {{alerte.translatedAlarmelibelle}}
+          </div>
+          <div>
+             <span class="nbrAlarme mr-2">
+            {{alerte.countAlarme}}
+          </span>
+          </div>
+        </div>
+        <div class="sep"></div>
+      </ng-template>
+    </div>
+  </div>
+</div>

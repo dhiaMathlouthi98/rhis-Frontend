@@ -1,0 +1,305 @@
+@import '../../../../../../assets/file_import/table-style-commun';
+
+.arrow-right {
+  float: left;
+  margin: 10px;
+}
+
+.btn-group {
+  margin: 10px;
+
+  button {
+    padding: 8px 11px;
+    line-height: 19px;
+  }
+
+  .btn-light {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.btn-group .btn-light.active {
+  background-color: #F7F7F7;
+}
+
+.ui-calendar .ui-inputtext {
+  height: 28px;
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 15px;
+  margin-top: 0;
+  padding: 16px !important;
+}
+
+/************************************/
+/***********TABLE**********/
+/************************************/
+th {
+  color: #9E9E9E !important;
+
+  &:last-child {
+    text-align: left !important;
+  }
+}
+
+.day-hour-table-row {
+  font-family: "TT Wellingtons Medium", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  color: #9B9B9B;
+  background-color: #f1f1f1 !important;
+  text-align: center;
+
+  &:hover {
+    background-color: #efefef !important;
+  }
+  td {
+    font-weight: 500;
+    line-height: 20px;
+    border: none !important;
+    padding: 12px 0 !important;
+    vertical-align: top !important;
+  }
+
+  td {
+    border-left: 1pt dotted #cccccc !important;
+
+    &:nth-child(odd) {
+      border-left: 1pt dotted #999999 !important;
+    }
+  }
+
+  .last-half-hour {
+    border-right: 1pt dotted #999999 !important;
+  }
+}
+
+
+/******************* icons ******************/
+.shape-filter {
+  height: 28px;
+  width: 28px;
+  border: 1px solid #AFA899;
+  box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.15);
+}
+
+.oval-plus {
+  box-sizing: border-box;
+  height: 18px;
+  width: 18px;
+  border: 1.5px solid #AFA899;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #AFA899;
+  line-height: 16px;
+  margin: 3px;
+  text-align: center;
+}
+
+.empl-prenom {
+  text-transform: uppercase;
+}
+
+.gdh-employee {
+  margin-bottom: 0.3rem !important;
+  font-weight: bold;
+}
+
+.ui-table {
+  position: inherit !important;
+}
+
+.fitCentent {
+  width: fit-content;
+  max-width: fit-content;
+}
+
+.table-day-hourly {
+  margin-bottom: 62px;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.th-hourly {
+  font-size: 10px;
+  position: relative;
+  left: -15px
+}
+
+.last-hour {
+  position: absolute;
+  top: 0;
+  left: 26px !important;
+}
+
+#vue-heure {
+  p-paginator {
+    @include nbre-ligne-page();
+  }
+}
+
+#vue-heure p-paginator .ui-paginator {
+  margin-bottom: 0;
+  margin-top: 20px;
+  @media screen and (max-width: 1366px) {
+    margin-top: 25px;
+  }
+}
+
+.link-style {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+  text-decoration: underline;
+}
+
+.container-generate-report {
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.generation-report-close-btn {
+  background-color: #e2e6ea;
+  cursor: pointer;
+}
+
+.generation-label {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: rgb(45, 199, 109);
+}
+
+.progress {
+  background-color: rgb(255, 155, 66);
+}
+
+.table-list.table-day-hourly p-table .ui-table table .ui-table-tbody > tr > td:first-child {
+  vertical-align: middle !important;
+}
+
+.table-list.table-day-hourly #vue-heure p-table .ui-table table .ui-table-thead > tr > th {
+  padding: 0;
+}
+
+.table-list.table-day-hourly p-table .ui-table table .ui-table-tbody > tr > td:last-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.table-list.table-day-hourly .ui-table .ui-table-unfrozen-view .ui-table-tbody > tr > td {
+  height: 78px !important;
+
+  &:first-child {
+    border-radius: unset !important;
+  }
+}
+
+.table-list.table-day-hourly .ui-table .ui-table-frozen-view .ui-table-tbody > tr > td {
+  height: 78px !important;
+}
+
+.table-list.table-day-hourly .ui-table .ui-table-unfrozen-view .ui-table-thead > tr > th {
+  padding-bottom: 6px !important;
+}
+
+.table-list.table-day-hourly .ui-table .ui-table-frozen-view .ui-table-thead > tr > th {
+  padding-bottom: 1px !important;
+}
+
+.table-list.table-day-hourly .ui-table .ui-table-frozen-view .ui-table-tbody > tr > td {
+  border-radius: 8px 0 0 8px;
+}
+
+.table-list.table-day-hourly .ui-table-scrollable-body {
+  overflow-x: auto !important;
+  padding-right: 0;
+}
+
+.table-list.table-day-hourly .ui-table-scrollable-body::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.table-list.table-day-hourly .ui-table-scrollable-body:hover::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.table-list.table-day-hourly .ui-table-scrollable-body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.table-list.table-day-hourly .ui-table-scrollable-body::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+}
+
+.table-list.table-day-hourly p-table .ui-table table .ui-table-tbody > tr > td:nth-child(1) {
+  vertical-align: middle !important;
+}
+
+.table-list.table-day-hourly .ui-table-unfrozen-view {
+  left: 80px;
+  width: calc(100% - 80px);
+}
+
+.info-employee-planning {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+  width: 75px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  &:hover{
+    overflow: unset;
+    white-space: unset;
+  }
+  .empl-prenom,
+  .empl-nom {
+    max-width: 92px;
+    text-overflow: clip;
+  }
+}
+
+.table-list.table-day-hourly .ui-table-unfrozen-view {
+  top: -5px;
+}
+
+.table-list.table-day-hourly .ui-table-unfrozen-view .ui-table-scrollable-header {
+  margin-left: -17px;
+}
+
+
+#hourly-table .ui-dropdown-panel.ui-widget.ui-widget-content.ui-corner-all.ui-shadow {
+  top: -138px !important;
+}

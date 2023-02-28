@@ -1,0 +1,16 @@
+<div class="rhis-container">
+  <div>
+<span (click)="showProfiles()">
+    <img src="assets/icons/employe/Ico_View.svg" alt="no icon">
+  </span>
+
+  </div>
+  <div class="tooltip-container" *ngIf="isShownInfos" (rhisClickOutsideTooltip)="isShownInfos = false">
+    <rhis-infos-tooltip>
+      <div>
+        {{restaurantName}}
+      </div>
+    </rhis-infos-tooltip>
+  </div>
+
+</div>

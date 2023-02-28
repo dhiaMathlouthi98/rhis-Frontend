@@ -1,0 +1,73 @@
+<div class="home-page">
+  <div>
+    <div class="block-flex-commun-rhis">
+      <div class="chifre-affaire block-left-flex-commun-rhis">
+        <rhis-chart-evolution
+          [headerConfig]="chiffreAffaireConfig.headerConfig"
+          [chartConfig]="chiffreAffaireConfig.chartConfig"
+          [initIndexValue]="chiffreAffaireDefaultIndex"
+          [initChartData]="chiffreAffaireData"
+          [initChartLabel]="chiffreAffaireLabel"
+          [initTitle]="chiffreAffaireTitle"
+          (getChiffreAffaireByFilter)="getChiffreAffaireByFilter($event)"
+        ></rhis-chart-evolution>
+      </div>
+      <div class="indicateurs-cout block-right-flex-commun-rhis">
+        <rhis-indicateur-cout-employe
+          [colorConfig]="['#385FE3', '#EBEFFC']"
+          [heuresSuppComp]="heuresComp" [loading]="loadingHeuresSuppComp"
+          [heuresSupp]="false"
+        ></rhis-indicateur-cout-employe>
+        <rhis-indicateur-cout-employe
+          [colorConfig]="['#2DC76D', '#EAF9F0']"
+          [heuresSuppComp]="heuresSupp" [loading]="loadingHeuresSuppComp"
+          [heuresSupp]="true"
+        ></rhis-indicateur-cout-employe>
+      </div>
+    </div>
+    <div class="block-flex-commun-rhis second-line-block">
+      <div class="prod-main-oeuvre block-left-flex-commun-rhis">
+        <rhis-taux-main-oeuvre [position]="'left'" [initTauxMainOeuvreReel]="tauxMainDOeuvreReel"
+                               [initTauxMainOeuvrePrev]="tauxMainDOeuvrePrev"
+                               [loadingTxMainOeuvre] = "loadingTxMainOeuvre"
+                               (getValueByFilterEvent)="getTauxMainDOeuvreByFilter($event)"></rhis-taux-main-oeuvre>
+        <rhis-productivite [position]="'right'" [initProductiviteReel]="productiviteReel"
+                           [initProductivitePrev]="productivitePrev"
+                           [loadingProd]="loadingProd"
+                           (getValueByFilterEvent)="getProductiviteByFilter($event)"></rhis-productivite>
+      </div>
+      <div class="turn-over-main-oeuvre-moyen block-right-flex-commun-rhis">
+        <rhis-turn-over [position]="'left'" [initTurnOver]="turnOver" [initLoadingTurnOver]="loadingTurnOver"
+        (getTurnOverByFilterEvent)="getTurnOver($event)"></rhis-turn-over>
+        <rhis-masse-salariale [position]="'right'" [initMasseSalariale]="masseSalariale"
+                              [initLoadingMasseSalariale]="loadingMasseSalariale"
+                              (getValueByFilterEvent)="getValueByFilter($event)"></rhis-masse-salariale>
+      </div>
+    </div>
+    <div class="block-flex-commun-rhis">
+      <div class="indicateur-employee-contrat block-left-flex-commun-rhis">
+        <rhis-employe-contrat-infos
+          [employeesNumbers]="employeesNumbers"
+          (seeActiveEmployees)="goPageActiveEmployees()"></rhis-employe-contrat-infos>
+      </div>
+      <div class="anomalie-social block-right-flex-commun-rhis">
+        <rhis-anomalies-sociales (click)="displayRapportPopup()"></rhis-anomalies-sociales>
+      </div>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="closeRapportPopup()"
+  [showPopUp]="showPopupRapport"
+  [title]="selectedRapport?.libelleFile"
+  width="600">
+
+  <rhis-popup-rapports *ngIf="showPopupRapport"
+                       [initFirstDayOfWeekend]="premierJourDeLaSemaine"
+                       [initSelectedRapport]="selectedRapport"
+                       [initAllEmployeeLabel]="allEmployeeLabel"
+                       (generateRapportEvent)="launchGenerateRapport($event)"
+  ></rhis-popup-rapports>
+</rhis-pop-up>
+

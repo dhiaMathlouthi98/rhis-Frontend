@@ -1,0 +1,59 @@
+<div class="row align-items-start">
+  <div class="form-group block-switch-form-group">
+    <div class="block-flex-start-badge">
+      <div class="mr-4">
+        <div>
+          <p-radioButton
+            [(ngModel)]="selectedBadge.statut"
+            [disabled]="selectedBadge.statut !== tmpStatutAssigne" [ngModelOptions]="{standalone: true}"
+            inputId="preopt3"
+            label="{{'GESTION_BADGE.BADGE_ASSIGNED' | translate}}" name="group2"
+            value="{{tmpStatutAssigne}}"></p-radioButton>
+          <label *ngIf="tmpChoosenStatus === tmpStatutAssigne">{{selectedBadge.employee.nom}}
+            {{selectedBadge.employee.prenom}}
+          </label>
+        </div>
+      </div>
+      <div class="mr-4">
+        <div>
+          <p-radioButton
+            [(ngModel)]="selectedBadge.statut"
+            [disabled]="selectedBadge.statut === tmpStatutAssigne" [ngModelOptions]="{standalone: true}"
+            inputId="preopt1"
+            label="{{'GESTION_BADGE.BADGE_DISPO' | translate}}" name="group2"
+            value="{{tmpStatutDisponible}}"></p-radioButton>
+        </div>
+      </div>
+      <div class="mr-4">
+        <div>
+          <p-radioButton [(ngModel)]="selectedBadge.statut" [disabled]="selectedBadge.statut === tmpStatutAssigne"
+                         [ngModelOptions]="{standalone: true}"
+                         inputId="preopt2"
+                         label="{{'GESTION_BADGE.BADGE_INDISPO' | translate}}"
+                         name="group2"
+                         value="{{tmpStatutIndisponible}}"></p-radioButton>
+          <p-calendar
+            *ngIf="selectedBadge.statut === tmpStatutIndisponible"
+            [(ngModel)]="selectedBadge.dateDisponible"
+            [disabled]="selectedBadge.statut === tmpStatutAssigne"
+            [inline]="true"
+            [minDate]="calendarMinDate"
+            [ngModelOptions]="{standalone: true}"
+            class="ml-1"
+            dateFormat="dd/M/yy">
+          </p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 form-group">
+      <label>{{'GESTION_BADGE.COMMENTAIRE' | translate}}</label>
+      <textarea [(ngModel)]="selectedBadge.commentaire" [ngModelOptions]="{standalone: true}" autoResize="autoResize"
+                class="form-control"
+                cols="30" pInputTextarea rows="3"></textarea>
+    </div>
+    <button (click)="createOrUpdateBadge()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+            type="button">
+      <span>{{buttonLabel | uppercase}}</span>
+    </button>
+  </div>
+</div>

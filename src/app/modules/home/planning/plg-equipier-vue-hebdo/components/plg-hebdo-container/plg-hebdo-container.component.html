@@ -1,0 +1,428 @@
+<div class="rhis-container planning-general-rhis planning-hebdo-general">
+  <div class="table-list">
+    <table class="planning"
+           (rhisClickOutside)="unselectShift()">
+      <thead>
+      <tr class="row no-margin-rhis">
+        <th class="empNameColumn hebdo">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-light" [class.active]="sortByFirstName" (click)="sortEmployees(true)" id="PLG-ML-VueM-btn">
+              {{'EMPLOYEE.NOM' | translate}}
+            </button>
+            <button type="button" class="btn btn-light" [class.active]="!sortByFirstName" (click)="sortEmployees(false)" id="PLG-ML-VueP-btn">
+              {{'EMPLOYEE.PRENOM' | translate}}
+            </button>
+          </div>
+        </th>
+        <th *ngFor="let day of days" class="dayName bg-white">{{day.column}}  {{day.dateJournee | date: 'dd/MM'}}</th>
+      </tr>
+      </thead>
+      <tbody #contentBodyPlan
+             [ngStyle]="{'height': !clickMenubas ? contentHeightPlanning + 'px' : (contentHeightPlanning - 70) + 'px'}"
+             class="content-planning-rhis listBesoinsCondense hebdo"
+             id="planningFixeContainer"
+             (scroll)="hideDropDown()">
+      <ng-container *ngIf="listEmployeeHasShift.length>0">
+        <tr rhis-plannings-hebdo-employee-row *ngFor="let employee of listEmployeeHasShift; let i = index"
+            [ngClass]="{'active-planning-fixe': employee?.disableInactifEmployee, 'bg-white': !employee?.disableInactifEmployee}"
+            [employee]="employee"
+            [messageConfonduShift]="messageConfonduShift"
+            [limitHeureDebut]="limiteHeureDebut"
+            [dateDebutSupDateFinErrorMessage]="dateDebutSupDateFinErrorMessage"
+            [dateFinWithoutDateDebutErrorMessage]="dateFinWithoutDateDebutErrorMessage"
+            [heureDebutSupHeureFinErrorMessage]="heureDebutSupHeureFinErrorMessage"
+            [shiftByEmployee]="shiftByEmployee.get(employee.idEmployee) ? shiftByEmployee.get(employee.idEmployee) : []"
+            [days]="days"
+            [listePositionTravail]="listePositionTravail"
+            [listEmployeeToAdd]="listEmployeeToAdd"
+            [newEmployeeInProgress]="newEmployeeInProgress"
+            [employeeList]="listEmployeeNotHasShift"
+            [attr.data-empIndex]="employee.idEmployee"
+            [attr.data-idShift]="employee.idEmployee"
+            [empIndex]="employee.idEmployee"
+            [addPopupTitle]="addPopupTitle"
+            [updatePopupTitle]="updatePopupTitle"
+            [modeAffichagePlanning]="modeAffichage"
+            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+            [totalShiftInWeek]="totalShiftInWeek"
+            [showPopAddShift]="showPopAddShift"
+            [nightValue]="setNightValue"
+            [listEmployeeHasShift]="listEmployeeHasShift"
+            [employeInactif]="employeInactif"
+            (rowSelectedEmitter)="updateSelectedShiftRow($event)"
+            (initValues)="initValuesForVericationContrainte($event)"
+            (verifContrainteEmployee)="verifContrainteEmployeeBeforeAffectation($event)"
+            [startTime]="startTime"
+            [startTimeIsNight]="startTimeIsNight"
+            [endTime]="endTime"
+            [endTimeIsNight]="endTimeIsNight"
+            [dateDebut]="dateDebut"
+            [dateFin]="dateFin"
+            [listShiftToUpdate]="listShiftToUpdate"
+            (checkIfNightValueEvent)="checkIfNightValue()"
+            (shiftEmitter)="addOrUpdateNewShiftCard($event)"
+            (rowSelectedEmitter)="updateSelectedEmployeeRow($event)"
+            (resetMessageConfonduShift)="resetMessageConfonduShift()"
+            (deleteShiftCardEmitter)="showConfirmDeleteShiftCard($event)"
+            (employeeAddedEmitter)="employeeAdded($event)"
+            (desaffecterEmployeeEmitter)="desaffecterEmployee($event)"
+            class="row no-margin-rhis">
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer" id="footer">
+    <rhis-details-temps-affecte [displayMoeProd]="showMoe"
+                                [detailTempsPayeWeek]="detailTempsPayeWeek"
+                                [totauxDayByDay]="totauxDayByDay"
+                                [weekNumber]="weekNumber"
+                                (menuBasOpen)='menuOpenedBas($event)'>
+    </rhis-details-temps-affecte>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="popupVerificationContrainteVisibility"
+  [title]="titlePopupContraint"
+  [width]="popUpStyle?.width"
+  [height]="popUpStyle?.height" *ngIf=" listContrainte.length"
+>
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis table-anomalie">
+    <p-table [value]="listContrainte">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="col-popup-anomalie-1">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="col-popup-anomalie-2" scope="col">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="col-popup-anomalie-3 last-td" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-messageVerification>
+        <tr *ngIf="!messageVerification?.employe" [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td class="col-popup-anomalie-1" *ngIf="!messageVerification?.DisplayDate && !messageVerification?.acheval">
+            {{ dateContraintSocial }}
+          </td>
+          <td class="col-popup-anomalie-1" *ngIf="messageVerification?.DisplayDate">
+            {{ dateContraintSocial }}
+
+          </td>
+          <td class="col-popup-anomalie-1" *ngIf="messageVerification?.acheval">
+            {{ dateContrainteAcheve }}
+          </td>
+          <td class="col-popup-anomalie-2">
+            {{employeeHasAnomalieContraintSocial?.nom}}&nbsp;{{employeeHasAnomalieContraintSocial?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+        <tr *ngIf="messageVerification?.employe" [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+
+          <td *ngIf="messageVerification?.dateOfAnomalie  " class="col-popup-anomalie-1">
+            {{messageVerification?.dateOfAnomalie}}
+          </td>
+          <td class="col-popup-anomalie-2">
+            {{messageVerification?.employe?.nom}}&nbsp;{{messageVerification?.employe?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button type="button" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+              (click)="save()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+              id="PLG-fx-save-popup">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button type="button"
+              (click)="closePopup($event)"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis"
+              id="PLG-fx-cancel-popup">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<!-- popup to dispaly CS affectation-->
+<!-- popup to dispaly CS globale-->
+<rhis-pop-up (closeEvent)="closePopup()" [height]="popUpStyle?.height"
+  [showPopUp]="popupVerificationContrainteGlobaleVisibility" [title]="titlePopupContraint" [width]="popUpStyle?.width"
+  *ngIf="listContrainteGlobale.length">
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis popup-containte-eq table-anomalie">
+    <p-table [value]="listContrainteGlobale">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="col-popup-anomalie-1">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="col-popup-anomalie-2" scope="col">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="col-popup-anomalie-3 last-td" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template let-messageVerification pTemplate="body">
+        <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}" [pSelectableRow]="messageVerification">
+          <td *ngIf="messageVerification?.employe" class="col-popup-anomalie-1">
+            {{ messageVerification?.dateOfAnomalie }}
+          </td>
+          <td *ngIf="messageVerification?.employee  && !messageVerification?.employe " class="col-popup-anomalie-1">
+            {{ dateContraintSocial }}
+          </td>
+          <td *ngIf="messageVerification?.employee" class="col-popup-anomalie-2">
+            {{messageVerification?.employee?.nom}}&nbsp;{{messageVerification?.employee?.prenom}}
+          </td>
+          <td *ngIf="messageVerification?.employe && !messageVerification?.employee" class="col-popup-anomalie-2">
+            {{messageVerification?.employe?.nom}}&nbsp;{{messageVerification?.employe?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button (click)="sauvegardeGlobaleVueHebdo()" *ngIf="!hiddenSaveGlobale"
+        class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis" id="PLG-Eq-saveGlobal-btn"
+        type="button">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button (click)="closePopup()"
+        class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis "
+        id="PLG-Eq-cancel-cteGlobal-popup" type="button">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<rhis-pop-up (closeEvent)="showSaveReferencePopup = false"
+             [height]="popUpStyle?.height"
+             [showPopUp]="showSaveReferencePopup"
+             [title]="popupTitle"
+             [width]="popUpStyle?.width">
+  <p-tabView>
+    <p-tabPanel #variableTabReference  [selected]="true" [header]="'GESTION_PARC_RAPPORT.SAVE_POPUP' | translate" >
+
+      <form [formGroup]="saveReferenceForm" class="popup-equipier">
+        <div class="d-flex flex-column ">
+          <div class="row">
+
+          </div>
+          <div class="section-element position-relative mt-3 w-96">
+            <label class="section-element-title"
+                   for="PLG-Eq-refName-popup">{{'PLANNING_EQUIPIER.REFERENCE_NAME' | translate}}*</label>
+            <input class="text-field" formControlName="referenceName" id="PLG-Eq-refName-popup"
+                   maxlength="250" rhisStyleForm
+                   type="text">
+
+            <span *ngIf="saveReferenceForm.get('referenceName').hasError('required') && isSubmitted"
+                  class="form-item-error red small-rhis"
+                  id="PLG-Eq-refNameError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+          </div>
+          <div class="section-element position-relative mt-3  w-96">
+            <label class="section-element-title"
+                   for="PLG-Eq-refList-popup">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+            <p-dropdown [autoDisplayFirst]="false" [options]="shiftReferenceList" class="drop-down-general"
+                        formControlName="referenceList" id="PLG-Eq-refList-popup"
+                        optionLabel="libelle">
+            </p-dropdown>
+          </div>
+          <button  (click)="checkReferenceExistance()"
+                   class="btn save-add-button-rhis orange-background w-96 mt-4 mb-3"
+                   id="PLG-Eq-refExistance-popup-btn" type="button">
+            <span>{{'PLANNING_EQUIPIER.SAVE_REFERENCE' | translate}}</span>
+          </button>
+        </div>
+
+      </form>
+    </p-tabPanel>
+    <p-tabPanel #variableTabDelete [header]="'BUTTON.SUPPRIMER' | translate">
+
+      <div class="popup-equipier" style="height: 140px">
+        <div *ngIf="shiftReferenceList?.length > 0;else noReferenceFound">
+          <div class="section-element position-relative w-100">
+            <label class="section-element-title">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+            <p-dropdown (onChange)="choosenDayReferenceDeletedLibelleError = false;"
+                        [(ngModel)]="choosenDayReferenceToDelete"
+                        [autoDisplayFirst]="false"
+                        [options]="shiftReferenceList"
+                        appendTo="body"
+                        class="drop-down-general" id="PLG-Eq-refJ-list-popup-delete"
+                        optionLabel="libelle">
+            </p-dropdown>
+            <span *ngIf="choosenDayReferenceDeletedLibelleError"
+                  class="form-item-error red small-rhis"
+                  id="PLG-Eq-refJError-list-popup-delete">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+
+          </div>
+          <button (click)="showConfirmDeleteReference()"
+                  class="btn save-add-button-rhis orange-background btn-popup-rhis mt-4"
+                  id="PLG-Eq-loadJRef-popup-delete" type="button">
+            <span>{{'PLANNING_REFERENCE.SUP_REFERENCE' | translate}}</span>
+
+          </button>
+        </div>
+        <ng-template #noReferenceFound>
+          {{'PLANNING_EQUIPIER.CHARGER_REF_EMPTY_LIST' | translate}}
+        </ng-template>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</rhis-pop-up>
+
+<!-- popup to dispaly CS NB max de shift par jour en cas de suppression -->
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="popupVerificationCsMaxShift"
+  [title]="titlePopupContraint"
+  [width]="popUpStyle?.width"
+  [height]="popUpStyle?.height"
+>
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis table-anomalie">
+    <p-table [value]="listContrainteSuppression">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="col-popup-anomalie-1">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="col-popup-anomalie-2" scope="col">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="col-popup-anomalie-3 last-td" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-messageVerification>
+        <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td class="col-popup-anomalie-1">
+            {{messageVerification?.dateOfAnomalie}}
+          </td>
+          <td class="col-popup-anomalie-2">
+            {{employeeHasAnomalieContraintSocial?.nom}}&nbsp;{{employeeHasAnomalieContraintSocial?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button type="button" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+              (click)="removeShift()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+              id="PLG-fx-remove-CSpopup">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button type="button"
+              (click)="closePopup($event)"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis"
+              id="PLG-fx-cancel-CSpopup">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<!-- <p-confirmDialog [appendTo]="'body'"></p-confirmDialog> -->
+<rhis-pop-up (closeEvent)="showChargerJourReferencePopupVueHebdo = false"
+             [height]="popUpStyle?.height"
+             [showPopUp]="showChargerJourReferencePopupVueHebdo"
+             [title]="titleChargerJourReferencePopup"
+             width="700">
+  <div class="popup-equipier" style="height: 140px">
+    <div *ngIf="shiftReferenceList?.length > 0;else noReferenceFound">
+      <div class="row affectation">
+        <div class="col-6 mt-4">
+          <p-radioButton [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" [value]=false
+                         label="{{'PLANNING_EQUIPIER.WITH-AFFECTATION' | translate}}"
+                         id="PLG-Eq-saveJournee-popup" name="groupname"></p-radioButton>
+        </div>
+        <div class="col-6 mt-4">
+          <p-radioButton [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" [value]=true
+                         label="{{'PLANNING_EQUIPIER.WITHOUT-AFFECTATION' | translate}}"
+                         id="PLG-Eq-saveSemaine-popup" name="groupname"></p-radioButton>
+        </div>
+
+      </div>
+      <div class="position-relative w-100 d-flex justify-content-around mt-4 ">
+        <div class="section-element position-relative w-100">
+        <label class="section-element-title">{{'PLANNING_EQUIPIER.REFERENCE_LIST' | translate}}</label>
+        <p-dropdown (onChange)="choosenJourReferenceLibelleError = false;"
+                    [(ngModel)]="choosenJourReference"
+                    [autoDisplayFirst]="false"
+                    [options]="shiftReferenceList"
+                    appendTo="body"
+                    class="drop-down-general" id="PLG-Eq-refJ-list-popup"
+                    optionLabel="libelle">
+        </p-dropdown>
+        <span *ngIf="choosenJourReferenceLibelleError"
+              class="form-item-error red small-rhis"
+              id="PLG-Eq-refJError-list-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+
+      </div>
+      </div>
+      <button (click)="prepareToLoadJourReference()"
+              class="btn save-add-button-rhis orange-background btn-popup-rhis mt-5"
+              id="PLG-Eq-loadJRef-popup" type="button">
+        <span >{{'PLANNING_EQUIPIER.CHARGER_REF_TITLE_WEEK' | translate}}</span>
+      </button>
+    </div>
+    <ng-template #noReferenceFound>
+      {{'PLANNING_EQUIPIER.CHARGER_REF_EMPTY_LIST-WEEK' | translate}}
+    </ng-template>
+  </div>
+
+</rhis-pop-up>
+
+
+<rhis-pop-up (closeEvent)="closePopupLoadingWeekRefrence()"
+             [height]="popUpStyle?.height"
+             [showPopUp]="popupVerificationContrainteLoadingWeekVisibility"
+             [title]="titlePopupContraint"
+             [width]="popUpStyle?.width" *ngIf="listContrainteOfLaodingWeek.length">
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis popup-containte-eq">
+    <p-table [value]="listContrainteOfLaodingWeek">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="date-width">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="employee-width">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="message-contrainte-width" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template let-messageVerification pTemplate="body">
+        <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td *ngIf="messageVerification?.employe" class="date-width">
+            {{ messageVerification?.dateOfAnomalie }}
+          </td>
+
+          <td *ngIf="messageVerification?.employe" class="employee-width">
+            {{messageVerification?.employe?.nom}}&nbsp;{{messageVerification?.employe?.prenom}}
+          </td>
+          <td class="message-contrainte-width">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button (click)="saveWeekReference()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+              id="PLG-Eq-saveGlobal-btn-view-hebdo" type="button">
+        <span>{{'BUTTON.CONTINUE' | translate}}</span>
+      </button>
+      <button (click)="closePopupLoadingWeekRefrence()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis "
+              id="PLG-Eq-cancel-cteGlobal-popup-view-hebdo" type="button">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<p-confirmDialog *ngIf="displayDialogChargerReferenceVueHebdo" [appendTo]="'body'" [key]="'dialogChargerReferenceViewHebdo'">
+  <p-footer>
+    <button (click)="ecraserShiftsForReference()" label="{{'PLANNING_EQUIPIER.ECRASER_ALL'|translate}}" pButton
+            type="button"></button>
+    <button (click)="keepShifstForReference()" label="{{'PLANNING_EQUIPIER.ADD_ALL'|translate}}" pButton
+            type="button"></button>
+  </p-footer>
+</p-confirmDialog>

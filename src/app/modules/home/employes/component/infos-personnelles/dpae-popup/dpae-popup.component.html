@@ -1,0 +1,31 @@
+<div *ngIf="showData">
+  {{texte}}
+  <br>
+  <br>
+  <div class="scroll-content-rhis" style="max-height: 250px;">
+  <span *ngIf="data && data.dpaeFieldsStateDto">
+      <div *ngFor="let field of data.dpaeFieldsStateDto.fields">
+        <label class="section-element-title">-
+          <ng-container *ngFor="let code of field.code" >
+          {{(code | translate)+' '}} </ng-container>  </label> <label class="section-element-title" *ngIf="field.value.length>0"> : </label>  <b> {{field.value}} </b>
+</div>
+</span>
+  </div>
+
+  <br>
+  <br>
+  <div class="center">
+    <button (click)="closePopup()" class="btn save-add-button-rhis  orange-background "
+            id="dpae-fermer"
+            type="button">
+      <span>{{ 'DPAE.BUTTON_FERMER'| translate }}</span>
+    </button>
+    <button (click)="deposer()"
+            *ngIf="data.statut === ('NOT_YET_WITH_COMPLETE_INFOS' || (data.statut === 'REJECTED' && data.dpaeFieldsStateDto.allRequiredFieldsPresent )) && bloquerDebloquerButtonControl()"
+            class="btn save-add-button-rhis  orange-background "
+            id="dpae-fermer"
+            type="button">
+      <span>{{ 'DPAE.BUTTON_DEPOSER'| translate }}</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="200">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{'MODE_VENTE.TITLE' | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list">
+      <p-table [value]="modesVente" [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup">
+          <colgroup>
+            <ng-container *ngIf="modesVente?.length">
+              <col *ngFor="let c of ['','','','']">
+            </ng-container>
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <ng-container *ngIf="modesVente?.length">
+              <th scope="col">{{'MODE_VENTE.NOM' | translate}}</th>
+              <th scope="col">{{'MODE_VENTE.LIBELLE' | translate}}</th>
+              <ng-container *ngIf="hasSystemCaisse">
+                <th scope="col">{{'MODE_VENTE.LIGNES_MONTANT' | translate}}</th>
+                <th scope="col">{{'MODE_VENTE.LIGNES_TRANSACTION' | translate}}</th>
+              </ng-container>
+              <ng-container *ngIf="hasMaitreDSystemCaisse">
+                <th scope="col">{{'MODE_VENTE.CENTRE_REVENU_LABEL' | translate}}</th>
+                <th scope="col">{{'MODE_VENTE.FILTRE_LABEL' | translate}}</th>
+              </ng-container>
+              <th scope="col" *ngIf="hasZeltySystemCaisse">{{'MODE_VENTE.CODE_SOURCE' | translate}}</th>
+              <th scope="col">{{'MODE_VENTE.M_O' | translate}}</th>
+            </ng-container>
+            <th>
+              <button *ngIf="addButtonControl()" type="button" (click)="openPoUpToAddModeVente()"
+                      class="btn save-add-button-rhis orange-background">
+                <span>{{('MODE_VENTE.ADD_BUTTON'|translate) | uppercase}}</span>
+              </button>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-modeVente>
+          <tr class="table-row" (click)="changeModeVente(modeVente)">
+            <td>
+              {{modeVente?.nom}}
+            </td>
+            <td>
+              {{modeVente?.libelle}}
+            </td>
+            <ng-container *ngIf="hasSystemCaisse">
+              <td>
+                {{modeVente?.lignesMontant}}
+              </td>
+              <td>
+                {{modeVente?.lignesTransaction}}
+              </td>
+            </ng-container>
+            <ng-container *ngIf="hasMaitreDSystemCaisse">
+              <td>
+                {{modeVente?.centreRevenu}}
+              </td>
+              <td>
+                {{modeVente?.filtre}}
+              </td>
+            </ng-container>
+              <td *ngIf="hasZeltySystemCaisse">
+                {{modeVente?.codeSource}}
+              </td>
+            <td>
+              <i *ngIf="modeVente?.mainOeuvre" class="pi pi-check ng-star-inserted"></i>
+            </td>
+            <td>
+            <span
+              *ngIf="modeVente?.statut && deleteButtonControl()"
+              (click)=" showConfirmDelete(modeVente?.uuid); $event.stopPropagation()">
+              <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+            </span>
+              <span class="con-tooltip bottom" (click)="showConfirmActivation(modeVente); $event.stopPropagation()"
+                    *ngIf="!modeVente?.statut">
+              <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+            </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="hide()"
+  [showPopUp]="popupModeVente"
+  [title]="actionTitle"
+  [width]="500"
+>
+  <rhis-add-mode-vente *ngIf="popupModeVente"
+                       (sendModeVente)="addUpdateModeVente($event)"
+                       (setUniquenessGuard)="setUniquenessGuard($event)"
+                       [modeVente]="selectedModeVente"
+                       [libelleExist]="libelleExist"
+                       [nomExist]="nomExist"
+                       [buttonLabel]="actionTitle"
+                       [systemCaisse]="hasSystemCaisse"
+                       [maitreD]="hasMaitreDSystemCaisse"
+                       [zelty]="hasZeltySystemCaisse"
+  ></rhis-add-mode-vente>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

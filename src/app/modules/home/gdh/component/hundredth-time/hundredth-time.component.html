@@ -1,0 +1,14 @@
+<div class="btn-group" role="group">
+  <button (click)="onSelectHourView(true);" [ngClass]="{'active': isHourlyView}" class="btn btn-light"
+          id="GDH-selectHV-btn" type="button">
+    <span>
+      <img alt="no print icon" src="assets/icons/gdh/Ico_Clock_ON.svg">
+    </span>
+  </button>
+  <button (click)="onSelectHourView(false);" [ngClass]="{'active': !isHourlyView}" class="btn btn-light"
+          id="GDH-selectNotHV-btn" type="button">
+    <span>
+      <img alt="no print icon" src="assets/icons/gdh/Ico_1,23_ON.svg">
+    </span>
+  </button>
+</div>

@@ -1,0 +1,199 @@
+.container {
+  background-color: #FFFFFF;
+  max-width: 1200px;
+  padding-top: 20px;
+}
+
+.resize-drag {
+  background-color: #29e;
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 30px 20px;
+  touch-action: none;
+  width: 120px;
+  /* This makes things *much* easier */
+  box-sizing: border-box;
+}
+
+.resize-container {
+  display: inline-block;
+  width: 100%;
+  height: 240px;
+}
+
+::ng-deep {
+  div.slot-node:before {
+    border-bottom: 2px solid red;
+  }
+
+  div.slot-node {
+    position: absolute;
+    border-radius: 5px;
+    width: 960px;
+    height: 51px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    touch-action: none;
+  }
+
+  div.slot-node .right-time {
+    display: none;
+  }
+
+  div.slot-node.orange {
+    background-color: #fa9b4c;
+  }
+
+  div.slot-node.green {
+    background-color: #4dc76e;
+  }
+
+  .row.slots-row {
+    height: 90px;
+  }
+
+  .resize-handle-left, .resize-handle-right {
+    height: 25px;
+    width: 3px;
+    opacity: 0.5;
+    top: 13px;
+    border-radius: 1.5px;
+    background-color: #FFFFFF;
+    position: absolute;
+  }
+
+  .resize-handle-left {
+    left: 5px;
+  }
+
+  .resize-handle-right {
+    right: 5px;
+  }
+
+  #availability-container {
+    .row, .col-xl-2, .col-xl-10 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .col-xl-10 {
+      margin-top: 10px;
+    }
+
+    & > .row > .col-xl-10 :last-child .right-time {
+      display: inline;
+    }
+
+    .right-time, .left-time {
+      color: #9B9B9B;
+      font-size: 14px;
+      position: absolute;
+      top: -20px;
+      left: -20px;
+    }
+
+    .right-time {
+      color: #9B9B9B;
+      font-size: 14px;
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      left: unset;
+    }
+    .slot-node .right-time:last-of-type {
+      display: unset;
+    }
+  }
+
+  .heure-dispo-rhis {
+    height: 31px;
+    width: 48px;
+    border-right: 1px solid rgba($color: #ffffff, $alpha: 0.3);
+    margin-top: 10px;
+    float: left;
+  }
+
+  .heure-dispo-rhis-first {
+    border-left: 1px solid rgba($color: #ffffff, $alpha: 0.3);
+  }
+}
+
+:host ::ng-deep {
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+       supported by Chrome and Opera */
+  }
+
+  .ui-chkbox-label {
+    font-weight: normal;
+  }
+}
+
+.dispo-block {
+  position: relative;
+  left: 100px;
+}
+
+.days-block {
+  min-width: 180px;
+}
+
+.horizontal-scroll {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  max-width: calc(100% - 340px);
+}
+
+.availability {
+  h3 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    margin-top: 0;
+  }
+  .ui-chkbox-label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+.days-block .titleHeader {
+  width: fit-content;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.ratio {
+  left: 45.5%;
+}
+
+.dispo-Week {
+  left: 30%;
+}
+
+.dispo-day {
+  left: 70%;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  width: fit-content;
+}
+
+.day-error {
+  width: 135%;
+  display: inline-block;
+  font-size: 10px;
+  line-height: normal;
+}

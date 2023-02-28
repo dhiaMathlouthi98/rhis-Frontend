@@ -1,0 +1,206 @@
+{
+  "dateDebut": "02/09/2019",
+  "dateFin": "08/09/2019",
+  "numSemaine": "36",
+  "employees": [
+    {
+      "idGDH": 1,
+      "idEmploye": 1000,
+      "matricule": "1000",
+      "nom": "Ali",
+      "prenom": "Baha",
+      "isAvenantExist": true,
+      "codeGdh" : "A.T",
+      "tempsContrat": 1050,
+      "tempsPointes" : 0,
+      "tempsPlanifies": 1031,
+      "tempsAbsences": 0,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences": 
+        [{"name" : 16, "value" : 35},
+          {"name" : 17, "value" : 60},
+          {"name" : 18, "value" : 0},
+          {"name" : 19, "value" : 25}
+        ]
+      ,
+      "pointages":  [
+        { "name": 16,
+          "value": 45,
+          "dateJournee": "2020-04-20",
+          "totalMinutes": 45,
+          "modified": false
+        },
+        {"name": 17,
+          "value": 170,
+          "dateJournee": "2020-04-20",
+          "totalMinutes": 170,
+          "modified": false
+        },
+        {"name": 18,
+          "value": 220,
+          "dateJournee":"2020-04-20",
+          "totalMinutes": 220,
+          "modified": false
+        },
+        {"name": 19,
+          "value": 0,
+          "dateJournee":"2020-04-20",
+          "totalMinutes": 220,
+          "modified": false
+        }
+      ]
+    },
+    {
+      "idGDH": 1,
+      "idEmploye": 1001,
+      "matricule": "1001",
+      "nom": "Paul",
+      "prenom": "Pirou",
+      "codeGdh" : "F.P",
+      "tempsContrat": 1050,
+      "tempsPointes" : 1031,
+      "tempsPlanifies": 1031,
+      "tempsAbsences": 36,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences":  [
+        [{"name" : 0, "value" : 0},
+          {"name" : 0, "value" : 0},
+          {"name" : 0, "value" : 0}]
+      ],
+      "pointages": [ {
+        "dateJournee": "2020-04-20",
+        "totalMinutes": 0,
+        "modified": false
+      }]
+    },
+    {
+      "idGDH": 1,
+      "idEmploye": 1000,
+      "matricule": "0001",
+      "nom": "Bogdan",
+      "prenom": "Ouass",
+      "codeGdh" : "F.P",
+      "tempsContrat": 1050,
+      "tempsPointes" : 1050,
+      "tempsPlanifies": 1031,
+      "tempsAbsences": 36,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences": [],
+      "pointages": []
+    },
+    {
+      "idGDH": 1,
+      "idEmploye": 2020,
+      "matricule": "00017",
+      "nom": "Lajnef",
+      "prenom": "Malek",
+      "tempsContrat": 2400,
+      "tempsPointes" : 0,
+      "tempsPlanifies": 2000,
+      "tempsAbsences": 0,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences": [],
+      "pointages": []
+    },
+    {
+      "idGDH": 1,
+      "idEmploye": 1000,
+      "matricule": "1000",
+      "nom": "Ali",
+      "prenom": "Baha",
+      "tempsContrat": 1050,
+      "tempsPointes" : 0,
+      "tempsPlanifies": 1031,
+      "tempsAbsences": 0,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences": [],
+      "pointages":  [
+        {
+          "dateJournee": "2020-04-12",
+          "totalMinutes": 45,
+          "modified": false
+        },
+        {
+          "dateJournee": "2020-04-13",
+          "totalMinutes": 70,
+          "modified": false
+        },
+        {
+          "dateJournee": "2020-04-16",
+          "totalMinutes": 20,
+          "modified": false
+        }
+      ]
+    },
+    {
+      "idGDH": 1,
+      "idEmploye": 1000,
+      "matricule": "1000",
+      "nom": "Ali",
+      "prenom": "Baha",
+      "tempsContrat": 1050,
+      "tempsPointes" : 1000,
+      "tempsPlanifies": 1031,
+      "tempsAbsences": 0,
+      "delta": 0,
+      "heureCompl": [{"name" : "CP0", "value" : 155},{"name" : "CP10", "value" : 155},{"name" : "CP30", "value" : 155}],
+      "heureSupp": [{"name" : "SP0", "value" : 155},{"name" : "SP25", "value" : 155},{"name" : "SP50", "value" : 155}],
+      "heureDeNuit": [{"name" : "N0", "value" : 155},{"name" : "N1", "value" : 155},{"name" : "N2", "value" : 155}],
+      "heureJoursFeries": 0,
+      "coupures": 0,
+      "repas": 10,
+      "absences":  [
+        [{"name" : 0, "value" : 0},
+          {"name" : 0, "value" : 0},
+          {"name" : 0, "value" : 0}]
+      ],
+      "pointages":  [
+        {
+          "dateJournee": "2020-04-12",
+          "totalMinutes": 45,
+          "modified": false
+        },
+        {
+          "dateJournee": "2020-04-13",
+          "totalMinutes": 70,
+          "modified": false
+        },
+        {
+          "dateJournee": "2020-04-16",
+          "totalMinutes": 20,
+          "modified": false
+        }
+      ]
+    }
+  ]
+}

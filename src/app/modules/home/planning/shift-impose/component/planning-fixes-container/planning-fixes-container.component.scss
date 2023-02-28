@@ -1,0 +1,119 @@
+.nightValue {
+  font-weight: bold;
+}
+
+.wrongLoiValueColor {
+  background-color: #dc3545 !important;
+}
+
+.wrongLoiValueColor > td {
+  color: #fff !important;
+}
+
+:host ::ng-deep {
+  .save-add-button-rhis {
+    float: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    letter-spacing: 1.2px;
+    padding: 10px 18px;
+    margin-left: 10px;
+    @media screen and (max-width: 991px) {
+      padding: 6px 8px;
+    }
+  }
+
+  .planning-general-rhis {
+    .ui-chkbox {
+      .ui-chkbox-box {
+        width: 15px !important;
+        height: 15px !important;
+        border: none;
+
+        &:hover {
+          border: none !important;
+        }
+
+        &::before {
+          font-size: 18px;
+        }
+      }
+
+      .ui-chkbox-icon {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .rhis-container.planning-general-rhis {
+    margin-bottom: 60px;
+  }
+}
+
+:host ::ng-deep {
+  table.planning {
+    tbody, thead {
+      display: block;
+    }
+
+    tbody.content-planning-rhis.heightBodyPlanning {
+      height: auto;
+    }
+  }
+
+  .rhis-container.planning-general-rhis table thead th.empNameColumn {
+    width: 243px !important;
+  }
+  .rhis-container.planning-general-rhis table tbody td.employeeCell {
+    width: 243px !important;
+  }
+
+  .active-planning-fixe {
+    background: linear-gradient(45deg, rgba(155, 155, 155, 0.99) 1%, #fff 1%, #fff 49%, #9B9B9B 49%, #9B9B9B 51%, #fff 51%, #fff 99%, #9B9B9B 99%);
+    background-size: 6px 6px;
+    background-position: 50px 50px;
+
+    .td-drop-zone {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      @media screen and (max-width: 1366px) {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+}
+
+.row.no-margin-rhis {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+:host ::ng-deep {
+  table.planning {
+    tbody.content-planning-rhis {
+      p-dropdown {
+        border: none !important;
+      }
+    }
+  }
+
+}
+
+.col-popup-anomalie-1 {
+  width: 15%;
+}
+
+.col-popup-anomalie-2 {
+  width: 32%;
+}
+
+.col-popup-anomalie-3 {
+  width: 53%;
+}
+

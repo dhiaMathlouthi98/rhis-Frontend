@@ -1,0 +1,25 @@
+<div class="container">
+  <form [formGroup]="typeContratform">
+    <div class="type-contrat-form">
+      <div class="section-element element-100-rhis">
+        <label for="libelle" class="section-element-title">
+          {{'TYPE_CONTRAT.TYPE' | translate}}*
+        </label>
+        <input id="libelle" type="text" size="30" pInputText class="text-field" formControlName="libelle">
+        <span class="form-item-error red small-rhis"
+              *ngIf="(typeContratform.get('libelle').hasError('required') || typeContratform.get('libelle').hasError('trimValidator'))  && isSubmitted">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="form-item-error red small-rhis"
+              *ngIf="existentTypeContratMesssage">{{existentTypeContratMesssage}}</span>
+      </div>
+      <div class="section-element element-100-rhis">
+        <label for="dureeDetermine" class="section-element-title mr-2">
+          {{'TYPE_CONTRAT.DUREE' | translate}}
+        </label>
+        <p-checkbox id="dureeDetermine" formControlName="dureeDetermine" binary="true"></p-checkbox>
+      </div>
+    </div>
+    <button type="button" (click)="addOrUpdateTypeContrat()" class="btn save-add-button-rhis orange-background btn-popup-rhis mt-3">
+      <span>{{buttonTitle | uppercase}}</span>
+    </button>
+  </form>
+</div>

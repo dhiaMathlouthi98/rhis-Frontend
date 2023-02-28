@@ -1,0 +1,41 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<div class="container-fluid bloc-container-fluid-rhis">
+  <h1 (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+      [offset]="120"
+      class="titre-principale-page-rhis">{{title | translate}}</h1>
+  <div [ngStyle]="{'height': heightInterface}"
+       class="row justify-content-left scroll-content-rhis">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <ul class="list-group">
+        <li *ngFor="let entity of entities; index as index; trackBy: trackByFn;"
+            class="list-group-item d-flex justify-content-between align-items-center">
+          <rhis-editable (update)="updateField(index)" (setDefault)="setDefaultValue(index)">
+            <ng-template rhisViewMode>
+              {{entity?.libelle}}
+            </ng-template>
+            <ng-template rhisEditMode>
+              <div class="row d-flex align-items-center justify-content-around">
+                <input class="form-control edit-input" [formControl]="getControl(index)" rhisEditableOnEnter>
+                <i class="pi pi-save" rhisEditableOnClick (click)="updateField(index); $event.stopPropagation()"></i>
+              </div>
+            </ng-template>
+          </rhis-editable>
+          <div (click)="showConfirmDelete(entity['uuid'], index)" *ngIf="entity?.statut" class="delete-competence">
+            <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+          </div>
+          <div *ngIf="!entity?.statut" class="con-tooltip bottom"
+               (click)=" showConfirmActivation(entity, index); $event.stopPropagation()">
+            <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+          </div>
+        </li>
+      </ul>
+      <div class="input-group mb-3">
+        <input [formControl]="inputControl" type="text" class="form-control add-input" placeholder="">
+        <div class="add align-self-center" (click)="add()">
+          <img src="assets/icons/employe/Btn_Add.svg" alt="no image">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

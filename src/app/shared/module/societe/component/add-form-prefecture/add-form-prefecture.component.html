@@ -1,0 +1,81 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="350">
+</div>
+<div [formGroup]="formGroup" class="view scroll-content-rhis" [ngStyle]="{'height': heightInterface}">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="section-element w-100">
+        <label for="nomPrefecture"
+               class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_PREFECTURE_NAME' | translate}}</label>
+        <input type="text"
+               id="nomPrefecture"
+               maxlength="255"
+               class="input-general-rhis"
+               formControlName="nomPrefecture">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="section-element w-100">
+        <label for="telephonePrefecture1"
+               class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_TEL1' | translate}}</label>
+        <input type="text"
+               id="telephonePrefecture1"
+               maxlength="20"
+               class="input-general-rhis"
+               rhisStyleForm
+               [hasError]="isFormSubmitted && formGroup?.controls?.telephonePrefecture1?.errors"
+               formControlName="telephonePrefecture1">
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.telephonePrefecture1?.getError('pattern') && isFormSubmitted">
+          {{'SOCIETE.PHONE_FORMAT' | translate}}
+        </span>
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.telephonePrefecture1?.getError('maxlength') &&
+                ! formGroup?.controls?.telephonePrefecture1?.getError('pattern') && isFormSubmitted">
+          {{'SOCIETE.PHONE_MAX_LENGTH_ERROR' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-xl-4 col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label for="adressePrefecture1"
+               class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_ADDR1' | translate}}</label>
+        <input type="text"
+               id="adressePrefecture1"
+               maxlength="255"
+               class="input-general-rhis"
+               formControlName="adressePrefecture1">
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-6">
+      <div class="section-element w-100">
+        <label for="villePrefecture"
+               class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_CITY' | translate}}</label>
+        <input type="text"
+               id="villePrefecture"
+               maxlength="255"
+               class="input-general-rhis"
+               formControlName="villePrefecture">
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-6 mt-xl-0 mt-lg-4 mt-md-4">
+      <div class="section-element w-100">
+        <label for="codePostalPrefecture"
+               class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_ZIPCODE' | translate}}</label>
+        <input type="number"
+               id="codePostalPrefecture"
+               min="0"
+               class="input-general-rhis"
+               rhisStyleForm
+               [hasError]="formGroup?.controls?.codePostalPrefecture?.errors && isFormSubmitted"
+               formControlName="codePostalPrefecture">
+        <span class="red small-rhis"
+              *ngIf="formGroup?.controls?.codePostalPrefecture?.errors && isFormSubmitted">
+            {{'SOCIETE.NOMBRE_MIN_ERROR' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

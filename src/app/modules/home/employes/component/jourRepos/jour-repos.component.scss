@@ -1,0 +1,119 @@
+col:first-child {
+  @media only screen and (max-width: 1199px) and (min-width: 992px) {
+    width: 12%;
+  }
+}
+
+col:nth-child(2) {
+  @media only screen and (max-width: 1199px) and (min-width: 992px) {
+    width: 12%;
+  }
+}
+
+col:last-child {
+  width: 230px;
+  @media screen and (max-width: 1199px) {
+    width: 115px;
+  }
+  @media screen and (max-width: 991px) {
+    width: 110px;
+  }
+}
+
+:host ::ng-deep {
+  .table-list.bg-gris-avec-border p-table {
+    .ui-table {
+      table {
+        .ui-table-thead {
+          > tr {
+            > th:nth-child(1) .day-resp-rhis,
+            > th:nth-child(1) p-sorticon {
+              float: left;
+              display: inline-block;
+            }
+
+            @media screen and (max-width: 991px) {
+              > th .day-resp-rhis {
+                width: 3ch;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+
+              > th:nth-child(1) .day-resp-rhis,
+              > th:nth-child(2) .day-resp-rhis {
+                overflow: visible;
+                width: auto;
+              }
+
+              > th:nth-child(1),
+              > th:nth-child(2) {
+                width: 105px;
+              }
+            }
+
+            > th:first-child, th:nth-child(2) {
+              @media screen and (max-width: 1600px) {
+                padding-left: 20px !important;
+                width: 130px;
+              }
+              @media screen and (max-width: 1550px) {
+                padding-left: 15px !important;
+              }
+              @media screen and (max-width: 1366px) {
+                width: 100px;
+              }
+            }
+
+            th:nth-child(2) {
+              @media screen and (max-width: 1600px) {
+                padding-left: 0 !important;
+              }
+            }
+
+            @media only screen and (max-width: 1350px) and (min-width: 1200px) {
+              th:not(:first-child):not(:last-child):not(:nth-child(2)) .day-resp-rhis {
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 22px;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
+
+        .ui-table-tbody {
+          > tr {
+            @media screen and (max-width: 1366px) {
+              font-size: 13px;
+            }
+            @media screen and (max-width: 1200px) {
+              font-size: 12px;
+            }
+            td {
+              .td-right-border {
+                padding-top: 17px;
+                padding-right: 34px;
+              }
+            }
+
+            td:first-child, td:nth-child(2) {
+              @media screen and (max-width: 1600px) {
+                width: 130px;
+              }
+              @media screen and (max-width: 1366px) {
+                width: 100px;
+              }
+
+              .td-container.td-left-border {
+                @media screen and (max-width: 1550px) {
+                  padding: 0 0 0 20px;
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+}

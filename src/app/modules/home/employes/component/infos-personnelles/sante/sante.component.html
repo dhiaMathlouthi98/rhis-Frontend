@@ -1,0 +1,62 @@
+<ng-container [formGroup]="formGroup">
+  <div class="view-section container-fluid section-top">
+    <div class="view-section-title margin-top-title-rhis">{{'COORDONNES.SANTE' | translate}}</div>
+    <div class="section-body">
+      <div class="rhis-row row">
+        <div class="blo-sante-resp-rhis input-info-perso-rhis col-xl-3 col-lg-6 col-6">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-numSecSocial">{{'COORDONNES.NUM_SEC_SOC' | translate}}</label>
+          <p-inputMask formControlName="numero"
+                       mask="?9 99 99 99 999 999 99"
+                       slotChar=" "
+                       rhisStyleForm
+                       selector = ".ui-inputtext.ui-corner-all"
+                       [hasError]="unicite.numeroSecuriteSocialExist ||
+                       (formGroup.controls.numero?.errors?.size && formGroup.controls.numero.invalid  && (formGroup.controls.numero.touched|| onSubmit))"
+                       id="EMP-infoPerso-numSecSocial">
+          </p-inputMask>
+          <span *ngIf="unicite.numeroSecuriteSocialExist" class="red small d-block"
+                id="EMP-infoPerso-numSecSocialError">
+          {{'MESSAGE.NUMERO_SECURITE_SOCIAL_EXISTE' | translate}}
+        </span>
+          <span *ngIf="formGroup.controls.numero?.errors?.size && formGroup.controls.numero.invalid  && (formGroup.controls.numero.touched|| onSubmit)" class="red small"
+                id="EMP-infoPerso-numSecSocialSizeError">
+          {{"SECURITE_SOCIALE.ERR_CHAMPS_NON_VALIDE" | translate}}
+        </span>
+        </div>
+        <div class="blo-sante-resp-rhis input-info-perso-rhis col-xl-3 col-lg-6 col-6">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-mutuelle">{{'COORDONNES.MUTUELLE' | translate}}</label>
+          <input class="input-general-rhis" formControlName="mutuelle" id="EMP-infoPerso-mutuelle" type="text">
+        </div>
+        <div class="personne-contact-urg-rhis blo-sante-resp-rhis input-info-perso-rhis col-xl-3 col-lg-6 col-6">
+          <label for="EMP-infoPerso-nomPerContacter"
+                 class="section-element-title">{{'COORDONNES.PERSONNE_CONTACTER' | translate}}</label>
+          <input
+            rhisStyleForm
+            [hasError]="formGroup.controls['nomPersonneContacter'].errors?.pattern"
+            class="input-general-rhis" formControlName="nomPersonneContacter" id="EMP-infoPerso-nomPerContacter"
+            type="text">
+        </div>
+        <div class="blo-sante-resp-rhis input-info-perso-rhis col-6 col-lg-6 col-xl-3">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-numTelUrg">{{'COORDONNES.NUM_URGENCE' | translate}}</label>
+          <input
+            rhisStyleForm
+            [hasError]="formGroup.controls['nomPersonneContacter'].errors?.pattern"
+            class="input-general-rhis" formControlName="numTelephUrgence" id="EMP-infoPerso-numTelUrg" type="text">
+          <span class="small-rhis red"
+                *ngIf="formGroup.controls['numTelephUrgence'].getError('pattern') && !formGroup.controls['numTelephUrgence'].valid  && (formGroup.controls['numTelephUrgence'].touched|| onSubmit)"
+                id="EMP-infoPerso-numTelUrgError">
+          {{'SOCIETE.PHONE_FORMAT' | translate}}
+          </span>
+          <span class="small-rhis red"
+                *ngIf="formGroup.controls['numTelephUrgence'].getError('maxlength') && !formGroup.controls['numTelephUrgence'].valid  && (formGroup.controls['numTelephUrgence'].touched|| onSubmit)"
+                id="EMP-infoPerso-numTelUrgMaxError">
+            {{'SOCIETE.PHONE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

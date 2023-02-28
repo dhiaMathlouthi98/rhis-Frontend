@@ -1,0 +1,198 @@
+<rhis-diff-besoin-planifie-chart
+  (openDetailTempsPaye)="showMoreData()"
+  [hidden]="showDetailedView || (!isChartShown)">
+</rhis-diff-besoin-planifie-chart>
+<div [ngClass]="{'detail-temps-paie-scrollable': detailTempsPaieScrollable,
+                  'opened-menu': menuOpened}"
+     class="Scroll-horizontal-detail-temps-paie">
+  <div *ngIf="!showDetailedView && widthOfHour" class="detail-temps-paye-minimalist temps-paye-all">
+    <div class="block-left-temps">
+      <div class="block-1">
+        <img (click)="showMoreData()"
+             *ngIf="showDetailedView || (!isChartShown)" alt="no icon" class="pointer-cursor"
+             id="PLG-Eq-DetailTemps-showmore"
+             src="assets/icons/arrow-icons/arrow-top.png">
+      </div>
+      <div class="block-2">
+        <div *ngIf="!displayMoeProd;else prodRefrenceTitle"
+             class="taux-moe">
+          {{"PLANNING_EQUIPIER.TAUX_MOE" | translate}}
+          <img alt="no icon" src="assets/icons/planning/percentage.png">
+        </div>
+        <ng-template #prodRefrenceTitle>
+          <div [ngClass]="{'taux-moe-openedMenu': menuOpened }" class="taux-moe">
+            {{"PLANNING_EQUIPIER.PRODUCTIVITY" | translate}}
+            <img alt="no icon" src="assets/icons/planning/euro.png">
+          </div>
+        </ng-template>
+      </div>
+      <div class="block-3">
+        <img (click)="isChartShown = true; tooltip.hide()" *ngIf="!isChartShown" alt="no icon"
+             (mouseenter)="showMessage(tooltip, $event, 'OPEN')"
+             (mouseleave)="tooltip.hide()"
+             class="chart-icon pointer-cursor open-chart-img block-img2"
+             id="PLG-Eq-DetailTemps-showChart" src="assets/icons/planning/chart/open.png">
+      </div>
+      <div class="block-4">
+        <div [ngClass]="{'taux-moe-openedMenu': menuOpened}"
+             class="ca-previsionnel">
+          {{"PLANNING_EQUIPIER.CA_PREVISIONNEL" | translate}}
+          <img alt="no icon" src="assets/icons/planning/euro.png">
+        </div>
+      </div>
+      <div class="block-5">
+        <img (click)="isChartShown = false; tooltip.hide()"
+             *ngIf="isChartShown"
+             (mouseenter)="showMessage(tooltip, $event, 'CLOSE')"
+             (mouseleave)="tooltip.hide()"
+             [ngClass]="{'open_chart-mini_details-hide_icon' : !showDetailedView && isChartShown, 'closed_chart-mini_details-hide_icon': showDetailedView || (!isChartShown)}"
+             alt="no icon" class="chart-icon position-absolute pointer-cursor close-chart-img"
+             id="PLG-Eq-DetailTemps-hideChart" src="assets/icons/planning/chart/close.png">
+        <div [ngClass]="{'taux-moe-openedMenu': menuOpened}"
+             class="temps-paye">
+          {{"PLANNING_EQUIPIER.TEMPS_PLANIFIE" | translate}}
+          <img alt="no icon" src="assets/icons/planning/hours.png">
+        </div>
+        <p-overlayPanel #tooltip
+                        [dismissable]="true"
+                        appendTo="body">
+          <div class="icon-hover-container">
+            <span>{{messageChartControlButton}}</span>
+          </div>
+        </p-overlayPanel>
+      </div>
+    </div>
+    <div class="block-right-temps bg-white">
+      <div class="loop-block-temps">
+        <!-- Display TAUX MOE -->
+        <ng-container *ngIf="!displayMoeProd;else prodRefrenceValues">
+          <div *ngFor="let tm of moeValues" [ngClass]="{'taux-moe-openedMenu': menuOpened }"
+               [ngStyle]="{'width': widthOfHour}" class="taux-moe details-temps-paye-values">
+            {{tm | number:'1.0-0'}} %
+          </div>
+        </ng-container>
+        <!-- Display PRODUCTIVITY -->
+        <ng-template #prodRefrenceValues>
+          <div *ngFor="let prod of prodValues"
+               [ngStyle]="{'width': widthOfHour}"
+               class="taux-moe details-temps-paye-values">
+            {{prod?.valeur | number:'1.0-0'}} €/h
+          </div>
+        </ng-template>
+      </div>
+      <div class="loop-block-temps">
+        <div *ngFor="let ca of caValues" [ngStyle]="{'width': widthOfHour}"
+             class="ca-previsionnel details-temps-paye-values">{{ca | number:'1.0-0'}} €
+        </div>
+      </div>
+      <div class="loop-block-temps">
+        <div *ngFor="let tp of planifiedTimeValues" [ngStyle]="{'width': widthOfHour}"
+             class="temps-paye details-temps-paye-values">{{tp}} h
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-temps-paye" *ngIf="showDetailedView">
+    <div class="detail-temps-paye-header">
+      <div class="arrow-down-planning">
+        <img (click)="showLessData()" alt="no icon" id="PLG-Eq-DetailTemps-showLess"
+             src="assets/icons/arrow-icons/arrow-down.png">
+      </div>
+      <div class="header-info">
+        <div class="header-info-title">{{"PLANNING_EQUIPIER.DETAILS_TEMPS_PAYE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_PAYE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_ABSENCE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_TEMPS_PLANIFIE" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TOTAL_CA_PREVISIONNEL" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.TAUX_MOE_MOYEN" | translate}}</div>
+        <div class="header-info-second-title">{{"PLANNING_EQUIPIER.PROD_MOYENNE" | translate}}</div>
+        <div></div>
+        <div class="header-info-title">{{"PLANNING_EQUIPIER.SAVE_SEMAINE" | translate}} {{week}}</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalTempsPaye}} h</div>
+        <div class="header-info-values">{{totalTempsAbsence}} h</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalTempsPlanifie}} h</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.totalCA}} €</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.tauxMOEMoyen}} %</div>
+        <div class="header-info-values">{{detailTempsPayeWeek?.prodMoyenne}} €/h</div>
+        <div></div>
+      </div>
+    </div>
+    <div class="detail-temps-paye-grid"
+         [ngStyle]="{'grid-template-columns': 'repeat(' + detailsGridColumnsNumber + ', auto'}">
+      <div></div>
+      <div></div>
+      <div class="hour" *ngFor="let hour of tempsPayeHours">{{hour}}</div>
+      <div class="day-title background-grey border-radius-left"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[0]?.dateJounree === date}">
+        {{days[0] | translate}} {{detailTempsPayeWeek?.journee[0]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total background-grey"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[0]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[0]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[0]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value background-grey" *ngFor="let value of getDetailedValuesByDay(0)">{{value}}</div>
+
+      <div class="day-title" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[1]?.dateJounree === date}">
+        {{days[1] | translate}} {{detailTempsPayeWeek?.journee[1]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[1]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[1]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[1]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value" *ngFor="let value of getDetailedValuesByDay(1)">{{value}}</div>
+
+      <div class="day-title background-grey border-radius-left"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[2]?.dateJounree === date}">
+        {{days[2] | translate}} {{detailTempsPayeWeek?.journee[2]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total background-grey"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[2]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[2]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[2]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value background-grey" *ngFor="let value of getDetailedValuesByDay(2)">{{value}}</div>
+
+      <div class="day-title" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[3]?.dateJounree === date}">
+        {{days[3] | translate}} {{detailTempsPayeWeek?.journee[3]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[3]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[3]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[3]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value" *ngFor="let value of getDetailedValuesByDay(3)">{{value}}</div>
+
+      <div class="day-title background-grey border-radius-left"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[4]?.dateJounree === date}">
+        {{days[4] | translate}} {{detailTempsPayeWeek?.journee[4]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total background-grey"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[4]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[4]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[4]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value background-grey" *ngFor="let value of getDetailedValuesByDay(4)">{{value}}</div>
+
+      <div class="day-title" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[5]?.dateJounree === date}">
+        {{days[5] | translate}} {{detailTempsPayeWeek?.journee[5]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total" [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[5]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[5]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[5]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value" *ngFor="let value of getDetailedValuesByDay(5)">{{value}}</div>
+
+      <div class="day-title background-grey border-radius-left"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[6]?.dateJounree === date}">
+        {{days[6] | translate}} {{detailTempsPayeWeek?.journee[6]?.dateJounree?.slice(0, 5)}}
+      </div>
+      <div class="day-total background-grey"
+           [ngClass]="{'selected-day': detailTempsPayeWeek?.journee[6]?.dateJounree === date}">
+        {{detailTempsPayeWeek?.journee[6]?.totalTempsPaye}}
+        / {{detailTempsPayeWeek?.journee[6]?.tempsPlanifiePayeDisplay}}
+      </div>
+      <div class="day-value background-grey" *ngFor="let value of getDetailedValuesByDay(6)">{{value}}</div>
+      <div class="background-grey border-radius-right"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+svg {
+  width: 65px;
+  margin: 0 20% 0 19%;
+  @media screen and (max-width: 1199px) {
+    width: 85%;
+    margin: 10px auto 0;
+  }
+}
+.circle-bg {
+  fill: none;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0, 100;
+  }
+}
+
+.percentage {
+  font-family: "TT Wellingtons Medium";
+  font-size: 0.5em;
+  text-anchor: middle;
+}

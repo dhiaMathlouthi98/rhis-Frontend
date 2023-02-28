@@ -1,0 +1,206 @@
+<div class="header row">
+  <div *ngIf="listChartes?.length > 0" class="float-right col-12 pr-0">
+    <button (click)="addCharteDecoupage()" *ngIf="updateControl()" class="btn save-add-button-rhis orange-background"
+            type="button">
+      <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+    </button>
+  </div>
+</div>
+<div class="container-fluid change-container-fluid-rhis">
+  <div class="table-list bg-gris-avec-border">
+    <p-table *ngIf="listChartesDecoupagesOrdonner.length > 0"
+             [value]="listChartesDecoupagesOrdonner" [responsive]="true" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <ng-container>
+            <th>{{'PHASE.LIBELLE' | translate}}</th>
+          </ng-container>
+          <ng-container *ngFor="let column of collumns">
+            <th class="text-center">{{column.column}}</th>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template let-i="rowIndex" pTemplate="body" let-decoupage>
+        <tr class="table-row">
+          <td>
+            <div class="td-container td-left-border">
+              {{decoupage?.phase.libelle}}
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[0].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[0].val)] }}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[1].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[1].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[2].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[2].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[3].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[3].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[4].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[4].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[5].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[5].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+          <td pEditableColumn>
+            <div class="td-container td-right-border">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="chartesItemList"
+                              [(ngModel)]="decoupage['valeur'+(collumns[6].val)]"
+                              editable="true"
+                              class="drop-down-general"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{decoupage['valeur' + (collumns[6].val)]}}
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-table *ngIf="listChartesDecoupagesOrdonner.length === 0"
+             [value]="listPhase" [responsive]="true" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <ng-container>
+            <th>{{'PHASE.LIBELLE' | translate}}</th>
+          </ng-container>
+          <ng-container *ngFor="let column of collumns">
+            <th class="text-center">{{column.column}}</th>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template let-i="rowIndex" pTemplate="body" let-phase>
+        <tr class="table-row">
+          <td>
+            <div class="td-container td-left-border">
+              {{phase.libelle}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              --
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="row mt-2">
+    <div *ngIf="listChartes?.length > 0" class="float-right col-12 pr-3 mt-1 button-style-special">
+      <button (click)="addCharteDecoupage()" *ngIf="updateControl()" class="btn save-add-button-rhis orange-background"
+              type="button">
+        <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+</div>

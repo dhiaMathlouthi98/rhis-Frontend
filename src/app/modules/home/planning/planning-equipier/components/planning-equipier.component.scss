@@ -1,0 +1,652 @@
+.rhis-container {
+  font-family: "TT Wellingtons Medium";
+  width: 100%;
+  height: 100%;
+
+  .header {
+    .block-flex-general-eq {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: stretch;
+      align-content: stretch;
+      height: 55px;
+    }
+
+    .block-flex-left {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      align-content: stretch;
+
+      .block-week-nmbre {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+        text-align: center;
+        margin-right: 8px;
+        background-color: #FF9B42;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-around;
+        margin-top: 4px;
+      }
+
+      .calendar.block-filter-calendar {
+        width: 202px;
+      }
+    }
+
+    .block-flex-right {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      align-items: stretch;
+    }
+
+    .header-equipier-block {
+      .block-filter-calendar {
+        .next-day-button {
+          background: none;
+          border: none;
+          position: relative;
+          bottom: 29px;
+          left: 150px;
+
+          img {
+            width: 13px;
+          }
+        }
+
+        .next-day-button:focus {
+          outline: 0;
+        }
+
+        .previous-day-button {
+          background: none;
+          border: none;
+          position: relative;
+          bottom: 29px;
+          right: 24px;
+
+          img {
+            width: 13px;
+          }
+        }
+
+        .previous-day-button:focus {
+          outline: 0;
+        }
+      }
+
+      .edit-buttons {
+
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 140px;
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+          z-index: 99;
+          right: 0;
+          padding: 5px;
+          border-radius: 5px;
+
+          a {
+            padding: 6px 12px;
+            display: block;
+            color: #615f5f;
+            font-family: "TT Wellingtons Medium";
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            line-height: 14px;
+
+            &:hover {
+              background-color: #f1f1f1;
+              cursor: pointer;
+            }
+          }
+
+          hr {
+            margin: 0;
+          }
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+          z-index: 99999;
+        }
+
+        .btn {
+          padding: 0;
+          margin-right: 3px;
+
+          img {
+            max-width: 25px;
+          }
+        }
+      }
+
+      .block-left-buttons-equipier {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        margin: 0 10px;
+
+        .display-buttons {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          align-items: stretch;
+          align-content: stretch;
+          .vue-condensee-buttons{
+            margin-right: 5px;
+          }
+          .switch-button-left, .switch-button-right {
+            outline: none;
+            height: 32px;
+            padding: 5px;
+          }
+
+          .switch-button-right.enca-switch-button {
+            font-size: 12px;
+            height: 32px;
+            line-height: 12px;
+            padding: 0 3px;
+            top: 0;
+            &.manager-leader-button{
+              border-radius: 5px;
+              margin-left: 5px;
+            }
+            span {
+              top: 0;
+            }
+          }
+          .btn-group.btn-jour-semaine {
+            margin: 0;
+          }
+        }
+      }
+
+      .moe-block {
+        height: 32px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid #DEDEDE;
+        font-family: "TT Wellingtons Medium";
+        vertical-align: middle;
+        padding: 0 4px;
+        margin: 0 0 0 5px;
+        font-size: 9px;
+        display: flex;
+        align-items: center;
+        color: #414141;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        span {
+          font-family: "TT Wellingtons Bold";
+        }
+      }
+      .moe-block.prod-btn {
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+      }
+    }
+  }
+}
+
+.wrongLoiValueColor {
+  background-color: #ff0000 !important;
+}
+
+.wrongLoiValueColor > td {
+  color: #fff !important;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+:host ::ng-deep {
+
+  gridster .gridster-column {
+    border: 1px dashed #dee2e6 !important;
+  }
+
+  gridster .gridster-column:nth-child(4n) {
+    border-right: none !important;
+    border-right: 1px solid #d7dbdf !important;
+  }
+
+  gridster .gridster-column:nth-child(4n)::after {
+    border-right: 1px solid #d7dbdf !important;
+  }
+
+  gridster .gridster-row {
+    background: #ffffff7a;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .specific-decoupage-style1 {
+    gridster .gridster-row:nth-child(3n) {
+      background: inherit;
+    }
+  }
+
+  .specific-decoupage-style2 {
+    gridster .gridster-row:nth-child(3n + 1) {
+      background: inherit;
+    }
+  }
+
+  .specific-decoupage-style3 {
+    gridster .gridster-row:nth-child(3n + 2) {
+      background: inherit;
+    }
+  }
+
+  gridster .gridster-row:nth-child(3n + 4) {
+    border-radius: 5px 5px 0 0;
+  }
+
+  gridster .gridster-row:nth-child(3n + 5) {
+    border-radius: 0 0 5px 5px;
+  }
+
+  .gridster-preview {
+    background: inherit;
+  }
+
+  p-calendar .ui-inputtext {
+    width: 175px !important;
+    height: 32px !important;
+    margin-top: 0 !important;
+    text-align: center;
+    color: #414141;
+    font-family: "TT Wellingtons Medium";
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 12px;
+  }
+
+  .ui-calendar .ui-inputtext {
+    padding: 15px !important;
+  }
+
+  p-calendar .ui-button {
+    font-size: 9px;
+  }
+
+  p-calendar .ui-button-icon-only .ui-button-icon-left {
+    top: 30%;
+    left: 34%;
+  }
+
+  p-calendar .ui-datepicker-trigger.ui-button {
+    width: 32px !important;
+    height: 32px !important;
+    background-color: #fff !important;
+    border: 1px solid #C8C7C4;
+
+    .ui-button-icon-left {
+      background-image: url(/assets/icons/employe/calendar.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 22px;
+      height: 22px;
+    }
+
+    .ui-button-icon-left::before {
+      content: "";
+    }
+  }
+
+  .ui-calendar {
+      width: 224px;
+      min-width: 224px;
+
+    .ui-datepicker {
+      min-width: 174px !important;
+    }
+  }
+
+  .ui-datepicker table {
+    margin: 0;
+  }
+}
+
+.employee-width {
+  width: 27%;
+}
+
+.date-width {
+  width: 18%;
+}
+
+.message-contrainte-width {
+  width: 55%;
+}
+
+a.link-underline {
+  text-decoration: none;
+}
+
+.flex-start-equipier {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  align-content: stretch;
+}
+
+.btn-optimisation-equipier {
+  margin-left: 0;
+}
+
+.Scroll-horizontal-planning-equipier {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.content-planning-equipier {
+  overflow-y: auto;
+  width: 100%;
+  position: relative;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+    background-color: #F5F5F5;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+    background-color: #AFA899;
+  }
+}
+
+.horizontal-scroll-equipier-menu-close {
+  .content-planning-equipier {
+    overflow-x: hidden;
+  }
+}
+
+.btn.save-add-button-rhis.btn-special-equipierHome {
+  padding: 8px;
+  font-size: 8px;
+  margin-left: 5px;
+}
+
+.btn.save-add-button-rhis.btn-add-employee {
+  margin-left: 0;
+}
+
+.btn.save-add-button-rhis.btn-save-employee {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.hide-hour {
+  width: 34px;
+  height: 28px;
+  position: fixed;
+  right: -5px;
+  top: 136px;
+  z-index: 99;
+  background: #f7f7f7;
+}
+
+.hide-hour.right-hour-planning {
+  width: 52px;
+  height: 28px;
+  left: 212px;
+  top: 135px;
+  z-index: 16 !important;
+}
+
+.planning_lock_style {
+  position: absolute !important;
+  z-index: 99999999999999;
+  top: 0;
+}
+
+.buttons-equipier-general {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.moe-prod-button {
+  position: relative;
+}
+
+.moe-tooltip-hover-content {
+  visibility: hidden;
+}
+
+.moe-prod-button:hover .moe-tooltip-hover-content {
+  visibility: visible;
+  position: absolute;
+  top: 54px;
+  width: 85px !important;
+  right: 10px;
+
+  .rhis-container .rhis-tooltip {
+    width: 87px !important;
+  }
+}
+
+.bloc-inf-1500 {
+  z-index: 9999999999;
+
+  ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+
+    > li {
+      display: inline;
+      padding: 0;
+      position: relative;
+
+      &:hover > ul {
+        display: block;
+      }
+    }
+
+    ul {
+      position: absolute;
+      display: none;
+      margin: 0;
+      padding: 5px;
+      width: 155px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 -11px 13px 0 rgba(0, 0, 0, 0.05);
+      right: 0;
+
+      li {
+        display: inline-block;
+        background-image: none;
+        margin: 0 2px;
+      }
+
+      ul {
+        position: absolute;
+        top: 25px;
+        right: 0;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        width: 140px;
+        box-shadow: 0 -11px 13px 0 rgba(0, 0, 0, 0.05);
+
+        li {
+          display: block;
+
+          a {
+            display: block;
+            padding: 5px 0;
+            color: #615f5f;
+            font-family: "TT Wellingtons Medium";
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 12px;
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+              color: #615f5f;
+            }
+          }
+        }
+      }
+    }
+
+    a {
+      color: #615f5f;
+      font-family: "TT Wellingtons Medium";
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 14px;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: #615f5f;
+      }
+    }
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  img {
+    max-width: 25px;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .edit-buttons {
+    display: block;
+  }
+  .edit-buttons.bloc-sup-1500 {
+    visibility: unset;
+    display: block;
+  }
+  .edit-buttons.bloc-inf-1500 {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1499px) {
+
+  .edit-buttons.bloc-inf-1500 {
+    width: 28px;
+  }
+
+  .edit-buttons.bloc-inf-1500 {
+    display: block;
+    visibility: unset;
+  }
+  .edit-buttons.bloc-sup-1500 {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.icon-plus-plus {
+  max-width: 25px;
+}
+
+.pop-up-search {
+  height: 140px;
+}
+.block-input-week-rhis {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+  max-width: 285px;
+  padding-left: 3px;
+
+  .img-planning {
+    position: absolute;
+    z-index: 999;
+
+    img {
+      width: 20px;
+      height: auto;
+      cursor: pointer;
+      margin-top: -5px;
+    }
+  }
+
+  .img-planning.left {
+    left: 14px;
+  }
+
+  .img-planning.right {
+    left: 185px;
+  }
+}
+
+.btn-light {
+  color: #9B9B9B;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  border: 1px solid #DEDEDE;
+  height: 32px;
+}
+.popup-equipier {
+  .section-element{
+    margin-left: 0;
+  }
+}

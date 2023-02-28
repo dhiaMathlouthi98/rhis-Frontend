@@ -1,0 +1,59 @@
+.style-tooltip-hover {
+  float: right;
+  margin-right: 18%;
+}
+
+:host {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+:host ::ng-deep {
+  .section-element .text-field,
+  .ui-calendar .ui-inputtext {
+    margin-top: 0;
+  }
+
+  .checkbox-active-contrat {
+    .ui-chkbox .ui-chkbox-box.ui-state-disabled {
+      cursor: pointer !important;
+    }
+  }
+  .ui-datepicker .ui-datepicker-title {
+    font-weight: normal;
+  }
+
+}
+
+.specific-block-info {
+  margin-left: 36%;
+  .form-control {
+    height: 51px;
+    font-size: 11px;
+  }
+  .section-element {
+    width: 34.5%;
+  }
+}
+
+.specific-block-sortie {
+  .form-control {
+    height: 51px;
+  }
+}
+
+.add-margin-motifS.specific-block-info {
+  margin-top: -76px !important;
+}
+
+.input-style-contract {
+  height: 51px;
+  width: 100%;
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  padding: 17px !important;
+  outline: none;
+}

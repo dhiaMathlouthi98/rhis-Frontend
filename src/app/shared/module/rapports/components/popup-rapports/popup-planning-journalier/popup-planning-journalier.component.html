@@ -1,0 +1,64 @@
+<div class="popup-planning-journalier popup-equipier">
+  <div class="row">
+    <div class="col-5 no-padding-spec">
+      <span class="ml-1 ui-chkbox-label">{{'RAPPORT_PLANNING_JOURNALIER.MODE_PAYSAGE' | translate}}</span>
+      <p-inputSwitch [(ngModel)]="mode" class="green-switch"
+                     id="RAPPORT_PlgJR-switchMode"></p-inputSwitch>
+      <span class="ml-1 ui-chkbox-label">{{'RAPPORT_PLANNING_JOURNALIER.MODE_PORTRAIT' | translate}}</span>
+    </div>
+    <div class="align-self-center">
+      <label class="ui-chkbox-label">{{"RAPPORT_PLANNING_JOURNALIER.TRI_PAR" | translate}} </label>
+    </div>
+    <div class="col-3">
+      <p-dropdown [(ngModel)]="sortBy" [autoDisplayFirst]="false" [options]="sortTypes" class="drop-down-general"
+                  id="RAPPORT_PlgJR-sort"
+                  optionLabel="sortName"></p-dropdown>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div *ngFor="let pdfSection of pdfSections | keyvalue: originalOrder" class="col-6 ckeckbox-style">
+      <p-checkbox (onChange)="checkProdMoem(pdfSection.key.toString())"
+                  [(ngModel)]="selectedSectionsValues"
+                  [disabled]="(pdfSection.key.toString() === 'PROD' && moemSelected)
+                        || (pdfSection.key.toString() === 'MOEM' && prodSelected)"
+                  [label]="pdfSection.value | translate"
+                  [value]="pdfSection.key"
+                  id="RAPPORT_PlgJR-pdfCheckbox"
+                  name="groupname"></p-checkbox>
+    </div>
+  </div>
+  <div class="row mt-4 mb-4 ml-0">
+    <div class="section-element mr-4">
+      <label class="section-element-title">{{'PLANNING_EQUIPIER.HEURE_SEPARATION'|translate}}</label>
+      <div>
+        <p-calendar [(ngModel)]="heureSeparation"
+                    [timeOnly]="true"
+                    appendTo="body"
+                    id="RAPPORT_PlgJR-HourSep"
+        ></p-calendar>
+      </div>
+    </div>
+    <div *ngIf="!selectedDate" class="section-element bloc-date_journee">
+      <label class="section-element-title">{{'PLANNING_EQUIPIER.DATE_JOURNEE'|translate}} *</label>
+      <div class="date-journee-calendar">
+        <p-calendar [(ngModel)]="choosenDate" (ngModelChange)="dateNotExist=false;" dateFormat="dd/mm/yy"
+                    id="RAPPORT_PlgJR-dateJ"></p-calendar>
+        <span *ngIf="dateNotExist"
+              class="form-item-error red small-rhis position-absolute date-journee_obl"
+              id="RAPPORT_plgJournalier-dateFError">{{'POPUP_RAPPORT.REQUIRED_DATE' | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="ml-3 section-element mt-4 last-element-label-semaine">
+      <p-checkbox [(ngModel)]="displayWeek" [label]="labelSemaine" binary="true"
+                  id="RAPPORT_PlgJR-displayWeek"
+                  name="displayWeek"></p-checkbox>
+    </div>
+  </div>
+  <button (click)="validatePdfSectionsSelection()"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-2"
+          id="RAPPORT_PlgJR-afficheBtn" type="button">
+    <span>{{"POPUP_RAPPORT.AFFICHER" | translate | uppercase}}</span>
+  </button>
+</div>

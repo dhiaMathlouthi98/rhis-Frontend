@@ -1,0 +1,98 @@
+<div class="generation-rapport">
+  <div class="bloc-left scroll-general-rhis"  [ngClass]="(rapportCodeName === 'PERFORMANCE_RAPPORT' && !comparatif) ? 'scroll-analyse-perf' : ''">
+    <div class="align-spinner-text" *ngIf="showSpinner else pdfTemplate;">
+      <p-progressSpinner  class="anomalies-in-progress"></p-progressSpinner>
+    </div>
+    <ng-template #pdfTemplate>
+      <ng-container *ngIf="generatedReport else generateButtonTemplate">
+        <div *ngIf="rapportCodeName !== 'PERFORMANCE_RAPPORT' &&  rapportCodeName != 'POSTES_TRAVAIL_RAPPORT'" class="pdf scroll" style="height: 100%;">
+          <ngx-extended-pdf-viewer [filenameForDownload]=documentName
+                                   [showBookmarkButton]=false [showFindButton]=false
+                                   [showHandToolButton]=false
+                                   [showOpenFileButton]=false
+                                   [showPresentationModeButton]=false
+                                   [showPropertiesButton]=false
+                                   [showScrollingButton]=false
+                                   [showSecondaryToolbarButton]=false
+                                   [showSidebarButton]=false
+                                   [showZoomButtons]=false
+                                   [src]="reportViewer"
+                                   backgroundColor="rgb(82, 79, 79)"
+                                   height="100%"
+                                   useBrowserLocale="true">
+          </ngx-extended-pdf-viewer>
+
+        </div>
+        <div *ngIf="rapportCodeName === 'PERFORMANCE_RAPPORT' && !comparatif">
+          <rhis-performance-table
+          [DISPLAY_YEAR]="'mois'"
+          [ecart]="reportViewer?.ecart"
+          [filter]="reportViewer?.filter"
+          [header]="reportViewer?.header"
+          [spMode]="reportViewer?.spMode"
+          [performanceValues]="reportViewer?.performanceValues"
+          [tableTitle]="reportViewer?.tableTitle"
+          [applyStyle]="true"
+          [typePeriode]="typePeriode"
+          >
+          </rhis-performance-table>
+        </div>
+
+        <div *ngIf="rapportCodeName === 'PERFORMANCE_RAPPORT' && comparatif">
+        <rhis-analyse-performance-report [data]="data"></rhis-analyse-performance-report>
+        </div>
+        <div *ngIf="rapportCodeName === 'POSTES_TRAVAIL_RAPPORT'">
+         <rhis-poste-travail-report [data]="data" [selectedPage]="selectedReport"  ></rhis-poste-travail-report>
+        </div>
+
+      </ng-container>
+    </ng-template>
+
+    <ng-template #generateButtonTemplate>
+      <div *ngIf="rapportCodeName === 'POSTES_TRAVAIL_RAPPORT'" class="align-spinner-text">
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_1" | translate}}</span>
+        <span class="font-weight-bold">{{"GESTION_PARC_RAPPORT.RAPPORT_POSTE_TRAVAIL_TITLE"| translate}}</span>
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_2" | translate}}</span>
+      </div>
+      <div *ngIf="rapportCodeName === 'PILOTAGE_RESUME_PLANNING_RAPPORT'" class="align-spinner-text">
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_1" | translate}}</span>
+        <span class="font-weight-bold">{{"GESTION_PARC_RAPPORT.RESUME_PLANNING" | translate}}</span>
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_2" | translate}}</span>
+      </div>
+      <div *ngIf="rapportCodeName === 'PERFORMANCE_RAPPORT'" class="align-spinner-text">
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_1" | translate}}</span>
+        <span class="font-weight-bold">{{"GESTION_PARC_RAPPORT.ANALYSE_PERFORMANCE" | translate}}</span>
+        <span>{{"GESTION_PARC_RAPPORT.CLICK_TO_GENERATE_PART_2" | translate}}</span>
+      </div>
+    </ng-template>
+    <div class="bloc-exporter item">
+      <span (click)="exportButtonClick()" [hidden]="!buttonExport" class="con-tooltip bottom">
+        <img alt="" src="assets/icons/employe/dl small.svg">
+        <span class="rhis-tooltip exporter-rapport">{{"GESTION_PARC_RAPPORT.EXPORTER" | translate}}</span>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="generatedReport && showPaginator" class="footer-pdf">
+    <p-paginator (onPageChange)="onChangeReport($event)" [first]="first" [pageLinkSize]="5" [rows]="1"
+                 [totalRecords]="totalRecords"></p-paginator>
+  </div>
+  <div class="bloc-right scroll-general-rhis">
+    <p-tabView>
+      <p-tabPanel [header]="firstTab">
+        <rhis-onglet-parametres
+          (generateRapport)="generateReportData($event)"  (displaySpinner)="displaySpinner($event)"
+          [libelleRapport]="libelleRapport" [idRapport]="idRapport" [rapportCodeName]="rapportCodeName"
+          [uuidRapport]="uuidRapport" [selectedReport]="selectedReport" [envoiParams]="envoiParams">
+        </rhis-onglet-parametres>
+      </p-tabPanel>
+      <p-tabPanel [disabled]="sharedService.tabEnvoiEmailDisabled" [header]="secondTab" [tooltip]="sharedService?.tabEnvoiEmailDisabled ? secondTabTooltipText : ''">
+        <rhis-onglet-envoi-rapport
+          [libelleRapport]="libelleRapport" [rapportCodeName]="rapportCodeName"
+          [uuidRapport]="uuidRapport" [envoiParams]="envoiParams"
+        ></rhis-onglet-envoi-rapport>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

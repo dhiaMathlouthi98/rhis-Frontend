@@ -1,0 +1,83 @@
+<div>
+  <form [formGroup]="addUserForm">
+    <div class="row">
+      <div class="section-element col-6">
+        <label class="section-element-title" for="nom">{{"USER.NOM" | translate}}*</label> <br>
+        <input class="text-field" id="nom" [(ngModel)]="selectedUser.nom" type="text" pInputText required="true"
+               formControlName="nom">
+        <br>
+        <span class="form-item-error red small-rhis ml-1"
+              *ngIf="addUserForm.controls['nom'].invalid &&(addUserForm.controls['nom'].touched  || isSubmitted)">
+          {{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+      </div>
+      <div class="section-element delete-mg-style-rhis col-6">
+        <label class="section-element-title" for="prenom">{{"USER.PRENOM" | translate}}*</label> <br>
+        <input class="text-field" id="prenom" [(ngModel)]="selectedUser.prenom" type="text" pInputText required="true"
+               formControlName="prenom">
+        <br>
+        <span class="form-item-error red small-rhis ml-1"
+              *ngIf="addUserForm.controls['prenom'].invalid &&(addUserForm.controls['prenom'].touched  || isSubmitted)">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="section-element delete-mg-style-rhis section-body mt-3 col-6">
+        <label class="section-element-title" for="profils">
+          {{"USER.PROFIL" | translate}}*
+        </label>
+        <p-dropdown id="profils"
+                    [filter]="false"
+                    rhisStyleForm
+                    [hasError]="addUserForm.controls['profil'].invalid  &&(addUserForm.controls['nationalite'].touched|| isSubmitted)"
+                    [selector]="selectors.dropDownSelector"
+                    [scrollHeight]="scrollHeight"
+                    [options]="listProfil"
+                    optionLabel="libelle"
+                    [(ngModel)]="selectedProfil"
+                    [autoDisplayFirst]="false"
+                    required="true"
+                    appendTo="body"
+                    formControlName="profil">
+        </p-dropdown>
+        <br>
+        <span class="form-item-error red small-rhis ml-1"
+              *ngIf="(addUserForm.get('profil').invalid || addUserForm.get('profil').untouched || !addUserForm.controls['profil'].value?.idProfil) && isSubmitted ">
+        {{"USER.OBLIGATORY" | translate}}
+      </span>
+      </div>
+
+      <div class="section-element delete-mg-style-rhis section-body mt-3 col-6">
+        <label class="section-element-title" for="langues">
+          {{"USER.DEFAULT_LANGUAGE" | translate}}*
+        </label>
+        <p-dropdown id="langues"
+                    [(ngModel)]="languagedropdown"
+                    [options]="languages"
+                    [placeholder]=language.label
+                    formControlName="langue">
+        </p-dropdown>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="section-element delete-mg-style-rhis col-12 section-body mt-3">
+        <label class="section-element-title" for="email">{{"USER.EMAIL" | translate}}*</label> <br>
+        <input (ngModelChange)="onChangeMail()" [(ngModel)]="selectedUser.email" class="text-field"
+               formControlName="email"
+               id="email"
+               pInputText required="true"
+               type="email">
+        <br>
+        <span *ngIf="addUserForm.controls['email'].invalid && (addUserForm.controls['email'].touched  || isSubmitted)"
+              class="form-item-error red small-rhis ml-1"> {{"USER.EMAIL_ERROR"  | translate}}</span>
+        <span *ngIf="mailExistatnt && isSubmitted"
+              class="form-item-error red small-rhis ml-1">{{"USER.EMAIL_EXISTANT"  | translate}}</span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row mt-4">
+  <div class="btn save-add-button-rhis orange-background mt-3 btn-popup-rhis" (click)="addOrUpdateUser()">
+    <span>{{buttonLabel | uppercase}}</span>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+<div class="position-travail-form-container">
+  <form [formGroup]="positionTravailform">
+    <div class="position-travail-form">
+      <!-- libelle -->
+      <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="section-element du">
+              <label for="libelle" class="section-element-title">
+                {{'POST_TRAVAIL.NOM' | translate}}*
+              </label>
+              <input id="libelle" type="text" size="30" pInputText class="text-field" formControlName="libelle">
+              <span class="form-item-error red small-rhis"
+                    *ngIf="(positionTravailform.get('libelle').hasError('required')||positionTravailform.get('libelle').hasError('trimValidator')) && isSubmitted">{{"POST_TRAVAIL.REQUIRED" | translate}}</span>
+              <span class="form-item-error red small-rhis"
+                    *ngIf="existentPositionTravailMessage">{{existentPositionTravailMessage}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-body mt-3">
+        <div class="row">
+          <div class="col-6">
+            <!-- duree max -->
+            <div class="section-element du">
+              <label for="dureeMax" class="section-element-title">
+                {{'POST_TRAVAIL.DUR_MAX' | translate}}*
+              </label>
+              <input id="dureeMax" type="number" step=".01" pInputText class="text-field" rhisTwoDigitDecimaNumber
+                     formControlName="dureeMax">
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('dureeMax').hasError('required') && isSubmitted">{{"POST_TRAVAIL.REQUIRED" | translate}}</span>
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('dureeMax').hasError('pattern') && isSubmitted">{{"POST_TRAVAIL.ERR_CHAMP_INVALID" | translate}}</span>
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('dureeMax').hasError('min') && isSubmitted">{{"POST_TRAVAIL.MIN_DURRE_MAX_ERROR" | translate}}</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <!-- min qualification -->
+            <div class="section-element du">
+              <label for="minQualfication" class="section-element-title">
+                {{'POST_TRAVAIL.M_QUALIFICATION' | translate}}*
+              </label>
+              <input id="minQualfication" type="number" pInputText class="text-field" rhisIntegerNumbers
+                     formControlName="minQualfication">
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('minQualfication').hasError('required') && isSubmitted">{{"POST_TRAVAIL.REQUIRED" | translate}}</span>
+              <span class="form-item-error red small-rhis" *ngIf="positionTravailform.get('minQualfication').hasError('pattern') &&
+              isSubmitted">{{"POST_TRAVAIL.ERR_CHAMP_INVALID" | translate}}</span>
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('minQualfication').hasError('min') && isSubmitted">{{"POST_TRAVAIL.MIN_QUALIF_ERROR" | translate}}</span>
+              <span class="form-item-error red small-rhis"
+                    *ngIf="positionTravailform.get('minQualfication').hasError('max') && isSubmitted">{{"POST_TRAVAIL.MIN_QUALIF_ERROR" | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-body mt-3">
+        <div class="row d-flex align-items-top">
+          <!-- DECALAGE_ARRIVE -->
+          <div class="col-4">
+            <div class="section-element du">
+              <label for="decalageArrive" class="section-element-title">
+                {{'POST_TRAVAIL.DECALAGE_ARRIVE' | translate}}
+              </label>
+              <input id="decalageArrive" type="number" rhisIntegerNumbers pInputText
+                     class="text-field col-lg-9 col-md-9 "
+                     formControlName="decalageArrive">
+              <span class="ml-2"> min</span>
+            </div>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <p-inputSwitch id="senseDecalageArrive" formControlName="senseDecalageArrive"
+                           class="input-switch-h"></p-inputSwitch>
+            <span *ngIf="positionTravailform.get('senseDecalageArrive').value" class="ml-1"
+                  style="color: green">{{'POST_TRAVAIL.AVANT' | translate}}</span>
+            <span *ngIf="!positionTravailform.get('senseDecalageArrive').value" class="ml-1"
+                  style="color: darkred">{{'POST_TRAVAIL.APRES' | translate}}</span>
+          </div>
+          <div class="col-4">
+            <!-- DECALAGE_DEPART -->
+            <div class="section-element du">
+              <label for="decalageDepart" class="section-element-title">
+                {{'POST_TRAVAIL.DECALAGE_DEPART' | translate}}
+              </label>
+              <input id="decalageDepart" type="number" rhisIntegerNumbers pInputText
+                     class="text-field col-lg-9 col-md-9 "
+                     formControlName="decalageDepart">
+              <span class="ml-2"> min</span>
+            </div>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <!-- SENS_DECALAGE_DEPART -->
+            <div class="section-element du  d-flex align-items-center">
+              <p-inputSwitch id="senseDecalageDepart" formControlName="senseDecalageDepart"
+                             class="input-switch-h"></p-inputSwitch>
+              <span *ngIf="positionTravailform.get('senseDecalageDepart').value" class="ml-1"
+                    style="color: green">{{'POST_TRAVAIL.AVANT' | translate}}</span>
+              <span *ngIf="!positionTravailform.get('senseDecalageDepart').value" class="ml-1"
+                    style="color: darkred">{{'POST_TRAVAIL.APRES' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-body mt-2">
+        <div class="row">
+          <div class="col-3 mt-4 section-element checkbox-section checkbox-position">
+            <!--fermeture-->
+            <p-checkbox type="checkbox"
+                        id="fermeture"
+                        formControlName="fermeture"
+                        [label]="'POST_TRAVAIL.FERMETURE' | translate"
+                        binary="true">
+            </p-checkbox>
+          </div>
+          <div class="col-3 mt-4 checkbox-section checkbox-position">
+            <!--prod-->
+            <p-checkbox type="checkbox"
+                        id="prod"
+                        formControlName="prod"
+                        [label]="'POST_TRAVAIL.PROD' | translate"
+                        binary="true">
+            </p-checkbox>
+          </div>
+          <div class="col-6 mt-2 color-style-modify-position">
+            <label for="couleur" class="section-element-title">
+              {{'POST_TRAVAIL.COULEUR' | translate}}
+            </label>
+            <input id="couleur" type="color" pInputText class="text-field" formControlName="couleur">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <button (click)="addOrUpdatePositionTravail()" class="btn save-add-button-rhis orange-background btn-popup-rhis"
+              type="button">
+        <span>{{buttonTitle | uppercase }}</span>
+      </button>
+    </div>
+  </form>
+</div>

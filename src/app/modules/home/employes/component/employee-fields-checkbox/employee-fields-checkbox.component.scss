@@ -1,0 +1,90 @@
+.employee-chexbox-excel {
+  position: absolute;
+  top: 43px;
+  background: #fff;
+  right: 115px;
+  border: 1px solid #c8c8c8;
+  padding: 5px 10px;
+  box-shadow: 0 -11px 13px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  width: fit-content;
+
+  .scroll-general-rhis.content-emp-chexbox {
+    height: 100%;
+    max-height: 67vh;
+    overflow-y: auto;
+    width: 100%;
+  }
+  .scroll-general-rhis:hover::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  .card {
+    border: none;
+
+    .card-body {
+      padding: 1.25rem 0 0 0;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 15px;
+    min-width: 205px;
+  }
+
+  input {
+    border-radius: 3px;
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+    background-color: #ffffff;
+    text-align: center;
+    margin-right: 7px;
+  }
+
+  input[type=text] {
+    border: 1px solid #AFA899;
+  }
+
+  label {
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+  }
+
+  .bloc-submit {
+    width: 100%;
+    .btn.save-add-button-rhis {
+      width: fit-content;
+    }
+  }
+}
+
+.center-btn-emp-excel {
+  margin-right: 5rem !important;
+}
+
+
+.content-first, .content-second {
+  visibility: hidden;
+  display: none;
+}
+
+.displayOnClick {
+  display: block;
+  visibility: visible;
+}
+
+.first-level {
+  color: #6389EC !important;
+}
+
+.second-level {
+  color: #BEB8AC !important;
+}
+
+.pi-chevron-right, .pi-chevron-down {
+  font-size: 1em;
+}

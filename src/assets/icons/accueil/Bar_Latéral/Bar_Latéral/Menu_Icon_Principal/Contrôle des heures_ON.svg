@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>ABED5201-56D1-4D51-BD30-447E835EA91F</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="00-Tab-Bar" transform="translate(-25.000000, -331.000000)">
+            <g id="Bar_Latéral">
+                <g id="Menu_Icon_Principal" transform="translate(25.000000, 35.000000)">
+                    <g id="Contrôle-des-heures_ON" transform="translate(0.000000, 296.000000)">
+                        <g id="Contrôle-des-heures">
+                            <path d="M12,0 C5.372583,-4.05812251e-16 8.11624501e-16,5.372583 0,12 C-8.11624501e-16,18.627417 5.372583,24 12,24 C18.627417,24 24,18.627417 24,12 C23.9928352,5.37555305 18.624447,0.00716484761 12,0 Z M12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C17.5228475,2 22,6.4771525 22,12 C21.9939376,17.5203344 17.5203344,21.9939376 12,22 L12,22 Z" id="Shape" fill="#AFA899" fill-rule="nonzero"></path>
+                            <path d="M12,4 C11.7238576,4 11.5,4.22385763 11.5,4.5 L11.5,11.5 L4.5,11.5 C4.22385763,11.5 4,11.7238576 4,12 C4,16.418278 7.581722,20 12,20 C16.418278,20 20,16.418278 20,12 C20,7.581722 16.418278,4 12,4 Z" id="Path" fill="#385FE3"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

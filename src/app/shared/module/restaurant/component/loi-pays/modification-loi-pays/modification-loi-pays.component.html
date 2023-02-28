@@ -1,0 +1,122 @@
+<div class="row align-items-start">
+  <div class="col-lg col-md">
+    <div class="form-group">
+      <div class="ui-g-12">
+        <div class="row ">
+          <div class="col-lg-5 col-md-5 align-self-center">
+            {{'LABELS.LAW' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            {{selectedLoi.translatedLibelle}}
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-5 col-md-5 align-self-center">
+            {{'LABELS.MAJEUR' | translate}}
+          </div>
+          <div class="col-lg-6 col-md-6 section-element">
+            <div *ngIf="selectedLoi?.isTime && !selectedLoi?.majeurForbiddenChanges">
+              <p-calendar
+                [(ngModel)]="selectedLoi.valeurMajeurAfficher"
+                (onClose)="validTimeToDisplay(selectedLoi)"
+                [timeOnly]="true">
+              </p-calendar>
+            </div>
+            <div
+              *ngIf="(selectedLoi?.valeurMajeurAfficher === 'true' || selectedLoi?.valeurMajeurAfficher === 'false') && !selectedLoi?.majeurForbiddenChanges">
+              <p-checkbox
+                [(ngModel)]="selectedLoi.majeurBooleanValue"
+                (onChange)="setBooleanToStringValue(true)"
+                binary="true">
+              </p-checkbox>
+            </div>
+            <div *ngIf="selectedLoi?.isPeriod && !selectedLoi?.majeurForbiddenChanges">
+              <p-dropdown
+                [options]="listPeriodiciteItem"
+                [(ngModel)]="selectedLoi.valeurMajeurAfficher"
+                editable="true"
+                class="drop-down-general">
+              </p-dropdown>
+            </div>
+            <div
+              *ngIf="!selectedLoi?.isTime && !selectedLoi?.isPeriod && !selectedLoi?.majeurForbiddenChanges">
+              <span
+                *ngIf="selectedLoi?.valeurMajeurAfficher !== 'false' && selectedLoi?.valeurMajeurAfficher !== 'true'">
+                          <input class="text-field" type="text" rhisIntegerNumbers
+                                 [(ngModel)]="selectedLoi.valeurMajeurAfficher">
+              </span>
+            </div>
+            <div *ngIf="selectedLoi?.majeurForbiddenChanges">
+              <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-5 col-md-5 align-self-center">
+            {{'LABELS.MINEUR' | translate}}
+          </div>
+          <div class="col-lg-6 col-md-6 section-element">
+            <div *ngIf="selectedLoi?.isTime && !selectedLoi?.mineurForbiddenChanges">
+              <p-calendar
+                [(ngModel)]="selectedLoi.valeurMineurAfficher"
+                (onClose)="validTimeToDisplay(selectedLoi)"
+                [timeOnly]="true">
+              </p-calendar>
+            </div>
+            <div
+              *ngIf="(selectedLoi?.valeurMineurAfficher === 'true' || selectedLoi?.valeurMineurAfficher === 'false') && !selectedLoi?.mineurForbiddenChanges">
+              <p-checkbox
+                [(ngModel)]="selectedLoi.mineurBooleanValue"
+                (onChange)="setBooleanToStringValue(false)"
+                binary="true">
+              </p-checkbox>
+            </div>
+            <div *ngIf="selectedLoi?.isPeriod && !selectedLoi?.mineurForbiddenChanges">
+              <p-dropdown
+                [options]="listPeriodiciteItem"
+                [(ngModel)]="selectedLoi.valeurMineurAfficher"
+                editable="true"
+                class="drop-down-general">
+              </p-dropdown>
+            </div>
+            <div
+              *ngIf="!selectedLoi?.isTime && !selectedLoi?.isPeriod && !selectedLoi?.mineurForbiddenChanges">
+              <span
+                *ngIf="selectedLoi?.valeurMineurAfficher !== 'false' && selectedLoi?.valeurMineurAfficher !== 'true'">
+                          <input class="text-field" type="text" rhisIntegerNumbers
+                                 [(ngModel)]="selectedLoi.valeurMineurAfficher">
+              </span>
+            </div>
+            <div *ngIf="selectedLoi?.mineurForbiddenChanges">
+              <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-5 col-md-5 align-self-center">
+            {{'LABELS.BLOQUANTE' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            <i *ngIf="selectedLoi?.loiRef?.bloquante" class="pi pi-check"></i>
+            <p-checkbox *ngIf="!selectedLoi?.loiRef?.bloquante" [(ngModel)]="selectedLoi.bloquante"
+                        binary="true"></p-checkbox>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-5 col-md-5 align-self-center">
+            {{'LABELS.POINTEUSE' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            <p-checkbox [(ngModel)]="selectedLoi.loiPointeuse"
+                        binary="true"></p-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-footer class="d-flex justify-content-center mt-3">
+  <button type="button" (click)="updateLoiPays()" class="btn save-add-button-rhis btn-popup-rhis orange-background">
+    <span>{{updateLoiPopupTitle | uppercase }}</span>
+  </button>
+</p-footer>

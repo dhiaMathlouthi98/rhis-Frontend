@@ -1,0 +1,57 @@
+:host ::ng-deep {
+  .save-add-button-rhis {
+    float: none;
+  }
+
+  .planning-general-rhis {
+    .ui-chkbox {
+      .ui-chkbox-box {
+        width: 15px !important;
+        height: 15px !important;
+        border: none;
+
+        &:hover {
+          border: none !important;
+        }
+
+        &::before {
+          font-size: 18px;
+        }
+      }
+
+      .ui-chkbox-icon {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .rhis-container {
+    margin-bottom: 60px;
+  }
+  table.planning {
+    tbody, thead {
+      display: block;
+    }
+
+    tbody.content-planning-rhis.heightBodyPlanning {
+      height: auto;
+    }
+
+    tbody.content-planning-rhis {
+      td {
+        width: calc((100% - 243px) / 7);
+      }
+
+      td:nth-child(1) {
+        width: 243px !important;
+      }
+    }
+  }
+
+  p-dropdown {
+    border: none !important;
+  }
+}
+
+
+

@@ -1,0 +1,10 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="100" class="tabs-container">
+  <div [ngClass]="displayDashboardView ? 'active-tab' : 'not-active-tab'"
+       [class]="canAcess()? 'first-tab':''" (click)="goToDashboard()">{{'Acceuil.dashboard' | translate}}</div>
+  <div *ngIf="canAcess()" [ngClass]="displayPerformanceView ? 'active-tab' : 'not-active-tab'"
+       (click)="goToPerformance()" [class.disabled]="!this.canAcess()">{{'Acceuil.performances' | translate}}</div>
+</div>
+<div [ngStyle]="{'height': heightInterface}" class="scroll-content-rhis">
+  <rhis-dashboard [hidden]="!displayDashboardView"></rhis-dashboard>
+  <rhis-performance [hidden]="!displayPerformanceView"></rhis-performance>
+</div>

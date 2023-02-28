@@ -1,0 +1,137 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-md-4 col-lg-6">
+    </div>
+    <div class="float-right col-md-8 col-lg-6">
+      <button type="button" *ngIf="listePositionTravail?.length && (updateButtonControl() || addButtonControl())" (click)="updateAllListePositionTravail()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate | uppercase}}</span>
+      </button>
+      <button id="1004" type="button" (click)="addNewPopup()" class="btn save-add-button-rhis blue-background">
+        <span>{{'POST_TRAVAIL.ADD_NEW_BUTTON' | translate | uppercase }}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div class="table-list bg-gris-avec-border last-th-center responsive-table-rhis"
+         *ngIf="listePositionTravail?.length">
+      <p-table [value]="listePositionTravail" [responsive]="true"
+               selectionMode="single"
+               [(selection)]="selectedPosteTravail" [dataKey]="'libelle'" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th scope="col">{{'POST_TRAVAIL.NOM' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.PROD' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.DUR_MAX' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.M_QUALIFICATION' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.FERMETURE' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.DECALAGE_ARRIVE' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.DECALAGE_DEPART' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.COULEUR' | translate}}</th>
+            <th scope="col">{{'POST_TRAVAIL.STATUS' | translate}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-postTravail>
+          <tr (click)="updatePopup(postTravail,i)" [pSelectableRow]="postTravail" class="table-row">
+            <td>
+              <div class="td-container td-left-border">
+                {{postTravail?.libelle}}
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                <i *ngIf="postTravail?.prod" class="pi pi-check"></i>
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                {{postTravail?.dureeMax}}
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                {{postTravail?.minQualfication}}
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                <i *ngIf="postTravail?.fermeture" class="pi pi-check"></i>
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                {{postTravail?.decalageArrive}} min
+                <span *ngIf="postTravail?.senseDecalageArrive">{{'POST_TRAVAIL.AVANT' | translate}}</span>
+                <span *ngIf="!postTravail?.senseDecalageArrive">{{'POST_TRAVAIL.APRES' | translate}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                {{postTravail?.decalageDepart}} min
+                <span *ngIf="postTravail?.senseDecalageDepart">{{'POST_TRAVAIL.AVANT' | translate}}</span>
+                <span *ngIf="!postTravail?.senseDecalageDepart">{{'POST_TRAVAIL.APRES' | translate}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="td-container" [(style.backgroundColor)]="postTravail.couleur">
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+          <span class="label-table"
+                [ngStyle]="{'background-color': postTravail.actifPositionTravail ? '#2DC76D': '#FF9B42'}">
+          {{(postTravail.actifPositionTravail ? "POST_TRAVAIL.ACTIF" : "POST_TRAVAIL.INACTIF") | translate}}
+        </span>
+              </div>
+            </td>
+            <td>
+              <div class="td-container">
+                <div *ngIf="postTravail.actifPositionTravail" class="float-right mr-3">
+                  <i *ngIf=" i!=0" (click)="augmenterPriorite(postTravail);$event.stopPropagation()"
+                     class="pi pi-chevron-up"></i>
+                  <i *ngIf=" i!=listeActifPositionTravail.length-1"
+                     (click)="diminuerPriorite(postTravail);$event.stopPropagation()"
+                     class="pi pi-chevron-down"></i>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+              <span *ngIf="postTravail?.actifPositionTravail && deleteButtonControl()" class="item"
+                    (click)="deletePositionTravail(postTravail);$event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/Btn_Close.svg"
+                    alt="no image">
+              </span>
+                  <span *ngIf="!postTravail?.actifPositionTravail" class="item"
+                        (click)="reactivePositionTravail(postTravail);$event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/Btn_Add.svg"
+                    alt="no image">
+                </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="hidePopup()"
+  [showPopUp]="displayPopup"
+  [title]="addUpdatePopupTitle"
+  [width]="popUpStyle?.width">
+  <rhis-add-update-position-travail *ngIf="displayPopup" [initPositionTravail]="selectedPosteTravail"
+                                    [existentPositionTravail]="existentPositionTravail"
+                                    (addOrUpdatePositionTravailEvent)="checkPostionTravailExistance($event)"
+                                    (resetErrorMessagesEvent)="resetErrorMessagesEvent()"
+                                    [buttonLabel]='buttonLabel'
+  ></rhis-add-update-position-travail>
+</rhis-pop-up>
+

@@ -1,0 +1,62 @@
+<div class="item-body block-shift-equipier-rhis" (dblclick)="openUpdateShiftForm()">
+    <div *ngIf="item?.sign" [ngStyle]="{'background': item?.colorSign}"
+         class="shift-signe-texte">
+    </div>
+    <div *ngIf="item?.isShift && item?.canUpdate" class="dropdown">
+        <a aria-haspopup="true" class="dropdown-toggle edit-link" data-toggle="dropdown"
+           aria-expanded="false" id="PLG-P-EditLink-Icon"
+           role="button">
+            <i class="edit-icon"
+               [ngStyle]="{'background-image': item.iconEditShift}"></i>
+        </a>
+        <div *ngIf="!lockState && (canDelete || canUpdate)"
+             [ngClass]="{'dropdownEdit-condense': minimalDisplay}"
+             class="dropdown-menu">
+            <ng-container>
+                <a class="dropdown-item"
+                   *ngIf="((enableDragAndResize && item?.resizeEnabled) && item.modifiable)  && canUpdate"
+                   (click)="openUpdateShiftForm()"
+                   id="PLG_Jr-edit-tooltip">{{'PLANNING_EQUIPIER.EDIT' | translate}}</a></ng-container>
+            <a class="dropdown-item" *ngIf="canDelete"
+               (click)="showConfirmDeleteShift($event, item)"
+               id="PLG_Jr-delete-tooltip">{{'PLANNING_EQUIPIER.DELETE' | translate}}</a>
+        </div>
+    </div>
+    <div *ngIf="item?.isShift"
+         [ngClass]="{'vertical-line-left': !minimalDisplay,
+                           'vertical-line-left-minimal-display': minimalDisplay,
+                           'shift-signe' :item?.sign,
+                           'resize-left': item?.acheval && !item?.modifiable
+                          }"
+         [ngStyle]="{'background-color' : item?.textColor}">&nbsp;
+    </div>
+    <div [ngClass]="{'item-label': item.isShift && !minimalDisplay,
+                     'item-label-minimal-display': item.isShift && minimalDisplay,
+                     'hiddenTexteShift': isSmallShiftHover}"
+         class="style-tooltip-hover">
+        <div>{{item?.label}}</div>
+        <div *ngIf="!minimalDisplay">{{item?.timeLabel}}</div>
+    </div>
+    <div *ngIf="item.isShift"
+         [ngClass]="{'vertical-line-right': !minimalDisplay,
+                           'vertical-line-right-minimal-display': minimalDisplay,
+                           'resize-right': item?.acheval && item?.modifiable
+                          }"
+         [ngStyle]="{'background-color' : item?.textColor}">&nbsp;
+    </div>
+    <div *ngIf="isSmallShiftHover && item?.isShift"
+         [ngClass]="{'tooltip-position-right': (item.x <= 4) }"
+         style="color: rgb(65, 65, 65)">
+        <rhis-infos-tooltip
+                [buttom]="(item.x <= 4) ? tooltipStyleRight.buttom : tooltipStyle.buttom"
+                [isFlagTop]="tooltipStyle.isFlagTop"
+                [ngClass]="{'deleteArrowTooltip' : minimalDisplay}"
+                [right]="(item.x <= 4) ? tooltipStyleRight.right : tooltipStyle.right"
+                [top]="(item.x <= 4) ? tooltipStyleRight.top : tooltipStyle.top"
+                class="contentSmallShiftHover">
+            <div style="width: 40px;">{{item?.label}}</div>
+            <div *ngIf="!minimalDisplay">{{item?.timeLabel}}</div>
+        </rhis-infos-tooltip>
+    </div>
+</div>
+

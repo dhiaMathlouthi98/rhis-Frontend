@@ -1,0 +1,71 @@
+<div class="formulaire-profil-rhis">
+  <form [formGroup]="profilForm">
+    <div class="row">
+      <div class="section-element col-6">
+        <label class="section-element-title" for="nom">{{"USER.NOM" | translate}}*</label> <br>
+        <input class="text-field" id="nom" type="text" pInputText required="true" formControlName="nomProfil">
+        <br>
+        <span class="form-item-error red small-rhis ml-1"
+              *ngIf="profilForm.controls['nomProfil'].invalid &&(profilForm.controls['nomProfil'].touched  || isSubmitted)">
+          {{"PROFIL.REQUIRED" | translate}}
+        </span>
+      </div>
+      <div class="section-element delete-mg-style-rhis col-6">
+        <label class="section-element-title" for="prenom">{{"USER.PRENOM" | translate}}*</label> <br>
+        <input class="text-field" id="prenom" type="text" pInputText required="true" formControlName="prenomProfil">
+        <br>
+        <span class="form-item-error red small-rhis ml-1"
+              *ngIf="profilForm.controls['prenomProfil'].invalid &&(profilForm.controls['prenomProfil'].touched  || isSubmitted)">
+          {{"PROFIL.REQUIRED" | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="section-element delete-mg-style-rhis w-100 section-body mb-3 mt-3">
+      <label class="section-element-title" for="email">{{"USER.EMAIL" | translate}}</label> <br>
+      <input class="text-field" id="email" type="email" pInputText required="true" formControlName="emailProfil">
+      <br>
+      <span class="form-item-error red small-rhis ml-1"
+            *ngIf="profilForm.controls['emailProfil']?.invalid && (profilForm?.controls['emailProfil']?.touched  || isSubmitted)"> {{"USER.EMAIL_ERROR"  | translate}}</span>
+      <span class="form-item-error red small-rhis ml-1"
+            *ngIf="mailExistatnt && isSubmitted">{{"USER.EMAIL_EXISTANT"  | translate}}</span>
+    </div>
+    <p-fieldset legend="{{'PROFIL.MODIFY_PWD' | translate}}">
+      <div class="row">
+        <div class="section-element col-6">
+          <label class="section-element-title" for="pwd1">{{"USER.FORMER_PASSWORD" | translate}}</label> <br>
+          <input class="text-field" id="pwd1" type="password" formControlName="formerPassword" pInputText>
+          <br>
+          <span class="form-item-error red small-rhis ml-1"
+                *ngIf="wrongPass"> {{"USER.PASSWORD_ERROR"  | translate}}</span>
+        </div>
+        <div class="section-element delete-mg-style-rhis col-6">
+          <label class="section-element-title" for="pwd2">{{"USER.NEW_PASSWORD" | translate}}</label> <br>
+          <input (ngModelChange)="changePasswordValidity()" class="text-field" id="pwd2" formControlName="password"
+                 type="password" pInputText>
+          <br>
+          <span class="form-item-error red small-rhis ml-1"
+                *ngIf="(profilForm?.controls['password']?.invalid && (profilForm?.controls['password']?.touched  || isSubmitted))"> {{"USER.PASSWORD_INVALID"  | translate}}</span>
+          <span class="form-item-error red small-rhis ml-1"
+                *ngIf="isEmptyPassword"> {{"USER.PASSWORD_ERROR"  | translate}}</span>
+
+        </div>
+      </div>
+    </p-fieldset>
+    <div class="row mt-3">
+      <div class="section-element col-6">
+        <label class="section-element-title" for="email">{{"USER.DEFAULT_LANGUAGE" | translate}}</label> <br>
+        <p-dropdown (onChange)="onChange()"
+                   [(ngModel)]="languagedropdown"
+                   [options]="languages"
+                    [placeholder]=language.label
+                    formControlName="langue">
+        </p-dropdown>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="btn save-add-button-rhis orange-background mt-5 btn-popup-rhis" (click)="updateProfil()">
+    <span>{{'PROFIL.SAVE' | translate}}</span>
+  </div>
+</div>

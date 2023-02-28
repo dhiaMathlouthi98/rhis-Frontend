@@ -1,0 +1,27 @@
+<div [ngStyle]="{'width': recapEmployeeScrollable ? 'calc(100% + ' + widthBlockLeftEmployeeMenuOpened + 'px)' : '100%'}"
+     class="recap-container">
+  <div></div>
+  <div></div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.TEMPS_PLANIFIE" | translate}}</div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.TEMPS_ABSENCE" | translate}}</div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.TEMPS_CONTRAT" | translate}}</div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.RATIO" | translate}}</div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.HEURES_SUPP" | translate}}</div>
+  <div class="field-center recap-first-row">{{"PLANNING_EQUIPIER.HEURES_COMP" | translate}}</div>
+  <div class="employee-column">{{employee?.prenom}} {{employee?.nom}}</div>
+  <div class="field-center recap-second-row">{{"PLANNING_EQUIPIER.SAVE_SEMAINE" | translate | uppercase}}</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.tempsPlanifie}}</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.temspAbsence}}</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.tempsContrat | number:'1.0-2'}}</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.ratio | number:'1.0-2'}}%</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.heureSupp}}</div>
+  <div class="field-center recap-second-row">{{weekEmployeeSummary?.heureCompl}}</div>
+  <div class="employee-column">{{"PLANNING_EQUIPIER.RECAP_HEURES" | translate}}</div>
+  <div class="field-center recap-third-row">{{"PLANNING_EQUIPIER.MOIS" | translate | uppercase}}</div>
+  <div class="field-center recap-third-row">{{monthEmployeeSummary?.tempsPlanifie}}</div>
+  <div class="field-center recap-second-row">{{monthEmployeeSummary?.totalAbsenceInPeriode}}</div>
+  <div class="field-center recap-third-row">{{monthEmployeeSummary?.tempsContratDisplay}}</div>
+  <div class="field-center recap-third-row">{{monthEmployeeSummary?.ratio| number:'1.0-2'}}%</div>
+  <div class="field-center recap-third-row">{{monthEmployeeSummary?.heureSupp}}</div>
+  <div class="field-center recap-third-row">{{monthEmployeeSummary?.heureCompl}}</div>
+</div>

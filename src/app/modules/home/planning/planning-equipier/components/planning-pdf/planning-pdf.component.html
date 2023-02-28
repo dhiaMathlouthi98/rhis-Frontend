@@ -1,0 +1,372 @@
+<div class="rhis-container" style="margin: 0 auto;">
+  <div class="dl-button">
+    <input (click)="captureScreen()"
+           class="add-button blue-background"
+           id="PLG_Eq-downloadPdf-btn"
+           type="button"
+           [value]=download>
+  </div>
+  <div>
+    <div *ngFor="let dataElement of dataTables; let index = index;">
+      <div [id]="'contentToConvert_page' + index" style="margin-top: 5px; padding:4px;">
+        <div class="planning-header">
+          <div id="PG_contentToC-restaurant-name">
+            {{restaurantName}}
+            <div>
+              <img *ngIf="restaurantLogo" [src]="restaurantLogo" class="restaurant-logo">
+              <img *ngIf="!restaurantLogo" class="restaurant-logo" src="assets/icons/shared/image-not-found.png">
+            </div>
+          </div>
+          <div>
+            <div class="planning-title">{{"RAPPORT_PLANNING_JOURNALIER.TITLE" | translate}}</div>
+            <div class="planning-date" id="PG_contentToC-dateJour">{{dataElement?.dateJour}}</div>
+          </div>
+        </div>
+        <hr>
+        <div class="ca-infos">
+          <div class="ca-details" class="ventes-am-pm">
+            <div></div>
+            <div *ngIf="isSectionSelected('VAMPM')">
+              <div>
+                <span class="text-bold">
+                  {{"RAPPORT_PLANNING_JOURNALIER.CA_AM" | translate}} :
+                </span>
+                <span id="PG_CA-AM">{{dataElement?.detailCa?.caAm}}</span>
+              </div>
+              <div>
+                <span class="text-bold">{{"RAPPORT_PLANNING_JOURNALIER.HEURES_PAYE_AM" | translate}} :
+                </span>
+                <span id="PG_HeurePaye-AM">
+                  {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, false)?.heuresAM}}
+                </span>
+              </div>
+              <div>
+                <span class="text-bold">{{"RAPPORT_PLANNING_JOURNALIER.HEURES_PLANIFIE_AM" | translate}} :
+                </span>
+                <span id="PG_HeurePlannifie-AM">
+                  {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, true)?.heuresAM}}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="isSectionSelected('VTAC')">
+              <div>
+                <span class="text-bold">
+                  {{"RAPPORT_PLANNING_JOURNALIER.CA" | translate}} :
+                </span>
+                <span id="PG_CA">
+                  {{dataElement?.detailCa?.caValue}}
+                </span>
+              </div>
+              <div id="PG_HeurePaye">
+                <span class="text-bold">
+                  {{"RAPPORT_PLANNING_JOURNALIER.HEURES_PAYE" | translate}} :
+                </span>
+                <span id="PG_HeurePaye-CA">
+                  {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true)?.heures}}
+                </span>
+                <span *ngIf="isSectionSelected('PROD')">
+                  <span
+                    class="text-bold">
+                    {{"RAPPORT_PLANNING_JOURNALIER.PROD" | translate}} :
+                  </span>
+                  <span id="PG_HeurePaye-Prod_CA">
+                    {{dataElement?.detailCa?.ProdPaye}}
+                  </span>
+                  <span>€</span>
+                </span>
+                <span *ngIf="isSectionSelected('MOEM')">
+                  <span class="text-bold">
+                    {{"RAPPORT_PLANNING_JOURNALIER.MO_EQUIP_MGR" | translate}} :
+                  </span>
+                  <span id="PG_HeurePaye-MGR_CA">
+                    {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true)?.moEquiMgrValue}}
+                  </span>
+                  <span>%</span>
+                </span>
+              </div>
+              <div>
+                <span>
+                  <span class="text-bold">{{"RAPPORT_PLANNING_JOURNALIER.HEURES_PLANIFIE" | translate}} :
+                  </span>
+                  <span id="PG_HeurePaye-AMPM_CA">
+                    {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, true)?.heures}}
+                  </span>
+                </span>
+                <span *ngIf="isSectionSelected('PROD')">
+                  <span class="text-bold">
+                    {{"RAPPORT_PLANNING_JOURNALIER.PROD" | translate}} :
+                  </span>
+                  <span id="PG_HeurePaye-detailProd_CA">
+                    {{dataElement?.detailCa?.Prod}}
+                  </span>
+                  <span>€</span>
+                </span>
+                <span *ngIf="isSectionSelected('MOEM')">
+                  <span class="text-bold">
+                    {{"RAPPORT_PLANNING_JOURNALIER.MO_EQUIP_MGR" | translate}} :
+                  </span>
+                  <span id="PG_HeurePaye-AMPM_CA_2">
+                    {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, true)?.moEquiMgrValue}}
+                  </span>
+                  <span>%</span>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="isSectionSelected('VAMPM')">
+              <div>
+                <span class="text-bold">{{"RAPPORT_PLANNING_JOURNALIER.CA_PM" | translate}} :
+                </span>
+                <span id="PG_HeurePaye-CAPM_CA">
+                  {{dataElement?.detailCa?.caPm}}
+                </span>
+              </div>
+              <div>
+                <span class="text-bold">
+                  {{"RAPPORT_PLANNING_JOURNALIER.HEURES_PAYE_PM" | translate}} :
+                </span>
+                <span id="PG_HEURES_PAYE_PM">
+                  {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, false).heuresPM}}
+                </span>
+              </div>
+              <div>
+                <span class="text-bold">{{"RAPPORT_PLANNING_JOURNALIER.HEURES_PLANIFIE_PM" | translate}} :
+                </span>
+                <span id="PG_HEURES_PLANIFIE_PM">
+                  {{getHeuresAMPM(dataElement?.detailCa, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData, true, true).heuresPM}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isSectionSelected('DP')"
+               [ngStyle]="{'grid-template-columns': '20% repeat(' + (dataElement?.detailCa?.ca?.length) + ', auto'}"
+               class="ca-details">
+            <div></div>
+            <div *ngFor="let caSingleValue of dataElement?.detailCa?.ca"
+                 class="values text-bold bottom-border">
+              <span id="PG_HEURES_caSingleValue">{{caSingleValue?.heure}}</span>
+              h
+            </div>
+            <div class="text-bold">
+              {{"RAPPORT_PLANNING_JOURNALIER.CA" | translate}}
+            </div>
+            <div *ngFor="let caSingleValue of dataElement?.detailCa?.ca" class="values">
+              <span id="PG_HEURES_CA_caSingleValue">{{caSingleValue?.valeur}}</span>
+            </div>
+            <div class="text-bold">
+              {{"RAPPORT_PLANNING_JOURNALIER.CUMUL" | translate}}
+            </div>
+            <div *ngFor="let cumulSingleValue of dataElement?.detailCa?.cumul" class="values">
+              <span id="PG_HEURES_cumulSingleValue">{{cumulSingleValue?.valeur}}</span>
+            </div>
+            <div *ngIf="isSectionSelected('PM')" class="text-bold">
+              {{"RAPPORT_PLANNING_JOURNALIER.MO_EQUIP_MGR" | translate}} :
+            </div>
+            <div *ngIf="!isSectionSelected('PM')" class="text-bold">
+              {{"RAPPORT_PLANNING_JOURNALIER.MO_EQUIP" | translate}} :
+            </div>
+            <div *ngFor="let moEquiMgrSingleValue of dataElement?.detailCa?.moEquiMgr"
+                 class="values">
+              <span id="PG_HEURES_moEquiMgrSingleValue">{{moEquiMgrSingleValue?.valeur}}</span>
+            </div>
+            <div class="text-bold">
+              {{"RAPPORT_PLANNING_JOURNALIER.CA" | translate}}
+              / {{"RAPPORT_PLANNING_JOURNALIER.PROD" | translate}}
+            </div>
+            <div *ngFor="let caProdSingleValue of dataElement?.detailCa?.caProd" class="values">
+              <span id="PG_HEURES_caProdSingleValue">{{caProdSingleValue?.valeur}}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isSectionSelected('PM')" class="grid-title">
+          {{"RAPPORT_PLANNING_JOURNALIER.EQUIPE_GESTION" | translate}}
+        </div>
+        <div *ngIf="isSectionSelected('PM')" class="planning-body">
+          <div class="employees-list">
+            <div *ngFor="let manager of dataElement?.managers; let i = index" [ngStyle]="{'height': employeeItemHeight}"
+                 class="employee-item">
+      <span *ngIf="manager && manager?.idEmployee !== null">
+        <span *ngIf="manager?.nom">
+          <div id="PG_manager-name-badge">
+            {{manager?.prenom}} {{manager?.nom}} ({{manager?.badge?.code}})
+          </div>
+          <div *ngIf="isSectionSelected('SS')" class="shifts-time-label">
+            <span id="PG_HEURES_shift">
+              {{getEmployeeShifts(manager, 'manager', null, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData)}}
+            </span>
+          </div>
+        </span>
+      </span>
+            </div>
+          </div>
+          <div [ngStyle]="{visibility: isSectionSelected('TPAMPM') ? 'unset' : 'hidden'}" class="am-pm-list">
+            <div *ngFor="let manager of dataElement?.managers; let i = index" [ngStyle]="{'height': employeeItemHeight}"
+                 class="am-pm-item">
+      <span *ngIf="manager && manager?.idEmployee !== null">
+        <span *ngIf="manager?.nom">
+          <div id="PG_HEURES_TempsPlanifiesAmPm">
+            {{getTempsPlanifiesAmPm(manager, 'manager', null, null, null, dataElement?.managers, dataElement?.managersData, false)?.beforeHs}}
+            /{{getTempsPlanifiesAmPm(manager, 'manager', null, null, null, dataElement?.managers, dataElement?.managersData, false)?.afterHs}}
+          </div>
+        </span>
+      </span>
+            </div>
+          </div>
+          <div *ngIf="dataElement?.gridsterManagerHeight" [ngStyle]="{'height': dataElement?.gridsterManagerHeight}"
+               class="pdf-gridster-container">
+            <gridster [options]="dataElement?.managerGridOptions">
+              <gridster-item *ngFor="let item of dataElement?.managersData" [item]="item"
+                             [ngClass]="{'shift-item': item?.isShift, 'hour-item': !item?.isShift, 'first-hour': item?.isheureDeDebut,
+                             'inactive-employee-shift-display-style': (!item?.plgManagerOrLeader || item.notActiveShift)}"
+                             [ngStyle]="{'background': item.color, 'border-left': item?.sign ? '7px solid ' + item?.colorSign : '0px solid',
+                             'border-right':item?.sign ? '7px solid ' + item?.colorSign : '0px solid',
+                              'color' : item?.textColor}"
+                             class="style-rapport-item-hour">
+                <div class="item-body">
+                  <div style="padding-top: 7px;">
+                    <div id="PG-managersData-label">{{item?.label}}</div>
+                    <div id="PG-managersData-timeLabel">{{item?.timeLabel}}</div>
+                  </div>
+                </div>
+              </gridster-item>
+            </gridster>
+          </div>
+        </div>
+        <div class="grid-title">{{"RAPPORT_PLANNING_JOURNALIER.EQUIPIERS" | translate}}</div>
+        <div class="planning-body">
+          <div class="employees-list">
+            <div *ngFor="let employee of dataElement?.employee_arrays[0]; let i = index"
+                 [ngStyle]="{'height': employeeItemHeight}"
+                 class="employee-item">
+      <span *ngIf="employee && employee?.idEmployee !== -1">
+        <span>
+          <div *ngIf="employee?.nom">
+            {{employee?.prenom}} {{employee?.nom}} ({{employee?.badge?.code}})
+          </div>
+          <div *ngIf="isSectionSelected('SS')" class="shifts-time-label"
+               id="PG_HEURES_Shift-SS">
+            {{getEmployeeShifts(employee, 'teamMember', 0, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData)}}
+          </div>
+        </span>
+      </span>
+            </div>
+          </div>
+          <div [ngStyle]="{visibility: isSectionSelected('TPAMPM') ? 'unset' : 'hidden'}" class="am-pm-list">
+            <div *ngFor="let employee of dataElement?.employee_arrays[0]; let i = index"
+                 [ngStyle]="{'height': employeeItemHeight}"
+                 class="am-pm-item">
+      <span *ngIf="employee && employee?.idEmployee !== -1">
+        <span>
+          <div id="PG_HEURES_Shift-EMP">
+            {{getTempsPlanifiesAmPm(employee, 'teamMember', 0, dataElement?.employee_arrays, dataElement?.teamMembersData, null, null, false)?.beforeHs}}
+            /{{getTempsPlanifiesAmPm(employee, 'teamMember', 0, dataElement?.employee_arrays, dataElement?.teamMembersData, null, null, false)?.afterHs}}
+          </div>
+        </span>
+      </span>
+            </div>
+          </div>
+          <div *ngIf="dataElement?.gridsterTmHeight && dataElement?.gridsterTmHeight[0]"
+               [ngStyle]="{'height': dataElement?.gridsterTmHeight[0]}" class="pdf-gridster-container">
+            <gridster [options]="dataElement?.teamMemberGridOptions[0]">
+              <gridster-item *ngFor="let item of dataElement?.teamMembersData[0]" [item]="item"
+                             [ngClass]="{'shift-item': item?.isShift, 'hour-item': !item?.isShift, 'first-hour': item?.isheureDeDebut, 'shift-signe' :item?.sign,
+                             'inactive-employee-shift-display-style': item?.notPlgEquipier}"
+                             [ngStyle]="{'background': item?.color, 'border-left': item?.sign ? '7px solid ' + item?.colorSign : '0px solid',
+                     'border-right':item?.sign ? '7px solid ' + item?.colorSign : '0px solid',
+                      'color' : item?.textColor}"
+                             class="style-rapport-item-hour">
+                <div class="item-body">
+                  <div style="padding-top: 7px;">
+                    <div id="PG_HEURES_Shift-label">{{item?.label}}</div>
+                    <div id="PG_HEURES_Shift-timeLabel">{{item?.timeLabel}}</div>
+                  </div>
+                </div>
+              </gridster-item>
+            </gridster>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div>
+        <span>{{"RAPPORT_PLANNING_JOURNALIER.PRINTED_LE" | translate}}</span>
+        <span id="PG_current-date">
+          {{currentDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </span>
+      </div>
+      <div style="margin-top: 50px;">
+        <hr>
+      </div>
+      <!-- suite page -->
+      <div *ngIf="dataElement?.employee_arrays.length > 1">
+        <div *ngFor="let ea of dataElement?.employee_arrays; let iea = index"
+             [id]="'contentToConvert_next_' + index + iea"
+             style="padding-top: 35px; padding:4px;">
+          <div *ngIf="iea > 0">
+            <div class="planning-header">
+              <div>
+                <span id="PG_restaurant-name">{{restaurantName}}</span>
+                <div>
+                  <img *ngIf="restaurantLogo" [src]="restaurantLogo" class="restaurant-logo">
+                  <img *ngIf="!restaurantLogo" class="restaurant-logo" src="assets/icons/shared/image-not-found.png">
+                </div>
+              </div>
+              <div>
+                <div class="planning-title">{{"RAPPORT_PLANNING_JOURNALIER.TITLE" | translate}}</div>
+                <div class="planning-date" id="PG_date-jour">{{dataElement?.dateJour}}</div>
+              </div>
+            </div>
+            <hr>
+            <div class="planning-body">
+              <div class="employees-list">
+                <div *ngFor="let employee of dataElement?.employee_arrays[iea]; let i = index"
+                     [ngStyle]="{'height': employeeItemHeight}"
+                     class="employee-item">
+      <span *ngIf="employee && employee?.idEmployee !== -1">
+        <span *ngIf="employee?.nom">
+          <div id="PG_name-badge">
+            {{employee?.prenom}} {{employee?.nom}} ({{employee?.badge?.code}})
+          </div>
+        </span>
+          <div *ngIf="isSectionSelected('SS')" class="shifts-time-label"
+               id="PG_shift-SS-2">
+            {{getEmployeeShifts(employee, 'teamMember', iea, dataElement?.employee_arrays, dataElement?.teamMembersData, dataElement?.managers, dataElement?.managersData)}}
+          </div>
+      </span>
+                </div>
+              </div>
+              <div [ngStyle]="{visibility: isSectionSelected('TPAMPM') ? 'unset' : 'hidden'}" class="am-pm-list">
+                <div *ngFor="let employee of dataElement?.employee_arrays[iea]; let i = index"
+                     [ngStyle]="{'height': employeeItemHeight}"
+                     class="am-pm-item">
+      <span *ngIf="employee && employee?.idEmployee !== -1">
+          <div id="PG_temps-planifieAmPm">
+           {{getTempsPlanifiesAmPm(employee, 'teamMember', iea, dataElement?.employee_arrays, dataElement?.teamMembersData, null, null)?.beforeHs}}
+            /{{getTempsPlanifiesAmPm(employee, 'teamMember', iea, dataElement?.employee_arrays, dataElement?.teamMembersData, null, null)?.afterHs}}
+          </div>
+      </span>
+                </div>
+              </div>
+              <div [ngStyle]="{'height': dataElement?.gridsterTmHeight[iea]}" class="pdf-gridster-container">
+                <gridster [options]="dataElement?.teamMemberGridOptions[iea]">
+                  <gridster-item *ngFor="let item of dataElement?.teamMembersData[iea]" [item]="item"
+                                 [ngClass]="{'shift-item': item?.isShift, 'hour-item': !item?.isShift, 'first-hour': item?.isheureDeDebut,'shift-signe' :item?.sign,
+                                 'inactive-employee-shift-display-style': item?.notPlgEquipier}"
+                                 [ngStyle]="{'background': item?.color, 'border-left': item?.sign ? '7px solid ' + item?.colorSign : '0px solid','border-right':item?.sign ? '7px solid ' + item?.colorSign : '0px solid', 'color' : item?.textColor}"
+                                 class="style-rapport-item-hour">
+                    <div class="item-body">
+                      <div style="padding-top: 7px;">
+                        <div id="PG_TM-label">{{item?.label}}</div>
+                        <div id="PG_TM-timeLabel">{{item?.timeLabel}}</div>
+                      </div>
+                    </div>
+                  </gridster-item>
+                </gridster>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+        {{"RAPPORT_PLANNING_JOURNALIER.PRINTED_LE" | translate}} {{currentDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="rhis-container">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="310">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"SOUSMENU.COUNTRY_LAW" | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="rhis-row row block-row-without-margin-rhis mb-3">
+      <div class="col-6 col-md-6 col-lg-3">
+        <div class="section-element-title">{{'LOI_PAYS.CHOOSE_PAYS' | translate}}</div>
+        <p-dropdown
+          (onChange)="onSelectNationalite()"
+          [(ngModel)]="selectedNationalite"
+          optionLabel="libellePays"
+          [autoDisplayFirst]="false"
+          [options]="listPays"
+          class="drop-down-general"></p-dropdown>
+      </div>
+      <div class="col-6 col-md-6 col-lg-4">
+        <h1 class="section-element-title col-12">{{'LOI_PAYS.CHOOSE_TEMPS_TRAVAIL' | translate}}</h1>
+        <p-checkbox
+          name="choix"
+          [label]="tempsPleinLabel"
+          [value]="tempsPlein"
+          [(ngModel)]="selectedTempsTravail"
+          (onChange)="setTempTravail($event, tempsPlein)"
+          class="col-5 col-md-4 col-lg-3 col-xl-2">
+        </p-checkbox>
+        <p-checkbox
+          name="choix"
+          [label]="tempstempsPartielLabel"
+          [value]="tempsPartiel"
+          [(ngModel)]="selectedTempsTravail"
+          (onChange)="setTempTravail($event, tempsPartiel)"
+          class="col-5 col-md-4 col-lg-3 col-xl-2">
+        </p-checkbox>
+      </div>
+    </div>
+
+    <div class="table-list mt-6" *ngIf="listLoiPays.length > 0">
+      <p-table [value]="listLoiPays" [responsive]="true"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header">
+          <tr class="header-row">
+            <th class="text-center">{{'LABELS.LAW' | translate}}</th>
+            <th class="text-center">{{'LABELS.MAJEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.MINEUR' | translate}}</th>
+            <th class="text-center">{{'LABELS.BLOQUANTE' | translate}}</th>
+            <th class="text-center">{{'LABELS.POINTEUSE' | translate}}</th>
+            <th class="text-center">{{'TYPE_CONTRAT.STATUS' | translate}}</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-loi>
+          <tr class="table-row" (click)="displayUpdateLoiPopup(loi)">
+            <td>{{loi.translatedLibelle}}</td>
+            <td class="text-center">
+              <div>
+                <span *ngIf="loi?.valeurMajeurAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate}}
+              </span>
+                <span *ngIf="loi?.valeurMajeurAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                <span
+                  *ngIf="(loi?.valeurMajeurAfficher !== 'false' && loi?.valeurMajeurAfficher !== 'true') && !loi?.majeurForbiddenChanges">
+                              {{loi?.valeurMajeurAfficher}}
+              </span>
+                <div *ngIf="loi?.majeurForbiddenChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+              </div>
+            </td>
+
+            <td class="text-center">
+              <div>
+                <span *ngIf="loi?.valeurMineurAfficher === 'true'">
+                {{'COMMON_LOI.TRUE' | translate}}
+              </span>
+                <span *ngIf="loi?.valeurMineurAfficher === 'false'">
+                {{'COMMON_LOI.FALSE' | translate}}
+              </span>
+                <span
+                  *ngIf="(loi?.valeurMineurAfficher !== 'false' && loi?.valeurMineurAfficher !== 'true') && !loi?.mineurForbiddenChanges">
+                              {{loi?.valeurMineurAfficher}}
+              </span>
+                <div *ngIf="loi?.mineurForbiddenChanges">
+                  <span>{{'COMMON_LOI.FORBIDDEN' | translate}}</span>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <i *ngIf="loi.bloquante" class="pi pi-check"></i>
+            </td>
+            <td>
+              <i *ngIf="loi.loiPointeuse" class="pi pi-check"></i>
+            </td>
+            <td><span class="label-table"
+                      [ngStyle]="{'background-color': loi.status ? '#2DC76D': '#FF9B42'}">
+          {{(loi.status ? "TYPE_CONTRAT.ACTIF" : "TYPE_CONTRAT.INACTIF") | translate}}
+        </span>
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+                <span *ngIf="loi?.status" class="item" (click)="activerDesactiverLoiPays(loi);$event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/subtract-circle.svg"
+                    alt="no image"></span>
+                  <span *ngIf="!loi?.status" class="item"
+                        (click)="activerDesactiverLoiPays(loi);$event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/subtract-circle-ADD.svg"
+                    alt="no image"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="hideUpdateLoiPopup()"
+  [showPopUp]="displayPopup"
+  [title]="updateLoiPopupTitle">
+
+  <rhis-modification-loi-pays *ngIf="displayPopup" [initListePeriodicite]="listPeriodicite"
+                              [initLoiPays]="selectedLoi"
+                              [initTitle]="updateLoiPopupTitle"
+                              (updateLoiEvent)="updateLoi($event)"
+  ></rhis-modification-loi-pays>
+</rhis-pop-up>
+
+<!--CONFIRMATION AND TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

@@ -1,0 +1,36 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+.menu-list {
+  span {
+    text-transform: uppercase;
+    float: left;
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 14px;
+    width: fit-content;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .active {
+    color: #414141;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #414141;
+  }
+
+  .not-active {
+    color: #414141;
+    opacity: 0.35;
+  }
+}

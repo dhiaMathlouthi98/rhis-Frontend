@@ -1,0 +1,64 @@
+<div class="w-100 d-flex flex-column justify-content-between validate-container">
+    <div>
+        <div class="bold-text mt-3">
+            {{"GESTION_PARC_RAPPORT.RESTAURANTS_LIST_TEXT" | translate}}
+        </div>
+        <div class="section-element-title mb-3 mt-3">
+            <p-multiSelect
+                    [(ngModel)]="selectedRestaurants"
+                    [options]="displayedRestaurants"
+                    [disabled]="disableMultiSelectOption"
+                    appendTo="body"
+                    defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                    optionLabel="libelle"
+                    selectedItemsLabel="{0} {{'GESTION_PARC_RAPPORT.SELECTED_RESTAURANTS' | translate}}"
+                    id="VALIDATE-RESTAURLANT-multiselect">
+            </p-multiSelect>
+        </div>
+    </div>
+    <div class="center-flex-block bloc-btn-generation-rapport mt-3">
+      <span class="con-tooltip bottom">
+    <button (click)="startValidationProcessForRestaurants()"
+            [disabled]="disableButton"
+            [ngClass]="{'change-cursor': disableButton}"
+            class="btn save-add-button-rhis blue-background"
+            id="VALIDATE-RESTAURLANT-BTN"
+            type="button">
+        <span>{{"BUTTON.VALIDATE" | translate}}</span>
+    </button>
+      </span>
+    </div>
+</div>
+
+<!-- Détectin des écarts contrat pop-up -->
+<rhis-pop-up
+        (closeEvent)="closePopupDeltaNegatif()"
+        [showPopUp]="showPopupDeltaNegatif"
+        [title]="'GDH.TTILE_ECART' | translate">
+    <div>
+        <p-accordion>
+            <p-accordionTab *ngFor="let restaurantName of deltaNegatifPerRestaurant?.keys()" class="validation-tab">
+                <p-header class="negatif-delta-list-header">{{getHeaderDeltaNegatif(restaurantName, deltaNegatifPerRestaurant)}}</p-header>
+                <div *ngFor="let emp of deltaNegatifPerRestaurant.get(restaurantName)?.listEmploye; let l = last">
+                    {{emp?.nomPrenom}}
+                    <hr *ngIf="!l">
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+    </div>
+    <div class="font-weight-bold delta-txt mb-5 mt-4">
+        <span> {{"GDH.DELTA_NEGATIF_QUESTION" | translate }}</span>
+    </div>
+    <div class="row d-flex justify-content-between">
+        <button (click)="validate()" class="col-5 btn save-add-button-rhis orange-background ml-0"
+                id="GDH-DELTA-FALSE-btn"
+                type="button">
+            <span>{{"COMMON_LOI.TRUE" | translate | uppercase}}</span>
+        </button>
+        <button (click)="closePopupDeltaNegatif()" class="col-5 btn save-add-button-rhis orange-background ml-0"
+                id="GDH-DELTA-TRUE-btn"
+                type="button">
+            <span>{{"COMMON_LOI.FALSE" | translate | uppercase}}</span>
+        </button>
+    </div>
+</rhis-pop-up>

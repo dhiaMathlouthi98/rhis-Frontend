@@ -1,0 +1,36 @@
+<div class="bg-white" [ngClass]="{'w-100': !menuState}">
+    <div [ngClass]="{'main_container-menu_is_open': menuState}"
+         class="main w-100 position-relative main_container-chart">
+        <img (click)="showMoreData()" alt="no icon" id="PLG-Eq-DetailTemps-showmore" class="position-absolute"
+             src="assets/icons/arrow-icons/arrow-top.png">
+        <div class="d-flex flex-column justify-content-around chart-title-block">
+            <span>{{"PLANNING_EQUIPIER.CHART_TITLE" | translate}}</span>
+        </div>
+        <div class="position-relative chart-block" [ngClass]="{'loading': dataIsLoading}" [style.width]="menuState ? chartWidth : '100%'">
+            <div *ngIf="dataIsLoading" class="position-absolute w-100 d-flex justify-content-around spinner-container">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+            <div class="position-absolute w-100 d-flex justify-content-between">
+                <ng-container *ngFor="let h of hours">
+                    <div class="chart-height"
+                         [ngClass]="{'dashed-hour': (h % nbrOfQuarterForAnHour) !== 0, 'hour': (h % nbrOfQuarterForAnHour) === 0}">
+                    </div>
+                </ng-container>
+            </div>
+            <div class="position-absolute w-100 chart-height d-flex flex-column justify-content-between">
+                <ng-container *ngFor="let l of levels; let i = index">
+                    <div class="w-100" [ngClass]="{'center-axe': i === 5, 'level': i !== 5}"></div>
+                </ng-container>
+            </div>
+            <div class="chart-container position-relative full-width-inherited-height" >
+                <canvas baseChart
+                        class="full-width-inherited-height"
+                        [options]="options"
+                        [labels]="labels"
+                        [chartType]="'bar'"
+                        [datasets]="dataset"
+                ></canvas>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,957 @@
+<div class="popup-equipier">
+  <div *ngIf="selectedRapport?.codeName === ANOMALIE_GDH">
+    <div class="mb-4 flex-between-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <p-calendar (onSelect)="getListEmployeePointage()" [(ngModel)]="dateDebut" appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_AnomalieGDH-dateD">
+        </p-calendar>
+        <span *ngIf="dateDebutError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AnomalieGDH-dateDError">
+        {{'POPUP_RAPPORT.REQUIRED_DATE_DEBUT' | translate}}
+      </span>
+      </div>
+      <div>
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <p-calendar (onSelect)="getListEmployeePointage()" [(ngModel)]="dateFin" appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_AnomalieGDH-dateF"></p-calendar>
+        <span *ngIf="dateFinError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AnomalieGDH-dateFError">{{'POPUP_RAPPORT.REQUIRED_FIN_DEBUT' | translate}}</span>
+        <span *ngIf="correctDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AnomalieGDH-dateError">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <p-checkbox (onChange)="onSelectAllEmployees()"
+                  [(ngModel)]="selectAllEmployees"
+                  [label]="allEmployeesLabel"
+                  binary="true"
+                  id="RAPPORT_AnomalieGDH-selectAllEmp"></p-checkbox>
+    </div>
+
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.ONLY_ONE' | translate}}</label>
+      <p-dropdown (onChange)="onSelectEmployee()"
+                  [(ngModel)]="choosenEmployee"
+                  [disabled]="!(dateFin && dateDebut)"
+                  [options]="listEmployee"
+                  appendTo="body"
+                  id="RAPPORT_AnomalieGDH-chooseEmp"
+                  optionLabel="displayedName"></p-dropdown>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === PLANNING_EMPLOYEE" class="planning_employee">
+    <div class="row">
+      <div class="col-4 mb-4 flex-start-block">
+        <span class="mr-3 switch-element-title">{{'POPUP_RAPPORT.MONTHLY' | translate}}</span>
+        <p-inputSwitch [(ngModel)]="monthlyChecked" (onChange)="iniSelectedPeEmployees($event)" class="green-switch" id="planning-emp-switch-popup"></p-inputSwitch>
+      </div>
+      <div *ngIf="!monthlyChecked" class="mb-4 flex-start-block">
+        <div class="label-periode-debut">
+          <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+        </div>
+        <div>
+          <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_PlgEmp-downWeek"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+            <p-calendar
+              (change)="checkWeekBordersExist()"
+              (onSelect)="selectDate($event)"
+              [(ngModel)]="values"
+              [showIcon]="true"
+              [showWeek]="true"
+              appendTo="body"
+              dateFormat="dd/mm/yy"
+              id="RAPPORT_PlgEmp-selectedWeek"
+              selectionMode="range">
+            </p-calendar>
+            <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_PlgEmp-upWeek"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+          </div>
+          <span *ngIf="weekDatesError"
+                class="form-item-error red small-rhis position-absolute error-coordination"
+                id="RAPPORT_PlgEmp-weekError">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+        </div>
+      </div>
+      <div *ngIf="monthlyChecked" class="mb-4 flex-start-block">
+        <div class="label-periode-debut">
+          <label class="section-element-title">{{'POPUP_RAPPORT.MONTH' | translate}}*</label>
+        </div>
+        <div>
+          <div class="block-input-week-rhis">
+            <p-calendar (onSelect)="selectMonthDate($event)" [readonlyInput]="true"
+                        [showIcon]="true"
+                        [yearNavigator]="true"
+                        dateFormat="mm/yy"
+                        id="RAPPORT_plgE-month-dateSelect"
+                        inputId="monthpicker"
+                        view="month"
+                        yearRange="2000:2050">
+            </p-calendar>
+          </div>
+          <span *ngIf="monthDatesError"
+                class="form-item-error red small-rhis position-absolute error-coordination"
+                id="RAPPORT_plgE-month-MonthError">{{'POPUP_RAPPORT.REQUIRED_MONTH' | translate}}</span>
+        </div>
+      </div>
+      <div class="flex-start-block mb-4">
+        <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}</label>
+        <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                    appendTo="body"
+                    id="RAPPORT_PlgEmp-selectedCriteria"
+                    optionLabel="name"
+        ></p-dropdown>
+      </div>
+      <div class="mb-4" style="font-size: 12px;">
+        <span>{{'POPUP_RAPPORT.RADIO_BUTTON_LABEL' | translate}}</span>
+        <p-radioButton [(ngModel)]="rappEmpRadioButtonSelectedValue"
+                       [ngModelOptions]="{standalone: true}"
+                       id="RAPPORT_PlgEmp-selectedRadio1"
+                       label="{{'POPUP_RAPPORT.EMPLOYEE' | translate}}"
+                       name="employeeGroupeTravail"
+                       value="employee"></p-radioButton>
+        <p-radioButton [(ngModel)]="rappEmpRadioButtonSelectedValue"
+                       [ngModelOptions]="{standalone: true}"
+                       id="RAPPORT_PlgEmp-selectedRadio2"
+                       label="{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}"
+                       name="employeeGroupeTravail"
+                       value="groupeTravail"></p-radioButton>
+      </div>
+      <div *ngIf="rappEmpRadioButtonSelectedValue === 'employee'" class="flex-start-block mb-4 position-relative"
+           style="margin-top: 10px;">
+        <label class="section-element-title" style="padding-right: 55px;">{{'POPUP_RAPPORT.EMPLOYEE' | translate}}
+          *</label>
+        <p-multiSelect (onClick)="checkRapportPeEmployees()"
+                       [(ngModel)]="selectedPeEmployees"
+                       [disabled]="disablePlgEmpRadioButton"
+                       [options]="employees" appendTo="body"
+                       defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                       id="RAPPORT_PlgEmp-CheckRPe">
+          <ng-template let-selectedPeEmployees pTemplate="selectedItems">
+          <span *ngIf="selectedPeEmployees.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+            <span *ngFor="let selectedPeEmployee of selectedPeEmployees;">
+            <span *ngIf="selectedPeEmployees.length <= 3">{{selectedPeEmployee.name}}, </span>
+          </span>
+            <span *ngIf="selectedPeEmployees.length >= 4">
+            {{selectedPeEmployees.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+          </ng-template>
+        </p-multiSelect>
+        <span *ngIf="rapportEmpEmployeeError"
+              class="form-item-error red small-rhis position-absolute error-employee"
+              id="RAPPORT_PlgEmp-CheckRPeError">{{'POPUP_RAPPORT.REQUIRED_EMPLOYEES' | translate}}</span>
+      </div>
+      <div *ngIf="rappEmpRadioButtonSelectedValue === 'groupeTravail'" class="flex-start-block mb-4 position-relative"
+           style="margin-top: 10px">
+        <label class="section-element-title" style="padding-right: 10px;">{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}
+          *</label>
+        <p-multiSelect (onClick)="checkRapportPeGrpTrv()"
+                       [(ngModel)]="selectedPeGroupesTravail"
+                       [disabled]="disablePlgEmpRadioButton"
+                       [options]="groupesTravail" appendTo="body"
+                       defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                       id="RAPPORT_PlgEmp-checkRPeGrpTrv">
+          <ng-template let-selectedPeGroupesTravail pTemplate="selectedItems">
+          <span *ngIf="selectedPeGroupesTravail.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+            <span *ngFor="let selectedPeGroupeTravail of selectedPeGroupesTravail;">
+            <span *ngIf="selectedPeGroupesTravail.length <= 3">{{selectedPeGroupeTravail.name}}, </span>
+          </span>
+            <span *ngIf="selectedPeGroupesTravail.length >= 4">
+            {{selectedPeGroupesTravail.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+          </ng-template>
+        </p-multiSelect>
+        <span *ngIf="rapportEmpGrpTrvError"
+              class="form-item-error red small-rhis position-absolute error-employee"
+              id="RAPPORT_PlgEmp-checkRPeGrpTrvError">{{'POPUP_RAPPORT.REQUIRED_GROUP_TRAVAIL' | translate}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === DISPONIBILITES_RAPPORT" class="rapport_disponibilites">
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+      </div>
+      <div>
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_DisponibilitesR-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="true"
+            [showWeek]="true"
+            dateFormat="dd/mm/yy"
+            id="RAPPORT_DisponibilitesR-selectD"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_DisponibilitesR-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+        <span *ngIf="weekDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_DisponibilitesR-weekDatesError">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.TYPE_RAPPORT' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedRapportDisponibilitesType" [options]="rapportDisponibilitesTypeList"
+                  id="RAPPORT_DisponibilitesR-TypeDropdown"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  id="RAPPORT_DisponibilitesR-sortDropdown"
+                  optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === ABSENCES_RAPPORT" class="rapport_absences">
+    <div class="mb-4 flex-between-block specifique-block">
+      <div class="label-periode-debut-absence text-perso-commun">
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+      </div>
+      <div>
+        <p-calendar (onSelect)="getListEmployee()" [(ngModel)]="dateDebut" dateFormat="dd/mm/yy"
+                    id="RAPPORT_AbsR-dateD-calendar"></p-calendar>
+        <span *ngIf="dateDebutError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AbsR-dateDError">{{'POPUP_RAPPORT.REQUIRED_DATE_DEBUT' | translate}}</span>
+      </div>
+      <div>
+        <label class="section-element-title pl-2 pr-2">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div>
+        <p-calendar (onSelect)="getListEmployee()" [(ngModel)]="dateFin" dateFormat="dd/mm/yy"
+                    id="RAPPORT_AbsR-dateF"></p-calendar>
+        <span *ngIf="dateFinError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AbsR-dateFError">{{'POPUP_RAPPORT.REQUIRED_FIN_DEBUT' | translate}}</span>
+        <span *ngIf="correctDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_AbsR-dateError">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style text-perso-commun"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}*</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  id="RAPPORT_AbsR-sortList"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style-motif-abs text-perso-commun">{{'POPUP_RAPPORT.MOTIF_ABSENCE' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesMotif()"
+                     [(ngModel)]="selectedMotifAbsences"
+                     [options]="motifAbsences" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_AbsR-motifAbs">
+        <ng-template let-selectedMotifAbsences pTemplate="selectedItems">
+          <span *ngIf="selectedMotifAbsences.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedMotifAbsence of selectedMotifAbsences;">
+            <span *ngIf="selectedMotifAbsences.length <= 3">{{selectedMotifAbsence.name}}, </span>
+          </span>
+          <span *ngIf="selectedMotifAbsences.length >= 4">
+            {{selectedMotifAbsences.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+      <span *ngIf="motifAbsenceError"
+            class="form-item-error red small-rhis position-absolute error-motif-absence"
+            id="RAPPORT_AbsR-motifAbs-error">{{'POPUP_RAPPORT.REQUIRED_MOTIF_ABSENCES' | translate}}</span>
+    </div>
+    <div>
+      <span class="text-perso-commun">{{'POPUP_RAPPORT.RADIO_BUTTON_LABEL' | translate}}</span>
+      <p-radioButton [(ngModel)]="rappAbsRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_AbsR-empRadioBtn"
+                     label="{{'POPUP_RAPPORT.EMPLOYEE' | translate}}" name="employeeGroupeTravail"
+                     value="employee"></p-radioButton>
+      <p-radioButton [(ngModel)]="rappAbsRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_AbsR-gpeTrRadioBtn"
+                     label="{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}" name="employeeGroupeTravail"
+                     value="groupeTravail"></p-radioButton>
+    </div>
+    <div *ngIf="rappAbsRadioButtonSelectedValue === 'employee'" class="flex-start-block mb-4 position-relative"
+         style="margin-top: 10px;">
+      <label class="section-element-title text-perso-commun" style="padding-right: 55px;">{{'POPUP_RAPPORT.EMPLOYEE' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesEmployees()"
+                     [(ngModel)]="selectedEmployees"
+                     [options]="employees" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_AbsR-checkRabs">
+        <ng-template let-selectedEmployees pTemplate="selectedItems">
+          <span *ngIf="selectedEmployees.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedEmployee of selectedEmployees;">
+            <span *ngIf="selectedEmployees.length <= 3">{{selectedEmployee.name}}, </span>
+          </span>
+          <span *ngIf="selectedEmployees.length >= 4">
+            {{selectedEmployees.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+      <span *ngIf="rapportAbsenceEmployeeError"
+            class="form-item-error red small-rhis position-absolute error-employee"
+            id="RAPPORT_AbsR-checkRabs-error">{{'POPUP_RAPPORT.REQUIRED_EMPLOYEES' | translate}}</span>
+    </div>
+    <div *ngIf="rappAbsRadioButtonSelectedValue === 'groupeTravail'" class="flex-start-block mb-4 position-relative"
+         style="margin-top: 10px">
+      <label class="section-element-title" style="padding-right: 10px;">{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesGrpTrv()"
+                     [(ngModel)]="selectedGroupesTravail"
+                     [options]="groupesTravail" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_AbsR-gpeTr">
+        <ng-template let-selectedGroupesTravail pTemplate="selectedItems">
+          <span *ngIf="selectedGroupesTravail.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedGroupeTravail of selectedGroupesTravail;">
+            <span *ngIf="selectedGroupesTravail.length <= 3">{{selectedGroupeTravail.name}}, </span>
+          </span>
+          <span *ngIf="selectedGroupesTravail.length >= 4">
+            {{selectedGroupesTravail.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+
+      <span *ngIf="rapportAbsenceGrpTrvError"
+            class="form-item-error red small-rhis position-absolute error-employee"
+            id="RAPPORT_AbsR-gpeTrError">{{'POPUP_RAPPORT.REQUIRED_GROUP_TRAVAIL' | translate}}</span>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === SERVICE_A_PRENDRE" class="service_a_prendre">
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_servicePrendre-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="true"
+            [showWeek]="true"
+            appendTo="body"
+            dateFormat="dd/mm/yy"
+            id="RAPPORT_servicePrendre-selectDate"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_servicePrendre-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+        <span *ngIf="weekDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_servicePrendre-upWeekDError">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === DETAILS_PERIODE">
+    <div class="mb-4 flex-between-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+      </div>
+      <div class="position-relative mb-4">
+        <p-calendar (onSelect)="checkDetailsPeriodeDates()" [(ngModel)]="dateDebut" appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_detailPeriod-dateD"></p-calendar>
+        <span *ngIf="dateDebutError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_detailPeriod-dateDError">{{'POPUP_RAPPORT.REQUIRED_DATE_DEBUT' | translate}}</span>
+      </div>
+      <div>
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div class="position-relative mb-4">
+        <p-calendar (onSelect)="checkDetailsPeriodeDates()" [(ngModel)]="dateFin" appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_detailPeriod-dateF"></p-calendar>
+        <span *ngIf="dateFinError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_detailPeriod-dateF-error">{{'POPUP_RAPPORT.REQUIRED_FIN_DEBUT' | translate}}</span>
+        <span *ngIf="correctDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_detailPeriod-dateError">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+    </div>
+    <div class="mb-4 flex-start-block">
+      <label class="text-perso-commun section-element-title">{{'POPUP_RAPPORT.DETAIL_PERIODE_AFFICHAGE_MINUTES' | translate}} </label>
+      <label class="mr-5 section-element-title">{{'POPUP_RAPPORT.MINUTES' | translate}}</label>
+      <p-inputSwitch [(ngModel)]="minutesOrCentieme"
+                     class="mr-5">
+      </p-inputSwitch>
+      <label class="mr-5 section-element-title">{{'POPUP_RAPPORT.HUNDREDTH' | translate}}</label>
+    </div>
+    <div class="mb-4">
+      <span class="section-element-title1" >{{'POPUP_RAPPORT.RADIO_BUTTON_LABEL' | translate}}</span>
+      <p-radioButton [(ngModel)]="rappEmpRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_AbsR-empRadioBtn" class="section-element-title1"
+                     label="{{'POPUP_RAPPORT.EMPLOYEE' | translate}}" name="employeeGroupeTravail"
+      value="employee"></p-radioButton>
+      <p-radioButton [(ngModel)]="rappEmpRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_AbsR-gpeTrRadioBtn"  class="section-element-title1"
+                     label="{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}" name="employeeGroupeTravail"
+                     value="groupeTravail"></p-radioButton>
+    </div>
+    <div *ngIf="rappEmpRadioButtonSelectedValue === 'employee'" class="flex-start-block mb-4 position-relative"
+         style="margin-top: 10px;">
+      <label class="section-element-title" style="padding-right: 55px;">
+        {{'POPUP_RAPPORT.EMPLOYEE' | translate}} :*</label>
+      <p-multiSelect (onClick)="checkRapportPeEmployees()"
+                     [(ngModel)]="selectedPeEmployees"
+                     [disabled]="!dateDebut || !dateFin || correctDateError "
+                     [options]="employees" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_PlgEmp-CheckRPe">
+        <ng-template let-selectedPeEmployees pTemplate="selectedItems">
+          <span *ngIf="selectedPeEmployees.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedPeEmployee of selectedPeEmployees;">
+            <span *ngIf="selectedPeEmployees.length <= 3">{{selectedPeEmployee.prenom}}, </span>
+          </span>
+          <span *ngIf="selectedPeEmployees.length >= 4">
+            {{selectedPeEmployees.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+      <span *ngIf="rapportEmpEmployeeError"
+            class="form-item-error red small-rhis position-absolute error-employee"
+            id="RAPPORT_PlgEmp-CheckRPeError">{{'POPUP_RAPPORT.REQUIRED_EMPLOYEES' | translate}}</span>
+    </div>
+    <div  *ngIf="rappEmpRadioButtonSelectedValue === 'groupeTravail'" class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.WORKING_GROUP' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedGroup" [disabled]="!(dateFin && dateDebut)" [options]="groupeTravailList"
+                  appendTo="body"
+                  id="RAPPORT_detailPeriod-workGpe"
+                  optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === COMPTEURS_EMPLOYES">
+    <div class="mb-4 flex-start-block">
+      <label class="text-perso-commun section-element-title">{{'POPUP_RAPPORT.MODE_AFFICHAGE' | translate}} </label>
+      <label class="mr-5 section-element-title">{{'POPUP_RAPPORT.NORMAL' | translate}}</label>
+      <p-inputSwitch [(ngModel)]="checked"
+                     class="mr-5"
+                     (click)="recupereDateSwitch()">
+      </p-inputSwitch>
+      <label class="mr-5 section-element-title">{{'POPUP_RAPPORT.DETAILLEE' | translate}}</label>
+    </div>
+    <div *ngIf="checked"
+         class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style text-perso-commun">
+        {{'POPUP_RAPPORT.PERIODE_ANALYSER' | translate}}
+      </label>
+      <p-dropdown [(ngModel)]="selectedPeriod"
+                  [options]="periodeAnaliser"
+                  appendTo="body"
+                  optionLabel="name">
+      </p-dropdown>
+    </div>
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title text-perso-commun">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div>
+        <p-calendar (onSelect)=" checkCompteursEmployeeError($event)"
+                    appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_compteurEmp-date"
+                    [(ngModel)]="dateJourprecedent">
+        </p-calendar>
+        <span *ngIf="dateCompEmpError"
+              class="form-item-error red small-rhis error-coordination"
+              id="RAPPORT_compteurEmp-dateError">{{'POPUP_RAPPORT.REQUIRED_DATE' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label
+        class="section-element-title filtrage-style text-perso-commun"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  appendTo="body"
+                  id="RAPPORT_compteurEmp-sort"
+                  optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === RAPPORT_OPERATIONNEL" class="rapport-operationnel">
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_operationnelR-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="true"
+            [showWeek]="true"
+            appendTo="body"
+            dateFormat="dd/mm/yy"
+            id="RAPPORT_operationnelR-selectDate"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_operationnelR-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+        <span *ngIf="weekDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_operationnelR-WeekDError">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.WORKING_GROUP' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedGroup" [disabled]="!(dateFin && dateDebut)" [options]="groupeTravailList"
+                  appendTo="body"
+                  id="RAPPORT_operationnelR-workGpeDropdown"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"
+             style="margin-right: 27px;"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  id="RAPPORT_operationnelR-sort"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div>
+      <span>{{'POPUP_RAPPORT.RADIO_BUTTON_OPERATIONNEL_LABEL' | translate}}</span>
+      <p-radioButton [(ngModel)]="rappOpRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_operationnelR-hourRadioBtn"
+                     label="{{'POPUP_RAPPORT.HOUR' | translate}}" name="employeeGroupeTravail"
+                     value="hour"></p-radioButton>
+      <p-radioButton [(ngModel)]="rappOpRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_operationnelR-hundredthRadioBtn"
+                     label="{{'POPUP_RAPPORT.HUNDREDTH' | translate}}" name="employeeGroupeTravail"
+                     value="hundredth"></p-radioButton>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === RESUME_PLANNING" class="service_a_prendre">
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_resumePlg-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="true"
+            [showWeek]="true"
+            appendTo="body"
+            dateFormat="dd/mm/yy"
+            id="RAPPORT_resumePlg-selectDate"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_resumePlg-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+        <span *ngIf="weekDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_resumePlg-weekD">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === RAPPORT_CORRECTION" class="rapport_correction">
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.CHOIX_DATE' | translate}}*</label>
+      </div>
+      <div class="block-input-week-rhis">
+        <p-calendar
+          [(ngModel)]="selectedDate"
+          [showIcon]="true"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+          id="RAPPORT_correctionR-DateSelect">
+        </p-calendar>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === PLANNING_MANAGERS" class="planning_employee">
+    <div style="margin-bottom: 30px;">
+      <span>{{'POPUP_RAPPORT.RADIO_BUTTON_LABEL' | translate}}</span>
+      <p-radioButton [(ngModel)]="weekMonthSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_plgM-weekRadioBtn"
+                     label="{{'POPUP_RAPPORT.WEEK' | translate}}" name="period"
+                     value="week"></p-radioButton>
+      <p-radioButton [(ngModel)]="weekMonthSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_plgM-monthRadioBtn"
+                     label="{{'POPUP_RAPPORT.MONTH' | translate}}" name="period"
+                     value="month"></p-radioButton>
+    </div>
+    <div *ngIf="weekMonthSelectedValue === 'week'" class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.WEEK' | translate}}*</label>
+      </div>
+      <div>
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_plgM-Week-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="true"
+            [showWeek]="true"
+            dateFormat="dd/mm/yy"
+            id="RAPPORT_plgM-Week-dateSelect"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_plgM-Week-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+        <span *ngIf="weekDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_plgM-week-WeekDateError">{{'POPUP_RAPPORT.REQUIRED_WEEK' | translate}}</span>
+      </div>
+    </div>
+    <div *ngIf="weekMonthSelectedValue === 'month'" class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title">{{'POPUP_RAPPORT.MONTH' | translate}}*</label>
+      </div>
+      <div>
+        <div class="block-input-week-rhis">
+          <p-calendar (onSelect)="selectMonthDate($event)" [readonlyInput]="true"
+                      [showIcon]="true"
+                      [yearNavigator]="true"
+                      dateFormat="mm/yy"
+                      id="RAPPORT_plgM-month-dateSelect"
+                      inputId="monthpicker"
+                      view="month"
+                      yearRange="2000:2050">
+          </p-calendar>
+        </div>
+        <span *ngIf="monthDatesError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_plgM-month-MonthError">{{'POPUP_RAPPORT.REQUIRED_MONTH' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.WORKING_GROUP' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedManagerLeader" [options]="managerLeaderList"
+                  id="RAPPORT_plgM-month-workGpe"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"
+             style="padding-right: 59px;"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  id="RAPPORT_plgM-month-sort"
+                  optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === VACANCES_RAPPORT" class="rapport_absences">
+    <div class="mb-4 flex-start-block">
+      <span class="switch-element-title" style="margin-right: 4rem">{{'POPUP_RAPPORT.MONTHLY' | translate}}</span>
+      <p-inputSwitch (onChange)="resetDates()" [(ngModel)]="monthlyChecked" class="green-switch"
+                     id="planning-vac-switch-popup"></p-inputSwitch>
+    </div>
+    <div *ngIf="!monthlyChecked" class="mb-4 flex-between-block specifique-block">
+      <div class="label-periode-debut-absence">
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+      </div>
+      <div>
+        <p-calendar (onSelect)="getListEmployee(); setMaxDate()" [(ngModel)]="dateDebut" dateFormat="dd/mm/yy"
+                    id="RAPPORT_Vac-dateD-calendar"></p-calendar>
+        <span *ngIf="dateDebutError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_Vac-dateDError">{{'POPUP_RAPPORT.REQUIRED_DATE_DEBUT' | translate}}</span>
+      </div>
+      <div>
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <p-calendar (onSelect)="getListEmployee()" [(ngModel)]="dateFin" [disabled]="!dateDebut"
+                    [maxDate]="maxDate" dateFormat="dd/mm/yy" id="RAPPORT_Vac-dateF"></p-calendar>
+        <span *ngIf="dateFinError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_Vac-dateFError">{{'POPUP_RAPPORT.REQUIRED_FIN_DEBUT' | translate}}</span>
+        <span *ngIf="correctDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_Vac-dateError">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+    </div>
+    <div *ngIf="monthlyChecked" class="mb-4 flex-between-block">
+      <div class="label-periode-debut-absence">
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_DE' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <p-calendar
+          (onSelect)="selectMonthDateDebut($event);getListEmployee(); setMaxDate(); dateFinCalendar.value = null;dateFinCalendar.updateInputfield()"
+          [readonlyInput]="true"
+          [showIcon]="false"
+          [yearNavigator]="true"
+          dateFormat="mm/yy"
+          id="RAPPORT_plgV-month-startDateSelect"
+          inputId="monthpicker"
+          view="month"
+          yearRange="2000:2050">
+        </p-calendar>
+        <span *ngIf="dateDebutError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_VacM-dateDError">{{'POPUP_RAPPORT.REQUIRED_DATE_DEBUT' | translate}}</span>
+      </div>
+      <div>
+        <label class="section-element-title">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div class="position-relative">
+        <p-calendar #dateFinCalendar (onSelect)="selectMonthDateFin($event);getListEmployee()" [disabled]="!dateDebut"
+                    [maxDate]="maxDate"
+                    [readonlyInput]="true"
+                    [showIcon]="false"
+                    [yearNavigator]="true"
+                    dateFormat="mm/yy"
+                    id="RAPPORT_plgV-month-endDateSelect"
+                    inputId="monthpicker"
+                    view="month"
+                    yearRange="2000:2050">
+        </p-calendar>
+        <span *ngIf="dateFinError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_VacM-dateFError">{{'POPUP_RAPPORT.REQUIRED_FIN_DEBUT' | translate}}</span>
+        <span *ngIf="correctDateError"
+              class="form-item-error red small-rhis position-absolute error-coordination"
+              id="RAPPORT_VacM-dateError">{{'POPUP_RAPPORT.ERR_DATE' | translate}}</span>
+      </div>
+    </div>
+    <div class="flex-start-block mb-4">
+      <label class="section-element-title filtrage-style"> {{'POPUP_RAPPORT.SORTING_CRITERIA' | translate}}*</label>
+      <p-dropdown [(ngModel)]="selectedCriteria" [options]="sortingCriteriaList"
+                  id="RAPPORT_Vac-sortList"
+                  optionLabel="name"></p-dropdown>
+    </div>
+    <div class="flex-start-block mb-4 position-relative">
+      <label class="section-element-title filtrage-style-motif-abs">{{'POPUP_RAPPORT.MOTIF_ABSENCE' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesMotif()"
+                     [(ngModel)]="selectedMotifAbsences"
+                     [options]="motifAbsences" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_Vac-motifAbs">
+        <ng-template let-selectedMotifAbsences pTemplate="selectedItems">
+          <span *ngIf="selectedMotifAbsences.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedMotifAbsence of selectedMotifAbsences;">
+            <span *ngIf="selectedMotifAbsences.length <= 3">{{selectedMotifAbsence.name}}, </span>
+          </span>
+          <span *ngIf="selectedMotifAbsences.length >= 4">
+            {{selectedMotifAbsences.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+      <span *ngIf="motifAbsenceError"
+            class="form-item-error red small-rhis position-absolute error-motif-absence"
+            id="RAPPORT_Vac-motifAbs-error">{{'POPUP_RAPPORT.REQUIRED_MOTIF_ABSENCES' | translate}}</span>
+    </div>
+    <div>
+      <span>{{'POPUP_RAPPORT.RADIO_BUTTON_LABEL' | translate}}</span>
+      <p-radioButton [(ngModel)]="rappAbsRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_Vac-empRadioBtn"
+                     label="{{'POPUP_RAPPORT.EMPLOYEE' | translate}}" name="employeeGroupeTravail"
+                     value="employee"></p-radioButton>
+      <p-radioButton [(ngModel)]="rappAbsRadioButtonSelectedValue" [ngModelOptions]="{standalone: true}"
+                     id="RAPPORT_Vac-gpeTrRadioBtn"
+                     label="{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}" name="employeeGroupeTravail"
+                     value="groupeTravail"></p-radioButton>
+    </div>
+    <div *ngIf="rappAbsRadioButtonSelectedValue === 'employee'" class="flex-start-block mb-4 position-relative"
+         style="margin-top: 10px;">
+      <label class="section-element-title" style="padding-right: 55px;">{{'POPUP_RAPPORT.EMPLOYEE' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesEmployees()"
+                     [(ngModel)]="selectedEmployees"
+                     [options]="employees" appendTo="body"
+                     defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                     id="RAPPORT_Vac-checkRabs">
+        <ng-template let-selectedEmployees pTemplate="selectedItems">
+          <span *ngIf="selectedEmployees.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedEmployee of selectedEmployees;">
+            <span *ngIf="selectedEmployees.length <= 3">{{selectedEmployee.name}}, </span>
+          </span>
+          <span *ngIf="selectedEmployees.length >= 4">
+            {{selectedEmployees.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+
+      <span *ngIf="rapportAbsenceEmployeeError"
+            class="form-item-error red small-rhis position-absolute error-employee"
+            id="RAPPORT_Vac-checkRabs-error">{{'POPUP_RAPPORT.REQUIRED_EMPLOYEES' | translate}}</span>
+    </div>
+    <div *ngIf="rappAbsRadioButtonSelectedValue === 'groupeTravail'" class="flex-start-block mb-4 position-relative"
+         style="margin-top: 10px">
+      <label class="section-element-title" style="padding-right: 10px;">{{'POPUP_RAPPORT.GROUPE_TRAVAIL' | translate}}
+        *</label>
+      <p-multiSelect (onClick)="checkRapportAbsencesGrpTrv()"
+                     [(ngModel)]="selectedGroupesTravail"
+                     [options]="groupesTravail" appendTo="body"
+                     id="RAPPORT_Vac-gpeTr">
+        <ng-template let-selectedGroupesTravail pTemplate="selectedItems">
+          <span *ngIf="selectedGroupesTravail.length === 0">
+            {{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}
+          </span>
+          <span *ngFor="let selectedGroupeTravail of selectedGroupesTravail;">
+            <span *ngIf="selectedGroupesTravail.length <= 3">{{selectedGroupeTravail.name}}, </span>
+          </span>
+          <span *ngIf="selectedGroupesTravail.length >= 4">
+            {{selectedGroupesTravail.length }} {{'POPUP_RAPPORT.SELECTED_ITEMS' | translate}}
+          </span>
+        </ng-template>
+      </p-multiSelect>
+      <span *ngIf="rapportAbsenceGrpTrvError"
+            class="form-item-error red small-rhis position-absolute error-employee"
+            id="RAPPORT_Vac-gpeTrError">{{'POPUP_RAPPORT.REQUIRED_GROUP_TRAVAIL' | translate}}</span>
+    </div>
+  </div>
+
+  <div *ngIf="selectedRapport?.codeName === PLANNING_POSTE_TRAVAIL">
+    <div class="mb-4 flex-start-block">
+      <label class="text-perso-commun section-element-title">{{'POPUP_RAPPORT.MODE_AFFICHAGE' | translate}} </label>
+      <label class="mr-5 section-element-title">{{'Acceuil.JOUR' | translate}}</label>
+      <p-inputSwitch [(ngModel)]="checkedJourSemainePosteTravail"
+                     class="mr-5"
+                     (click)="recupereDateSwitch()">
+      </p-inputSwitch>
+      <label class="mr-5 section-element-title">{{'Acceuil.SEMAINE' | translate}}</label>
+    </div>
+
+    <div class="mb-4 flex-start-block">
+      <div class="label-periode-debut">
+        <label class="section-element-title text-perso-commun">{{'POPUP_RAPPORT.PERIODE_A' | translate}}*</label>
+      </div>
+      <div *ngIf="!checkedJourSemainePosteTravail">
+        <p-calendar (onSelect)=" checkCompteursEmployeeError($event)"
+                    appendTo="body"
+                    dateFormat="dd/mm/yy"
+                    id="RAPPORT_compteurEmp-date"
+                    [(ngModel)]="dateJourprecedent">
+        </p-calendar>
+
+      </div>
+
+        <div class="block-input-week-rhis" *ngIf="checkedJourSemainePosteTravail">
+          <span class="img-planning left popup-travail">
+            <img (click)="downWeekDate()" alt="no image" id="RAPPORT_DisponibilitesR-downWeekD"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar
+            (change)="checkWeekBordersExist()"
+            (onSelect)="selectDate($event)"
+            [(ngModel)]="values"
+            [showIcon]="false"
+            [showWeek]="true"
+            dateFormat="dd/mm/yy"
+            appendTo="body"
+            id="RAPPORT_DisponibilitesR-selectD"
+            selectionMode="range">
+          </p-calendar>
+          <span class="img-planning right popup-travail">
+          <img (click)="upWeekDate()" alt="no image" id="RAPPORT_DisponibilitesR-upWeekD"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+        </div>
+           <span *ngIf="datePosteTravailError"
+              class="form-item-error red small-rhis error-coordination"
+              id="RAPPORT_compteurEmp-dateError">{{'POPUP_RAPPORT.REQUIRED_DATE' | translate}}</span>
+
+    </div>
+
+    <div class="flex-start-block mb-4" *ngIf="!checkedJourSemainePosteTravail">
+      <label
+        class="section-element-title filtrage-style text-perso-commun"> {{'POPUP_RAPPORT.DECOUPAGE_POSTE_TRAVAIL' | translate}}</label>
+      <p-dropdown [(ngModel)]="selectedDecoupagePT" [options]="PosteTravailDecoupage"
+                  appendTo="body"
+                  (onShow)="alignSizes()"
+                  id="RAPPORT_PLANNING_POSTE_TRAVAIL"
+                  optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <button (click)="generateRapport();" *ngIf="selectedRapport?.codeName === PLANNING_POSTE_TRAVAIL"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-3"
+          id="RAPPORT_generateR-afficheBtn"
+          type="button">
+    <span >{{"POPUP_RAPPORT.TELECHARGER" | translate | uppercase}}</span>
+  </button>
+  <button (click)="generateRapport();" *ngIf="selectedRapport?.codeName !== PLG_RAPPORT_JOURNALIER && selectedRapport?.codeName !== PLANNING_POSTE_TRAVAIL"
+          class="btn save-add-button-rhis orange-background btn-popup-rhis mt-3"
+          id="RAPPORT_generateR-afficheBtn"
+          type="button"
+          [disabled]="choosenEmployee.nom === '' && !selectAllEmployees">
+    <span *ngIf="!checked">{{"POPUP_RAPPORT.AFFICHER" | translate | uppercase}}</span>
+    <span *ngIf="checked">{{"POPUP_RAPPORT.TELECHARGER" | translate | uppercase}}</span>
+  </button>
+
+  <div *ngIf="selectedRapport?.codeName === PLG_RAPPORT_JOURNALIER">
+    <rhis-popup-planning-journalier
+      (openPopup)="openClosePopup($event)">
+    </rhis-popup-planning-journalier>
+  </div>
+
+</div>

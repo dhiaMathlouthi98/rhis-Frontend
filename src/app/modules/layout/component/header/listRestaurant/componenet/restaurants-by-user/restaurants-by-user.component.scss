@@ -1,0 +1,93 @@
+:host ::ng-deep {
+    .table-list.table-specific-style p-table .ui-table table {
+        .ui-table-thead > tr > th{
+            text-align: left;
+            padding-left: 12px;
+            width: 40%;
+        }
+        .ui-table-thead > tr > th:last-child {
+            text-align: right;
+            width: 35%;
+          }
+      .ui-table-tbody {
+        > tr > td {
+          text-align: left;
+          padding-left: 15px;
+          width: 40%;
+        }
+        > tr > td:last-child {
+            text-align: right;
+            width: 35%;
+          }
+      }
+    }
+    .table-list p-table .ui-table table {
+        .ui-table-thead > tr > th{
+            text-align: left;
+            padding-left: 12px;
+            width: 33%;
+        }
+        .ui-table-thead > tr > th:last-child {
+            text-align: right;
+            width: 44%;
+          }
+      .ui-table-tbody {
+        > tr > td {
+          text-align: left;
+          padding-left: 15px;
+          width: 33%;
+        }
+        > tr > td:last-child {
+            text-align: right;
+            width: 44%;
+          }
+      }
+    }
+  }
+
+  .search {
+    height: 38px;
+    width: 285px;
+    border-radius: 19px;
+    background-color: #FFFFFF;
+    border: 1px solid #d1d1d9;
+    margin-right: 13px;
+    @media screen and (max-width: 1366px) {
+      width: 232px;
+    }
+    &.table-specific-style{
+        width: 241px;
+    }
+    input {
+      outline: none;
+      height: inherit;
+      width: 238px;
+      margin-left: 10px;
+      border: none;
+      background-color: transparent;
+      color: #AFA899;
+      font-family: "TT Wellingtons Light";
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      &.table-specific-style{
+        width: 185px;
+      }
+      @media screen and (max-width: 1366px) {
+        width: 200px;
+        font-size: 13px;
+      }
+      @media screen and (max-width: 1280px) {
+        width: 160px;
+      }
+  
+      &::placeholder {
+        color: inherit;
+      }
+    }
+  
+    span {
+      cursor: pointer;
+      margin-right: 12px;
+    }
+  }

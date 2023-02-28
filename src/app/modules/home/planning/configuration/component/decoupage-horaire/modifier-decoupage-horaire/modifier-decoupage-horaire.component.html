@@ -1,0 +1,94 @@
+<div class="decoupage-horaire-display">
+  <div>
+    <!-- libelle -->
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{'POST_TRAVAIL.LIBELLE' | translate}}*
+            </label>
+            <input type="text" size="30" placeholder="Saisir Libelle" [(ngModel)]="newDecoupageHoraire.phase.libelle"
+                   pInputText
+                   class="text-field">
+            <span class="form-item-error red small" *ngIf="libellePhaseError">
+              {{libellePhaseErrorMessage | translate}}</span>
+            <span class="form-item-error red small" *ngIf="timeConfendueDecoupageHoraireError">
+              {{timeConfendueDecoupageHoraireErrorMessage | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[0].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[0].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[0].val),'valeur'+(listJours[1].val),0)"></p-calendar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[1].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[1].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[1].val),'valeur'+(listJours[2].val),1)"></p-calendar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[2].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[2].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[2].val),'valeur'+(listJours[3].val),2)"></p-calendar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[3].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[3].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[3].val),'valeur'+(listJours[4].val),3)"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 mb-3">
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[4].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[4].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[4].val),'valeur'+(listJours[5].val),4)"></p-calendar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[5].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[5].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[5].val),'valeur'+(listJours[6].val),5)"></p-calendar>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="section-element">
+            <label class="section-element-title">
+              {{listJours[6].column}}*
+            </label>
+            <p-calendar [(ngModel)]="newDecoupageHoraire[('valeur'+(listJours[6].val))]" [timeOnly]="true"
+                        (onClose)="verificationNightValue('valeur'+(listJours[6].val),'valeur'+(listJours[0].val),6)"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" (click)="addNewDecoupageHoraire()"
+          class="btn save-add-button-rhis btn-popup-rhis orange-background mt-5">
+    <span>{{buttonTitle | uppercase }}</span>
+  </button>
+</div>

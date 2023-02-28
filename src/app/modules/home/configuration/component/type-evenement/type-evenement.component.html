@@ -1,0 +1,74 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="190">
+    <div>
+      <h1 class="titre-principale-page-rhis">{{"TYPE_EVENT.TYPE" | translate}}</h1>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list">
+      <p-table [value]="typeEvents"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup">
+          <colgroup>
+              <col *ngFor="let c of headerCode">
+              <col>
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let hc of headerCode">{{'TYPE_EVENT.' + hc | translate}}</th>
+            <th>
+              <button *ngIf="addButtonControl()" type="button"
+                      class="btn save-add-button-rhis button-add-intable-rhis orange-background"
+                      (click)="addTypeEvenement()">
+                <span>{{('TYPE_EVENT.ADD_BUTTON'|translate) | uppercase}}</span>
+              </button>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-typeEvent>
+          <tr class="table-row" (click)="editTypeEvenement(typeEvent)">
+            <td>{{typeEvent?.libelle}}</td>
+            <td><i *ngIf="typeEvent?.payer" class="pi pi-check"></i></td>
+            <td><i *ngIf="typeEvent?.travaille" class="pi pi-check"></i></td>
+            <td><i *ngIf="typeEvent?.previsible" class="pi pi-check"></i></td>
+            <td>{{typeEvent?.code}}</td>
+            <td>{{typeEvent?.codeGdh}}</td>
+            <td>{{typeEvent?.codePaye}}</td>
+            <td><i *ngIf="typeEvent?.valorise" class="pi pi-check"></i></td>
+            <td><span class="label-table" [ngStyle]="{'background-color': typeEvent.statut ? '#2DC76D': '#FF9B42'}">
+          {{(typeEvent.statut ? "TYPE_EVENT.ACTIF" : "TYPE_EVENT.INACTIF") | translate}}
+        </span></td>
+            <td *ngIf="deleteButtonControl()">
+            <span (click)=" showConfirmDelete(typeEvent?.uuid); $event.stopPropagation()"
+                  *ngIf="typeEvent.statut" class="item">
+              <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+            </span>
+              <span class="con-tooltip bottom" (click)="showConfirmActivation(typeEvent); $event.stopPropagation()"
+                    *ngIf="!typeEvent.statut">
+              <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+            </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="showPopUp = false"
+  [showPopUp]="showPopUp"
+  [title]="actionTitle"
+  [width]="popUpStyle?.width"
+>
+  <rhis-add-type-evenement *ngIf="showPopUp"
+                           [typeEvents]="typeEvents"
+                           [selectedTypeEvenemet]="selectedTypEvenement"
+                           [buttonLabel]="actionTitle"
+                           (saveTypeEvenement)="getEntity($event)"
+  ></rhis-add-type-evenement>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

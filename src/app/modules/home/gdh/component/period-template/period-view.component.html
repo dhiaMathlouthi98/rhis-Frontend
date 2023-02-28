@@ -1,0 +1,497 @@
+<div class="table-list" style="position: relative;">
+  <div (rhisHeightScrollableSection)="heightInterface = $event"
+       [offset]="370">
+    <div class="block-filter-right-gdh">
+      <button (click)="toggleFilterPopup()" class="btn btn-show-left-part">
+        <img alt="no print icon" src="assets/icons/gdh/Plus@3x.png">
+      </button>
+      <button (click)="showRightPart()" *ngIf="showPart1 && showRightPartButton" class="btn btn-show-right-part">
+        <img alt="no print icon" src="assets/icons/gdh/Ico_Arrow.svg">
+      </button>
+    </div>
+  </div>
+  <rhis-filter-popup [openedAlertes]="openedFilterPopup" [showCoupuresCol]="showCoupuresCol"
+                     [showRepasCol]="showRepasCol" [showContratCol]="showContratCol"
+                     [showHeuresSupplCol]="showHeuresSupplCol"
+                     [showHeuresComplCol]="showHeuresComplCol" [showHeuresNuitCol]="showHeuresNuitCol"
+                     [showHeuresFerieCol]="showHeuresFerieCol" [viewDay]="viewDay"
+                     (rhisClickOutsideTooltip)="closeFilterPopup()"
+                     *ngIf="openedFilterPopup" (toggleColumn)="toggleColumn($event)"
+                     (closeAlertes)="closeFilterPopup()">
+  </rhis-filter-popup>
+
+  <div [ngClass]="{'d-flex': !menuIsOpen}" class="table-list table-weeek-view-scroll">
+    <div class="child-table-view-all-gdh" style="width: 100%;">
+      <p-table #dt (onPage)="onLazyLoad($event)"
+               [columns]="header"
+               [customSort]="true"
+               [first]="first"
+               [frozenValue]="frozenLines" [lazy]="true"
+               [paginator]="true" [resetPageOnSort]="false"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               [rows]="rows"
+               [scrollHeight]="getScrollHeight | memoize: heightInterface: header: total: [this.showHeuresSupplCol, this.showHeuresComplCol, this.showHeuresNuitCol]: menuIsOpen"
+               [scrollable]="true"
+               [totalRecords]="totalRecords"
+               [value]="gdhViewData?.employees">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 150px">
+            <ng-container *ngFor="let col of columns">
+              <col [ngStyle]="
+            {
+            'width': col?.isDay ?  '60px !important' : col?.field == 'moisDetails'? '170px' : col?.field == 'traits' ? '5px' : col?.field == 'empty' ? '50px' : '100px'
+             }"
+                   [ngClass]="[(col?.field == 'coupuresSemaine' && !showCoupuresCol) || (col?.field == 'repasSemaine' && !showRepasCol)
+              || (col?.field == 'tempsContrat' && !showContratCol) || (col?.field == 'heureCompl' && !showHeuresComplCol)
+              || (col?.field == 'heureSupp' && !showHeuresSupplCol) || (col?.field == 'heureDeNuit' && !showHeuresNuitCol)
+              || (col?.field == 'heureJoursFeries' && !showHeuresFerieCol) ? 'display-none' : '']"
+              >
+            </ng-container>
+          </colgroup>
+        </ng-template>
+        <ng-template let-columns pTemplate="header">
+          <tr class="header-row">
+            <th [pSortableColumn]="'prenom'" (click)="sortList()" class="th-employee">
+              <ng-container>
+                {{"GDH.PERIOD_VIEW.EMPLOYE" | translate}}
+              </ng-container>
+              <p-sortIcon [field]="'prenom'" ariaLabel="Activate to sort"
+                          ariaLabelAsc="Activate to sort in ascending order"
+                          ariaLabelDesc="Activate to sort in descending order">
+              </p-sortIcon>
+            </th>
+            <ng-container *ngFor="let col of header; let l = last;  let i = index">
+              <th *ngIf="!col?.isDay || (col?.isDay && showPlusDetails)" [ngClass]="[col?.isDay ?  periode + ' day-col-width' :
+              col?.field == 'moisDetails'? 'moins-details-width' :
+              col?.field == 'traits' ? 'separator-width' : col?.field == 'empty' ? 'last-col-width' : '',
+              (col?.field == 'coupuresSemaine' && !showCoupuresCol) || (col?.field == 'repasSemaine' && !showRepasCol)
+              || (col?.field == 'tempsContrat' && !showContratCol) || (col?.field == 'heureCompl' && !showHeuresComplCol)
+              || (col?.field == 'heureSupp' && !showHeuresSupplCol) || (col?.field == 'heureDeNuit' && !showHeuresNuitCol)
+              || (col?.field == 'heureJoursFeries' && !showHeuresFerieCol) ? 'display-none' : '']" class="th-week">
+                <!-- show header fixed part : Employe -->
+                <ng-container *ngIf="col?.field == 'employe'">
+                  {{"GDH.PERIOD_VIEW.EMPLOYE" | translate}}
+                </ng-container>
+                <!-- show header seperator lines -->
+                <ng-container *ngIf="col?.field == 'traits'">
+                  <div class="week-trais"></div>
+                </ng-container>
+                <!-- show/hide details part : "Plus de details" -->
+                <ng-container *ngIf="col?.field == 'moisDetails'">
+                  <div class="display-inline">
+                    <div (click)="showLeftPart()" *ngIf="!showPart1" class="z-1000">
+                      <span><img alt="no print icon" class="rotate-180" src="assets/icons/gdh/Ico_Arrow.svg"></span>
+                    </div>
+                  </div>
+                  <div (click)="TogglePlusDetails()" class="btn-plus-details"
+                       id="GDH-paie-plusDetail-btn">
+                    <div class="div-plus-details">
+                      <div *ngIf="showPlusDetails; else moinsDetailsTemplate">
+                        <img alt="no print icon" class="arrow-r" src="assets/icons/gdh/Arrow.svg">
+                        <b> {{"GDH.PERIOD_VIEW.MOINS_DETAILS" | translate | uppercase}}</b>
+                      </div>
+                      <ng-template #moinsDetailsTemplate>
+                        <b>{{"GDH.PERIOD_VIEW.PLUS_DETAILS" | translate | uppercase}}</b>
+                        <img alt="no print icon" class="arrow-l" src="assets/icons/gdh/Arrow.svg">
+                      </ng-template>
+                    </div>
+                  </div>
+                </ng-container>
+                <!-- show the rest of header parts other then employe, more details and days details -->
+                <ng-container
+                  *ngIf="col?.field != 'employe' && col?.field != 'moisDetails' && !col?.isDay && col?.field != 'tempsContrat'">
+                  <span [innerHTML]="col?.title"></span>
+                </ng-container>
+                <!-- show header fixed part : tempsContrat -->
+                <ng-container *ngIf="col?.field == 'tempsContrat'">
+                  <span [innerHTML]="col?.title"></span>
+                </ng-container>
+
+                <!-- show days details under "Plus de details" part -->
+                <ng-container *ngIf="col?.isDay">
+                  <div (click)="TogglePlusDetails()" *ngIf="col?.isFirstDay" class="first-day">
+                    <b> {{col?.title}}</b>
+                  </div>
+                  <div (click)="TogglePlusDetails()" *ngIf="!col?.isLastDay && !col?.isFirstDay" class="in-day">
+                    <b> {{col?.title}}</b>
+                  </div>
+                  <div (click)="TogglePlusDetails()" *ngIf="col?.isLastDay" class="last-day">
+                    <b> {{col?.title}}</b>
+                  </div>
+                </ng-container>
+
+                <p-sortIcon *ngIf="col?.field == 'employe' " [field]="col?.field" ariaLabel="Activate to sort"
+                            ariaLabelAsc="Activate to sort in ascending order"
+                            ariaLabelDesc="Activate to sort in descending order">
+                </p-sortIcon>
+
+              </th>
+            </ng-container>
+          </tr>
+
+        </ng-template>
+        <ng-template let-columns="columns" let-rowData pTemplate="frozenrows">
+          <tr *ngIf="total">
+            <td>
+              <div class="d-flex justify-content-start gdh-total-title">
+                <span>{{rowData['title']}}</span>
+              </div>
+            </td>
+            <ng-container *ngFor="let col of columns">
+              <ng-container *ngIf="isFilteredColumns | memoize: col?.field; else notFilteredColumns">
+                <ng-container *ngIf="checkFilteredColumnsExists(col?.field)">
+                  <ng-container *ngIf="col?.field === 'repasSemaine'; else coupuresTemplate">
+                    <td class="td-day">
+                      <b>{{total?.repas !== -1 ? total?.repas : ""}}</b>
+                    </td>
+                  </ng-container>
+                  <ng-template #coupuresTemplate>
+                    <td *ngIf="col?.field === 'coupuresSemaine'; else otherThanCoupuresAndRepas" class="td-day">
+                      <b>{{total?.coupures}}</b>
+                    </td>
+                  </ng-template>
+                  <ng-template #otherThanCoupuresAndRepas>
+                    <td *ngIf="ternaryValuesField | memoize: col?.field; else othersTotalThanTernaryValues"
+                        class="td-day ternary-column-values">
+                      <b *ngIf="isHourlyView" [innerHTML]="rowData[col?.field]|heureComplSupp"></b>
+                      <b *ngIf="!isHourlyView" [innerHTML]="rowData[col?.field]|centiemeSuppCompHours">></b>
+                    </td>
+                  </ng-template>
+                  <ng-template #othersTotalThanTernaryValues>
+                    <td class="td-day">
+                      <b *ngIf="isHourlyView">{{rowData[col?.field] | tempPlanifiesTime}}</b>
+                      <b *ngIf="!isHourlyView">{{rowData[col?.field] | centiemeTime}}</b>
+                    </td>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+              <ng-template #notFilteredColumns>
+                <ng-container *ngIf="emptyColumns | memoize: col?.field; else emptyColumnsValues">
+                  <td class="td-day">
+                    <b *ngIf="isHourlyView">{{rowData[col?.field] | tempPlanifiesTime}}</b>
+                    <b *ngIf="!isHourlyView">{{rowData[col?.field] | centiemeTime}}</b>
+                  </td>
+                </ng-container>
+                <ng-template #emptyColumnsValues>
+                  <td class="td-day">
+                    <b>{{rowData[col?.field]}}</b>
+                  </td>
+                </ng-template>
+              </ng-template>
+            </ng-container>
+          </tr>
+          <ng-container *ngIf="!total">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" animationDuration=".5s" fill="#EEEEEE"
+                               strokeWidth="8"></p-progressSpinner>
+          </ng-container>
+        </ng-template>
+        <ng-template let-columns="columns" let-employe let-employeIndex="rowIndex" pTemplate="body">
+          <tr [pSelectableRow]="employe" class="table-row">
+            <td>
+              <div class="grid-user">
+                <div>
+                  <div class="mr-2 img-profil__photo32">{{employe|user2Lettre}}</div>
+                </div>
+
+                <div (click)="employeeInfo(employe) ; popoverInfoEmploye.toggle($event)" class="gdh-employee">
+                  <b class="empl-prenom">{{employe?.prenom}} </b>
+                  <br/>
+                  <span>{{employe?.nom}}</span>
+                </div>
+              </div>
+              <p-overlayPanel #popoverInfoEmploye
+                              [dismissable]="true"
+                              appendTo="body">
+                <rhis-employee-info-popover [employee]="employe" [selectedEmployeeUuId]="selectedEmployeeId">
+                </rhis-employee-info-popover>
+              </p-overlayPanel>
+            </td>
+            <ng-container *ngFor="let col of header;">
+              <td (click)="addAction(employeIndex, col?.field)" *ngIf="!col?.isDay || (col?.isDay && showPlusDetails)"
+                  [ngStyle]="{'display':  (col?.field == 'coupuresSemaine' && !showCoupuresCol) || (col?.field == 'repasSemaine' && !showRepasCol)
+            || (col?.field == 'tempsContrat' && !showContratCol) || (col?.field == 'heureCompl' && !showHeuresComplCol)
+            || (col?.field == 'heureSupp' && !showHeuresSupplCol) || (col?.field == 'heureDeNuit' && !showHeuresNuitCol)
+            || (col?.field == 'heureJoursFeries' && !showHeuresFerieCol) ? 'none' : '',
+            'width': col?.isDay ? ( viewPaye ? '60px': '70px'): (col?.field === 'traits' ? '5px': (col?.field === 'moisDetails' ? '170px' : (col?.field === 'empty' ? '50px': 'auto')))}"
+                  class="td-day">
+                <ng-container *ngIf="col?.field == 'tempsContrat'">
+                  <div>
+                    <span (click)="popoverShown(employe) ; popoverInfoContrat.toggle($event)"
+                          *ngIf="employe?.avenantExist">
+                                      <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsContrat|tempPlanifiesTime"
+                                            class="color-gris"></span>
+                                     <span *ngIf="!isHourlyView"
+                                           [innerHTML]="employe?.tempsContrat|centiemeTime"
+                                           class="color-gris"
+                                     >
+                                  </span>
+                                  <span> * </span>
+                    </span>
+                    <span *ngIf="!employe?.avenantExist">
+                                      <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsContrat|tempPlanifiesTime"
+                                            class="color-gris"></span>
+                                     <span *ngIf="!isHourlyView"
+                                           [innerHTML]="employe?.tempsContrat|centiemeTime"
+                                           class="color-gris"
+                                     >
+                                  </span>
+                    </span>
+                  </div>
+                  <p-overlayPanel #popoverInfoContrat
+                                  [dismissable]="true"
+                                  appendTo="body">
+                    <div class="row scroll-general-rhis popover-height">
+                      <div class="col-md-12 popover-padding">
+                        <div *ngFor="let contrat of contratList">
+                          <div class="libelle-flex">
+                            <div class="font-weight-bold"> {{"GDH.PERIOD_VIEW.BASE_CONTRACT" | translate}}</div>
+                          </div>
+                          <div class="element-flex">
+                            <div>{{contrat?.hebdo}} / {{"GDH.PERIOD_VIEW.HEBDO" | translate | uppercase}}</div>
+                            <div> -</div>
+                            <div>{{contrat?.mens}} / {{"GDH.PERIOD_VIEW.MENSUEL" | translate | uppercase}}</div>
+                          </div>
+                          <div *ngFor="let avenant of contrat?.avenants">
+                            <div class="libelle-flex">
+                              <div
+                                class="font-weight-bold"> {{"GDH.PERIOD_VIEW.AVENANT" | translate}} {{avenant?.dateDebut
+                                | date: 'dd.MM.yy'}} {{"GDH.PERIOD_VIEW.AU" | translate}} {{avenant?.datefin | date:
+                                'dd.MM.yy'}}
+                              </div>
+                            </div>
+                            <div class="element-flex">
+                              <div>{{avenant?.hebdo}} / {{"GDH.PERIOD_VIEW.HEBDO" | translate | uppercase}}</div>
+                              <div> -</div>
+                              <div>{{avenant?.mens}} / {{"GDH.PERIOD_VIEW.MENSUEL" | translate | uppercase}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </p-overlayPanel>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'tempsPlanifies'">
+                  <div *ngIf="isHourlyView" class="t-center color-black">
+                    <div [innerHTML]="employe?.tempsPlanifies|tempPlanifiesTime"></div>
+                    <span *ngIf="viewPaye">
+                  [<span class="th-temps-planifies" [innerHTML]="employe?.tempsRestePlanifies|tempPlanifiesTime"></span>]
+                </span>
+                  </div>
+                  <div *ngIf="!isHourlyView" class="t-center color-black">
+                    <div [innerHTML]="employe?.tempsPlanifies|centiemeTime"></div>
+                    <span *ngIf="viewPaye">
+                  [<span class="th-temps-planifies" [innerHTML]="employe?.tempsRestePlanifies|centiemeTime"></span>]
+                </span>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'tempsPointes'">
+              <span *ngIf="!employe?.tempsPointes && !employe?.tempsAbsences; else onlyPointingTemplate">-
+              </span>
+                  <ng-template #onlyPointingTemplate>
+                <span *ngIf="!employe?.tempsPointes && employe?.tempsAbsences; else tempsPointeTemplate"
+                      class="col-day-absence"> {{"GDH.PERIOD_VIEW.ABSENT" | translate}}
+                </span>
+                  </ng-template>
+                  <ng-template #tempsPointeTemplate>
+                <span
+                  [ngClass]="employe.tempsPointes > employe.tempsPlanifies? 'pointing-absence-style' : employe.tempsPointes < employe.tempsPlanifies? 'col-day-absence' : 'pointing-style'">
+                  <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsPointes|tempPlanifiesTime"></span>
+                  <span *ngIf="!isHourlyView" [innerHTML]="employe?.tempsPointes|centiemeTime"></span>
+                </span>
+                  </ng-template>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'traits'">
+                  <div class="th-traits"></div>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'moisDetails'">
+              <span class="color-black">
+                &Delta; {{"GDH.PERIOD_VIEW.DELTA" | translate}}
+              </span>
+                  <br/>
+                  <span
+                    [innerHTML]="employe?.tempsContrat|deltaTime:employe?.tempsPointes:!isHourlyView:employe?.delta"
+                    [ngClass]="employe.tempsPointes > employe.tempsContrat? 'pointing-absence-style' : employe.tempsPointes < employe.tempsContrat? 'col-day-absence' : 'pointing-style'"></span>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'tempsAbsencesSemaine'">
+              <span *ngIf="viewPaye">
+                <span
+                  *ngIf="employe?.tempsAbsences >= 0 && employe?.codeGdh !== ''; else noValueTemplate;"
+                  class="col-day-absence">
+                  <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsAbsences|tempPlanifiesTime"></span>
+                  <span *ngIf="!isHourlyView" [innerHTML]="employe?.tempsAbsences|centiemeTime"></span>
+                  <br/>
+                  [{{employe?.codeGdh}}]
+                </span>
+              </span>
+                  <span *ngIf="!viewPaye">
+                    <span (click)="closeAbsenceDayPopup() ; popoverInfoTempsAbsence.toggle($event)"
+                          *ngIf="employe?.tempsAbsences >= 0 && employe?.absences.length !== 0; else noValueTemplate"
+                          class="col-day-absence">
+                      <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsAbsences|tempPlanifiesTime"></span>
+                      <span *ngIf="!isHourlyView" [innerHTML]="employe?.tempsAbsences|centiemeTime"></span>
+                      <br/>
+                      [{{employe?.codeGdh}}]
+                    </span>
+                  </span>
+
+                  <p-overlayPanel #popoverInfoTempsAbsence
+                                  [dismissable]="true"
+                                  appendTo="body">
+                    <div class="row">
+                      <div class="col-md-12 popover-padding">
+                        <b class="popover-week-absence"> {{"GDH.PERIOD_VIEW.ABSENCES" | translate}}: </b>
+                        <br/><br/>
+                        <div *ngFor="let absence of employe.absences" class="popover-info-date">
+                          {{absence?.jour | titlecase}} : {{absence?.heureDebut | slice : 0 : 5}}
+                          - {{absence?.heureFin | slice : 0 : 5}} :
+                          {{absence?.typeEvenement?.codeGdh}}
+                        </div>
+                      </div>
+                    </div>
+                  </p-overlayPanel>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'heureCompl'">
+                  <span *ngIf="isHourlyView" [innerHTML]="employe?.heureCompl|heureComplSupp"
+                        class="th-week-heure"></span>
+                  <span *ngIf="!isHourlyView" [innerHTML]="employe?.heureCompl|centiemeSuppCompHours"
+                        class="th-week-heure"></span>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'heureSupp'">
+                  <span *ngIf="isHourlyView" [innerHTML]="employe?.heureSupp|heureComplSupp"
+                        class="th-week-heure"></span>
+                  <span *ngIf="!isHourlyView" [innerHTML]="employe?.heureSupp|centiemeSuppCompHours"
+                        class="th-week-heure"></span>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'heureDeNuit'">
+                  <span *ngIf="isHourlyView" [innerHTML]="employe?.heureDeNuit|heureComplSupp"
+                        class="th-week-heure"></span>
+                  <span *ngIf="!isHourlyView" [innerHTML]="employe?.heureDeNuit|centiemeSuppCompHours"
+                        class="th-week-heure"></span>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'heureJoursFeries'">
+              <span *ngIf="employe?.heureJoursFeries !== 0; else noValueTemplate">
+                <span *ngIf="isHourlyView" [innerHTML]="employe?.heureJoursFeries|tempPlanifiesTime"></span>
+                <span *ngIf="!isHourlyView" [innerHTML]="employe?.heureJoursFeries|centiemeTime"></span>
+              </span>
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'coupuresSemaine'">
+                  {{employe?.coupures}}
+                </ng-container>
+                <ng-container *ngIf="col?.field == 'repasSemaine'">
+                  <div (rhisClickOutside)="saveRepas(employe, repas?.value, employeIndex)"
+                       *ngIf="isRepasOnEditionMode[employeIndex % gdhViewData?.size]" [skipFirstClick]="true">
+                    <input (keydown.enter)="saveRepas(employe, repas?.value, employeIndex)"
+                           [value]="employe?.repas >= 0 ? employe?.repas : ''" class="repas" min="0"
+                           ref-repas type="number">
+                  </div>
+                  <ng-container
+                    *ngIf="(employe?.repas >= 0) && !isRepasOnEditionMode[employeIndex % gdhViewData?.size]">
+                    {{employe?.repas}}
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="col?.isDay">
+                  <!-- Case no pointings or absences -->
+                  <span
+                    *ngIf="isEmpty(col?.date, employe?.pointages) && isEmptyAbsence(col?.date, employe);else pointageTemplate">
+                -
+              </span>
+                  <!-- Case only pointings -->
+                  <ng-template #pointageTemplate>
+                <span
+                  *ngIf="!isEmpty(col?.date, employe?.pointages) && isEmptyAbsence(col?.date, employe);else absenceTemplate">
+                  <span *ngFor="let pointage of employe?.pointages">
+                    <span *ngIf="col?.date === pointage?.dateJournee">
+                      <span class="pointing-style" *ngIf="isHourlyView">
+                        {{ pointage?.totalMinutes | tempPlanifiesTime}}
+                        <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                       <span class="pointing-style" *ngIf="!isHourlyView">
+                        {{ pointage?.totalMinutes | centiemeTime}}
+                         <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                    </span>
+                    <span *ngIf="col?.date === pointage?.name">
+                      <span class="pointing-style" *ngIf="isHourlyView">
+                        {{ pointage?.value | tempPlanifiesTime}}
+                        <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                       <span class="pointing-style" *ngIf="!isHourlyView">
+                        {{ pointage?.value | centiemeTime}}
+                         <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                  </ng-template>
+                  <!-- Case only absences -->
+                  <ng-template #absenceTemplate>
+                <span
+                  *ngIf="!isEmptyAbsence(col?.date, employe) && isEmpty(col?.date, employe?.pointages);else absencePointingTemplate">
+                  <span *ngFor="let pointage of employe?.pointages">
+                    <span *ngIf="(col?.date === pointage?.dateJournee) || (col?.date === pointage?.name)">
+                      <span (click)="!viewPaye ? openAbsenceDayPopup(col?.date, employe?.absences, popoverInfo) : null"
+                            *ngIf="isHourlyView"
+                            [innerHTML]="pointage?.cumulAbsence|tempPlanifiesTime"
+                            class="col-day-absence">
+                      </span>
+                    <span (click)="!viewPaye ? openAbsenceDayPopup(col?.date, employe?.absences, popoverInfo) : null" *ngIf="!isHourlyView"
+                          [innerHTML]="pointage?.cumulAbsence|centiemeTime"
+                          class="col-day-absence">
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                  </ng-template>
+                  <!-- Case pointings and absences -->
+                  <ng-template #absencePointingTemplate>
+                <span *ngIf="!isEmptyAbsence(col?.date, employe) && !isEmpty(col?.date, employe?.pointages)">
+                  <span *ngFor="let pointage of employe?.pointages">
+                    <span *ngIf="(col?.date === pointage?.dateJournee) || (col?.date === pointage?.name)">
+                      <span *ngIf="!isHourlyView" class="pointing-absence-style"
+                            (click)="!viewPaye ? openAbsenceDayPopup(col?.date, employe?.absences, popoverInfo) : null">
+                        {{pointage?.cumulPointageAbsence| centiemeTime }}
+                        <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                          <span *ngIf="isHourlyView" class="pointing-absence-style"
+                                (click)="!viewPaye ? openAbsenceDayPopup(col?.date, employe?.absences, popoverInfo) : null">
+                        {{pointage?.cumulPointageAbsence| tempPlanifiesTime }}
+                            <span *ngIf="pointage?.modified"> * </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                  </ng-template>
+                  <p-overlayPanel #popoverInfo
+                                  [dismissable]="true"
+                                  appendTo="body">
+                    <div *ngIf="col?.date === clickedDay" class="row">
+                      <div class="col-md-12 popover-padding">
+                        <b class="popover-week-absence">{{"GDH.PERIOD_VIEW.ABSENCES" | translate}}: </b>
+                        <br/><br/>
+                        <div *ngFor="let absence of  (popUpAbsences | async)"
+                             class="popover-info-date">
+                          {{absence?.heureDebut | slice : 0 : 5}} - {{absence?.heureFin | slice : 0 : 5}}
+                          : {{absence?.typeEvenement?.codeGdh}}
+                        </div>
+                      </div>
+                    </div>
+                  </p-overlayPanel>
+                </ng-container>
+                <ng-template #noValueTemplate>
+                  -
+                </ng-template>
+              </td>
+            </ng-container>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<rhis-pop-up (closeEvent)="warningPopUpLock = false"
+             [showPopUp]="warningPopUpLock"
+             [title]="('GDH.BLOCK.TO' | translate) + limitBlockDate">
+  {{'GDH.BLOCK.PERIOD_WARNING' | translate}}
+</rhis-pop-up>

@@ -1,0 +1,134 @@
+@import '../../../../../../assets/file_import/table-style-commun';
+
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .titre.col-6 {
+    padding-left: 0;
+  }
+
+  h1.titre-principale-page-rhis {
+    float: left;
+  }
+
+  .col-4.titre {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .search {
+    height: 38px;
+    width: 296px;
+    border-radius: 19px;
+    background-color: #FFFFFF;
+    float: left;
+    margin: 0 15px;
+    border: 1px solid #d1d1d9;
+    @media screen and (max-width: 991px) {
+      width: 232px;
+      margin: 0 10px 0 10px;
+    }
+
+    input {
+      float: left;
+      outline: none;
+      height: inherit;
+      width: 235px;
+      margin-left: 20px;
+      border: none;
+      background-color: transparent;
+      color: #AFA899;
+      font-family: "TT Wellingtons Light";
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      @media screen and (max-width: 991px) {
+        width: 175px;
+        font-size: 12px;
+      }
+
+      &::placeholder {
+        color: inherit;
+      }
+    }
+
+    span {
+      float: right;
+      margin-top: 5px;
+      margin-right: 18px;
+      @media screen and (max-width: 991px) {
+        margin-right: 9px;
+      }
+
+      img {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .imprimer-icon {
+    float: left;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.status-select {
+  height: fit-content;
+  position: relative;
+
+  i {
+    font-size: 0.65rem;
+  }
+
+  div {
+    position: absolute;
+    top: 25px;
+    z-index: 1;
+    right: 157px;
+    width: 77%;
+    margin-left: 10px;
+  }
+}
+
+:host ::ng-deep {
+  .table-list {
+    @include nbre-ligne-page();
+  }
+  th:nth-child(n-1){
+    width: 40% !important;
+
+  }
+  td:nth-child(n-1){
+    width: 40% !important;
+  }
+  th:last-child{
+    width: 20% !important;
+
+  }
+  td:last-child{
+    width: 20% !important;
+  }
+ 
+}
+
+col:last-child {
+  width: 230px;
+  @media screen and (max-width: 991px) {
+    width: 158px;
+  }
+}
+
+.table-row {
+  td {
+    &:last-child {
+      padding-right: 34px !important;
+      @media screen and (max-width: 991px) {
+        padding-right: 14px !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+:host ::ng-deep {
+  .ui-multiselect {
+    max-width: 245px;
+    width: 100%;
+    min-width: 200px;
+  }
+}
+.btn.save-add-button-rhis.change-cursor {
+  cursor: not-allowed;
+  float: right;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.download-container {
+  height: 77vh ;
+}
+.item-selection {
+  font-size: 13px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.title-option {
+  font-weight: 700;
+}
+
+:host ::ng-deep {
+  .ui-inputswitch-slider {
+    background-color: #ccc !important;
+    border: 1px solid #ccc;
+  }
+
+  .ui-inputswitch {
+    width: 56px !important;
+    height: 28px !important;
+  }
+
+  .ui-inputswitch .ui-inputswitch-slider:before {
+    height: 22px !important;
+    width: 22px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+  }
+
+  .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+    -webkit-transform: translateX(27px) !important;
+    transform: translateX(27px) !important;
+  }
+
+  .ui-inputswitch {
+    width: 56px !important;
+    height: 28px !important;
+  }
+
+  .ui-inputswitch .ui-inputswitch-slider:before {
+    height: 22px !important;
+    width: 22px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+  }
+
+  .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider:before {
+    -webkit-transform: translateX(27px) !important;
+    transform: translateX(27px) !important;
+  }
+
+  .green-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #2DC76D !important;
+    border: 1px solid #2DC76D;
+  }
+
+  .blue-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #ccc !important;
+    border: 1px solid #ccc;
+  }
+}

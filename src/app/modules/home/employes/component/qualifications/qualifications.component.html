@@ -1,0 +1,129 @@
+<div class="row justify-content-end">
+  <button (click)="saveUpdate()" class="btn save-add-button-rhis orange-background" id="EMP_QUALI-save-btn"
+          type="button">
+    <span>{{'BUTTON.SAVE' | translate}}</span>
+  </button>
+</div>
+<div class="rhis-container">
+  <!-- DIV QUALIFICATION-->
+  <div class="view-section">
+    <div class="view-section-title">{{'EMPLOYEE.QUALIFICATION' | translate}}</div>
+    <div class="section-body">
+      <div *ngFor="let competence of competences" class="competences">
+        <rhis-competence [competence]='competence' (removeCompetence)="removeCompetence($event)"
+                         [translateComment]="translateComment(competence.valeurQualification)"></rhis-competence>
+      </div>
+      <div class="add-block-plus-rhis" *ngIf="remainingListPositionTravail.length !== 0 && this.addButtonControl()">
+        <div (click)="displayAddQualificationPopup()" id="EMP_QUALI-add-btn">
+          <img src="assets/icons/employe/Btn_Add.svg" alt="no image">
+          <span>{{'BUTTON.ADD' | translate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- DIV FORMATION OBLIGATOIRE-->
+  <div class="view-section">
+    <div class="view-section-title">{{'FORMATION.OBLIGATOIRE' | translate}}</div>
+    <div class="section-body">
+      <div *ngFor='let formation of listFormationObligatoire' class="formation">
+        <div (mouseenter)="showOrHideToolTip(formation)" (mouseleave)="showOrHideToolTip(formation)"
+             (dblclick)="defineFormationDate(formation)">
+          <div class="d-inline-block" (click)="setFormationEmployee(formation)">
+            <p-checkbox name="formation" binary="true"
+                        [(ngModel)]="formation.formationSelectedForEmployee"></p-checkbox>
+          </div>
+          <span class="ui-chkbox-label"> {{formation?.libelle}}</span>
+          <span class="ui-chkbox-label"
+                *ngIf="formation.dureeValidite !== 0 && formation.dateFormationEmployee"> {{'FORMATION.VALID_UNTIL' | translate}} {{ formation.dateFinValidite | date:'dd/MM/yyyy'  }}</span>
+          <rhis-infos-tooltip [top]="tooltipStyle.top"
+                              *ngIf="formation.toolTipShow && formation.dateFormationEmployee">
+            <span *ngIf="formation.dateFormationEmployee >= currentDate">{{'FORMATION.PREVU_LE' | translate}}
+              :{{formation.dateFormationEmployee| date:'dd/MM/yyyy' }}</span>
+            <span *ngIf="formation.dateFormationEmployee < currentDate">{{'FORMATION.FAITE_LE' | translate}}
+              :{{formation.dateFormationEmployee| date:'dd/MM/yyyy' }}</span>
+          </rhis-infos-tooltip>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- DIV FORMATION NON OBLIGATOIRE-->
+  <div class="view-section">
+    <div class="view-section-title">{{'FORMATION.AUTRES' | translate}}</div>
+    <div class="section-body">
+      <ng-container *ngFor='let formation of listFormationNonObligatoire'>
+        <div *ngIf="formation.formationSelectedForEmployee" (mouseenter)="showOrHideToolTip(formation)"
+             (mouseleave)="showOrHideToolTip(formation)">
+          <div class="rhis-container delete-competence">
+            <p>
+              <span *ngIf="this.deleteButtonControlFormation()" class="item-formation-rhis">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image"
+                     (click)="confirmDeleteFormationEmployee(formation)">
+              </span>
+              <span (dblclick)="defineFormationDate(formation) "
+                    class="label-list">
+                            {{formation.libelle}}
+              </span>
+            </p>
+
+
+            <rhis-infos-tooltip [top]="tooltipStyle?.top"
+                                [right]="tooltipStyle?.right"
+                                *ngIf="formation.toolTipShow && formation.dateFormationEmployee">
+              <span *ngIf="formation.dateFormationEmployee >= currentDate">{{'FORMATION.PREVU_LE' | translate}}
+                :{{formation.dateFormationEmployee| date:'dd/MM/yyyy' }}</span>
+              <span *ngIf="formation.dateFormationEmployee < currentDate">{{'FORMATION.FAITE_LE' | translate}}
+                :{{formation.dateFormationEmployee| date:'dd/MM/yyyy' }}</span>
+            </rhis-infos-tooltip>
+
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="remainingFormation() && this.addButtonControlFormation()"
+           (click)="displayAddFormationPopup()" class="add-block-plus-rhis"
+           id="EMP_QUALI-addFormation-btn">
+        <img alt="no image" src="assets/icons/employe/Btn_Add.svg">
+        <span>{{'FORMATION.ADD_NEW_FORMATION'|translate}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP ADD QUALIFICATION-->
+<rhis-pop-up
+  (closeEvent)="showAddQualificationPopup = false"
+  [showPopUp]="showAddQualificationPopup"
+  [title]=addNewQualificationTitle>
+  <rhis-add-new-qualification [positionTravails]='remainingListPositionTravail'
+                              (addNewQualificationEvent)="addNewQualification($event)"></rhis-add-new-qualification>
+</rhis-pop-up>
+
+<!-- POPUP ADD FORMATION OBLIGATOIRE TO EMPLOYEE-->
+<p-dialog [showHeader]="false"
+          [(visible)]="showUpdateFormationDatePopup"
+          [modal]="true"
+          [responsive]="true"
+          [maximizable]="true"
+          minHeight="'50'"
+          [appendTo]="'body'"
+          [dismissableMask]="true"
+          (onHide)="showUpdateFormationDatePopup = false">
+  <p-calendar [(ngModel)]="dateSelectedFormation" [inline]="true"></p-calendar>
+  <p-footer>
+    <button class="ui-button-warning float-left" type="button" pButton icon="pi pi-check"
+            (click)="showUpdateFormationDatePopup = false"
+            label="{{'BUTTON.CANCEL' | translate}}"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="setDateValue()"
+            label="{{'BUTTON.SAVE' | translate}}"></button>
+  </p-footer>
+</p-dialog>
+
+<!-- POPUP ADD FORMATION NON OBLIGATOIRE TO EMPLOYEE-->
+<rhis-pop-up
+  (closeEvent)="showAddFormationPopup = false"
+  [showPopUp]="showAddFormationPopup" [title]=addNewFormationEmployeeTitle>
+
+  <rhis-add-new-formation-employee *ngIf="showAddFormationPopup" [listFormations]='listFormationNonObligatoire'
+                                   (addNewFormationEvent)="addNewFormationEmployee($event)"></rhis-add-new-formation-employee>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

@@ -1,0 +1,33 @@
+<div class="rhis-container" >
+  <div class="content">
+    <div class="row ml-0 mr-0">
+        <div class="section-element width-100">
+          <label class="section-element-title ">{{'EMPLOYEE.DATE_VISIE' | translate}}</label>
+          <rhis-calendar
+            [(ngModel)]="visiteMedical.dateVisite"
+            (date)="setNewDateVisite()"
+            [placeholder]="'JJ/MM/AAAA'"
+            dateFormat="dd/mm/yy"
+            id="EMP_visiteMedicale-dateVisite">
+          </rhis-calendar >
+        </div>
+    </div>
+    <div class="row ml-0 mt-4 mr-0 mb-5">
+      <div class="section-element width-100">
+        <label class="section-element-title">{{'EMPLOYEE.EXPIRE_LE' | translate}}</label>
+        <rhis-calendar
+          [(ngModel)]="visiteMedical.dateExpiration"
+          (date)="setNewDateExpiration()"
+          [placeholder]="'JJ/MM/AAAA'"
+          dateFormat="dd/mm/yy"
+          id="EMP_visiteMedicale-dateExpire">
+        </rhis-calendar >
+      </div>
+    </div>
+  </div>
+  <button (click)="addOrUpdateVisiteMedical()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+          id="EMP_visiteMedicale-popup-add-btn"
+          type="button">
+    <span>{{buttonLabel | uppercase}}</span>
+  </button>
+</div>

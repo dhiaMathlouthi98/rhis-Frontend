@@ -1,0 +1,19 @@
+<ng-container [formGroup]="formGroup">
+  <div class="view-section section-top container-fluid">
+    <div class="view-section-title">{{'EMPLOYEE.DIVERS' | translate}}</div>
+    <div class="section-body">
+      <div class="rhis-row row row-margin-bottom-rhis">
+        <div class="col-6 col-xl-3">
+          <label class="section-element-title"
+                 for="EMP-infoPerso-moyenTansport">{{'EMPLOYEE.MOYEN_TRANSPORT' | translate}}</label>
+          <p-dropdown id="EMP-infoPerso-moyenTansport"
+                      placeholder=" "
+                      [options]="listMoyenTransport"
+                      formControlName="moyenTransport"
+                      optionLabel="libelle"
+                      class="drop-down-general"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,85 @@
+.rhis-container {
+  .content {
+    display: flex;
+    flex-direction: column;
+    height: 447px;
+    justify-content: space-between;
+  }
+
+  .duration {
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 14px;
+    color: #414141;
+  }
+}
+
+.checkbox-section {
+  position: relative;
+  top: 43px;
+  left: 13px;
+}
+
+.calendar-section {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  & .ui-chkbox-box {
+    height: 16px !important;
+    width: 16px !important;
+  }
+
+  & .ui-chkbox-icon {
+    &::before {
+      font-size: 18px;
+      bottom: 4px;
+      right: 2px;
+    }
+  }
+
+  & .ui-chkbox-label {
+    margin-right: 0 !important;
+    top: -1px;
+    left: 0;
+  }
+
+  label.section-element-title {
+    margin-bottom: 0;
+  }
+
+  p-radioButton {
+    * {
+      cursor: pointer;
+    }
+  }
+
+}
+
+.mode_calc_duration {
+  height: 80px;
+  div {
+    p-radioButton {
+      height: fit-content;
+    }
+  }
+}
+
+.mode_calc_duration {
+  height: 80px;
+  div {
+    p-radioButton {
+      height: fit-content;
+    }
+  }
+}
+
+.w-75-px {
+  width: 75px;
+}
+
+.duration-error-message {
+  margin-left: 133px;
+}

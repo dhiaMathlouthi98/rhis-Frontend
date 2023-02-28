@@ -1,0 +1,122 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="260">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"MENU.RESTAURANT.SUB_MENU.JOURS_FERIES" | translate}}</h1>
+    </div>
+    <div class="float-right col-6">
+      <button type="button" (click)="saveListJourFeries()" class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="row">
+      <!-- listes des pays restaurant selectionné-->
+      <div class="container-fluid">
+        <div class="row ">
+          <div class="col-3 filtre-jour-ferie">
+            <label id="labelPaysId"> {{'JOUR_FERIES.PAYS' | translate}} </label>
+            <p-dropdown [disabled]="true" [options]="listPays" [style]="{'width':'15%'}" [(ngModel)]="nationalite"
+                        id="dropDownListePaysId"
+                        optionLabel="paysFR"
+                        class="drop-down-general"></p-dropdown>
+
+          </div>
+          <div class="col-6">
+            <div class="dropdown-list-restau-copiage" *ngIf="displayRestoList">
+              <label class="mr-4" id="labelResto"> {{'FRANCHISE.RESTAURANT' | translate}} </label>
+
+              <p-dropdown [options]="listRestoSource"
+                          [(ngModel)]="restaurantSource"
+                          optionLabel="libelleRestaurant"
+                          id="dropDownPremierJourSemaineId"
+                          (onChange)="checkSaveContentAfterChangeRestaurant()"
+                          class="drop-down-general">
+              </p-dropdown>
+              <div (click)="showPopupListResto()" *ngIf="!showPopup" class="rhis-tooltip-copy-generique bottom">
+                <img alt="no icon" class="copy-icon-style" src="assets/icons/parc/icon-copy-not-selected.png">
+                <div class="rhis-tooltip-copy">
+              <span>
+                {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_1" | translate}}
+              </span>
+                  <span>
+                 {{"GESTION_PARC_RAPPORT.JOUR_FERIE_RESOURCE" | translate}}
+               </span>
+                  <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_2" | translate}}
+               </span>
+                  <span>
+                 {{restaurantSource?.libelleRestaurant}}
+               </span>
+                  <span>
+                 {{"NOTIFICATION_GENERIQUE.COPAIAGE_PART_3" | translate}}
+               </span>
+                </div>
+              </div>
+              <span *ngIf="showPopup">
+             <img alt="no icon" class="copy-icon-style" src="assets/icons/parc/icon-copy-selected.png">
+           </span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="bloc-year-JF">
+      <div class="btn-inc-dec-JF">
+        <img (click)="increamentYear()" alt="no print icon" src="../assets/icons/jour-ferie/Ico_Arrow-decrement.png">
+      </div>
+      <div class="year-selected-JF">{{yearSelected}}</div>
+      <div class="btn-inc-dec-JF">
+        <img (click)="decrementYear()" disabled="" alt="no print icon"
+             src="../assets/icons/jour-ferie/Ico_Arrow-increment.png">
+      </div>
+    </div>
+    <div class="table-list bg-gris-blanc-sans-border last-th-center"
+         *ngIf="listJourFeriesByRestaurantByPays.length > 0">
+      <p-table [value]="listJourFeriesByRestaurantByPays"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th>{{'JOUR_FERIES.DATE' | translate}}</th>
+            <th>{{'JOUR_FERIES.LIBELLE' | translate}}</th>
+            <th>{{'JOUR_FERIES.ANCIENNETE' | translate}}</th>
+            <th *ngIf="deleteButtonControl()">{{'JOUR_FERIES.ACTIVE' | translate}}</th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-jourFeries>
+          <tr class="table-row" [pSelectableRow]="jourFeries"
+          >
+            <td>
+              {{jourFeries?.dateFeries | date: 'dd/MM/yyyy'}}
+            </td>
+            <td>
+              {{jourFeries?.libelle}}
+            </td>
+
+            <td (click)="changeAncienneteValue(jourFeries)">
+              <i class="pi pi-check" *ngIf="jourFeries.anciennete"></i>
+            </td>
+            <td *ngIf="deleteButtonControl()" (click)="setBooleanValue(jourFeries)">
+              <p-checkbox *ngIf="!jourFeries.jourFerierRestaurant" binary="true"></p-checkbox>
+              <i class="pi pi-check" *ngIf="jourFeries.jourFerierRestaurant"></i>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<rhis-pop-up-gestion-parc (closeEvent)="closePopup()"
+                          (submitDataEvent)="submit($event)" *ngIf="showPopup"
+                          [dropdownListData]="listRestoDestination" [optionLabel]="'libelleRestaurant'"
+                          [showPopUp]="showPopup" [submitButtonText]="submitButtonText"
+                          [resourceName]=resourceName
+                          [restaurantSource]="restaurantSource?.libelleRestaurant">
+</rhis-pop-up-gestion-parc>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog key="pays" [appendTo]="'body'"></p-confirmDialog>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+

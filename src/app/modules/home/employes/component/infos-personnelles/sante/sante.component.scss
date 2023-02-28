@@ -1,0 +1,48 @@
+:host ::ng-deep {
+  .section-element .text-field ,
+  .ui-calendar .ui-inputtext
+  {
+    margin-top: 0;
+  }
+  p-inputmask input {
+    height: 51px;
+    width: 100%;
+    font-family: "TT Wellingtons DemiBold", "sans-serif";
+    border: 1px solid #C8C7C4;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    padding: 17px;
+    outline: none;
+  }
+  .ui-inputtext:enabled:focus:not(.ui-state-error) {
+    border-color: #C8C7C4;
+  }
+
+  .ui-inputtext:enabled:hover:not(.ui-state-error) {
+    border-color: #C8C7C4;
+  }
+}
+
+@media screen and (max-width: 1196px) {
+    .section-element.quadru.personne-contact-urg-rhis {
+      .text-field {
+        margin-top: 0;
+      }
+    }
+}
+
+@media screen and (max-width: 991px) {
+  .section-element.quadru.blo-sante-resp-rhis {
+    width: 49%;
+    margin-top: 12px;
+  }
+  .section-element.quadru.blo-sante-resp-rhis:nth-child(3) {
+    margin-left: 0;
+  }
+
+  .section-element.quadru.blo-sante-resp-rhis:nth-child(4) .text-field {
+    margin-top: 0;
+  }
+}

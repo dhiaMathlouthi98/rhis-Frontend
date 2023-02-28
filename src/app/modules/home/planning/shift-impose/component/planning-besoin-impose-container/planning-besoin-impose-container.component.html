@@ -1,0 +1,96 @@
+<div class="rhis-container planning-general-rhis scroll-planning-rhis">
+  <div class="with-scroll-planning-rhis">
+    <div class="header">
+      <div class="row">
+        <div class="col-xl-6 col-lg-5 col-md-6">
+          <a [routerLink]="rhisRouter.getRoute('HOME_PLANNING')">
+            <h3>{{'SHIFT_FIXE.PLANNING' | translate}}</h3>
+          </a>
+          <span class="arrow-right besoin-shift"><img src="assets/icons/employe/Arrow right.svg" alt="no icon"></span>
+          <h1>{{'BIMPOSE.BESOIN_IMPOSE' | translate}}</h1>
+        </div>
+        <div class="col-xl-6 col-lg-7 col-md-6 text-right pull-right">
+          <button (click)="newPoste()" *ngIf="addButtonControl()" class="btn save-add-button-rhis blue-background"
+                  id="PLG_BI-newPoste-btn"
+                  type="button">
+            <span>{{'BIMPOSE.NEW_POSTE' | translate}}</span>
+          </button>
+          <button (click)="save()" *ngIf="addButtonControl()" class="btn save-add-button-rhis blue-background"
+                  id="PLG_BI-save-btn"
+                  type="button">
+            <span>{{'BUTTON.SAVE'|translate}}</span>
+          </button>
+          <button (click)="showConfirmDeleteRow()" *ngIf="deleteButtonControl()" class="btn btn-delete"
+                  id="PLG_BI-delete-btn">
+            <span><img src="assets/icons/chart-icon/supprimer.png"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="table-list">
+      <table class="planning bg-white m-1">
+        <thead>
+        <tr class="row no-margin-row">
+          <th class="empNameColumn">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-light"
+                      [routerLink]="rhisRouter.getRoute('PLANNING-SHIFT-FIXE')"
+                      id="PLG_BI-ShiftF-btn">{{'SHIFT_FIXE.SHIFT_FIXE' | translate}}
+              </button>
+              <button type="button" class="btn btn-light" [class.active]="true"
+                      [routerLink]="rhisRouter.getRoute('BESOIN')"
+                      id="PLG_BI-BI-btn">{{'SOUSMENU.PLANNING_BESOIN_IMPOSE'|translate}}
+              </button>
+              <div class="btn-list-bars" (click)="btnListBesoins()"
+                   [ngClass]="{stylelistBesoinCondense: stylelistBesoinCondense}"
+                   id="PLG_BI-list-btn">
+                <i class="pi pi-list"></i>
+              </div>
+            </div>
+          </th>
+          <th *ngFor="let day of days" class="dayName">{{day.column}}</th>
+        </tr>
+        </thead>
+        <tbody #contentBodyPlan [ngClass]="{listBesoinsCondense: listBesoinsCondense}"
+               [ngStyle]="{'height': contentHeightPlanning + 'px'}"
+               class="content-planning-rhis"
+               id="planningBesoinImpose"
+               (scroll)="hideDropDown()">
+        <tr rhis-plannings-fixes-poste-row *ngFor="let poste of listeUsedPositionTravail"
+            [limitHeureDebut]="limiteHeureDebut"
+            [dateDebutSupDateFinErrorMessage]="dateDebutSupDateFinErrorMessage"
+            [dateFinWithoutDateDebutErrorMessage]="dateFinWithoutDateDebutErrorMessage"
+            [heureDebutSupHeureFinErrorMessage]="heureDebutSupHeureFinErrorMessage"
+            [initPersonneValue]="personne"
+            [initPersonnesValue]="personnes"
+            [addPopupTitle]="addPopupTitle"
+            [updatePopupTitle]="updatePopupTitle"
+            [days]="days"
+            [poste]="poste"
+            [besoinImposeByPosteTravail]="besoinImposeByPosteTravail"
+            [posteIndex]="poste.idPositionTravail"
+            [positionList]="listeAvailablePositionTravail"
+            [attr.data-posteIndex]="poste.idPositionTravail"
+            [attr.data-idBesoinImpose]="poste.idPositionTravail"
+            [modeAffichagePlanning]="modeAffichage"
+            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+            (checkIfNightValueEvent)="checkIfNightValue()"
+            [nightValue]="setNightValue"
+            [startTime]="startTime"
+            [startTimeIsNight]="startTimeIsNight"
+            [endTime]="endTime"
+            [endTimeIsNight]="endTimeIsNight"
+            (getStartTimeAndEndTimeFromDecoupageHoraire)="getStartTimeAndEndTimeFromDecoupageHoraire($event)"
+            (cardDetailsEmitter)="addNewPositionCard($event)"
+            (positionAddedEmitter)="positionAdded($event)"
+            (rowSelectedEmitter)="updateSelectedPosRow($event)"
+            (deleteCardEmitter)="showConfirmDeletePositionCard($event)"
+            class="row no-margin-row">
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+

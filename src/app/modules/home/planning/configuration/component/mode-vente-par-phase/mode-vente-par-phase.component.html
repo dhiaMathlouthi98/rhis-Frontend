@@ -1,0 +1,193 @@
+<div class="header row">
+  <div class="float-right col-12 pr-0">
+    <button (click)="saveListModeVente()" *ngIf="updateControl()" class="btn save-add-button-rhis orange-background"
+            type="button">
+      <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+    </button>
+  </div>
+</div>
+<div class="container-fluid change-container-fluid-rhis">
+  <div class="table-list bg-gris-avec-border">
+    <p-table [value]="listPhase" dataKey="libelle" [responsive]="true" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <ng-container>
+            <th>{{'PHASE.LIBELLE' | translate}}</th>
+          </ng-container>
+          <ng-container *ngFor="let column of collumns">
+            <th class="text-center">{{column.column}}</th>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template let-i="rowIndex" pTemplate="body" let-phase>
+        <tr class="table-row">
+          <td>
+            <div class="td-container td-left-border">
+              <a href="#" [pRowToggler]="phase">
+                <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                {{phase?.libelle}}
+              </a>
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[0].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[1].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[2].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[3].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[4].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{calculerTotalPourcentage(phase, collumns[5].val)}} %
+            </div>
+          </td>
+          <td>
+            <div class="td-container td-right-border">
+              {{calculerTotalPourcentage(phase, collumns[6].val)}} %
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
+        <tr class="table-row" *ngFor="let mvPhase of rowData.modesVentes">
+          <td>
+            <div class="td-container td-left-border">
+              {{mvPhase.modeVente.libelle}}
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[0].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[0].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[1].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[1].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[2].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[2].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[3].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[3].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[4].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[4].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[5].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[5].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+          <td pEditableColumn>
+            <div class="td-container td-right-border">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input type="text"
+                         rhisTwoDigitDecimaNumber pInputText
+                         [(ngModel)]="mvPhase['valeur'+collumns[6].val]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{mvPhase['valeur' + collumns[6].val]}} %
+                </ng-template>
+              </p-cellEditor>
+            </div>
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="row mt-2">
+    <div class="float-right col-12 pr-3 mt-1 button-style-special">
+      <button (click)="saveListModeVente()" class="btn save-add-button-rhis orange-background" type="button">
+        <span>{{'BUTTON.SAVE'|translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+</div>

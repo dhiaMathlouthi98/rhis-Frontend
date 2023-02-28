@@ -1,0 +1,92 @@
+.container-fluid.bloc-container-fluid-rhis {
+  font-family: "TT Wellingtons Light", sans-serif;
+  padding: 0;
+  input:focus {
+    z-index: unset;
+    border: unset;
+    box-shadow: unset;
+  }
+  li {
+    height: 60px;
+    border-radius: 5px;
+    background-color: #e3dfdb;
+    border: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #9B9B9B;
+    @media screen and (max-width: 1366px) {
+      height: 50px;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    &:last-child {
+      margin-bottom: unset;
+    }
+  }
+
+  img {
+    cursor: pointer;
+  }
+
+  .edit-input {
+    width: 85%;
+    outline: none !important;
+    border-right: none;
+    border-top: none;
+    border-left: none;
+    border-radius: 0;
+
+    &:focus {
+      border-top: unset;
+      border-right: unset;
+      border-left: unset;
+      border-bottom: 1px solid #ced4da;
+    }
+  }
+
+  .add-input {
+    margin-top: 50px;
+    border-radius: 8px 31px 31px 8px;
+    border: unset;
+    height: 51px;
+    font-family: "TT Wellingtons DemiBold", sans-serif;
+    font-size: 12px;
+    padding: 17px 56px 17px 17px;
+    background-color: #e3dfdb;
+    @media screen and (max-width: 1366px) {
+      margin-top: 25px;
+      height: 46px;
+      font-size: 13px;
+    }
+  }
+
+  .add {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    @media screen and (max-width: 1366px) {
+      right: 2px;
+      top: 28px;
+    }
+
+    img {
+      width: 52px;
+      @media screen and (max-width: 1366px) {
+        width: 40px;
+      }
+    }
+  }
+
+  .pi-save {
+    font-size: 2em;
+    cursor: pointer;
+  }
+
+  rhis-editable {
+    width: 90%;
+  }
+}
+
+

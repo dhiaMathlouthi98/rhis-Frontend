@@ -1,0 +1,104 @@
+<div>
+  <form [formGroup]="formGroup">
+    <span class="form-item-error red"
+          *ngIf="existeJourRepos">{{existeJourRepos}}
+    </span>
+    <span class="form-item-error red"
+          *ngIf="joursReposNotSelected && !existeJourRepos">
+      {{"JOUR_REPOS.SELECT_DAY_OFF" | translate}}
+    </span>
+    <div class="row">
+      <div class="section-body col-4">
+        <label class="section-element-title" for="EMP_jourRepos-dateJ-popup">
+          {{'JOUR_REPOS.DATE' | translate}}*
+        </label>
+        <rhis-calendar (date)="getSemaine()"
+                       [hasError]="formGroup.controls['dateJour'].invalid  &&(formGroup.controls['dateJour'].touched || isSubmitted)"
+                       [placeholder]="'JJ/MM/AAAA'"
+                       [selector]="selectors.calendarSelector"
+                       dateFormat="dd/mm/yy"
+                       formControlName="dateJour"
+                       id="EMP_jourRepos-dateJ-popup"
+                       rhisStyleForm></rhis-calendar>
+        <span *ngIf="formGroup.controls['dateJour'].invalid  &&(formGroup.controls['dateJour'].touched || isSubmitted)"
+              class="red small" id="EMP_jourRepos-dateJError">
+            {{'SEMAINE_REPOS.DATE_REQUIRED' | translate}}
+          </span>
+      </div>
+      <div class="section-body col-4">
+        <label class="section-element-title" for="EMP_jourRepos-debutS-popup">
+          {{'JOUR_REPOS.DEBUT_SEMAINE' | translate}}
+        </label>
+        <rhis-calendar [placeholder]="'JJ/MM/AAAA'"
+                       [selector]="selectors.calendarSelector"
+                       dateFormat="dd/mm/yy"
+                       formControlName="debutSemaine"
+                       id="EMP_jourRepos-debutS-popup"
+                       rhisStyleForm></rhis-calendar>
+
+      </div>
+      <div class="section-body col-4">
+        <label class="section-element-title" for="EMP_jourRepos-finS-popup">
+          {{'JOUR_REPOS.FIN_SEMAINE' | translate}}
+        </label>
+        <rhis-calendar [placeholder]="'JJ/MM/AAAA'"
+                       [selector]="selectors.calendarSelector"
+                       dateFormat="dd/mm/yy"
+                       formControlName="finSemaine"
+                       id="EMP_jourRepos-finS-popup"
+                       rhisStyleForm></rhis-calendar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="section-body">
+          <div class="jours mt-4">
+            <label>{{'SEMAINE_REPOS.JOUR_SEMAINE' | translate}}</label>
+          </div>
+          <div class="row">
+            <ng-container *ngFor="let joursRepos of JoursSemainEnum; let i = index">
+              <div class="d-flex mb-3">
+                <span class="label-list label-list-jour">{{joursRepos?.label}}</span>
+                <span (click)="formGroup.get('dateJour').value ?
+                 setPeriode(joursRepos['value'], listJourRepos, 'am'):
+                 setPeriode(joursRepos['value'], listJourRepos2, 'am')"
+                      [id]="'EMP_jourRepos-' + joursRepos.label + '-AM'"
+                      class="mr-3 pointer-cursor">
+                  {{'LABELS.AM' | translate}}
+                </span>
+                <div class="check mr-3" (click)="formGroup.get('dateJour').value ?
+                 setPeriode(joursRepos['value'], listJourRepos):
+                 setPeriode(joursRepos['value'], listJourRepos2)">
+                  <div class="position-relative float-left"
+                       [ngClass]="{'period': formGroup.get('dateJour').value ?
+                       getPeriode(joursRepos['value'], 'am', listJourRepos) :
+                        getPeriode(joursRepos['value'], 'am', listJourRepos2)}">
+                  </div>
+                  <div class="position-relative float-right"
+                       [ngClass]="{'period': formGroup.get('dateJour').value ?
+                        getPeriode(joursRepos['value'], 'pm', listJourRepos) :
+                        getPeriode(joursRepos['value'], 'pm', listJourRepos2)}">
+                  </div>
+                </div>
+                <span (click)="formGroup.get('dateJour').value ?
+                 setPeriode(joursRepos['value'], listJourRepos, 'pm'):
+                 setPeriode(joursRepos['value'], listJourRepos2, 'pm')"
+                      [id]="'EMP_jourRepos-' + joursRepos.label + '-PM'"
+                      class="mr-5 pointer-cursor">
+                  {{'LABELS.PM' | translate}}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <button (click)="onSubmit()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+              id="EMP_jourRepos-save-btn-popup"
+              type="button">
+        <span>{{buttonLabel | uppercase}}</span>
+      </button>
+    </div>
+  </form>
+</div>

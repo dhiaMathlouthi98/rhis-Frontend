@@ -1,0 +1,248 @@
+.arrow-right {
+  float: left;
+  margin: 10px;
+}
+
+.btn-group {
+  margin: 10px;
+  @media screen and (max-width: 1366px) {
+    margin: 10px 0;
+  }
+
+  button {
+    padding: 8px 11px;
+    line-height: 19px;
+    @media screen and (max-width: 1366px) {
+      padding: 8px;
+    }
+  }
+
+  .btn-light {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+  }
+}
+
+.btn-group .btn-light.active {
+  background-color: #F7F7F7;
+}
+
+.ui-calendar .ui-inputtext {
+  height: 28px;
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 15px;
+  margin-top: 0px;
+  padding: 16px !important;
+  font-family: "TT Wellingtons Medium", sans-serif;
+}
+
+.filter-date-gdh {
+  width: unset;
+  margin-right: 10px;
+
+  .search {
+    float: left;
+    height: 38px;
+    width: 230px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    margin: 0 20px 0 20px;
+    border: 1px solid #cccccc;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    @media screen and (max-width: 1366px) {
+      width: 180px;
+    }
+
+    input {
+      float: left;
+      outline: none;
+      height: inherit;
+      width: 180px;
+      margin-left: 5px;
+      border: none;
+      background-color: transparent;
+      color: #414141;
+      font-family: "TT Wellingtons Bold", sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 10px;
+      border-right: 1px solid #cccccc;
+      text-align: center;
+      @media screen and (max-width: 1366px) {
+        width: 140px;
+      }
+
+      &::placeholder {
+        color: inherit;
+      }
+    }
+
+    span {
+      float: right;
+      margin-top: 4px;
+      margin-right: -3px;
+      @media screen and (max-width: 1366px) {
+        margin-top: 5px;
+        margin-right: -4.3px;
+      }
+    }
+
+    span.day-after {
+      cursor: pointer;
+      width: 10px;
+      position: relative;
+      left: -55px;
+      @media screen and (max-width: 1366px) {
+        left: -35px;
+      }
+    }
+
+    @media screen and (max-width: 1366px) {
+      span:nth-child(1) {
+        left: -165px !important;
+      }
+    }
+    @media screen and (max-width: 1366px) {
+      span:nth-child(2) {
+        left: -35px !important;
+      }
+    }
+  }
+}
+
+.mini-btn {
+  padding: 0.175rem 0.15rem !important;
+}
+
+.scroll-horizontal-gdh {
+  padding: 5px 20px;
+}
+
+.scroll-horizontal-gdh.scroll-horizontal-hourly-day {
+  min-width: auto;
+}
+
+.pay-interface-container {
+  width: 1000px;
+}
+
+.popup-print-rapport {
+  height: 340px;
+  width: 450px !important;
+}
+
+:host ::ng-deep {
+  .table-list .ui-table-scrollable-body {
+    min-height: auto;
+  }
+
+  .icon-right-download-gdh {
+    width: auto;
+  }
+}
+
+.navigate-vue-normal-graphique {
+  width: 110px;
+  margin-right: 10px;
+  @media screen and (max-width: 1366px) {
+    width: 85px;
+  }
+}
+
+.navigate-vue-semaine-paye {
+  width: fit-content;
+  @media screen and (max-width: 1366px) {
+    width: fit-content;
+  }
+}
+
+.header-filter-gdh {
+  margin-bottom: 10px;
+}
+
+.header-filter-gdh, .header-filter-gdh-child {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+
+  .left-block-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+  }
+
+  .right-block-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: stretch;
+  }
+}
+
+.rhis-container.interface-global-gdh {
+  height: 100%;
+}
+
+.padlock {
+  cursor: pointer;
+  width: 30px;
+}
+
+.padlock-container {
+  width: 43px;
+  border: 1px solid #cccccc;
+  background: white;
+  border-radius: 5px 0 0 5px;
+}
+
+.time-picker-with-padlock {
+  border-left: unset !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.col-4.drpo-delta {
+  padding: 0;
+}
+
+.delta-btn .btn.save-add-button-rhis {
+  margin-left: 0;
+}
+
+.delta-txt {
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+.align-popup-validation-elements{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+.popup-validation-text-font{
+    color: #414141;
+    font-family: "TT Wellingtons Medium";
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17px;
+}
+.space-between {
+  margin-bottom: 40px;
+}

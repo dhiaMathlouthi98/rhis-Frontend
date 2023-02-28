@@ -1,0 +1,70 @@
+<div class="rhis-container">
+  <div class="header row">
+    <div class="col-6">
+    </div>
+    <div class="float-right col-6">
+      <button *ngIf="addButtonControl()" type="button" (click)="addNewPopup()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'GROUPEMENT_POST_TRAVAIL.ADD_NEW' | translate | uppercase }}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div *ngIf="listeAfficher.length > 0 && hasGroupement()" class="table-list last-th-center">
+      <p-table [value]="listeAfficher" [responsive]="true" [columns]="header" [scrollable]="true" scrollHeight="400px">
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let col of columns; let l = last; let i = index" [pSortableColumn]="col?.field">
+              {{col?.title}}
+              <p-sortIcon *ngIf="col?.field === 'libelle' && i !==1" [field]="col?.field" ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+              <div (click)="switchProdAndNoProd()" *ngIf="i===1" width="2%">
+                <span class="pi pi-arrow-left"></span>
+                <span class="pi pi-arrow-right"></span>
+              </div>
+              <!-- filtre sur le statut -->
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-postTravail>
+          <tr class="table-row" *ngFor="let groupement of postTravail.groupement ;let i = index; let size = count">
+            <td *ngIf="i%size === 0" [attr.rowspan]="size">
+              {{postTravail?.libelle}}
+            </td>
+            <td></td>
+            <td>
+              {{groupement?.libelle}}
+            </td>
+            <td>
+              <div class="td-container td-right-border">
+                <div class="operation">
+                <span *ngIf="deleteButtonControl()" class="item"
+                      (click)="deleteGroupement(postTravail,groupement);$event.stopPropagation()">
+                  <img
+                    src="assets/icons/employe/Btn_Close.svg"
+                    alt="no image"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="hidePopup()"
+  [showPopUp]="displayPopup"
+  [title]="popupTitle">
+
+  <rhis-add-update-groupement-position-travail *ngIf="displayPopup"
+                                               [initListActivePositionTravail]="listeActivePositionTravail"
+                                               [selectedGroupement]="selectedGroupement"
+                                               (addOrUpdateGroupementPositionTravailEvent)="addOrUpdateGroupement($event)"
+                                               (closeEvent)="hidePopup()"
+                                               [buttonLabel]='popupTitle'
+  ></rhis-add-update-groupement-position-travail>
+</rhis-pop-up>

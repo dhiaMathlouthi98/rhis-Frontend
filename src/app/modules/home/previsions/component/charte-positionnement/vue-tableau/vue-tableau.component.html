@@ -1,0 +1,149 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="300">
+</div>
+<div [style.width.px]="calculWidth" class="view-scroll-horizontal-rhis">
+  <div [ngStyle]="{'height': heightInterface}" class="wrapper-rhis">
+    <table class="table" (rhisClickOutside)="unselectPositionement()">
+      <thead>
+      <tr>
+        <th class="sticky-col-rhis first-col-rhis">{{'CHARTEPOSITIONNEMENT.VENTEHOR' | translate}}</th>
+        <th class="sticky-col-rhis second-col-rhis">{{'CHARTEPOSITIONNEMENT.EFFECTIF' | translate}}</th>
+        <th class="sticky-col-rhis third-col-rhis">{{'CHARTEPOSITIONNEMENT.PROD' | translate}}</th>
+        <th class="sticky-col-rhis quadro-col-rhis">{{'CHARTEPOSITIONNEMENT.%COL' | translate}}</th>
+        <th style="text-align: center" *ngFor="let col of columnPositionTravail">
+          {{col.libelle}}
+        </th>
+        <th class="sticky-col-rhis last-col-rhis"></th>
+      </tr>
+      <tr *ngFor="let newPositionnement of listPositionnementToAdd" class="sticky-first-tr-rhis">
+        <th style="text-align: center" [ngClass]="newPositionnement?.erreurCA ? 'red-cell':''"
+            class="sticky-col-rhis first-col-rhis" (click)="clearField(newPositionnement,null,false)">
+          <span contenteditable="true" (keydown)="checkForWrongNumberFormat($event,newPositionnement,false)"
+                (keyup)="updateValeurVenteHoraire(newPositionnement)" [textContent]="newPositionnement['venteHoraire']"
+                (focus)="clearField(newPositionnement,null,false)"
+                (input)="newPositionnement['venteHoraire']=$event.target.textContent"
+                id="PREV_VueT-newPosVenteHr">{{newPositionnement['venteHoraire']}}</span>
+        </th>
+        <th class="sticky-col-rhis second-col-rhis grey"
+            [ngClass]="newPositionnement?.erreurTotalEffectif ? 'red-cell':''">{{newPositionnement.effectif}}
+        </th>
+        <th class="grey sticky-col-rhis third-col-rhis">{{newPositionnement?.productivite}}</th>
+        <th class="grey sticky-col-rhis quadro-col-rhis">{{newPositionnement?.pourcentageCol}}</th>
+
+        <ng-template ngFor [ngForOf]="columnPositionTravail" let-k="index">
+          <ng-template ngFor [ngForOf]="newPositionnement['positionementPositionTravails']" let-j="index">
+            <th
+              *ngIf="columnPositionTravail[k]?.idPositionTravail == newPositionnement['positionementPositionTravails'][j]?.positionnementPositionTravailID?.idPositionPK"
+              style="text-align: center"
+              [ngClass]="newPositionnement['positionementPositionTravails'][j]?.erreurEffectif ? 'red-cell':''"
+              contenteditable="true"
+              (keydown)="checkForWrongNumberFormat($event,newPositionnement,true)"
+              (blur)="verificationNewPositionTravailPositionnement(j,newPositionnement,false,$event)"
+              (keydown.enter)="verificationNewPositionTravailPositionnement(j,newPositionnement,false,$event)"
+              (click)="clearField(newPositionnement,j,false)"
+              (focus)="clearField(newPositionnement,j,false)"
+              id="PREV_VueT-newPosPostTr">{{newPositionnement['positionementPositionTravails'][j]?.valeur}}
+            </th>
+          </ng-template>
+          <th
+            *ngIf="!positionnementHasPositionTravail(newPositionnement,k)"
+            (click)="clearField(newPositionnement,k,true,true)"
+            id="PREV_VueT-newPosHasPostTr">
+              <span contenteditable="true"
+                    (keydown)="checkForWrongNumberFormat($event,newPositionnement,true,k)"
+                    (blur)="verificationNewPositionTravailPositionnement(k,newPositionnement,true,$event)"
+                    (keydown.enter)="verificationNewPositionTravailPositionnement(k,newPositionnement,true,$event)"
+                    (focus)="clearField(newPositionnement,k,true,true)"
+                    id="{{ newPostionnementSpanId + k }}">0</span>
+          </th>
+        </ng-template>
+        <th class="sticky-col-rhis last-col-rhis">
+          <div class="td-container td-right-border">
+            <div class="operation">
+                <span *ngIf="addButtonControl()" class="item"
+                      (click)="addNewPositionnement();$event.stopPropagation()"
+                      id="PREV_VueT-addNewPos">
+                    <img alt="no image" src="assets/icons/employe/Btn_Add.svg">
+                </span>
+            </div>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="wrapper-rhis-eee">
+
+      <!-- add sale -->
+
+      <tr class="blank_row_rhis">
+        <td>&nbsp;</td>
+      </tr>
+
+      <!-- end add sale -->
+
+      <tr *ngFor="let positionnement of listPositionnementToDisplay" (click)="selectRow(positionnement)"
+          [ngClass]="positionnement?.isSelected ? 'select-postionnement-rhis':''">
+        <td style="text-align: center" [ngClass]="positionnement?.erreurCA ? 'red-cell':''"
+            class="sticky-col-rhis first-col-rhis" (click)="clearField(positionnement,null,false)"
+            (focusout)="resetValue(positionnement,k,true)"
+            id="PREV_VueT-updateValVenteHr">
+          <span (keydown)="checkForWrongNumberFormat($event,positionnement,false)"
+                (keyup.enter)="updateValeurVenteHoraire(positionnement)"
+                (blur)="updateValeurVenteHoraire(positionnement)" contenteditable="true"
+                [textContent]="positionnement['venteHoraire']"
+                (focus)="clearField(positionnement,null,false)"
+                (focusout)="resetValue(positionnement,k,true)"
+                (input)="positionnement['venteHoraire']=$event.target.textContent">{{positionnement['venteHoraire']}}</span>
+        </td>
+        <td class="sticky-col-rhis second-col-rhis grey"
+            [ngClass]="positionnement?.erreurTotalEffectif ? 'red-cell':''">{{positionnement.effectif}}
+        </td>
+        <td class="grey sticky-col-rhis third-col-rhis">{{positionnement?.productivite}}</td>
+        <td class="grey sticky-col-rhis quadro-col-rhis">{{positionnement?.pourcentageCol}}</td>
+
+        <ng-template ngFor [ngForOf]="columnPositionTravail" let-k="index">
+          <ng-template ngFor [ngForOf]="positionnement['positionementPositionTravails']" let-j="index">
+            <td
+              *ngIf="columnPositionTravail[k]?.idPositionTravail == positionnement['positionementPositionTravails'][j]?.positionnementPositionTravailID?.idPositionPK"
+              style="text-align: center"
+              [ngClass]="positionnement['positionementPositionTravails'][j]?.erreurEffectif ? 'red-cell':''"
+              contenteditable="true"
+              (keydown)="checkForWrongNumberFormat($event,positionnement,true)"
+              (blur)="verificationPositionTravailPositionnement(j,positionnement,false,$event)"
+              (keydown.enter)="verificationPositionTravailPositionnement(j,positionnement,false,$event)"
+              (click)="clearField(positionnement,j,false)"
+              (focus)="clearField(positionnement,j,false)"
+              (focusout)="resetValue(positionnement,k,false,false)"
+              id="PREV_VueT-verifPosTr"
+            >{{positionnement['positionementPositionTravails'][j]?.valeur}}
+            </td>
+          </ng-template>
+          <td
+            *ngIf="!positionnementHasPositionTravail(positionnement,k)" (click)="clearField(positionnement,k,true)"
+            (focusout)="resetValue(positionnement,k,false,true)">
+              <span contenteditable="true"
+                    (focus)="clearField(positionnement,k,true)"
+                    (keydown)="checkForWrongNumberFormat($event,positionnement,true)"
+                    (blur)="verificationPositionTravailPositionnement(k,positionnement,true,$event)"
+                    (keydown.enter)="verificationPositionTravailPositionnement(k,positionnement,true,$event)"
+                    id="{{ emptyValuePositionnementSpanId + positionnement.idPositionement + k }}">0</span>
+          </td>
+        </ng-template>
+
+        <td class="sticky-col-rhis last-col-rhis">
+          <div class="td-container td-right-border">
+            <div class="operation">
+                <span *ngIf="deleteButtonControl()" class="item"
+                      (click)="deletePositionnement(positionnement);$event.stopPropagation()"
+                      id="PREV_VueT-deletePosTr">
+                    <img
+                      src="assets/icons/employe/Btn_Close.svg"
+                      alt="no image">
+                </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

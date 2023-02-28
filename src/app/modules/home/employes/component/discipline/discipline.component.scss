@@ -1,0 +1,20 @@
+.center, th:first-child {
+  text-align: center !important;
+  padding-left: 0 !important;
+}
+
+.margin-bottom-30px {
+  margin-bottom: 30px;
+}
+
+.td-container {
+  padding: unset;
+}
+
+@media screen and (max-width: 991px) {
+  :host ::ng-deep {
+    .table-list.bg-gris-avec-border p-table .ui-table table .ui-table-thead > tr > th:first-child {
+      padding-left: 2px !important;
+    }
+  }
+}

@@ -1,0 +1,88 @@
+<div class="container-fluid change-container-fluid-rhis">
+  <div class="table-list bg-gris-avec-border">
+    <p-table [columns]="JourReposHeader" [scrollable]="true" [value]="semaineRepos" scrollHeight="330px">
+      <ng-template pTemplate="colgroup" let-columns stickyHeader stickyClass="stickyHeader">
+        <colgroup>
+          <ng-container *ngIf="semaineRepos?.length && columns?.length">
+            <col *ngFor="let c of columns">
+            <col>
+          </ng-container>
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+          <ng-container *ngIf="semaineRepos?.length">
+            <th *ngFor="let col of columns; let f= first;"
+                [pSortableColumn]="col?.field ? col.field : null">
+              <div class="day-resp-rhis">{{col.title}}</div>
+              <p-sortIcon *ngIf="f" [field]="col.field" ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </ng-container>
+          <th>
+            <button (click)="addJoursRepos()" *ngIf="addButtonControl()"
+                    class="btn save-add-button-rhis button-add-intable-rhis orange-background"
+                    id="EMP_jourRepos-add-btn"
+                    type="button">
+              <span>{{'SEMAINE_REPOS.ADD_NEW_SEMAINE_REPOS' | translate | uppercase}}</span>
+            </button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-semRepo>
+        <tr *ngIf="JourReposHeader?.length"
+            (click)="showSemaineRepos(semRepo)">
+          <td>
+            <div class="td-container td-left-border center">
+              {{semRepo?.debutSemaine| date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container ">
+              {{semRepo?.finSemaine | date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <!-- jourSem tableau contenat les jours de semaine, on parcour en suite les jours de repos de la semaine de repo
+                si semrepo.jour repo == joursem on affiche le checkbox = true -->
+          <td *ngFor="let jour of jourSem">
+            <div class="td-container ">
+              <div *ngFor="let jourRepos of semRepo?.joursRepos">
+                <div *ngIf="jourRepos?.jourSemaine === jour">
+                  <i class="pi pi-check"></i>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="td-container td-right-border">
+                <span *ngIf="deleteButtonControl()" (click)="showConfirmDeleteSemaineRepos(semRepo,'delete');$event.stopPropagation()"
+                      class="item float-right">  <img
+                  src="assets/icons/employe/Btn_Close.svg" alt="no image"></span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="showJourReposPopup = false"
+  [showPopUp]="showJourReposPopup"
+  [title]="addUpdateJourReposTitle"
+  width="700"
+>
+
+  <rhis-jour-repos-form *ngIf="showJourReposPopup"
+                        [parametreNationnaux]="parametreNationnaux"
+                        [selectedSemaineRepos]="selectedSemaineRepos"
+                        [JoursSemainEnum]="JoursSemainEnum"
+                        [existeJourRepos]="existeJourRepos"
+                        [buttonLabel]="addUpdateJourReposTitle"
+                        (addOrUpdateJourReposEvent)="addOrUpdateJourReposForEmployee($event)"
+                        (resetErrorMessagesEvent)="resetErrorMessagesEvent()"></rhis-jour-repos-form>
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+

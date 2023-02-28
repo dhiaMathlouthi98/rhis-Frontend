@@ -1,0 +1,92 @@
+<div class="rhis-container view">
+  <div class="header" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+    <div>
+      <h2 class="titre-principale-page-rhis">{{pageTitle}}</h2>
+      <div class="nbr d-flex flex-column justify-content-around text-center ml-1">{{totalRecords}}</div>
+    </div>
+    <div class="block-droite-list-restaurant">
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder="{{'PARAMETRE_ENVOI_RAPPORT_FRANCHISE.SEARCH_PLACEHOLDER' | translate}}">
+        <span (click)="searchEnvois()"><img src="assets/icons/employe/ico_search_small.svg" alt=""></span>
+      </div>
+    </div>
+  </div>
+  <div class="table-list" *ngIf="listEnvois?.length">
+    <p-table [columns]="header"
+             [value]="listEnvois"
+             [paginator]="true"
+             [lazy]="true"
+             [rows]="row"
+             [first]="first"
+             [totalRecords]="totalRecords"
+             [rowsPerPageOptions]="rowsPerPageOptions"
+             (onSort)="sortRows($event)"
+             [resetPageOnSort]="false"
+             (onPage)="onLazyLoad($event)"
+             [scrollable]="true" [scrollHeight]="heightInterface">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let c of columns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <th *ngFor="let col of columns" [pSortableColumn]="(col?.field !== 'receiver') ? col?.field : null">
+            {{col?.title}}
+            <p-sortIcon *ngIf="col?.field != 'receiver'" [field]="col?.field"
+                        ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-envoi>
+        <tr class="table-row">
+          <td>
+            {{envoi?.lastNameFirstNameCreateur}}</td>
+          <td>
+            <button type="button" class="close close_button_style" data-dismiss="modal" aria-label="Close" *ngIf="isShownReceiver && (selectedEnvoiUuid === envoi?.uuid)" (click)="closeTooltip()">
+              <img src="assets/icons/parc/Btn_Close_Blue.svg" alt="">
+            </button>
+            <div (click)="showDestinataires(envoi?.uuid, envoi)" *ngIf="envoi?.receiver?.length > 1 else displayReceiv">
+              ...
+                <div class="tooltip-container" *ngIf="isShownReceiver && (selectedEnvoiUuid === envoi?.uuid)" (rhisClickOutsideTooltip)="isShownReceiver = false">
+                  <rhis-infos-tooltip>
+                    <div *ngFor="let receiv of envoi?.receiver">
+                      {{receiv?.email}}
+                    </div>
+                  </rhis-infos-tooltip>
+                </div>
+              
+            </div>
+            <ng-template #displayReceiv>
+              {{envoi?.receiver[0]?.email}}
+            </ng-template>
+          </td>
+          <td>{{envoi?.frequenceExpedition}}</td>
+          <td>{{envoi?.objectMail}}</td>
+          <td>
+            <div *ngIf="envoi?.lastNameFirstNameCreateur === 'Moi'" class="d-flex justify-content-around">
+              <div *ngIf="deleteButtonControl()">
+                <span (click)="goToParamEnvoi(envoi)">
+                  <img src="assets/icons/employe/Ico_View.svg" alt="no icon">
+                </span>
+              </div>
+              <div *ngIf="deleteButtonControl()">
+              <span (click)=" showConfirmDelete(envoi?.uuid, envoi?.objectMail); $event.stopPropagation()" class="item">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

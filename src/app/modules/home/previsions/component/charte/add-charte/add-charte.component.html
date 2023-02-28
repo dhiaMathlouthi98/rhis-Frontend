@@ -1,0 +1,26 @@
+<div class="row align-items-start">
+  <div class="form-group">
+    <div class="ui-g-12">
+      <div class="row">
+        <div class="section-element col-12">
+          <label class="section-element-title" for="PREVISION-CharteP-libelle-popup">
+            {{'CHARTE.LIBELLE' | translate}}*
+          </label>
+          <input [(ngModel)]="libelleCharte" class="text-field" id="PREVISION-CharteP-libelle-popup" pInputText
+                 size="30"
+                 type="text">
+          <span *ngIf="charteExistante"
+                class="form-item-error red small-rhis"
+                id="PREVISION-CharteP-libelleError">
+            {{'CHARTE.EXIST' | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-footer class="d-flex justify-content-center mt-3">
+  <div (click)="addNewCharte()" class="add-button orange-background valid" id="PREVISION-CharteP-add-btn">
+    <span>{{title | uppercase }}</span>
+  </div>
+</p-footer>

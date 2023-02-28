@@ -1,0 +1,55 @@
+<div class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="160">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"PERIODE_PAIE.TITLE" | translate}}</h1>
+    </div>
+    <div class="float-right col-md-8 col-lg-6">
+      <button type="button" *ngIf="!compareList() && updateControl()" (click)="updatePeriodePaieRestaurant()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate | uppercase}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list" *ngIf="listPeriode?.length">
+      <p-table [value]="listPeriode" [responsive]="true"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th class="text-center">{{'BIMPOSE.DEBUT' | translate}}</th>
+            <th class="text-center">{{'BIMPOSE.FIN' | translate}}</th>
+          </tr>
+        </ng-template>
+        <ng-template let-index="rowIndex" pTemplate="body" let-paie>
+          <tr class="table-row" (rhisClickOutside)="resetSelection(index)">
+            <td (dblclick)="setMaxDateAndMinDateValues(index)"
+                [ngClass]="{'periode__paie--clicked': !paie.display, 'periode__paie--no-clicked': paie.display}">
+              <ng-container *ngIf="!paie.display">
+                <rhis-calendar [(ngModel)]="selectedDate"
+                               (date)="setNewDate(index)"
+                               [minDate]="choosenMinDate"
+                               [maxDate]="choosenMaxDate"
+                               [placeholder]="'JJ/MM/AAAA'"
+                               dateFormat="dd/mm/yy"
+                               [appendTo]="'body'">
+
+                </rhis-calendar>
+              </ng-container>
+              <ng-container *ngIf="paie.display">
+                {{paie?.dateDebut| date:'dd/MM/yyyy'}}
+              </ng-container>
+            </td>
+            <td class="text-center">
+              {{paie?.dateFin| date:'dd/MM/yyyy'}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+
+</div>
+
+

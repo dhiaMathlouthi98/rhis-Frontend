@@ -1,0 +1,67 @@
+.editor-container {
+  height: calc(100% - 800px);
+}
+
+.tree-view-container {
+  height: calc(100vh - 290px);
+  overflow: auto;
+}
+
+:host ::ng-deep {
+  ejs-maskedtextbox {
+    .e-control-wrapper.e-mask.e-input-group {
+      border-color: #ced4da !important;
+    }
+
+    .e-input-focus {
+      box-shadow: none !important;
+    }
+  }
+
+  .tree-view-container > ejs-treeview {
+    #default_active div.e-text-content {
+      span {
+        color: black !important;
+      }
+      color: black !important;
+    }
+    #default ul li.e-list-item div.e-text-content.e-icon-wrapper,
+    #default_active ul li.e-list-item.e-active div.e-text-content span {
+      color: black !important;
+    }
+  }
+
+  ejs-documenteditorcontainer {
+    button.e-de-statusbar-pageweb, button.e-de-statusbar-zoom {
+      visibility: hidden;
+    }
+  }
+  .e-treeview .e-list-text {
+    font-size: 15px;
+    color: black !important;
+  }
+  .e-treeview li.e-list-item.e-hover:not([aria-expanded]) > .e-fullrow {
+    background-color: #D3DBF6;
+    border-color: #D3DBF6;
+  }
+  .e-treeview li.e-list-item.e-active:not([aria-expanded]) > .e-fullrow {
+    background-color: #A0B3F1;
+    border-color: #A0B3F1;
+  }
+}
+
+button {
+  padding: 8px;
+  font-size: 8px;
+  margin-left: 5px;
+}
+
+.btn-control-add-report {
+  width: fit-content;
+  float: right;
+  margin-top: -47px;
+}
+
+.search-input {
+  margin-bottom: 20px;
+}

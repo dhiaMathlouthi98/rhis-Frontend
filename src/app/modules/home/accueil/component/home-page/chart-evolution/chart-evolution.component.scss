@@ -1,0 +1,82 @@
+.rhis-container {
+  & > h1 {
+    float: left;
+    margin: 0;
+    height: 28px;
+    width: auto;
+    font-family: "TT Wellingtons DemiBold";
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    @media screen and (max-width: 1680px) {
+      font-size: 18px;
+    }
+    @media screen and (max-width: 1366px) {
+      font-size: 16px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 14px;
+    }
+  }
+
+  .periode-block {
+    float: right;
+    margin-bottom: 10px;
+
+    h1 {
+      float: left;
+      margin-left: 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 1366px) {
+        margin-left: 10px;
+        font-size: 13px;
+      }
+      @media screen and (max-width: 1024px) {
+        font-size: 11px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  canvas {
+    margin-top: 20px;
+    height: 160px !important;
+    font-family: "TT Wellingtons Regular";
+    @media screen and (max-width: 1366px) {
+      height: 155px !important;
+    }
+    @media screen and (max-width: 1024px) {
+      height: 117px !important;
+    }
+  }
+
+  .selected-periode {
+    font-family: "TT Wellingtons Regular";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    @media screen and (max-width: 1366px) {
+      font-size: 13px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 12px;
+    }
+  }
+
+  .periode {
+    opacity: 0.5;
+    font-family: "TT Wellingtons Light";
+    font-size: 14px;
+    line-height: 20px;
+    @media screen and (max-width: 1366px) {
+      font-size: 13px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 12px;
+    }
+  }
+}

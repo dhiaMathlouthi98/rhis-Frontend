@@ -1,0 +1,287 @@
+<div class="rhis-container">
+  <div class="header">
+    <div class="row block-flex-between-rhis">
+      <div>
+        <a (click)="backToHomePlanning()">
+          <h3>{{'SHIFT_FIXE.PLANNING' | translate}}</h3>
+        </a>
+        <span class="arrow-right besoin-shift"><img src="assets/icons/employe/Arrow right.svg" alt="no icon"></span>
+        <h1 *ngIf="hasPlanningLeader">{{'PLANNING_LEADER.PLANNING_LEADER' | translate}} {{weekSelected }}</h1>
+        <h1 *ngIf="!hasPlanningLeader">{{'PLANNING_MANAGER.PLANNING_MANAGER' | translate}} {{weekSelected }}</h1>
+      </div>
+      <div class="text-right pull-right header-right-planning-rhis">
+        <button *ngIf="updateButtonControl()" type="button" class="btn save-add-button-rhis blue-background ml-2 mr-2"
+                (click)="saveListPlanningManager()"
+                id="PLG-ML-VueP-save-btn">
+            <span>{{'SHIFT_FIXE.SAVE' | translate}}
+            </span>
+        </button>
+      </div>
+    </div>
+    <div class="row block-flex-between-rhis">
+      <div class="block-input-week-rhis">
+          <span class="img-planning left" id="PLG-ML-VueP-downWeek-btn">
+            <img (click)="downWeekDate()" src="assets/icons/planning/back-rhis.png" alt="no image">
+         </span>
+        <p-calendar
+          [showWeek]="true"
+          [locale]="calendar_fr"
+          [(ngModel)]="values"
+          selectionMode="range"
+          dateFormat="dd/mm/yy"
+          (onSelect)="selectDate($event)"
+          (onMonthChange)="setWeeksValue($event)"
+          [showIcon]="true"
+          id="PLG-ML-VueP-selectD-calendar">
+        </p-calendar>
+        <span class="img-planning right" id="PLG-ML-VueP-afterWeek-btn">
+          <img (click)="upWeekDate()" src="assets/icons/planning/after-rhis.png" alt="no image">
+        </span>
+      </div>
+      <div>
+        <button (click)="showConfirmDeleteRow($event)"
+                *ngIf="deleteButtonControl()"
+                class="btn btn-delete"
+                id="PLG-ML-VueP-delete-btn">
+                  <span>
+                    <img src="assets/icons/chart-icon/supprimer.png">
+                  </span>
+        </button>
+        <button class="btn btn-list-manager-rhis"
+                id="PLG-ML-VueP-download-btn">
+          <span>
+            <img src="assets/icons/chart-icon/Download.png">
+          </span>
+        </button>
+        <div class="dropdown btn-dropdown">
+          <button class="btn btn-list-manager-rhis">
+          <span>
+            <img src="assets/icons/chart-icon/Plus.png">
+          </span>
+          </button>
+          <div class="dropdown-content">
+            <a href="/home/restaurant/periode-manager"> {{"PERIODE_MANAGER.PERIODE_MANAGER" | translate}}</a>
+            <a (click)="displayRapportPopup()"
+               *ngIf="hasPlanningLeader" id="PLG-ML-DrapportPlgL-btn"> {{"PLANNING_LEADER.PLG_LEADER" | translate}}</a>
+            <a (click)="displayRapportPopup()"
+               *ngIf="!hasPlanningLeader"
+               id="PLG-ML-DrapportnotPlgL-btn"> {{"SOUSMENU.PLANNING_MANAGER" | translate}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-list">
+    <table class="planning bg-white m-1"
+           (rhisClickOutside)="unselectPlanningManager()">
+      <thead>
+      <tr class="row no-margin-row">
+        <th class="empNameColumn">
+          <div class="btn-group" role="group" *ngIf="!hasPlanningLeader">
+            <button type="button" class="btn btn-light"
+                    [routerLink]="rhisRouter.getRoute('PLANNING-MANAGER')"
+                    id="PLG-ML-VueMRouter-btn">{{'PLANNING_MANAGER.VUE_MANAGER' |
+              translate}}
+            </button>
+            <button type="button" class="btn btn-light" [class.active]="true"
+                    [routerLink]="rhisRouter.getRoute('PLANNING-MANAGER-VUE-POSTE')"
+                    id="PLG-ML-VuePRouter-btn">{{'PLANNING_MANAGER.VUE_POSTE' |
+              translate}}
+            </button>
+          </div>
+          <div class="btn-group" role="group" *ngIf="hasPlanningLeader">
+            <button type="button" class="btn btn-light"
+                    [routerLink]="rhisRouter.getRoute('PLANNING-LEADER')"
+                    id="PLG-ML-LRouter-btn">{{'PLANNING_LEADER.VUE_MANAGER' | translate}}
+            </button>
+            <button type="button" class="btn btn-light" [class.active]="true"
+                    [routerLink]="rhisRouter.getRoute('PLANNING-LEADER-VUE_POSTE')"
+                    id="PLG-ML-PRouter-btn">{{'PLANNING_LEADER.VUE_POSTE' |
+              translate}}
+            </button>
+          </div>
+        </th>
+        <th *ngFor="let day of days" class="dayName">{{day.column}}</th>
+      </tr>
+      </thead>
+      <tbody #contentBodyPlan
+             [ngStyle]="{'height': contentHeightPlanning + 'px'}"
+             class="content-planning-rhis"
+             id="planningManagerVuePoste"
+      (scroll)="hideDropDown()">
+      <ng-container *ngIf="listPeriodeWithPlanningManager.length>0">
+        <tr rhis-planning-manager-row *ngFor="let periode of listPeriodeWithPlanningManager; let i = index"
+            [ngClass]="{'active-planning-manager': !periode.statut}"
+            [periode]="periode"
+            [vuePoste]="true"
+            [messageConfonduPlanningManger]="messageConfonduPlanningManger"
+            [limitHeureDebut]="limiteHeureDebut"
+            [hasPlanningLeader]="hasPlanningLeader"
+            [dateDebutSupDateFinErrorMessage]="dateDebutSupDateFinErrorMessage"
+            [dateFinWithoutDateDebutErrorMessage]="dateFinWithoutDateDebutErrorMessage"
+            [heureDebutSupHeureFinErrorMessage]="heureDebutSupHeureFinErrorMessage"
+            [planningManagerByPeriode]="planningByPeriode.get(periode.idPeriodeManager)"
+            [days]="days"
+            [listManagerOrLeaderActif]="listManagerOrLeaderActif"
+            [listePositionTravail]="listePositionTravail"
+            [listManagerOrleaderInactif]="listManagerOrleaderInactif"
+            [attr.data-periodeIndex]="periode?.idPeriodeManager"
+            [attr.data-idPlanningManager]="periode.idPeriodeManager"
+            [periodeIndex]="periode?.idPeriodeManager"
+            [addPopupTitle]="addPopupTitle"
+            [JoursSemainEnum]="JoursSemainEnum"
+            [dateDebut]="dateDebut"
+            [valeurProductif]="valeurProductif"
+            [updatePopupTitle]="updatePopupTitle"
+            [totalShiftManagerInWeek]="totalShiftManagerInWeek"
+            [showPopAddShiftManager]="showPopAddShiftManager"
+            [nightValue]="setNightValue"
+            [startTime]="startTime"
+            [startTimeIsNight]="startTimeIsNight"
+            [endTime]="endTime"
+            [modeAffichagePlanning]="modeAffichage"
+            [setDecoupageValues]="decoupageHoraireFinEtDebutActivity"
+            [endTimeIsNight]="endTimeIsNight"
+            (initValues)="initValuesForVerificationContrainte($event)"
+            (checkIfNightValueEvent)="checkIfNightValue()"
+            (planningManagerShiftEmitter)="addOrUpdateNewPlanningManagerOrLeaderFixeCard($event)"
+            (rowSelectedEmitter)="updateSelectedEmployeeRow($event)"
+            (deletePlanningManagerCardEmitter)="showConfirmDeletePlanningManagerCard($event)"
+            (resetMessageConfonduPlanningManager)="resetMessageConfonduPlanningManager()"
+            (getIdOfPlanningManagerProductifDeleted)="getIdOfPlanningManagerProductifDeleted($event)"
+            (resetPopupOfPlanningManager)="resetPopupOfPlanningManager()"
+            (getLastAndFirstDayOfActivity)="getLastAndFirstDayOfActivity($event)"
+            [dateFin]="dateFin"
+            class="row no-margin-row">
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="popupVerificationContrainteVisibility"
+  [title]="titlePopupContraint"
+  [width]="popUpStyle?.width"
+  [height]="popUpStyle?.height">
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis table-anomalie">
+    <p-table [value]="listContrainte">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="col-popup-anomalie-1">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="col-popup-anomalie-2">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="col-popup-anomalie-3">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-messageVerification>
+        <tr *ngIf="!messageVerification?.employe" [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td class="col-popup-anomalie-1" *ngIf="!messageVerification?.acheval">
+            {{ dateContraintSocial }}
+          </td>
+          <td class="col-popup-anomalie-1" *ngIf="messageVerification?.acheval">
+            {{ dateContrainteAcheve }}
+          </td>
+          <td class="col-popup-anomalie-2">
+            {{planningHasAnomalieContraintSocial?.nom}}&nbsp;{{planningHasAnomalieContraintSocial?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+
+        <tr *ngIf="messageVerification?.employe" [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td class="col-popup-anomalie-1">
+            {{ messageVerification?.dateOfAnomalie }}
+          </td>
+          <td class="col-popup-anomalie-2">
+            {{messageVerification?.employe?.nom}}&nbsp;{{messageVerification?.employe?.prenom}}
+          </td>
+          <td class="col-popup-anomalie-3">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button type="button" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+              (click)="save()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+              id="PLG_M-save-popup-btn">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button type="button"
+              (click)="closePopup($event)"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis"
+              id="PLG_M-cancel-popup-btn">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<!-- popup to dispaly CS NB max de shift par jour en cas de suppression -->
+<rhis-pop-up (closeEvent)="closePopup($event)"
+             [height]="popUpStyle?.height"
+             [showPopUp]="popupVerificationCsMaxShift"
+             [title]="titlePopupContraint"
+             [width]="popUpStyle?.width">
+  <div class="table-list bg-gris-avec-border perso-table-popup-rhis">
+    <p-table [value]="listContrainteSuppression">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="date-width">{{'SHIFT_FIXE.DATE' | translate}}</th>
+          <th class="employee-width">{{'SHIFT_FIXE.EMPLOYEE_POPUP' | translate}}</th>
+          <th class="message-contrainte-width" scope="col">{{'SHIFT_FIXE.ANOMALIE' | translate}}</th>
+        </tr>
+      </ng-template>
+      <ng-template let-messageVerification pTemplate="body">
+        <tr [ngClass]="{'wrongLoiValueColor' : messageVerification?.bloquante}"
+            [pSelectableRow]="messageVerification">
+          <td class="date-width">
+            {{ dateContraintSocial }}
+          </td>
+          <td class="employee-width">
+            {{planningHasAnomalieContraintSocial?.nom}}&nbsp;{{planningHasAnomalieContraintSocial?.prenom}}
+          </td>
+          <td class="message-contrainte-width">
+            {{messageVerification?.message}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div class="pop-up-table-rhis">
+      <button (click)="removeShift()" *ngIf="!hiddenSave" [disabled]="getBlockedConstraint()"
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-save-rhis"
+              id="PLG-MLVP-save-popupVerifCsMax-btn"
+              type="button">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button (click)=closePopup($event)
+              class="btn button-popup-rhis orange-background color-btn-white-rhis btn-cancel-rhis "
+              id="PLG-MLVP-cancel-popupVerifCsMax-bt"
+              type="button">
+        <span>{{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<rhis-pop-up
+  (closeEvent)="closeRapportPopup()"
+  [showPopUp]="showPopupRapport"
+  [title]="selectedRapport?.libelleFile"
+  width="600">
+
+  <rhis-popup-rapports *ngIf="showPopupRapport"
+                       [initFirstDayOfWeekend]="premierJourDeLaSemaine"
+                       [initDateDisplay]="this.dateDebut"
+                       [initSelectedRapport]="selectedRapport"
+                       [initManagerOrLeader]="hasPlanningLeader"
+                       (generateRapportEvent)="launchGenerateRapport($event)"
+  ></rhis-popup-rapports>
+</rhis-pop-up>

@@ -1,0 +1,10 @@
+<div class="rhis-container">
+  <div class="rhis-tooltip"
+       [ngStyle]="toolTipStyle"
+       (click)="$event.stopPropagation()">
+    <div [ngClass]="{'flag': isFlagTop , 'flag-bottom': !isFlagTop }"
+         [style.right.px]="caretPositionFromRight">
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

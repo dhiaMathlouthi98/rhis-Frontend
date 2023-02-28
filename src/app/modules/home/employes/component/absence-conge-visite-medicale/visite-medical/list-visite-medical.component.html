@@ -1,0 +1,80 @@
+<div class="rhis-container">
+  <div class="table-list bg-gris-avec-border">
+    <p-table [columns]="visiteHeader" [value]="listVisiteMedical" [scrollable]="true" scrollHeight="400px">
+      <ng-template pTemplate="colgroup" let-columns stickyHeader stickyClass="stickyHeader">
+        <colgroup>
+          <ng-container *ngIf="listVisiteMedical?.length">
+            <col *ngFor="let c of columns">
+            <col>
+          </ng-container>
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr class="header-row">
+          <ng-container *ngIf="listVisiteMedical?.length">
+            <th *ngFor="let col of columns; let f= first; let l = last"
+                [pSortableColumn]="col?.field != 'numTel' ? col?.field : null">
+              {{col?.title}}
+              <p-sortIcon *ngIf="l || f" [field]="col?.field" ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+          </ng-container>
+          <th>
+            <button (click)="addVisiteMedical()" *ngIf="addButtonControl()"
+                    class="btn save-add-button-rhis button-add-intable-rhis orange-background"
+                    id="EMP_visiteMedicale-add-btn"
+                    type="button">
+              <span>{{'VISITE_MEDICAL.ADD_NEW_VISITE'|translate}}</span>
+            </button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-visite>
+        <tr [pSelectableRow]="visite"
+            (click)="showDetailsVisiteMedical(visite); $event.stopPropagation()">
+          <td>
+            <div class="td-container td-left-border">
+              {{visite.dateVisite| date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+              {{visite.dateExpiration| date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+          <td>
+            <div class="td-container">
+               <span class="label-table blue-background">
+        {{visite.valide}}
+            </span>
+            </div>
+          </td>
+
+          <td>
+            <div class="td-container td-right-border">
+              <div class="operation">
+                <span (click)="showConfirmDeleteVisiteMedical(visite );$event.stopPropagation()"
+                      *ngIf="deleteButtonControl()" class="item">  <img
+                  src="assets/icons/employe/Btn_Close.svg" alt="no image"></span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="showVisiteMedicalPopup = false"
+  [showPopUp]="showVisiteMedicalPopup"
+  [height]="350"
+  [title]=addUpdateVisiteMedicalTitle>
+  <rhis-add-visite-medical *ngIf="showVisiteMedicalPopup"
+                           [visiteMedical]="visiteMedical"
+                           [buttonLabel]="addUpdateVisiteMedicalTitle"
+                           (addOrUpdateVisiteMedicalEvent)="addOrUpdatevisiteMedical($event)"></rhis-add-visite-medical>
+</rhis-pop-up>
+
+

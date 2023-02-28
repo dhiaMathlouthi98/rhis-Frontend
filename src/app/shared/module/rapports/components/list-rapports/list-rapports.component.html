@@ -1,0 +1,124 @@
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="200"
+       class="scroll-top-content-openRhis">
+    <div class="header row justify-content-between scroll-width-TopRhis header-reports-rhis">
+      <div class="col-4 titre">
+        <h1 class="titre-principale-page-rhis">{{"REPORT.ALL_REPORTS" | translate}}
+          <span *ngIf="!parcRapport"
+                class="nbr d-flex flex-column justify-content-around text-center">{{totalRapports}}</span>
+          <span *ngIf="parcRapport"
+                class="nbr d-flex flex-column justify-content-around text-center">{{totalRapportsParc}}</span>
+        </h1>
+      </div>
+      <div class="float-right">
+        <div class="search">
+          <input [formControl]="searchedValue" [placeholder]="placeholderText" id="RAPPORT_search-input"
+                 type="text">
+          <span (click)="searchRapport()">
+            <img alt="" id="RAPPORT_search-icon"
+                 src="assets/icons/employe/ico_search_small.svg">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div class="table-list responsive-table-rhis">
+      <p-table #dt (onPage)="onLazyLoad($event)" (onSort)="sortData($event)" [columns]="header" [first]="first"
+               [lazy]="true"
+               [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="row"
+               [scrollHeight]="heightInterface" [scrollable]="true" [totalRecords]="totalRecords"
+               *ngIf="!loading"
+               [value]="listRapports">
+        <ng-template let-columns pTemplate="colgroup">
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template let-columns pTemplate="header" stickyClass="stickyHeader" stickyHeader>
+          <tr class="header-row">
+            <th *ngFor="let col of columns; let f = first" [pSortableColumn]="col?.field">
+              <ng-container>
+                {{col?.title}}
+              </ng-container>
+              <p-sortIcon [field]="col?.field" [field]="col?.field"
+                          ariaLabel="Activate to sort" ariaLabelAsc="Activate to sort in ascending order"
+                          ariaLabelDesc="Activate to sort in descending order">
+              </p-sortIcon>
+              <ng-container *ngIf="f && !parcRapport">
+                <div (click)="showFilter = !showFilter; $event.stopPropagation()"
+                     class="filter-select d-flex justify-content-center">
+                  <i class="pi pi-fw pi-sort-down"></i>
+                  <div (rhisClickOutsideTooltip)="showFilter = false" *ngIf="showFilter">
+                    <p-listbox (onChange)="changeFilter($event)" [options]="filterOptions" optionLabel="label">
+                    </p-listbox>
+                  </div>
+                </div>
+              </ng-container>
+            </th>
+            <th *ngIf="parcRapport"></th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" let-rapport pTemplate="body">
+          <tr (dblclick)="!parcRapport ? showActionPopup(rapport) : ''"
+              [id]="rapport?.codeName"
+              [pSelectableRow]="rapport"
+              class="table-row">
+            <td (dblclick)="parcRapport ? generationRapportParc(rapport) : ''">
+              <div>
+                {{rapport?.categorie}}
+              </div>
+            </td>
+            <td (dblclick)="parcRapport ? generationRapportParc(rapport) : ''">
+              <div>
+                {{rapport?.libelleFile}}
+              </div>
+            </td>
+            <td (dblclick)="parcRapport ? generationRapportParc(rapport) : ''">
+              <div>
+                {{rapport?.lastUsed | date : "dd/MM/yyyy"}}
+              </div>
+            </td>
+            <td *ngIf="parcRapport">
+                <span (click)="paramEnvoiRapport(rapport)" *ngIf="rapport?.paramsEnvoi"
+                      class="con-tooltip bottom">
+                  <img alt="no icon" src="assets/icons/shared/email-liste.png">
+                  <span class="rhis-tooltip">{{"REPORT.LISTE_ENVOI_CREE" | translate}}</span>
+                </span>
+              <span *ngIf="!rapport?.paramsEnvoi" class="con-tooltip bottom">
+                  <img alt="no icon" src="assets/icons/shared/mail-pas-liste.png">
+                  <span class="rhis-tooltip">{{"REPORT.LISTE_ENVOI_CREE" | translate}}</span>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <rhis-pop-up
+    (closeEvent)="closePopup()"
+    [showPopUp]="showPopupRapport"
+    [title]="selectedRapport?.libelleFile"
+    width="600"
+    *ngIf="openPopup">
+
+    <rhis-popup-rapports (generateRapportEvent)="launchGenerateRapport($event)"
+                         (generateExcel)="GenerateExcelRapportDetailee($event)"
+                         (getListEmployeeEvent)="getListEmployeeByPointage($event)"
+                         (getListEmployeeActifEvent)="getListEmployeeActiveBetweenTwoDates($event)"
+                         (openPopup)="openClosePopup($event)"
+                         *ngIf="showPopupRapport"
+                         [initAllEmployeeLabel]="allEmployeeLabel"
+                         [initListEmployee]="listEmployees"
+                         [initSelectedRapport]="selectedRapport"
+    ></rhis-popup-rapports>
+  </rhis-pop-up>
+
+</div>
+
+<p-progressSpinner
+  class="data-in-progress"
+  *ngIf="loading"
+  id="spinner-to">
+</p-progressSpinner>

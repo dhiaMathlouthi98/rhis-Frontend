@@ -1,0 +1,80 @@
+<div class="rhis-container">
+  <div class="header row" *ngIf="!isEditOperation">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{"TYPE_RESTAURANT.TYPE_RESTAURANT_NAME" | translate}}</h1>
+    </div>
+    <div class="float-right col-6 mt-2">
+      <button id="1004" type="button" (click)="saveTypeRestaurant()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis" [formGroup]="typeRestaurantForm">
+    <div class="row block-row-without-margin-rhis mb-3">
+      <div class="section-element" [ngClass]="{' col-6 col-lg-4': !isEditOperation, 'w-100': isEditOperation}">
+        <label for="nomType"
+               class="section-element-title">{{'TYPE_RESTAURANT.TYPE_RESTAURANT_NAME' | translate}}</label>
+        <input type="text" class="input-general-rhis" id="nomType"
+               formControlName="nomType">
+        <span class='red small'
+              *ngIf="nameHasError && isSubmitted">  {{'TYPE_RESTAURANT.TYPE_RESTAURANT_NAME_REQUIRED_ERROR' | translate}}</span>
+      </div>
+    </div>
+    <div class="row block-row-without-margin-rhis mb-3">
+      <div class="section-element" [ngClass]="{' col-6 col-lg-4': !isEditOperation, 'w-100': isEditOperation}">
+        <label for="typeComportementRestaurant"
+               class="section-element-title">{{'TYPE_RESTAURANT.FUNCTION_MODE_NAME' | translate}}</label>
+        <input type="number" class="input-general-rhis" id="typeComportementRestaurant"
+               formControlName="typeComportementRestaurant">
+        <span class='red small'
+              *ngIf="modeFonctionnementHasError && isSubmitted">  {{'TYPE_RESTAURANT.TYPE_RESTAURANT_FUNCTION_MODE_REQUIRED_ERROR' | translate}}</span>
+      </div>
+    </div>
+    <div class="row block-row-without-margin-rhis">
+      <div class="form-group" [ngClass]="{'col-md-8 col-md-7 col-lg-5': !isEditOperation}">
+        <label class="section-element-title mb-3">{{'TYPE_RESTAURANT.TYPE_RESTAURANT_LOGO' | translate}}</label>
+        <p-fileUpload id="uploadRestaurantLogo"
+                      [url]="uploadLogoUrl"
+                      (onUpload)="onUpload($event)"
+                      (onSelect)="onSelect($event)"
+                      (onClear)="onClear($event)"
+                      (onRemove)="onClear($event)"
+                      (onError)="onUploadError($event)"
+                      [showUploadButton]="false"
+                      chooseLabel='{{"BUTTON.CHOOSE" | translate}}'
+                      cancelLabel='{{"BUTTON.CANCEL" | translate}}'
+                      accept="image/*" name="DefaultFileUpload">
+          <ng-template pTemplate="content">
+            <ng-container *ngIf="logo">
+              <div class="ui-fileupload-row ng-star-inserted">
+                <div>
+                  <img [src]="logo?.url" width="50" class="ng-star-inserted">
+                </div>
+                <div>{{logo?.name}}</div>
+                <div>{{logo?.size}} KB</div>
+                <div>
+                  <button icon="pi pi-times" type="button"
+                          class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
+                          (click)="onClear(null)">
+                    <span class="ui-button-icon-left ui-clickable pi pi-times"></span>
+                    <span class="ui-button-text ui-clickable">ui-btn</span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+    </div>
+    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+  </div>
+  <button type="button" *ngIf="isEditOperation" (click)="saveTypeRestaurant()"
+          class="btn save-add-button-rhis btn-popup-rhis orange-background">
+    <span>{{'TYPE_RESTAURANT.MODIFY_RESTAURANT_TYPE_TITLE' | translate}}</span>
+  </button>
+</div>
+
+
+
+

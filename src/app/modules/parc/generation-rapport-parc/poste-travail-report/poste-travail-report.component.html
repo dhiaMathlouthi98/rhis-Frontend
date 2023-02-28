@@ -1,0 +1,107 @@
+<div class="wrapper scroll-general-rhis pb-3">
+  <span *ngIf="data.data.modeRapport==='1'">
+    <b>{{data.data.dateDebut | date:'dd-MM-yyyy'}}</b>
+  </span>
+  <span *ngIf="data.data.modeRapport==='2'">
+<b>{{'PARAMETRE_ENVOI_RAPPORT_FRANCHISE.DU'|translate}} {{data.data.dateDebut | date:'dd-MM-yyyy'}} {{'GESTION_PAIE_PARC.PERIODE_TO'| translate}} {{data.data.deteFin | date:'dd-MM-yyyy'}}</b>
+  </span>
+  <div *ngIf="data.vue===1">
+    <table class="table-jour">
+      <thead>
+      <tr class="color1">
+        <th class="">  {{"POPUP_RAPPORT.RESTAURANT" | translate}}</th>
+        <th class="postt-cell ">{{"POPUP_RAPPORT.POSTE_TRAVAIL" | translate}}</th>
+        <ng-container *ngFor="let time of dayOrTimeimeHeader">
+          <td>{{time.heureDebut}}</td>
+        </ng-container>
+      </tr>
+
+      </thead>
+      <tbody>
+      <ng-container *ngIf="!data.comparatif">
+        <ng-container
+          *ngFor="let position of data.data.restaurantDtoList[selectedPage].jourDtoList[0].posteTravailDtoList; let indexPosition = index; let first = first">
+          <tr>
+            <ng-container *ngIf="first">
+              <th [rowSpan]="data.data.restaurantDtoList[selectedPage].jourDtoList[0].posteTravailDtoList.length"
+                  class="color1 postt-cell "> {{data.data.restaurantDtoList[selectedPage].libelle}}</th>
+            </ng-container>
+
+            <th class="color2 postt-cell "> {{position.libelle}}</th>
+            <ng-container
+              *ngFor="let sommeProd of data.data.restaurantDtoList[selectedPage].jourDtoList[0].posteTravailDtoList[indexPosition].intervalleDtoList; let indexsommeProd = index">
+
+              <td> {{sommeProd.sommeProd === 0 ? '' : sommeProd.sommeProd | number:'1.2-2'}}</td>
+
+            </ng-container>
+          </tr>
+        </ng-container>
+
+
+      </ng-container>
+
+
+      <ng-container *ngIf="data.comparatif">
+        <ng-container *ngFor="let resto of data.data.restaurantDtoList; let indexResto = index">
+          <ng-container
+            *ngFor="let position of data.data.restaurantDtoList[indexResto].jourDtoList[0].posteTravailDtoList; let indexPosition = index; let first = first">
+            <tr>
+              <ng-container *ngIf="first">
+                <th [rowSpan]="data.data.restaurantDtoList[indexResto].jourDtoList[0].posteTravailDtoList.length"
+                    class="color1 postt-cell "> {{resto.libelle}}</th>
+              </ng-container>
+
+              <th class="color2 postt-cell "> {{position.libelle}}</th>
+              <ng-container
+                *ngFor="let sommeProd of data.data.restaurantDtoList[indexResto].jourDtoList[0].posteTravailDtoList[indexPosition].intervalleDtoList; let indexsommeProd = index">
+
+                <td> {{sommeProd.sommeProd === 0 ? '' : sommeProd.sommeProd | number:'1.2-2'}}</td>
+
+              </ng-container>
+            </tr>
+          </ng-container>
+
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="data.vue===2">
+    <table class="table-semaine">
+      <thead>
+      <tr class="color1 stick-th-head ">
+        <th class="color1 postt-cell">  {{"POPUP_RAPPORT.RESTAURANT" | translate}}</th>
+        <th>{{"POPUP_RAPPORT.POSTE_TRAVAIL" | translate}}</th>
+        <ng-container *ngFor="let day of dayOrTimeimeHeader; let last = last">
+          <td class="postt-cell" *ngIf="!last"> {{"DAYS."+day.toUpperCase() | translate}}</td>
+          <td class="postt-cell" *ngIf="last"> {{day}}</td>
+        </ng-container>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let resto of data.data.restaurantDtoList; let indexResto = index">
+        <ng-container *ngFor="let data of calculeSemaineData(indexResto); let indexdata = index; let first = first">
+          <tr>
+            <ng-container *ngIf="first">
+              <th class="color1 postt-cell" [rowSpan]="positionSemaine.length">{{resto.libelle}}</th>
+            </ng-container>
+            <td class="color2">{{data.position}}</td>
+            <td>{{data.day0 === 0 ? '' : data.day0 | number:'1.2-2'}}</td>
+            <td>{{data.day1 === 0 ? '' : data.day1 | number:'1.2-2'}}</td>
+            <td>{{data.day2 === 0 ? '' : data.day2 | number:'1.2-2'}}</td>
+            <td>{{data.day3 === 0 ? '' : data.day3 | number:'1.2-2'}}</td>
+            <td>{{data.day4 === 0 ? '' : data.day4 | number:'1.2-2'}}</td>
+            <td>{{data.day5 === 0 ? '' : data.day5 | number:'1.2-2'}}</td>
+            <td>{{data.day6 === 0 ? '' : data.day6 | number:'1.2-2'}}</td>
+            <td>{{getSommeDay(data)=== 0 ? '' : getSommeDay(data)| number:'1.2-2'}}</td>
+          </tr>
+        </ng-container>
+
+      </ng-container>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+

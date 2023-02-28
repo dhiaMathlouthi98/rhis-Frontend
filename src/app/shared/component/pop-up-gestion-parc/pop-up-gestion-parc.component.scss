@@ -1,0 +1,71 @@
+.pop-up-container-rhis {
+  border-radius: 5px;
+  background-color: #FFFFFF;
+
+  h5.modal-title {
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 26px;
+    text-align: center;
+    margin: 0 auto;
+    padding-left: 2rem;
+    @media screen and (max-width: 1366px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  .content {
+    padding: 0 55px 5px 39px;
+    max-height: 415px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    @media screen and (max-width: 991px) {
+      max-width: 485px;
+    }
+  }
+
+  .modal-header {
+    border: none;
+  }
+}
+
+.align-popup-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.space-between {
+  margin-bottom: 40px;
+}
+
+.text-radio-button {
+  font-weight: bold;
+  margin-right: 65px;
+}
+
+.resto-text-style {
+  font-weight: bold;
+}
+
+.align-ecraser-msg {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  font-weight: bold;
+  color: #878b91;
+}

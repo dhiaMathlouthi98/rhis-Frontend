@@ -1,0 +1,127 @@
+<p-tabView>
+  <p-tabPanel header="{{'PROFIL.MANAGE'|translate}}">
+    <div class="rhis-container view">
+
+      <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="170"
+           class="header row">
+        <div class="col-md-5 col-lg-6">
+
+        </div>
+        <div class="float-right col-md-7 col-lg-6">
+          <button *ngIf="addButtonControl()" type="button" (click)="showAddPopup()"
+                  class="btn save-add-button-rhis blue-background">
+            <span>{{'PROFIL.ADD_NEW_ONE'|translate}}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="container-fluid change-container-fluid-rhis">
+        <div class="table-list">
+          <p-table #dt [scrollHeight]="heightInterface" [scrollable]="true" [value]="ecrans"
+                   dataKey="code">
+            <ng-template pTemplate="header" let-columns>
+              <tr class="header-row">
+                <th>{{"PROFIL_RESTAURANT.HEADER_CODE" | translate}}</th>
+                <th>{{"PROFIL_RESTAURANT.HEADER_LIBELLE" | translate}}</th>
+                <th *ngFor="let col of listProfil">
+              <span *ngIf="this.deleteButtonControl()" class="item" (click)="deletProfil(col)">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+                  {{col.libelle}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-ecran let-columns="columns">
+              <tr>
+                <td>
+                  <div class="td-container td-left-border">
+                    <a href="#" [pRowToggler]="ecran">
+                      <i
+                        [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                      {{ecran?.code}}
+                    </a>
+                  </div>
+                </td>
+                <td>{{ecran.libelle}}</td>
+                <ng-template ngFor [ngForOf]="listProfil" let-k="index">
+                  <td>
+                    <p-checkbox [readonly]="!isEditable" binary="true" [ngModel]="doesProfilHasEcran(ecran,k)"
+                                (onChange)="changeEcran(ecran,k)"></p-checkbox>
+                  </td>
+                </ng-template>
+
+              </tr>
+
+            </ng-template>
+
+            <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex">
+              <tr class="table-row" *ngFor="let droitAccess of permissions">
+                <td class="rhis-invisible"></td>
+                <td>
+                  <div class="td-container td-left-border">
+                    {{droitAccess.name}}
+                  </div>
+                </td>
+
+                <ng-template ngFor [ngForOf]="listProfil" let-j="index">
+                  <td>
+                    <p-checkbox binary="true" [readonly]="!isEditable"
+                                [ngModel]="doesProfilHasDroit(rowData,j,droitAccess)"
+                                (onChange)="changeDroit(rowData,j,droitAccess)"></p-checkbox>
+                  </td>
+                </ng-template>
+
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+      </div>
+    </div>
+
+
+  </p-tabPanel>
+  <p-tabPanel header="Fonctionnalité mobile" *ngIf="isMobileAppEnabled && showMobile()">
+
+    <rhis-list-profil-mobile [listProfilMobile]="listProfilMobile" [ecransMobile]="ecransMobile" [droitList]="droitList">
+
+    </rhis-list-profil-mobile>
+  </p-tabPanel>
+</p-tabView>
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddProfilPopup"
+  [title]=showAddProfilTitle>
+
+  <div class="container-fluid">
+    <div class="row">
+      <form [formGroup]="profilAddForm">
+
+        <div class="section-element w-100">
+          <label class="section-element-title" for="libelle">{{"PROFIL.PROFIL_NAME" | translate}}*</label>
+          <input class="text-field" id="libelle" type="libelle" pInputText required="true" formControlName="libelle">
+          <br>
+          <span class="form-item-error red small-rhis position-absolute ml-1"
+                *ngIf="(profilAddForm.get('libelle').hasError('required')) && isSubmitted">{{"PROFIL.Add_ERREUR" | translate}}</span>
+          <br>
+          <span class="form-item-error red small-rhis position-absolute ml-1"
+                *ngIf="duplicated">{{"PROFIL.DEPLUCATED" | translate}}</span>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <div class="add-button orange-background mt-4" (click)="addProfil()">
+    <span>{{'PROFIL.ADD_BUTTON'|translate}}</span>
+  </div>
+
+</rhis-pop-up>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-blockUI [blocked]="displaySpinner">
+  <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+    <span class="text-white">{{"BUTTON.IN_PROGRESS" | translate}}</span>
+  </div>
+</p-blockUI>

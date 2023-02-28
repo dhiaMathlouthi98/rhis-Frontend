@@ -1,0 +1,65 @@
+col {
+  &:last-child {
+    width: 290px;
+    @media screen and (max-width: 1300px) {
+      width: 180px;
+    }
+    @media screen and (max-width: 991px) {
+      width: 150px;
+    }
+  }
+}
+
+.operation {
+  margin-top: -4px;
+
+  span {
+    cursor: pointer;
+  }
+}
+
+.pdf {
+  height: inherit;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.success {
+  background-color: rgb(45, 199, 109);
+}
+
+.progress {
+  background-color: rgb(255, 155, 66);
+}
+
+.container-generate-report {
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.generation-report-close-btn {
+  background-color: #e2e6ea;
+  cursor: pointer;
+}
+
+.generation-label {
+  height: 30px;
+  border-radius: 5px;
+}
+
+:host ::ng-deep {
+  .table-list .ui-table-scrollable-body {
+    min-height: auto;
+  }
+
+  .table-list.bg-gris-avec-border p-table .ui-table table .ui-table-thead > tr > th:first-child {
+    padding-left: 10px !important;
+  }
+
+  .btn.save-add-button-rhis {
+    padding: 10px;
+  }
+}

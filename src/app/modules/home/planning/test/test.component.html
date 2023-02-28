@@ -1,0 +1,60 @@
+<div class="interface-test">
+  <p-accordion [multiple]="true">
+    <p-accordionTab [header]="'List des Besoins'" class="bloc-accordion-rhis">
+      <div *ngFor="let key of besoinKeys" class="mb-3 bloc-accordion-rhis">
+        {{key}}
+        <div *ngFor="let shift of besoinData[key]; let i = index">
+          {{i+1}} <span [ngStyle]="{'font-weight': shift?.heureDebutIsNight ? 'bold':''}">{{shift.heureDebut}}</span> -
+          <span [ngStyle]="{'font-weight': shift?.heureFinIsNight ? 'bold':''}">{{shift.heureFin}}</span> :
+          {{shift.effectif}}
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'List des Shifts'" class="bloc-accordion-rhis">
+      <div *ngFor="let key of shiftKeys" class="mb-3 bloc-accordion-rhis">
+        {{key}}
+        <div *ngFor="let shift of shiftData[key]; let i = index">
+          <ng-container *ngIf="shift.nombreEmployeeRequis > 0">
+            {{i+1}} <span [ngStyle]="{'font-weight': shift?.heureDebutIsNight ? 'bold':''}">{{shift.heureDebut}}</span>
+            -
+            <span [ngStyle]="{'font-weight': shift?.heureFinIsNight ? 'bold':''}">{{shift.heureFin}}</span> :
+            {{shift.nombreEmployeeRequis}}
+          </ng-container>
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab [header]="'List des Association'" class="bloc-accordion-rhis">
+      <div *ngFor="let key of assocKeys" class="mb-3 bloc-accordion-rhis">
+        {{key}}
+        <div *ngFor="let shift of assocData[key]; let i = index">
+          <ng-container *ngIf="shift.nombreEmployeeRequis > 0">
+            {{i+1}}
+            <span [ngStyle]="{'font-weight': shift?.heureDebutIsNight ? 'bold':''}">{{shift.heureDebut}}</span>
+            -
+            <span [ngStyle]="{'font-weight': shift?.heureFinIsNight ? 'bold':''}">{{shift.heureFin}}</span> :
+            {{shift.nombreEmployeeRequis}}
+            <span *ngIf="shift.employee">
+             {{shift.employee.nom}} {{shift.employee.prenom}}
+          </span>
+            <br>
+            <ng-container *ngIf="shift.listShiftAssocie.length > 0">
+              Shift Associé:
+              <div *ngFor="let assoc of shift.listShiftAssocie; let i = index">
+                <span>{{assoc.positionTravail.libelle}} </span>
+                <span [ngStyle]="{'font-weight': assoc?.heureDebutIsNight ? 'bold':''}">{{assoc.heureDebut}}</span>
+                -
+                <span [ngStyle]="{'font-weight': assoc?.heureFinIsNight ? 'bold':''}">{{assoc.heureFin}}</span> :
+                {{assoc.nombreEmployeeRequis}}
+                <span *ngIf="assoc.employee">
+             {{assoc.employee.nom}} {{assoc.employee.prenom}}
+          </span>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>

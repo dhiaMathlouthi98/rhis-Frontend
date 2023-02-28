@@ -1,0 +1,75 @@
+<div class="align-items-start">
+  <form [formGroup]="typeFormationform" style="width: 100%;">
+    <div class="mt-3">
+      <div class="row">
+        <div class="col-12">
+          <label class="section-element-title" for="libelle">{{'FORMATION.DESCRIPTION' | translate}}</label>
+          <input [hasError]="libelle.invalid && isSubmitted"
+                 class="form-control"
+                 formControlName="libelle"
+                 id="libelle"
+                 name="libelle"
+                 rhisStyleForm
+                 type="text">
+          <span
+            *ngIf="(typeFormationform.get('libelle').hasError('required') || typeFormationform.get('libelle').hasError('trimValidator'))  && (typeFormationform.controls['libelle'].touched || isSubmitted)"
+            class="form-item-error red small-rhis">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          <span *ngIf="libelleExiste"
+                class="form-item-error red small-rhis">{{libelleExiste}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <div class="row">
+        <div class="col-6">
+          <label class="section-element-title" for="code">{{'FORMATION.CODE' | translate}}</label>
+          <input [hasError]="code.invalid && isSubmitted"
+                 class="form-control"
+                 formControlName="code"
+                 id="code"
+                 maxlength="4"
+                 name="code"
+                 rhisStyleForm
+                 type="text">
+          <span
+            *ngIf="(typeFormationform.get('code').hasError('required') || typeFormationform.get('code').hasError('trimValidator')) && (typeFormationform.controls['code'].touched || isSubmitted)"
+            class="form-item-error red small-rhis">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+          <span *ngIf="codeExiste"
+                class="form-item-error red small-rhis">{{codeExiste}}</span>
+        </div>
+        <div class="col-6">
+          <label class="section-element-title" for="dureeValidite">{{'FORMATION.DUREE_VALIDATION' |
+            translate}}</label>
+          <input appIntegerNumbers
+                 class="form-control"
+                 class="form-control  form-control-lg"
+                 formControlName="dureeValidite"
+                 id="dureeValidite"
+                 min="0"
+                 name="dureeValidite"
+                 rhisStyleForm
+                 type="number">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <p-checkbox
+          binary="true"
+          formControlName="formationObligatoire"
+          id="formationObligatoire"
+          name="formationObligatoire"
+          rhisStyleForm
+        ></p-checkbox>
+        <label class="ml-2 section-element-title"
+               for="formationObligatoire">{{'FORMATION.OBLIGATOIRE' | translate}}</label>
+      </div>
+    </div>
+  </form>
+</div>
+<p-footer class="d-flex justify-content-center mt-3">
+  <button (click)="addOrUpdateTypeFormation()" class="btn save-add-button-rhis btn-popup-rhis orange-background"
+          type="button">
+    <span>{{showAddOrUpdateTypeFormationButtons}}</span>
+  </button>
+</p-footer>

@@ -1,0 +1,14 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-lg-6 {
+    padding-left: 0;
+  }
+
+  .float-right.col-md-8.col-lg-6 {
+    padding-right: 0
+  }
+}

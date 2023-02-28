@@ -1,0 +1,31 @@
+<ng-container [formGroup]="formGroup">
+  <div class="view-section container-fluid change-container-fluid-rhis section-top">
+    <div class="view-section-title margin-top-title-rhis">{{'COORDONNES.INFORMATION_BANCAIRES' | translate}}</div>
+    <div class="section-body">
+      <div class="rhis-row row">
+        <div class="col-6">
+          <label class="section-element-title" for="EMP-infoPerso-iban">{{'COORDONNES.IBAN' | translate}}</label>
+          <input
+            rhisStyleForm
+            [hasError]="unicite.bicAndIbanBanqueExist"
+            class="input-general-rhis" formControlName="iban" id="EMP-infoPerso-iban" type="text">
+          <span *ngIf="unicite.bicAndIbanBanqueExist" class="red small-rhis"
+                id="EMP-infoPerso-ibanError">
+          {{'MESSAGE.IBAN_EXISTE' | translate}}
+        </span>
+        </div>
+        <div class="col-6">
+          <label class="section-element-title" for="EMP-infoPerso-bic">{{'COORDONNES.BIC' | translate}}</label>
+          <input
+            rhisStyleForm
+            [hasError]="unicite.bicAndIbanBanqueExist"
+            class="input-general-rhis" formControlName="bic" id="EMP-infoPerso-bic" type="text">
+          <span *ngIf="unicite.bicAndIbanBanqueExist" class="red small-rhis"
+                id="EMP-infoPerso-bicError">
+          {{'MESSAGE.BIC_EXISTE' | translate}}
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

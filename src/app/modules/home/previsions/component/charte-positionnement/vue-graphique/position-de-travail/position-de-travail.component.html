@@ -1,0 +1,10 @@
+<div class="rhis-container" [style.background-color]="positionDeTravail.color">
+  <div class="description">{{positionDeTravail.label}}</div>
+  <div class="value">
+    <ng-container *ngIf="positionDeTravail.value > 0">+</ng-container>
+    <span [contentEditable]="isBannerEditable" [textContent]="pdtValue" (blur)="getNewValue($event)"
+          (keypress)="disableNewLine($event)"
+          id="PREV_VueG-PosTr"></span>
+  </div>
+  <p-toast position="bottom-right" key="wv"></p-toast>
+</div>

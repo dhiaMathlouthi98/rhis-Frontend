@@ -1,0 +1,40 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+:host ::ng-deep {
+  .ui-calendar {
+    .ui-inputtext {
+      width: 25%;
+      min-width: 140px;
+      max-width: 150px;
+      margin-top: 0;
+      height: 30px;
+    }
+
+    .ui-datepicker {
+      min-width: 340px;
+      width: 344px;
+      left: 22.5% !important;
+      overflow: unset;
+    }
+  }
+
+  .ui-calendar {
+    .ui-helper-clearfix::before,
+    .ui-helper-clearfix::after {
+      display: none;
+    }
+  }
+
+  .table-list p-table .ui-table table .ui-table-tbody > tr > td.periode__paie--clicked {
+    padding: 4px 0;
+  }
+}

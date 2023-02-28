@@ -1,0 +1,146 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="120">
+</div>
+<div [ngStyle]="{'height': heightInterface}" class="rhis-container view">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="150">
+    <div class="col-md-5 col-lg-6">
+      <h1 class="titre-principale-page-rhis">{{'SOUSMENU.GROUPE_TRAVAIL'|translate}}</h1>
+    </div>
+    <div class="float-right col-md-7 col-lg-6">
+      <button id="1004" type="button" (click)="addNewGroupTravail()"
+              class="btn save-add-button-rhis blue-background">
+        <span>{{'GROUPE_TRAVAIL.ADD_NEW'|translate}}</span>
+      </button>
+      <button type="button" *ngIf="listGroupTravail?.length" (click)="updateGroupeTravailNiveauByRestaurant()"
+              class="btn save-add-button-rhis orange-background">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis">
+    <div class="table-list" *ngIf="listGroupTravail?.length">
+      <p-table [value]="listGroupTravail"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup">
+          <colgroup>
+            <col *ngFor="let c of header">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let h of header">{{('GROUPE_TRAVAIL.' + h) | translate}}</th>
+            <th>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-groupTravail>
+          <tr class="table-row" (click)="showGroupeTravail(groupTravail)">
+            <td>
+              {{groupTravail?.libelle}}
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail.directeur"></i>
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail.pointeuse"></i>
+            </td>
+            <td>
+              {{groupTravail?.codeEmploi}}
+            </td>
+            <td>
+              {{groupTravail?.tauxhoraire}}
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail.mainOeuvre"></i>
+            </td>
+            <td>
+              {{groupTravail?.codeGdh}}
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail?.plgEquip"></i>
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail?.plgMgr"></i>
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail?.plgLeader"></i>
+            </td>
+            <td>
+              <i class="pi pi-check" *ngIf="groupTravail?.plgEquip"></i>
+            </td>
+            <td>
+              {{groupTravail?.dureePeriodEssai}}
+            </td>
+            <td>
+              <div class="td-container">
+            <span class="label-table" *ngIf="groupTravail?.statut"
+                  [ngStyle]="{'background-color': '#2DC76D'}">
+          {{'GROUPE_TRAVAIL.ACTIF' | translate}}
+        </span>
+                <span class="label-table" *ngIf="!groupTravail?.statut"
+                      [ngStyle]="{'background-color': '#FF9B42'}">
+           {{'GROUPE_TRAVAIL.INACTIF' | translate}}
+        </span>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <i *ngIf=" i!=0 && groupTravail?.statut"
+                     (click)="augmenterNiveau(groupTravail);$event.stopPropagation()"
+                     class="pi pi-chevron-up"></i>
+                  <i *ngIf=" i!=listGrouppTravailActif?.length-1 && groupTravail?.statut"
+                     (click)="diminuerNiveau(groupTravail);$event.stopPropagation()"
+                     class="pi pi-chevron-down"></i>
+                </div>
+                <div class="d-flex position-relative align-items-center justify-content-center">
+            <span *ngIf="groupTravail?.statut && deleteButtonControl()" class="mr-3"
+                  (click)="showConfirmDeleteGroupTravail(groupTravail,$event)">
+                  <img src="assets/icons/employe/Btn_Close.svg"
+                       alt="no image">
+            </span>
+                  <span (click)="activateGroupeTravailAndUpdateNiveau(groupTravail,$event)" class="item mr-3"
+                        *ngIf="!groupTravail?.statut">
+            <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+             <span class="rhis-tooltip">{{'EMPLOYEE.RENDRE_ACTIF_EMPLOYE' | translate}}</span>
+             </span>
+                  <span class="mr-3 icon-tooltip" (click)="modifierTauxHoraire(groupTravail,$event)">
+                <i class="pi pi-replay replay-icon mt-1"></i>
+                <span
+                  class="rhis-tooltip d-flex justify-content-center align-items-center">{{'GROUPE_TRAVAIL.MODIFIER_TAUX_HORAIRE' | translate}}</span>
+             </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!--ADD / UPDATE TYPE CONTRAT-->
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddUpdateGroupTravailPopup"
+  [title]=showAddUpdateGroupTravailPopupTitle
+  [width]="popUpStyle?.width">
+
+  <rhis-add-group-travail *ngIf="showAddUpdateGroupTravailPopup"
+                          (addOrUpdateGroupTravailEvent)="addOrUpdateGroupTravail($event)"
+                          (resetErrorMessagesEventLabel)="resetErrorMessagesLabelEvent()"
+                          (resetErrorMessagesEventCode)="resetErrorMessagesEventCode()"
+                          [selectedGroupTravail]="selectedGroupTravail"
+                          [showAddOrUpdateGroupeTravailButtons]="showAddOrUpdateGroupeTravailButtons"
+                          [libelleExiste]="libelleExiste"
+                          [codeExiste]="codeExiste"
+                          [disabledCheckBoxDirecteur]="disabledCheckBoxDirecteur"
+  ></rhis-add-group-travail>
+</rhis-pop-up>
+
+<!--CONFIRMATION AND TOAST-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+
+

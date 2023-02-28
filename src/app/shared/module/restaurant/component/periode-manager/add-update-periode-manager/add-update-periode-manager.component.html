@@ -1,0 +1,48 @@
+<div class="row align-items-start">
+  <div class="col-lg col-md periode-manager-popup-rhis">
+    <div class="form-group">
+      <div class="ui-g-12">
+        <div class="row ">
+          <div class="col-lg-3 col-md-3 align-self-center">
+            {{'PERIODE_MANAGER.NOM' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            <input [(ngModel)]="selectedPeriodeManager.libelle" class="text-field" type="text">
+            <span class="form-item-error red small-rhis" *ngIf="libellePeriodeManagerError">
+              {{libellePeriodeManagerErrorMessage | translate}}</span>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-3 col-md-3 align-self-center">
+            {{'PERIODE_MANAGER.HEURE_DEB' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            <p-calendar [(ngModel)]="selectedPeriodeManager.dateDebut" [timeOnly]="true"
+                        (onClose)="validerHeureNuit(true)"
+                        appendTo="body"></p-calendar>
+            <span class="form-item-error red small-rhis" *ngIf="heureDebutPeriodeManagerError">
+              {{heureDebutPeriodeManagerErrorMessage | translate}}</span>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-3 col-md-3 align-self-center">
+            {{'PERIODE_MANAGER.HEURE_FIN' | translate}}
+          </div>
+          <div class="col-lg col-md section-element">
+            <p-calendar [(ngModel)]="selectedPeriodeManager.dateFin" [timeOnly]="true"
+                        (onClose)="validerHeureNuit(false)"
+                        appendTo="body"></p-calendar>
+            <span class="form-item-error red small-rhis" *ngIf="heureFinPeriodeManagerError">
+              {{heureFinPeriodeManagerErrorMessage | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-footer class="d-flex justify-content-center mt-3">
+  <button type="button" (click)="addOrUpdatePeriodeManager()"
+          class="btn save-add-button-rhis btn-popup-rhis orange-background">
+    <span>{{buttonTitle | uppercase }}</span>
+  </button>
+</p-footer>

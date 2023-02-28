@@ -1,0 +1,120 @@
+<td class="posteCell" (click)="selectRow($event,poste)">
+  <div class="employee-draggable" [attr.data-posteIndex]="posteIndex">
+    <ng-container *ngIf="poste.idPositionTravail !== 0">
+      <div class="empName">{{poste.libelle}}</div>
+    </ng-container>
+
+    <ng-container *ngIf="poste.idPositionTravail === 0">
+      <label>{{'BIMPOSE.SELECT_POSITION' | translate}}</label>
+      <p-dropdown
+        [options]="positionList"
+        optionLabel="libelle"
+        placeholder="Postes disponibles"
+        [(ngModel)]="selectedPosition"
+        (ngModelChange)="onChangePosition()"
+        class="drop-down-general"
+        id="PLG-fx-positionT-poste">
+      </p-dropdown>
+    </ng-container>
+  </div>
+</td>
+<td *ngFor="let day of days; let dayIndex=index" class="td-drop-zone td-drop-zone-postes"
+    [attr.data-day]="day.label">
+  <div *ngFor="let besoin of besoinImposeByPosteTravail.get(poste.idPositionTravail)">
+    <ng-container *ngIf="besoin.jourSemaine === (day.label|uppercase ) && !besoin.shiftAchevalHidden">
+      <rhis-planning-poste-card
+        [cardDetails]="besoin"
+        [color]="poste.couleur"
+        [idBesoinImpose]="besoin.idBesoinImpose"
+        [cardDay]="day.label"
+        [cardPosteIndex]="posteIndex"
+        [cardID]="'card-'+dayIndex+'-'+i"
+        [initPersonneValue]="personne"
+        [initPersonnesValue]="personnes"
+        (editCard)="showEditCardForm($event)"
+        (deleteCard)="deleteCard($event)"
+      >
+      </rhis-planning-poste-card>
+    </ng-container>
+  </div>
+  <span *ngIf="addButtonControl()" (click)="showAddCardForm(poste, day.label)" class="icon-add"
+        id="PLG-fx-VueP-add-icon"></span>
+</td>
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="showPopUp"
+  [title]="titlePopup"
+  [width]="popUpStyle?.width">
+  <div class="section-body mt-0">
+    <div class="row">
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_DEBUT' | translate}}</label>
+        <p-calendar [(ngModel)]="newBesoinImpose.heureDebut" [timeOnly]="true"
+                    [disabled]="verificationNightIsRaised"
+                    (onClose)="validerHeureNuit(true)"
+                    appendTo="body"
+                    id="PLG-fx-hourD-poste"
+        ></p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutRequiredField"
+              id="PLG-fx-hourDError-poste">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutLimitError"
+              id="PLG-fx-hourDLimitError-poste">{{heureDebutLimitErrorMessage}}</span>
+      </div>
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_FIN' | translate}}</label>
+        <p-calendar [(ngModel)]="newBesoinImpose.heureFin" [timeOnly]="true"
+                    [disabled]="verificationNightIsRaised"
+                    (onClose)="validerHeureNuit(false)"
+                    appendTo="body"
+                    id="PLG-fx-hourF-poste"></p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureFinRequiredField"
+              id="PLG-fx-hourFError-poste">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureFinLimitError"
+              id="PLG-fx-hourFLimiteError-poste">{{heureFinLimitErrorMessage}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.DATE_DEBUT' | translate}}</label>
+        <p-calendar [(ngModel)]="newBesoinImpose.dateDebut"
+                    appendTo="body"
+                    dateFormat="dd-mm-yy"
+                    id="PLG-fx-dateD-poste"></p-calendar>
+      </div>
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.DATE_FIN' | translate}}</label>
+        <p-calendar [(ngModel)]="newBesoinImpose.dateFin"
+                    appendTo="body"
+                    dateFormat="dd-mm-yy"
+                    id="PLG-fx-DateF-poste"></p-calendar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-4 section-element">
+        <label class="section-element-title">{{'BIMPOSE.NBR_PERSONNE' | translate}}</label>
+        <input type="number" class="text-field" [(ngModel)]="newBesoinImpose.valeur" min="1" max="200"
+               onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+               id="PLG-fx-nbrePer-poste"
+               oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"/>
+      </div>
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.ADD' | translate}}</label><br><br>
+        <p-checkbox [(ngModel)]="newBesoinImpose.additionel" binary="true"
+                    id="PLG-fx-addBesoin-poste"></p-checkbox>
+      </div>
+    </div>
+    <div *ngIf="errorHourMessage != '' || errorDateMessage != ''" class="row col-md-12 text-danger text-center"
+         id="PLG-fx-DateHourError-poste">
+      {{errorHourMessage}} <br>{{errorDateMessage}}
+    </div>
+
+    <button (click)="saveCard()" class="btn add-button-shift-rhis mt-4 orange-background valid"
+            id="PLG-fx-saveCard-poste">
+      <span>{{titlePopup|uppercase}}</span>
+    </button>
+  </div>
+</rhis-pop-up>

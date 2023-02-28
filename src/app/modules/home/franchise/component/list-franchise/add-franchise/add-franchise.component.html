@@ -1,0 +1,87 @@
+<form [formGroup]="addFranchiseForm">
+  <div class="row">
+    <div class="section-element col-12">
+      <label class="section-element-title" for="nom">{{"FRANCHISE.NOM" | translate}}*</label> <br>
+      <input [hasError]="nom.invalid && isSubmitted"
+             class="text-field"
+             formControlName="nom"
+             id="nom"
+             maxlength="255"
+             pInputText
+             required="true"
+             rhisStyleForm
+             type="text">
+      <br>
+      <span
+        *ngIf="(addFranchiseForm.get('nom').hasError('required') && (addFranchiseForm.controls['nom'].touched
+         || isSubmitted))"
+        class="form-item-error red small-rhis">{{"FRANCHISE.NOM_REQUIRED" | translate}}
+      </span>
+      <span *ngIf="libelleExiste"
+            class="form-item-error red small-rhis">{{libelleExiste}}
+      </span>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="section-element col-12">
+      <label class="section-element-title" for="adresse">{{"FRANCHISE.ADRESSE" | translate}}</label> <br>
+      <input class="text-field"
+             formControlName="adresse"
+             id="adresse"
+             maxlength="255"
+             pInputText
+             type="text">
+      <br>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="section-element col-12">
+      <label class="section-element-title" for="numTelephone">{{"FRANCHISE.NUM_TELEPHONE" | translate}}</label> <br>
+      <input class="text-field"
+             formControlName="numTelephone"
+             id="numTelephone"
+             maxlength="20"
+             pInputText
+             type="text">
+      <br>
+      <span
+        *ngIf="addFranchiseForm.controls['numTelephone'].getError('pattern') && !addFranchiseForm.controls['numTelephone'].valid  && (addFranchiseForm.controls['numTelephone'].touched|| isSubmitted)"
+        class="small-rhis red">
+            {{'FRANCHISE.PHONE_FORMAT' | translate}}
+          </span>
+      <span
+        *ngIf="addFranchiseForm.controls['numTelephone'].getError('maxlength') && !addFranchiseForm.controls['numTelephone'].valid  && (addFranchiseForm.controls['numTelephone'].touched|| isSubmitted)"
+        class="small-rhis red">
+            {{'FRANCHISE.PHONE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="section-element col-6">
+      <label class="section-element-title" for="ville">{{"FRANCHISE.VILLE" | translate}}</label> <br>
+      <input class="text-field" formControlName="ville"
+             id="ville" maxlength="255"
+             pInputText
+             type="text">
+      <br>
+    </div>
+    <div class="section-element delete-mg-style-rhis col-6">
+      <label class="section-element-title" for="codePostal">{{"FRANCHISE.CODE_POSTAL" | translate}}</label> <br>
+      <input class="text-field" formControlName="codePostal"
+             id="codePostal" maxlength="255"
+             pInputText
+             type="text">
+      <br>
+      <span
+        *ngIf="addFranchiseForm.controls['codePostal'].getError('min') && !addFranchiseForm.controls['codePostal'].valid  && (addFranchiseForm.controls['codePostal'].touched|| isSubmitted)"
+        class="small-rhis red">
+            {{'FRANCHISE.POSTAL_FORMAT' | translate}}
+      </span>
+    </div>
+  </div>
+</form>
+<div class="row mt-3">
+  <div (click)="addOrUpdateFranchise()" class="btn save-add-button-rhis orange-background mt-3 btn-popup-rhis">
+    <span>{{buttonLabel | uppercase}}</span>
+  </div>
+</div>

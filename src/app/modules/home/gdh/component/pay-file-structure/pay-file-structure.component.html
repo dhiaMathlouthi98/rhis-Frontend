@@ -1,0 +1,120 @@
+<div class="float-right col-md-8 col-lg-6">
+  <button (click)="updateRestaurantPaySystemParams()"
+          class="btn save-add-button-rhis orange-background" id="GDH-pay-file-save-btn"
+          type="button">
+    <span>{{'BUTTON.SECOND_SAVE' | translate | uppercase}}</span>
+  </button>
+</div>
+<div class="col-6 col-md-6 col-lg-3 mt-3">
+  <div class="section-element-title mb-2 font-weight-bold mb-2">{{'GDH.PAY.PAY_SYSTEM' | translate}}</div>
+  <p-dropdown
+    (onChange)="showSystem($event?.value)"
+    [(ngModel)]="chosenSystem"
+    [autoDisplayFirst]="showFirstSystem"
+    [options]="systems"
+    [disabled]="!updateListControl()"
+    appendTo="body"
+    class="drop-down-general"
+    id="GDH-pay-file-dropdown"></p-dropdown>
+</div>
+<div class="rhis-container view">
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div *ngIf="listeParametres?.length" class="table-list variable-paie bg-gris-avec-border responsive-table-rhis">
+      <p-table *ngIf="showMenuControl()" [value]="listeParametres" [responsive]="true" [scrollable]="true"
+               [columns]="header" scrollHeight="130px">
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let col of columns"
+                class="{{col?.class}}"
+                [pSortableColumn]="col?.field === 'param'">
+              {{col?.title}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-param>
+          <tr class="table-row">
+            <td class="width-7">
+              <div class="td-container td-left-border">
+                {{param?.rubrique}}
+              </div>
+            </td>
+            <td class="width-20">
+              <div class="td-container td-left-border">
+                {{param?.param}}
+              </div>
+            </td>
+            <td *ngIf="param?.booleanValue" (click)="setBooleanValue(param)" class="width-10">
+              <div class="td-container justify-content-start value_cell">
+                <i *ngIf="param?.valeur === 'true'" class="pi pi-check"></i>
+              </div>
+            </td>
+            <td *ngIf="param?.param === 'ENCODAGE' && !param?.booleanValue" pEditableColumn>
+              <div *ngIf="updateListControl()" class="td-container td-right-border">
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [(ngModel)]="param.valeur"
+                                [options]="listEncodage" class="drop-down-general">
+                    </p-dropdown>
+                  </ng-template>
+                  <ng-template pTemplate="output" class="text-center">
+                    {{param?.valeur}}
+                  </ng-template>
+                </p-cellEditor>
+              </div>
+              <div *ngIf="!updateListControl()" class="td-container td-right-border">
+                <ng-template class="text-center">
+                  {{param?.valeur}}
+                </ng-template>
+              </div>
+
+            </td>
+            <td *ngIf="param?.param !== 'ENCODAGE' && param?.param !== 'ENTREPRISE' && !param?.booleanValue"
+                (click)="generateSchema(param)"
+                pEditableColumn
+                class="width-10">
+              <div class="td-container justify-content-start value_cell" *ngIf="updateListControl()">
+                <p-cellEditor *ngIf="!(include|memoize: ['NOMEDITEUR', 'SCHEMA', 'SCHEMAABS'] : param?.param)">
+                  <ng-template pTemplate="input">
+                    <input *ngIf="!param?.floatValue" type="text" pInputText
+                           [(ngModel)]="param.valeur">
+                    <input *ngIf="param?.floatValue" type="text" rhisTwoDigitDecimaNumber pInputText
+                           [(ngModel)]="param.valeur">
+                  </ng-template>
+                  <ng-template pTemplate="output" class="text-center">
+                    {{param?.valeur}}
+                  </ng-template>
+                </p-cellEditor>
+                <ng-container *ngIf="param?.param === 'NOMEDITEUR'">
+                  {{param?.valeur}}
+                </ng-container>
+                <ng-container *ngIf="include|memoize: ['SCHEMA', 'SCHEMAABS'] : param?.param">
+                  {{getSchemaRepresentation | memoize: param?.valeur}}
+                </ng-container>
+              </div>
+              <div class="td-container justify-content-start value_cell" *ngIf="!updateListControl()">
+                {{param?.valeur}}
+              </div>
+            </td>
+            <td *ngIf="param?.param === 'ENTREPRISE'">
+              <div class="text-center">
+                {{param?.valeur}}
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="showSchemaGenerator = false"
+  [showPopUp]="showSchemaGenerator"
+  [title]="schemaTitle">
+  <rhis-pay-schema-generator
+    *ngIf="showSchemaGenerator"
+    [schema]="schema"
+    (updateSchema)="updateSchema($event)"
+  >
+  </rhis-pay-schema-generator>
+</rhis-pop-up>
+

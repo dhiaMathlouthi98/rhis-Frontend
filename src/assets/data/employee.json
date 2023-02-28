@@ -1,0 +1,46 @@
+[
+  {
+    "matricule": "aaa",
+    "nom": "Khemiri",
+    "prenom": "Amine",
+    "carte": 1324,
+    "numTelephone": 12345698,
+    "statut": true,
+    "hasLaws": false,
+    "hebdoCourant": null,
+    "etat": "Actif"
+  },
+  {
+    "matricule": "aaa",
+    "nom": "Ben Salah",
+    "prenom": "Imed",
+    "carte": 1324,
+    "numTelephone": 12345698,
+    "statut": false,
+    "hasLaws": false,
+    "hebdoCourant": null,
+    "etat": "inactif"
+  },
+  {
+    "matricule": "aaa",
+    "nom": "Yaiich",
+    "prenom": "Karim",
+    "carte": 1324,
+    "numTelephone": 12345698,
+    "statut": true,
+    "hasLaws": false,
+    "hebdoCourant": null,
+    "etat": "actif"
+  },
+  {
+    "matricule": "aaa",
+    "nom": "Ayari",
+    "prenom": "Yassin",
+    "carte": 1324,
+    "numTelephone": 12345698,
+    "statut": false,
+    "hasLaws": false,
+    "hebdoCourant": null,
+    "etat": "inactif"
+  }
+]

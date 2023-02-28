@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>FDAD8E54-C9EA-4C7C-A00B-E3604034DA59</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="13-Planning-Semaine52" transform="translate(-1173.000000, -206.000000)">
+            <g id="Contenu" transform="translate(74.000000, 74.000000)">
+                <g id="icones" transform="translate(1011.000000, 132.000000)">
+                    <g id="Search" transform="translate(88.000000, 0.000000)">
+                        <path d="M14,0 C6.2680135,-4.73447626e-16 9.46895252e-16,6.2680135 0,14 C-9.46895252e-16,21.7319865 6.2680135,28 14,28 C21.7319865,28 28,21.7319865 28,14 C27.991641,6.27147856 21.7285214,0.00835898888 14,0 Z" id="Shape" fill="#AFA899"></path>
+                        <g id="search" transform="translate(6.000000, 6.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <circle id="Oval" transform="translate(7.118353, 7.117852) rotate(-23.025000) translate(-7.118353, -7.117852) " cx="7.1183526" cy="7.11785243" r="5.035"></circle>
+                            <path d="M11,11 L13.721589,13.5" id="Path"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

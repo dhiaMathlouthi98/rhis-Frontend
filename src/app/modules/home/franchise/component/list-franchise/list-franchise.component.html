@@ -1,0 +1,118 @@
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="190"
+       class="header  row justify-content-between">
+    <div class="col-4 titre">
+      <h1 class="titre-principale-page-rhis">{{"FRANCHISE.ALL" | translate}}
+        <span class="nbr d-flex flex-column justify-content-around text-center">{{totalFranchises}}</span>
+      </h1>
+    </div>
+    <div class="float-right">
+      <button *ngIf="addControl()" type="button" class="btn save-add-button-rhis blue-background"
+              (click)="showAddPopup()"
+              [routerLink]="">
+        <span>{{"FRANCHISE.CREATION_FRANCHISE" | translate}}</span>
+      </button>
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder="{{'RESTAURANT.SEARCH_PLACEHOLDER' | translate}}">
+        <span (click)="searchFranchises()">
+        <img src="assets/icons/employe/ico_search_small.svg" alt="">
+      </span>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive mt-4">
+    <div class="table-list responsive-table-rhis" *ngIf="listFranchises?.length">
+      <p-table [columns]="header"
+               [value]="listFranchises"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onSort)="sortRows($event)"
+               [resetPageOnSort]="false"
+               (onPage)="onLazyLoad($event)"
+               [scrollable]="true" [scrollHeight]="heightInterface">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+          <tr class="header-row">
+            <th *ngFor="let col of columns" [pSortableColumn]="(col?.field != 'numTel') ? col?.field : null">
+              {{col?.title}}
+              <p-sortIcon *ngIf="col?.field != 'numTel'" [field]="col?.field"
+                          ariaLabel="Activate to sort"
+                          ariaLabelDesc="Activate to sort in descending order"
+                          ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-franchise let-i="rowIndex">
+          <tr class="table-row">
+            <td (click)="showFranchiseDetails($event, franchise)" >{{franchise?.nom}}</td>
+            <td (click)="showFranchiseDetails($event, franchise)" >{{franchise?.numTelephone}}</td>
+            <td>
+              <div id="1002" class="d-flex justify-content-end">
+
+                <div class="d-flex justify-content-around">
+                  <div *ngIf="detailsControl()">
+                    <span (click)="getGestionParcPage(franchise?.uuid)" class="item">
+                    <img class="redirect-restaurant" src="assets/icons/employe/icons-porte-ouverte.png" alt="no icon">
+                    </span>
+                  </div>
+                  <div *ngIf="detailsControlEcran()"  class="ml-3">
+                      <rhis-actions-franchise
+                        [franchiseName]="franchise?.nom"
+                        [franchiseUuid]="franchise?.uuid"
+                        [listRestaurants]=" selectedFranchiseForRestaurantsPopUp === (franchise?.uuid) ? restaurantsNames : null"
+                        (getRestaurants)="getRestaurantName(franchise)"
+                        [index]="i"
+                        [totalElement]="listFranchises?.length"
+                        [numberElementPerPage]=numberElementPerPage>
+                      </rhis-actions-franchise>
+                  </div>
+                  <span *ngIf="deleteButtonControl()"
+                        (click)="showConfirmDelete(franchise?.uuid); $event.stopPropagation()" class="mr-3">
+                      <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+                  </span>
+
+                  <div>
+                      <span (click)=" navigateToRestaurantCreation(franchise?.uuid); $event.stopPropagation()"
+                            class="item">
+                        <img src="assets/icons/employe/subtract-circle-ADD.svg" alt="no icon">
+                      </span>
+                  </div>
+                </div>
+
+
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+
+<rhis-pop-up
+  (closeEvent)="closePopup()"
+  [showPopUp]="showAddFranchisePopup"
+  [title]=showAddFranchisePopupTitle
+  width="500">
+
+  <rhis-add-franchise (AddFranchiseEvent)="addOrUpdateFranchise($event)"
+                      *ngIf="showAddFranchisePopup"
+                      [buttonLabel]="buttonLabel"
+                      [selectedFranchise]="selectedFranchise"
+  >
+  </rhis-add-franchise>
+</rhis-pop-up>

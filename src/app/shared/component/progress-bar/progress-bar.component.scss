@@ -1,0 +1,40 @@
+.rhis-progress-bar {
+  position: relative;
+  height: 51px;
+  border-radius: 5px;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+}
+
+.left,
+.right {
+  position: absolute;
+  height: 100%;
+  cursor: col-resize;
+  width: 10px;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.left-drag, .right-drag {
+  position: absolute;
+  height: 25px;
+  width: 3px;
+  opacity: 0.75;
+  border-radius: 1.5px;
+  background-color: #FFFFFF;
+  top: 13px;
+}
+
+.left-drag {
+  left: 5px;
+}
+
+.right-drag {
+  right: 5px;
+}

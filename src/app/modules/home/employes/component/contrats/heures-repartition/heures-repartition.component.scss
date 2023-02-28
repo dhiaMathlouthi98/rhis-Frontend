@@ -1,0 +1,19 @@
+:host {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.field-set:nth-last-of-type(1) {
+  margin-top: 50px;
+}
+
+.heure-repart-rhis .tri {
+  width: 45%;
+}
+
+:host ::ng-deep {
+  .heure-repart-rhis.block-row-without-margin-rhis .ui-chkbox-label,
+  legend {
+    font-weight: normal;
+  }
+}

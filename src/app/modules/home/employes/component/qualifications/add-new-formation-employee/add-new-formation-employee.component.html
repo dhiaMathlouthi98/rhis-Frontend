@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="rhis-row">
+    <div class="col mt-2">
+      <label class="section-element-title">{{'FORMATION.CHOISIR_FORMATION'|translate}}</label>
+      <p-dropdown [options]="formationItemList"
+                  [(ngModel)]="selectedFormation"
+                  editable="true"
+                  [showClear]="true"
+                  class="drop-down-general"
+                  id="EMP_QUALI-formation-dropdown"></p-dropdown>
+    </div>
+
+    <!-- Force next columns to break to new line -->
+    <div class="w-100"></div>
+
+    <div class="col mt-4 mb-5">
+      <label class="section-element-title">{{'FORMATION.CHOISIR_DATE_FORMATION'|translate}}</label>
+      <p-calendar [(ngModel)]="selectedDate"
+                  appendTo="body"
+                  dateFormat="dd/mm/yy"
+                  id="EMP_QUALI-formation-date">
+      </p-calendar>
+    </div>
+  </div>
+  <button type="button" (click)="addNewFormationEmployee()"
+          class="btn save-add-button-rhis btn-popup-rhis orange-background"
+          id="EMP_QUALI-formation-popup-btn">
+    <span>{{'BUTTON.ADD' | translate}}</span>
+  </button>
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

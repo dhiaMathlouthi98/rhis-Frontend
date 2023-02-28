@@ -1,0 +1,54 @@
+:host {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.checkbox-error-position {
+  display: block;
+  margin-top: 10px;
+}
+
+.checkbox-position {
+  margin-top: 5px;
+}
+
+:host ::ng-deep {
+  .section-element .text-field,
+  .ui-calendar .ui-inputtext {
+    margin-top: 0;
+  }
+}
+
+:host ::ng-deep {
+  @media screen and (max-width: 991px) {
+    .ui-chkbox-label {
+      position: relative;
+      margin-right: 14px !important;
+      top: 4px;
+      left: 5px;
+    }
+  }
+}
+
+.dpae-btn-rejected{
+  background-color: #ff5454 ;
+  width: max-content;
+}
+.dpae-btn-disabled{
+  background-color: #FF9B42 ;
+  width: max-content;
+}
+.dpae-btn-ok-not-yet{
+  background-color: #385FE3 ;
+  width: max-content;
+}
+.dpae-btn-ko-not-yet{
+  background-color: #FF9B42  ;
+  width: max-content;
+}
+.dpae-btn-accepted{
+  background-color: #2DC76D  ;
+  width: max-content;
+}
+
+

@@ -1,0 +1,4051 @@
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-documenteditor/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-inputs/styles/bootstrap4.css';
+
+
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "TT Wellingtons Medium";
+  src: url("/assets/fonts/TT Wellingtons Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Wellingtons Regular";
+  src: url("/assets/fonts/TT Wellingtons Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Wellingtons DemiBold";
+  src: url("/assets/fonts/TT Wellingtons DemiBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Wellingtons Bold";
+  src: url("/assets/fonts/TT Wellingtons Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Wellingtons Light";
+  src: url("/assets/fonts/TT Wellingtons Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Wellingtons Thin";
+  src: url("/assets/fonts/TT Wellingtons Thin.otf") format("opentype");
+}
+
+body {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #F7F7F7 !important;
+  overflow-y: hidden;
+}
+
+*:focus {
+  outline: none;
+}
+
+.ui-blockui.ui-blockui-document {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.ui-sortable-column-icon {
+  font-size: 0.65rem !important;
+  color: rgba(65, 65, 65, 0.4) !important;
+}
+
+.scroll, .pop-up-content, textarea, .ui-menu {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+
+.scroll, .pop-up-content, textarea, .ui-menu {
+  &::-webkit-scrollbar-thumb {
+    background-color: #9B9B9B;
+    border-radius: 3.5px;
+  }
+}
+
+/**
+forms view section
+ */
+.view {
+  clear: both;
+  padding: 20px 35px;
+  width: 100%;
+  position: relative;
+  top: 0px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 -11px 13px 0 rgba(0, 0, 0, 0.05);
+  @media screen and (max-width: 1199px) {
+    padding: 30px 20px;
+  }
+  @media screen and (max-width: 991px) {
+    padding: 20px;
+  }
+}
+
+.view-section {
+  clear: both;
+}
+
+.view-section-title {
+  color: #385FE3;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  @media screen and (max-width: 1366px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+.view.view-details-employes.scroll-content-rhis {
+  top: 0;
+  padding: 15px 30px;
+
+  .rapport-interface {
+    .ui-table-scrollable-header {
+      height: 35px;
+    }
+  }
+}
+
+.section-top {
+  margin-top: 63px;
+  @media screen and (max-width: 991px) {
+    margin-top: 35px;
+  }
+}
+
+.section-top-specifique {
+  margin-top: 43px;
+  @media screen and (max-width: 991px) {
+    margin-top: 15px;
+  }
+}
+
+label.margin-top-input-pop-up {
+  margin-top: 12px !important;
+}
+
+.section-element {
+  font-family: "TT Wellingtons Medium", sans-serif;
+  float: left;
+  width: 29%;
+  margin-left: 2%;
+
+  .section-element-title {
+    width: fit-content;
+    color: #9B9B9B;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+    font-family: "TT Wellingtons Medium", sans-serif;
+  }
+
+  @media screen and (max-width: 1196px) {
+    label.section-element-title {
+      margin-bottom: 12px;
+    }
+  }
+
+  .text-field {
+    height: 51px;
+    width: 100%;
+    font-family: "TT Wellingtons DemiBold";
+    border: 1px solid #C8C7C4;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    margin-top: 10px;
+    padding: 17px;
+    outline: none;
+    @media screen and (max-width: 1196px) {
+      margin-top: 12px;
+    }
+
+    &::placeholder {
+      color: #414141;
+      font-family: "TT Wellingtons DemiBold";
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 17px;
+    }
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.checkbox-section {
+  width: 27%;
+
+  div {
+    margin-bottom: 10px;
+  }
+
+  @media screen and (max-width: 991px) {
+    width: 40%;
+  }
+}
+
+.calendar-section {
+  width: 15%;
+  @media screen and (max-width: 991px) {
+    width: 29%;
+  }
+}
+
+.du {
+  width: (100%-2)/2;
+}
+
+.tri {
+  width: (100%-4)/3;
+}
+
+.quadru {
+  width: (100%-6)/4;
+}
+
+.sexa {
+  width: 15%;
+}
+
+.septem {
+  width: (100%-12)/7;
+}
+
+.width-20 {
+  width: 19%;
+}
+
+.width-40 {
+  width: 37%;
+}
+
+.width-60 {
+  width: 58%;
+}
+
+.width-60.type-poste-rhis {
+  @media screen and (max-width: 1199px) {
+    width: 56%;
+  }
+  @media screen and (max-width: 991px) {
+    width: 100%;
+  }
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-34 {
+  width: 34%;
+  @media screen and (max-width: 1199px) {
+    width: 26%;
+  }
+  @media screen and (max-width: 991px) {
+    width: 49%;
+  }
+}
+
+.width-22 {
+  width: 22%;
+  @media screen and (max-width: 1199px) {
+    width: 28%;
+  }
+  @media screen and (max-width: 991px) {
+    width: 49%;
+    &:nth-child(3) {
+      margin-left: 0;
+      margin-top: 15px;
+    }
+  }
+}
+
+.width-16 {
+  width: 16%;
+  @media screen and (max-width: 1199px) {
+    width: 12%;
+  }
+  @media screen and (max-width: 991px) {
+    width: 49%;
+    margin-top: 15px;
+  }
+}
+
+.red {
+  color: #ff5454;
+}
+
+.small {
+  font-size: x-small
+}
+
+/**
+day box
+ */
+.ui-chkbox {
+  .ui-chkbox-box {
+    height: 26px !important;
+    width: 26px !important;
+
+    &:hover {
+      border: 1px solid #C8C7C4 !important;
+    }
+  }
+
+  .ui-state-active {
+    background-color: transparent !important;
+    border: 1px solid #C8C7C4 !important;
+  }
+
+  .ui-state-focus {
+    border: 1px solid #C8C7C4 !important;
+    box-shadow: none !important;
+  }
+
+  .ui-chkbox-icon {
+    margin-top: 2px;
+
+    &::before {
+      font-size: 26px;
+      position: relative;
+      bottom: 3px;
+      right: 1px;
+      color: #385FE3;
+    }
+  }
+}
+
+.ui-chkbox-label, .label-list {
+  position: relative;
+  margin-right: 30px !important;
+  top: 4px;
+  left: 10px;
+  height: 17px;
+  width: fit-content;
+  color: #414141;
+  font-family: "TT Wellingtons Medium";
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+}
+
+.groupe-travail-form .ui-chkbox-label {
+  margin-right: 0 !important;
+}
+
+.ui-calendar {
+  width: 100%;
+
+  .ui-inputtext {
+    height: 51px;
+    width: 100%;
+    border: 1px solid #C8C7C4;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    margin-top: 10px;
+    padding: 17px !important;
+    outline: none;
+  }
+}
+
+.pop-up-style-generique {
+  .ui-calendar {
+    .ui-inputtext {
+      margin-top: 0;
+    }
+  }
+
+  .section-element .text-field {
+    margin-top: 0;
+  }
+}
+
+.ui-dropdown {
+  width: 100% !important;
+  height: 51px;
+  border: 1px solid #C8C7C4 !important;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  padding: 17px;
+  outline: none;
+
+  .ui-dropdown-trigger {
+    font-size: 0.6em;
+    margin-right: 8px;
+    color: rgba(65, 65, 65, 0.9) !important;
+  }
+
+  .ui-dropdown-label {
+    position: relative;
+    bottom: 7px;
+  }
+
+  .ui-dropdown-item, .ui-dropdown-label {
+    color: #414141;
+    font-family: "TT Wellingtons Medium";
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+  }
+}
+
+.hebdo .ui-dropdown {
+  .ui-dropdown-label {
+    bottom: 13px !important;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/********************************** HENERAL HEADER ACCORDION ***********************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.ui-accordion-header {
+  & > a {
+    padding-left: 0 !important;
+    background-color: #FFFFFF !important;
+    border-style: solid !important;
+    border-width: 0 0 1px 0 !important;
+    border-color: #F0F0F0 !important;
+    outline: none !important;
+    padding-bottom: 22px !important;
+  }
+
+  &:not(.ui-state-disabled).ui-state-active {
+    & a {
+      color: black !important;
+    }
+
+    & .ui-accordion-toggle-icon {
+      color: initial !important;
+    }
+  }
+
+  .ui-accordion-header-text {
+    float: left;
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 35px;
+    @media screen and (max-width: 1366px) {
+      font-size: 20px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 18px;
+    }
+  }
+
+  .ui-accordion-toggle-icon {
+    color: #434343 !important;
+    margin-left: 12px;
+    margin-top: 11px;
+  }
+
+}
+
+.ui-accordion-content {
+  padding: 0 !important;
+  border: none !important;
+  margin: 0 0 20px 0;
+  @media screen and (max-width: 991px) {
+    margin: 25px 0;
+  }
+}
+
+.validation-tab {
+  .ui-accordion-header .ui-accordion-toggle-icon {
+    margin: 0 !important;
+  }
+}
+
+/**
+ utilities
+ */
+.label-table {
+  position: relative;
+  padding: 3px 11px 2px 11px;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.left-side {
+  float: left;
+}
+
+.right-side {
+  float: right;
+}
+
+
+/**-** à supprimer aprés la vérification ****/
+
+.add-button {
+  cursor: pointer;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-align: center;
+  padding: 12px 20px;
+  right: 0;
+  text-transform: uppercase;
+  @media screen and (max-width: 991px) {
+    padding: 8px;
+  }
+}
+
+.blackground-color {
+  background-color: black;
+}
+
+.orange-background {
+  background-color: #FF9B42;
+}
+
+.blue-background {
+  background-color: #385FE3;
+}
+
+.violet-background {
+  background-color: #7344F6;
+}
+
+.purple-color {
+  background-color: #AB8DFA;
+}
+
+.green-color {
+  background-color: #057e74;
+}
+
+.gray-color {
+  background-color: #5b595b;
+}
+
+.blue-color {
+  background-color: #6d8bd8;
+}
+
+.ui-dialog {
+  .ui-dialog-content {
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 5px;
+    overflow: hidden !important;
+  }
+}
+
+.ui-dialog.ui-confirmdialog {
+  background: #fff;
+  padding: 15px;
+  width: 35em;
+
+  .ui-dialog-titlebar {
+    border: none;
+    background: #fff;
+  }
+
+  .ui-dialog-footer {
+    border: none;
+    margin-top: 10px;
+  }
+}
+
+.ui-listbox {
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(120, 121, 147, 0.3) !important;
+  border-radius: 5px !important;
+
+  .ui-listbox-list-wrapper {
+    border-radius: inherit;
+  }
+}
+
+.has-error {
+  border-color: #ff5454 !important;
+}
+
+.ui-menu {
+  height: 250px;
+  overflow-y: auto;
+  left: 75px !important;
+  position: relative !important;
+  width: 200px !important;
+}
+
+.ui-menu.ui-shadow {
+  box-shadow: none !important;
+}
+
+th, tr {
+  outline: none;
+}
+
+.block-row-rhis {
+  width: 100%;
+  float: left;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/********************************* Les titres généralisés **************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+h1.titre-principale-page-rhis {
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 36px;
+  height: 50px;
+  @media screen and (max-width: 1366px) {
+    font-size: 32px;
+    line-height: 32px;
+    height: 40px;
+  }
+  @media screen and (max-width: 1244px) {
+    font-size: 30px;
+    line-height: 30px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 28px;
+    line-height: 28px;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/****************************************** DES BUTTONS ****************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.orange-background.btn {
+  background-color: #FF9B42;
+}
+
+.blue-background.btn {
+  background-color: #385FE3;
+}
+
+.btn.save-add-button-rhis {
+  float: right;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  letter-spacing: 1.2px;
+  padding: 10px 18px;
+  margin-left: 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
+
+  @media screen and (max-width: 1366px) {
+    padding: 10px;
+  }
+  @media screen and (max-width: 1280px) {
+    padding: 8px;
+  }
+}
+
+.btn.save-add-button-rhis.button-add-intable-rhis {
+  margin-left: 0;
+  @media screen and (max-width: 991px) {
+    font-size: 9px;
+  }
+}
+
+.btn.save-add-button-rhis.btn-popup-rhis {
+  width: 100%;
+  margin-left: 0;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/******************* TABLE STYLE WITH BACKGROUND WHITE WITHOUT BORDER **************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.table-list {
+  p-table {
+    .ui-table {
+      table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        @media screen and (max-width: 1366px) {
+          border-spacing: 0 5px;
+        }
+
+        .ui-table-thead > tr {
+          font-family: "TT Wellingtons Light", sans-serif;
+
+          > th {
+            color: #9E9E9E;
+            border: none;
+            padding: 0;
+            font-weight: 500;
+            background-color: transparent;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+            @media screen and (max-width: 1366px) {
+              font-size: 13px;
+            }
+            @media screen and (max-width: 1024px) {
+              font-size: 12px;
+            }
+
+            &:last-child {
+              text-align: left;
+            }
+
+            &::first-letter {
+              text-transform: uppercase;
+            }
+
+            &:hover {
+              background: none;
+            }
+          }
+        }
+
+        .ui-table-tbody > tr {
+          font-family: "TT Wellingtons Medium", sans-serif;
+          cursor: pointer;
+          font-size: 14px;
+          color: #9B9B9B;
+          background-color: #f7f7f7;
+          text-align: center;
+          @media screen and (max-width: 1366px) {
+            font-size: 13px;
+          }
+          @media screen and (max-width: 1024px) {
+            font-size: 12px;
+          }
+
+          &:hover {
+            background-color: #ededed;
+          }
+
+          > td {
+            border: none;
+            text-align: center;
+            font-weight: 500;
+            line-height: 20px;
+            padding: 12px 0;
+            vertical-align: middle;
+            border-top: 1px solid #d1d1d9;
+            border-bottom: 1px solid #d1d1d9;
+            @media screen and (max-width: 1366px) {
+              font-size: 13px;
+              line-height: 16px;
+              padding: 10px 0;
+            }
+
+            @media screen and (max-width: 1024px) {
+              font-size: 12px;
+            }
+
+            &:first-child {
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              border-left: 1px solid #d1d1d9;
+            }
+
+            &:last-child {
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+              border-right: 1px solid #d1d1d9;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/******************* TABLE STYLE WITH BACKGROUND GREY WITH BORDER ******************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.table-list.bg-gris-avec-border p-table .ui-table table {
+  .ui-table-thead > tr > th {
+    color: #A7A7A7 !important;
+
+    &:first-child {
+      text-align: left;
+      padding-left: 30px !important;
+      @media screen and (max-width: 991px) {
+        padding-left: 15px !important;
+      }
+    }
+  }
+
+  .ui-table-tbody {
+    > tr {
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 14px;
+      color: #9B9B9B;
+      text-align: center;
+
+      .td-container {
+        width: 100%;
+        height: 60px;
+        margin-top: -20px;
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .td-container.td-left-border {
+        padding: 0 0 0 30px;
+        line-height: 15px;
+        justify-content: left;
+        @media screen and (max-width: 991px) {
+          line-height: 14px;
+          padding: 0 0 0 15px;
+        }
+      }
+
+      .td-left-border {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        text-align: left;
+        padding-left: 30px;
+        @media screen and (max-width: 991px) {
+          padding-left: 10px;
+        }
+      }
+
+      .td-right-border {
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      > td {
+        padding: 19px 0 0 0;
+      }
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/**************************************** TABLE ANOMALIE ***************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.table-list.bg-gris-avec-border.perso-table-popup-rhis.table-anomalie {
+  p-table {
+    .ui-table {
+      table {
+        .ui-table-thead {
+          > tr {
+            > th {
+              text-align: left;
+
+              &:first-child {
+                padding-left: 10px !important;
+                text-align: center;
+              }
+            }
+          }
+        }
+
+        .ui-table-tbody {
+          > tr {
+            > td:nth-child(1) {
+              padding-left: 10px !important;
+              text-align: center;
+            }
+
+            > td {
+              padding: 10px 5px 8px 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/*************************** MODIFICATION STYLE LAST TH IN THE CENTER **************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.table-list.last-th-center {
+  p-table {
+    .ui-table {
+      table {
+        .ui-table-thead {
+          > tr {
+            > th:last-child {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/*************************** DELETE PADDING CONTAINER-FLUID BOOTSTRAP  *************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-fluid.change-container-fluid-rhis {
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/************************************* PERSONALIZED SCROLL  ************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.scroll-general-rhis {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+    background-color: #AFA899;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .responsive-table-rhis.table-list {
+    width: 1200px;
+  }
+
+  .container-fluid.change-container-fluid-rhis.scroll-table-responsive {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+      background-color: #F5F5F5;
+    }
+
+    &:hover::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+      background-color: #AFA899;
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/************************************** INPUT GENERAL RHIS  ************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.input-general-rhis {
+  height: 51px;
+  width: 100%;
+  font-family: "TT Wellingtons DemiBold";
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  padding: 17px;
+  outline: none;
+
+  &::placeholder {
+    color: #414141;
+    font-family: "TT Wellingtons DemiBold";
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+  }
+}
+
+.delete-padding-col-rhis.col-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media screen and (max-width: 1199px) {
+  .input-info-perso-rhis {
+    width: 49%;
+  }
+}
+
+label.section-element-title {
+  width: fit-content;
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+}
+
+.margin-top-title-rhis {
+  margin-top: 20px;
+}
+
+.row-margin-bottom-rhis {
+  margin-bottom: 20px;
+}
+
+.small-rhis {
+  font-size: 11px;
+}
+
+.row.block-row-without-margin-rhis {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#menu.scroll-perso-rhis .scroll-general-rhis {
+  height: auto;
+  max-height: 90vh;
+}
+
+.ui-widget-overlay {
+  background: none !important;
+}
+
+.opened-menu .scroll-content-openRhis {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.opened-menu .scroll-width-contentRhis {
+  width: 1200px;
+}
+
+.btn.color-btn-white-rhis {
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/*********************************** planning General RHIS  ************************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.rhis-container.planning-general-rhis {
+  .header {
+    margin-bottom: 35px;
+
+    .col-xl-6.col-lg-5.col-md-6 {
+      padding-right: 0;
+
+      h1 {
+        color: #414141;
+        font-family: "TT Wellingtons Medium";
+        font-size: 36px;
+        font-weight: 500;
+        line-height: 50px;
+        @media screen and (max-width: 1440px) {
+          font-size: 32px;
+          line-height: 44px;
+        }
+        @media screen and (max-width: 1366px) {
+          font-size: 30px;
+          line-height: 40px;
+        }
+        @media screen and (max-width: 1244px) {
+          font-size: 26px;
+          line-height: 36px;
+        }
+        @media screen and (max-width: 1024px) {
+          font-size: 22px;
+          line-height: 32px;
+        }
+      }
+
+      h3 {
+        color: #9B9B9B;
+        font-family: "TT Wellingtons Medium";
+        font-size: 26px;
+        font-weight: 500;
+        line-height: 48px;
+        float: left;
+        @media screen and (max-width: 1440px) {
+          font-size: 24px;
+          line-height: 48px;
+        }
+        @media screen and (max-width: 1244px) {
+          font-size: 22px;
+          line-height: 38px;
+        }
+        @media screen and (max-width: 1024px) {
+          font-size: 20px;
+          line-height: 36px;
+        }
+      }
+
+      .arrow-right {
+        float: left;
+        margin: 10px;
+        padding-left: 6px;
+        padding-right: 10px;
+      }
+
+      @media screen and (max-width: 1199px) {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
+
+    .col-xl-6.col-lg-7.col-md-6 {
+      padding-left: 0;
+
+      .arrow-right {
+        float: left;
+        margin: 10px;
+      }
+
+      .btn-delete {
+        box-shadow: none;
+        width: 60px;
+        height: 60px;
+        transition: width 0.5s, height 0.5s;
+        z-index: 9;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .btn-delete.drop-active {
+        width: 80px;
+        height: 80px;
+      }
+
+      @media screen and (max-width: 1199px) {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
+  }
+
+  .btn-group {
+    margin: 10px;
+
+    button {
+      width: auto;
+      padding: 7px 20px;
+      text-transform: uppercase;
+      @media screen and (max-width: 1500px) {
+        padding: 7px 10px;
+      }
+    }
+
+    .btn-light {
+      color: #9b9b9b;
+      font-family: "TT Wellingtons Medium";
+      font-size: 10px;
+      font-weight: bold;
+      background-color: #F7F7F7;
+      border: 1px solid #DEDEDE;
+      width: 90px;
+
+      &:hover {
+        background: #dedede !important;
+      }
+    }
+  }
+
+  .btn-group .btn-light.active {
+    background-color: #fff !important;
+    color: #212529 !important;
+
+    &:hover {
+      background: #dedede !important;
+    }
+  }
+
+  .empNameColumn.hebdo .btn-group button {
+    padding: 4px 10px;
+  }
+
+  table.planning {
+    width: 100%;
+    border: 1px solid #F2F0EE;
+    border-collapse: collapse;
+
+    th, td {
+      border: 1px solid #F2F0EE;
+      position: relative;
+      width: calc((100% - 243px) / 7);
+    }
+
+    th:last-child {
+      border-right: none;
+    }
+  }
+
+  .moving-active {
+    opacity: 0.8;
+  }
+
+  .dayName {
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium";
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: center;
+    width: calc((100% - 243px) / 7);
+    padding-top: 17px;
+  }
+
+  .empNameColumn {
+    width: 243px !important;
+  }
+
+  .title-poste-shift-rhis {
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+}
+.rhis-container.planning-general-rhis.planning-hebdo-general {
+  table.planning {
+    .dayName {
+      font-size: 11px;
+    }
+    tbody {
+      td:nth-child(1) {
+        border: none;
+        border-bottom: 1px solid #F2F0EE;
+      }
+
+      td:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+
+.opened-menu {
+  .rhis-container.planning-general-rhis {
+    .btn-group {
+      button {
+        @media screen and (max-width: 1300px) {
+          padding: 7px;
+        }
+      }
+    }
+  }
+
+  .listBesoinsCondense {
+    .empName {
+      @media screen and (max-width: 1366px) {
+        max-width: 165px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.btn.add-button-shift-rhis {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/*********************** Modification datapicker principale RHIS  ******************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.ui-datepicker {
+  padding: 10px 0 !important;
+
+  table td {
+    padding: 0 !important;
+
+    > a, > span {
+      padding: 0 !important;
+    }
+  }
+}
+
+.ui-datepicker table td > a.ui-state-active,
+.ui-datepicker table td > span.ui-state-active {
+  background-color: #385FE3 !important;
+}
+
+.ui-datepicker a:not([href]):not([tabindex]):hover,
+.ui-datepicker a:not([href]):not([tabindex]):focus {
+  color: #fff !important;
+  background-color: #385FE3 !important;
+}
+
+.table-list.bg-gris-avec-border.perso-table-popup-rhis {
+  p-table {
+    .ui-table {
+      table {
+        .ui-table-tbody > tr > td {
+          padding: 12px 0;
+          text-align: left;
+
+          &:nth-child(1) {
+            padding: 12px 0 12px 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.btn.button-popup-rhis {
+  float: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  letter-spacing: 1.2px;
+  padding: 10px 18px;
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 1199px) {
+  .scroll-planning-rhis {
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+
+  .with-scroll-planning-rhis {
+    max-width: 1400px;
+    width: 100%;
+  }
+}
+
+button:focus {
+  outline-style: unset !important;
+}
+
+.button-popup-rhis {
+  margin-top: 50px;
+  float: left;
+  margin-left: 0;
+}
+
+.button-popup-rhis.btn.btn-save-rhis {
+  float: right;
+}
+
+.btn.button-popup-rhis.btn-cancel-rhis {
+  float: left;
+  margin-left: 0;
+}
+
+.ui-dialog {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.55) !important;
+}
+
+.switch-button {
+  cursor: pointer;
+  right: 0;
+  top: 8px;
+  padding: 11px 15px 11px;
+  border: 1px solid #DEDEDE;
+  color: #9B9B9B;
+  font-family: "TT Wellingtons DemiBold", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-align: center;
+}
+
+.switch-button-left {
+  @extend .switch-button;
+  border-radius: 5px 0 0 5px;
+}
+
+.switch-button-right {
+  @extend .switch-button;
+  border-radius: 0 5px 5px 0;
+}
+
+.hebdo.switch-button-left, .hebdo.switch-button-right {
+  font-weight: normal;
+}
+
+.switch-button-left.moe-prod-button, .switch-button-right.moe-prod-button {
+  top: 0;
+}
+
+.employees-postes-buttons {
+  .switch-button,
+  .switch-button-left,
+  .switch-button-right {
+    span {
+      top: 4px;
+    }
+  }
+}
+
+.dropdown-list {
+  display: block;
+  font-family: "TT Wellingtons Medium";
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-align: center;
+  text-align-last: center;
+  color: #444;
+  padding: .6em 1.4em .5em .8em;
+  width: 220px;
+  height: 38px;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid #DEDEDE;
+  border-radius: 5px;
+}
+
+.white-background {
+  background-color: #FFFFFF;
+}
+
+.grey-background {
+  background-color: #F7F7F7;
+}
+
+.block-left-buttons-equipier, .employees-postes-buttons {
+  .white-background {
+    background-color: #FFFFFF !important;
+    color: #212529 !important;
+
+    &:hover {
+      background: #dedede !important;
+    }
+  }
+
+  .grey-background {
+    background-color: #F7F7F7 !important;
+    color: #9b9b9b !important;
+
+    &:hover {
+      background: #dedede !important;
+    }
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/********************************** Apply scroll height table  *********************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.table-list .ui-table-scrollable-body {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  padding-right: 5px;
+  min-height: 300px;
+}
+
+.table-list .ui-table-scrollable-body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.table-list .ui-table-scrollable-body::-webkit-scrollbar {
+  width: 4px;
+  background-color: #F5F5F5;
+}
+
+.table-list .ui-table-scrollable-body:hover::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-list .ui-table-scrollable-body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+  background-color: #AFA899;
+}
+
+.discipline-table {
+  .table-list .ui-table-scrollable-body {
+    min-height: 255px;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/*********************************  Apply scroll height form  **********************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.scroll-content-rhis {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 5px;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+    background-color: #AFA899;
+  }
+
+  &.view-details-employes {
+    overflow-y: hidden;
+  }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////*/
+/**************************** Correction de problème de dropdown *******************************/
+/*////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.drop-down-general {
+  border: none !important;
+}
+
+.row.no-margin-row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.opened-menu .employee-draggable {
+  padding: 10px 0 !important;
+}
+
+/************************* datepicker **************************/
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cdk-overlay-container {
+  z-index: 1000;
+  position: fixed;
+}
+
+.cdk-overlay-container:empty {
+  display: none;
+}
+
+.cdk-global-overlay-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 1000;
+  position: absolute;
+}
+
+.cdk-overlay-pane {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 1000;
+  position: absolute;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  max-height: 100%;
+  max-width: 100%;
+  pointer-events: auto;
+}
+
+.cdk-overlay-backdrop {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+  -moz-transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+  -o-transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+  transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 1;
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    opacity: .6;
+  }
+}
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, .288);
+}
+
+.cdk-overlay-transparent-backdrop,
+.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 0;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 1000;
+  position: absolute;
+  flex-direction: column;
+  min-height: 1px;
+  min-width: 1px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+}
+
+.cdk-global-scrollblock {
+  position: fixed;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.owl-dialog-container {
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 1.5em;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  overflow: auto;
+  outline: 0;
+  color: rgba(0, 0, 0, .87);
+  background: #fff;
+  -webkit-box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  -moz-box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  pointer-events: auto;
+}
+
+.owl-dt-container,
+.owl-dt-container * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.owl-dt-container {
+  display: block;
+  z-index: 1000;
+  font-size: 16px;
+  font-size: 1rem;
+  background: #fff;
+  pointer-events: auto;
+}
+
+.owl-dt-container-row {
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.owl-dt-container-row:last-child {
+  border-bottom: none;
+}
+
+.owl-dt-calendar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+}
+
+.owl-dt-calendar-control {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: .5em;
+  font-size: 1em;
+  color: #000;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-calendar-control .owl-dt-calendar-control-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -moz-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-calendar-control .owl-dt-calendar-control-content .owl-dt-calendar-control-button {
+  padding: 0 .8em;
+}
+
+.owl-dt-calendar-control .owl-dt-calendar-control-content .owl-dt-calendar-control-button:hover {
+  background-color: rgba(0, 0, 0, .12);
+}
+
+.owl-dt-calendar-main {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 0 .5em .5em;
+  outline: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -moz-box-flex: 1;
+  -ms-flex: 1 1 auto;
+}
+
+.owl-dt-calendar-view {
+  display: block;
+  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -moz-box-flex: 1;
+  -ms-flex: 1 1 auto;
+}
+
+.owl-dt-calendar-multi-year-view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-calendar-multi-year-view .owl-dt-calendar-table {
+  width: -webkit-calc(100% - 3em);
+  width: -moz-calc(100% - 3em);
+  width: calc(100% - 3em);
+}
+
+.owl-dt-calendar-multi-year-view .owl-dt-calendar-table .owl-dt-calendar-header th {
+  padding-bottom: .25em;
+}
+
+.owl-dt-calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-header {
+  color: rgba(0, 0, 0, .4);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-header .owl-dt-weekdays th {
+  padding-bottom: 1em;
+  text-align: center;
+  font-size: .7em;
+  font-weight: 400;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-header .owl-dt-calendar-table-divider {
+  position: relative;
+  height: 1px;
+  padding-bottom: .5em;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-header .owl-dt-calendar-table-divider:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -.5em;
+  left: -.5em;
+  height: 1px;
+  background: rgba(0, 0, 0, .12);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell {
+  position: relative;
+  -webkit-appearance: none;
+  height: 0;
+  text-align: center;
+  line-height: 0;
+  outline: 0;
+  color: rgba(0, 0, 0, .85);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 90%;
+  height: 90%;
+  border: 1px solid transparent;
+  -moz-border-radius: 999px;
+  border-radius: 999px;
+  font-size: .8em;
+  line-height: 1;
+  color: inherit;
+  cursor: pointer;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-out {
+  opacity: .2;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-today:not(.owl-dt-calendar-cell-selected) {
+  border-color: rgba(0, 0, 0, .4);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+  color: rgba(255, 255, 255, .85);
+  background-color: #385FE3;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected.owl-dt-calendar-cell-today {
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .85);
+  -moz-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .85);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-disabled {
+  cursor: default;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-disabled > .owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-selected) {
+  color: rgba(0, 0, 0, .4);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-disabled > .owl-dt-calendar-cell-content.owl-dt-calendar-cell-selected {
+  opacity: .4;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-disabled > .owl-dt-calendar-cell-today:not(.owl-dt-calendar-cell-selected) {
+  border-color: rgba(0, 0, 0, .2);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-active:focus > .owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-selected),
+.owl-dt-calendar-table :not(.owl-dt-calendar-cell-disabled):hover > .owl-dt-calendar-cell-content:not(.owl-dt-calendar-cell-selected) {
+  background-color: rgba(0, 0, 0, .04);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-in-range {
+  background: rgba(63, 81, 181, .2);
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-in-range.owl-dt-calendar-cell-range-from {
+  -moz-border-radius-topleft: 999px;
+  -moz-border-radius-bottomleft: 999px;
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-in-range.owl-dt-calendar-cell-range-to {
+  -moz-border-radius-topright: 999px;
+  -moz-border-radius-bottomright: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+.owl-dt-timer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 7em;
+  padding: .5em;
+  outline: 0;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+}
+
+.owl-dt-timer-box {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-timer-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+  margin: .2em 0;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -moz-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-timer-content .owl-dt-timer-input {
+  display: block;
+  width: 2em;
+  padding: .2em;
+  border: 1px solid rgba(0, 0, 0, .5);
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 1.2em;
+  outline: medium none;
+}
+
+.owl-dt-timer-divider {
+  display: inline-block;
+  position: absolute;
+  left: -.3em;
+  align-self: flex-end;
+  width: .6em;
+  height: 100%;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+}
+
+.owl-dt-timer-divider:after,
+.owl-dt-timer-divider:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  width: .35em;
+  height: .35em;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: currentColor;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.owl-dt-timer-divider:before {
+  top: 35%;
+}
+
+.owl-dt-timer-divider:after {
+  bottom: 35%;
+}
+
+.owl-dt-control-button {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-decoration: none;
+  font-size: 1em;
+  white-space: nowrap;
+  vertical-align: baseline;
+  outline: 0;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.owl-dt-control-button .owl-dt-control-button-content {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  outline: 0;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-control-period-button .owl-dt-control-button-content {
+  height: 1.5em;
+  padding: 0 .5em;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-transition: background-color .1s linear;
+  -moz-transition: background-color .1s linear;
+  -o-transition: background-color .1s linear;
+  transition: background-color .1s linear;
+}
+
+.owl-dt-control-period-button:hover > .owl-dt-control-button-content {
+  background-color: rgba(0, 0, 0, .12);
+}
+
+.owl-dt-control-period-button .owl-dt-control-button-arrow {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin: .1em;
+  -webkit-transition: -webkit-transform .2s ease;
+  -moz-transition: transform .2s ease, -moz-transform .2s ease;
+  -o-transition: transform .2s ease;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease, -webkit-transform .2s ease, -moz-transform .2s ease;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-control-arrow-button .owl-dt-control-button-content {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.owl-dt-control-arrow-button[disabled] {
+  color: rgba(0, 0, 0, .4);
+  cursor: default;
+}
+
+.owl-dt-control-arrow-button svg {
+  width: 50%;
+  height: 50%;
+  fill: currentColor;
+}
+
+.owl-dt-inline-container,
+.owl-dt-popup-container {
+  position: relative;
+  width: 13.5em;
+  -webkit-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+  -moz-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+}
+
+.owl-dt-inline-container .owl-dt-calendar,
+.owl-dt-inline-container .owl-dt-timer,
+.owl-dt-popup-container .owl-dt-calendar,
+.owl-dt-popup-container .owl-dt-timer {
+  width: 100%;
+}
+
+.owl-dt-inline-container .owl-dt-calendar,
+.owl-dt-popup-container .owl-dt-calendar {
+  height: 17.25em;
+}
+
+.owl-dt-dialog-container {
+  margin: -1.5em;
+  max-height: 95vh;
+}
+
+.owl-dt-dialog-container .owl-dt-calendar {
+  max-height: 750px;
+  max-width: 750px;
+  min-height: 330px;
+  min-width: 250px;
+}
+
+.owl-dt-dialog-container .owl-dt-timer {
+  max-width: 750px;
+  min-width: 250px;
+}
+
+@media all and (orientation: landscape) {
+  .owl-dt-dialog-container .owl-dt-calendar {
+    width: 58vh;
+    height: 62vh;
+  }
+
+  .owl-dt-dialog-container .owl-dt-timer {
+    width: 58vh;
+  }
+}
+
+@media all and (orientation: portrait) {
+  .owl-dt-dialog-container .owl-dt-calendar {
+    width: 80vw;
+    height: 80vw;
+  }
+
+  .owl-dt-dialog-container .owl-dt-timer {
+    width: 80vw;
+  }
+}
+
+.owl-dt-container-buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 2em;
+  color: #385FE3;
+}
+
+.owl-dt-container-control-button {
+  width: 50%;
+  height: 100%;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  font-size: 1em;
+}
+
+.owl-dt-container-control-button .owl-dt-control-button-content {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: background-color .1s linear;
+  -moz-transition: background-color .1s linear;
+  -o-transition: background-color .1s linear;
+  transition: background-color .1s linear;
+}
+
+.owl-dt-container-control-button:hover .owl-dt-control-button-content {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.owl-dt-container-info {
+  padding: 0 .5em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.owl-dt-container-info .owl-dt-container-range {
+  outline: 0;
+}
+
+.owl-dt-container-info .owl-dt-container-range .owl-dt-container-range-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  padding: .5em 0;
+  font-size: .8em;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+}
+
+.owl-dt-container-info .owl-dt-container-range:last-child {
+  border-top: 1px solid rgba(0, 0, 0, .12);
+}
+
+.owl-dt-container-info .owl-dt-container-info-active {
+  color: #385FE3;
+}
+
+.owl-dt-container-disabled,
+.owl-dt-trigger-disabled {
+  opacity: .35;
+  background-image: none;
+  cursor: default !important;
+  filter: Alpha(Opacity=35);
+}
+
+.owl-dt-timer-hour12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  color: #385FE3;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.owl-dt-timer-hour12 .owl-dt-timer-hour12-box {
+  border: 1px solid currentColor;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-transition: background .2s ease;
+  -moz-transition: background .2s ease;
+  -o-transition: background .2s ease;
+  transition: background .2s ease;
+}
+
+.owl-dt-timer-hour12 .owl-dt-timer-hour12-box .owl-dt-control-button-content {
+  width: 100%;
+  height: 100%;
+  padding: .5em;
+}
+
+.owl-dt-timer-hour12 .owl-dt-timer-hour12-box:focus .owl-dt-control-button-content,
+.owl-dt-timer-hour12 .owl-dt-timer-hour12-box:hover .owl-dt-control-button-content {
+  color: #fff;
+  background: #385FE3;
+}
+
+.owl-dt-calendar-only-current-month .owl-dt-calendar-cell-out {
+  visibility: hidden;
+  cursor: default;
+}
+
+.owl-dt-inline {
+  display: inline-block;
+}
+
+.owl-dt-control {
+  outline: 0;
+  cursor: pointer;
+}
+
+.owl-dt-control .owl-dt-control-content {
+  outline: 0;
+}
+
+.owl-dt-control:focus > .owl-dt-control-content {
+  background-color: rgba(0, 0, 0, .12);
+}
+
+.owl-dt-control:not(:-moz-focusring):focus > .owl-dt-control-content {
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.owl-hidden-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+
+/******************************************************/
+/*************        DATA TABLES      ****************/
+/******************************************************/
+
+/*
+ * Table styles
+ */
+table.dataTable {
+  width: 100%;
+  margin: 0 auto;
+  clear: both;
+  border-collapse: separate;
+  border-spacing: 0;
+  /*
+   * Header and footer styles
+   */
+  /*
+   * Body styles
+   */
+}
+
+table.dataTable thead th,
+table.dataTable tfoot th {
+  font-weight: bold;
+}
+
+table.dataTable thead th,
+table.dataTable thead td {
+  padding: 10px;
+  padding-bottom: 20px;
+  color: #999999;
+  font-family: "TT Wellingtons";
+  font-size: 14px;
+  line-height: 20px;
+  /*border-bottom: 1px solid #111111;*/
+}
+
+table.dataTable thead th:active,
+table.dataTable thead td:active {
+  outline: none;
+}
+
+table.dataTable tfoot th,
+table.dataTable tfoot td {
+  padding: 10px 18px 6px 18px;
+  border-top: 1px solid #111111;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  cursor: pointer;
+  *cursor: hand;
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+table.dataTable thead .sorting {
+  //background-image: url("images/sort_both.png");
+}
+
+table.dataTable thead .sorting_asc {
+  //background-image: url("images/sort_asc.png");
+}
+
+table.dataTable thead .sorting_desc {
+  //background-image: url("images/sort_desc.png");
+}
+
+table.dataTable thead .sorting_asc_disabled {
+  //background-image: url("images/sort_asc_disabled.png");
+}
+
+table.dataTable thead .sorting_desc_disabled {
+  //background-image: url("images/sort_desc_disabled.png");
+}
+
+table.dataTable tbody tr {
+  background-color: white;
+  background-color: #efefef;
+}
+
+table.dataTable tbody tr.selected {
+  background-color: #b0bed9;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 8px 10px;
+}
+
+table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
+}
+
+table.dataTable.row-border tbody tr:first-child th,
+table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th,
+table.dataTable.display tbody tr:first-child td {
+  border-top: none;
+}
+
+table.dataTable.cell-border tbody th, table.dataTable.cell-border tbody td {
+  border-top: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+
+table.dataTable.cell-border tbody tr th:first-child,
+table.dataTable.cell-border tbody tr td:first-child {
+  border-left: 1px solid #dddddd;
+}
+
+table.dataTable.cell-border tbody tr:first-child th,
+table.dataTable.cell-border tbody tr:first-child td {
+  border-top: none;
+}
+
+table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
+  background-color: #f9f9f9;
+}
+
+table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
+  background-color: #abb9d3;
+}
+
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+  background-color: whitesmoke;
+}
+
+table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+  background-color: #a9b7d1;
+}
+
+table.dataTable.order-column tbody tr > .sorting_1,
+table.dataTable.order-column tbody tr > .sorting_2,
+table.dataTable.order-column tbody tr > .sorting_3, table.dataTable.display tbody tr > .sorting_1,
+table.dataTable.display tbody tr > .sorting_2,
+table.dataTable.display tbody tr > .sorting_3 {
+  background-color: #f9f9f9;
+}
+
+table.dataTable.order-column tbody tr.selected > .sorting_1,
+table.dataTable.order-column tbody tr.selected > .sorting_2,
+table.dataTable.order-column tbody tr.selected > .sorting_3, table.dataTable.display tbody tr.selected > .sorting_1,
+table.dataTable.display tbody tr.selected > .sorting_2,
+table.dataTable.display tbody tr.selected > .sorting_3 {
+  background-color: #acbad4;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
+  background-color: #f1f1f1;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_2, table.dataTable.order-column.stripe tbody tr.odd > .sorting_2 {
+  background-color: #f3f3f3;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_3, table.dataTable.order-column.stripe tbody tr.odd > .sorting_3 {
+  background-color: whitesmoke;
+}
+
+table.dataTable.display tbody tr.odd.selected > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1 {
+  background-color: #a6b3cd;
+}
+
+table.dataTable.display tbody tr.odd.selected > .sorting_2, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_2 {
+  background-color: #a7b5ce;
+}
+
+table.dataTable.display tbody tr.odd.selected > .sorting_3, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_3 {
+  background-color: #a9b6d0;
+}
+
+table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
+  background-color: #f9f9f9;
+}
+
+table.dataTable.display tbody tr.even > .sorting_2, table.dataTable.order-column.stripe tbody tr.even > .sorting_2 {
+  background-color: #fbfbfb;
+}
+
+table.dataTable.display tbody tr.even > .sorting_3, table.dataTable.order-column.stripe tbody tr.even > .sorting_3 {
+  background-color: #fdfdfd;
+}
+
+table.dataTable.display tbody tr.even.selected > .sorting_1, table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_1 {
+  background-color: #acbad4;
+}
+
+table.dataTable.display tbody tr.even.selected > .sorting_2, table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_2 {
+  background-color: #adbbd6;
+}
+
+table.dataTable.display tbody tr.even.selected > .sorting_3, table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_3 {
+  background-color: #afbdd8;
+}
+
+table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
+  background-color: #eaeaea;
+}
+
+table.dataTable.display tbody tr:hover > .sorting_2, table.dataTable.order-column.hover tbody tr:hover > .sorting_2 {
+  background-color: #ebebeb;
+}
+
+table.dataTable.display tbody tr:hover > .sorting_3, table.dataTable.order-column.hover tbody tr:hover > .sorting_3 {
+  background-color: #eeeeee;
+}
+
+table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
+  background-color: #a1aec7;
+}
+
+table.dataTable.display tbody tr:hover.selected > .sorting_2, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_2 {
+  background-color: #a2afc8;
+}
+
+table.dataTable.display tbody tr:hover.selected > .sorting_3, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_3 {
+  background-color: #a4b2cb;
+}
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #f6f6f6;
+  margin-bottom: 10px;
+}
+
+table.dataTable.nowrap th, table.dataTable.nowrap td {
+  white-space: nowrap;
+}
+
+table.dataTable.compact thead th,
+table.dataTable.compact thead td {
+  padding: 4px 17px 4px 4px;
+}
+
+table.dataTable.compact tfoot th,
+table.dataTable.compact tfoot td {
+  padding: 4px;
+}
+
+table.dataTable.compact tbody th,
+table.dataTable.compact tbody td {
+  padding: 4px;
+}
+
+table.dataTable th.dt-left,
+table.dataTable td.dt-left {
+  text-align: left;
+}
+
+table.dataTable th.dt-center,
+table.dataTable td.dt-center,
+table.dataTable td.dataTables_empty {
+  text-align: center;
+}
+
+table.dataTable th.dt-right,
+table.dataTable td.dt-right {
+  text-align: right;
+}
+
+table.dataTable th.dt-justify,
+table.dataTable td.dt-justify {
+  text-align: justify;
+}
+
+table.dataTable th.dt-nowrap,
+table.dataTable td.dt-nowrap {
+  white-space: nowrap;
+}
+
+table.dataTable thead th.dt-head-left,
+table.dataTable thead td.dt-head-left,
+table.dataTable tfoot th.dt-head-left,
+table.dataTable tfoot td.dt-head-left {
+  text-align: left;
+}
+
+table.dataTable thead th.dt-head-center,
+table.dataTable thead td.dt-head-center,
+table.dataTable tfoot th.dt-head-center,
+table.dataTable tfoot td.dt-head-center {
+  text-align: center;
+}
+
+table.dataTable thead th.dt-head-right,
+table.dataTable thead td.dt-head-right,
+table.dataTable tfoot th.dt-head-right,
+table.dataTable tfoot td.dt-head-right {
+  text-align: right;
+}
+
+table.dataTable thead th.dt-head-justify,
+table.dataTable thead td.dt-head-justify,
+table.dataTable tfoot th.dt-head-justify,
+table.dataTable tfoot td.dt-head-justify {
+  text-align: justify;
+}
+
+table.dataTable thead th.dt-head-nowrap,
+table.dataTable thead td.dt-head-nowrap,
+table.dataTable tfoot th.dt-head-nowrap,
+table.dataTable tfoot td.dt-head-nowrap {
+  white-space: nowrap;
+}
+
+table.dataTable tbody th.dt-body-left,
+table.dataTable tbody td.dt-body-left {
+  text-align: left;
+}
+
+table.dataTable tbody th.dt-body-center,
+table.dataTable tbody td.dt-body-center {
+  text-align: center;
+}
+
+table.dataTable tbody th.dt-body-right,
+table.dataTable tbody td.dt-body-right {
+  text-align: right;
+}
+
+table.dataTable tbody th.dt-body-justify,
+table.dataTable tbody td.dt-body-justify {
+  text-align: justify;
+}
+
+table.dataTable tbody th.dt-body-nowrap,
+table.dataTable tbody td.dt-body-nowrap {
+  white-space: nowrap;
+}
+
+table.dataTable,
+table.dataTable th,
+table.dataTable td {
+  box-sizing: content-box;
+}
+
+/*
+ * Control feature layout
+ */
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  *zoom: 1;
+  zoom: 1;
+}
+
+.dataTables_wrapper .dataTables_length {
+  float: left;
+  margin-bottom: 20px
+}
+
+.dataTables_length select {
+  display: inline-block;
+  width: auto;
+}
+
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: right;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 0.5em;
+}
+
+.dataTables_wrapper .dataTables_info {
+  clear: both;
+  float: left;
+  padding-top: 0.755em;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  float: right;
+  text-align: right;
+  padding-top: 20px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  *cursor: hand;
+  color: #858d95 !important;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  transition: all ease 0.2s
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: #fff !important;
+  border: 1px solid #24d4fc;
+  background-color: #24d4fc;
+  /* W3C */
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+  cursor: default;
+  color: rgba(159, 165, 171, 0.5) !important;
+  border: 1px solid #ced4da;
+  background: #fff;
+  box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+  border: 1px solid #24d4fc;
+  background-color: #24d4fc;
+
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  outline: none;
+  color: white !important;
+  border: 1px solid #24d4fc;
+  background-color: #24d4fc;
+
+}
+
+.dataTables_wrapper .dataTables_paginate .ellipsis {
+  padding: 0 1em;
+}
+
+.dataTables_wrapper .dataTables_processing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 40px;
+  margin-left: -50%;
+  margin-top: -25px;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 1.2em;
+  background-color: white;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(25%, rgba(255, 255, 255, 0.9)), color-stop(75%, rgba(255, 255, 255, 0.9)), color-stop(100%, rgba(255, 255, 255, 0)));
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+  color: #333333;
+}
+
+.dataTables_wrapper .dataTables_scroll {
+  clear: both;
+}
+
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+  *margin-top: -1px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > thead > tr > th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > thead > tr > td, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > tbody > tr > th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > thead > tr > th > div.dataTables_sizing,
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > thead > tr > td > div.dataTables_sizing, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > tbody > tr > th > div.dataTables_sizing,
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody > table > tbody > tr > td > div.dataTables_sizing {
+  height: 0;
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 1px solid #111111;
+}
+
+.dataTables_wrapper.no-footer div.dataTables_scrollHead table.dataTable,
+.dataTables_wrapper.no-footer div.dataTables_scrollBody > table {
+  border-bottom: none;
+}
+
+.dataTables_wrapper:after {
+  visibility: hidden;
+  display: block;
+  content: "";
+  clear: both;
+  height: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .dataTables_wrapper .dataTables_info,
+  .dataTables_wrapper .dataTables_paginate {
+    float: none;
+    text-align: center;
+  }
+  .dataTables_wrapper .dataTables_paginate {
+    margin-top: 0.5em;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter {
+    float: none;
+    text-align: center;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    margin-top: 0.5em;
+  }
+}
+
+/*****************************************************/
+/**************    IMAGE USER   **********************/
+/*****************************************************/
+.img-profil__photo32 {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1d7bd9;
+  line-height: 35px;
+  text-align: center;
+  margin-bottom: 0;
+  color: #ffffff;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+
+.grid-user {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.gdh-employee {
+  height: 32px;
+  color: #414141;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 14px;
+  line-height: 16px;;
+  text-align: justify;
+}
+
+/*************************************************/
+/************** PAGINATION *****************/
+/*************************************************/
+
+.dataTables_paginate .paginate_button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.1em;
+  padding: 5px;
+  margin-left: 3px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  color: #67757c;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.dataTables_paginate .paginate_button {
+  border: solid 1px #ced4da;
+  border-radius: .25rem;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background-color: #fff
+}
+
+.dataTables_paginate .paginate_button.current, .dataTables_paginate .paginate_button.current:hover {
+  color: #fff;
+  border: 1px solid #1d7bd9;
+  background-color: #1d7bd9;
+}
+
+/**************************************/
+/******** POINTAGES *******/
+/**************************************/
+.rectangle {
+  box-sizing: border-box;
+  width: 103px;
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  margin: 1px;
+  display: inline-block;
+}
+
+.oval {
+  height: 13px;
+  line-height: 14px;
+  width: 13px;
+  display: inline-block;
+  border-radius: 50%;
+  font-size: 7px;
+  text-align: center;
+  color: #ffffff;
+  margin: 2px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-weight: bold;
+}
+
+.oval-absence {
+  background-color: #e80000;
+}
+
+.oval-pointage {
+  background-color: #C8C7C4;
+}
+
+.pointage-part {
+  display: inline-block;
+  height: 14px;
+  width: 80px;
+  font-family: "TT Wellingtons";
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 14px;
+}
+
+.time-green {
+  color: #2DC76D !important;
+  display: inline-block;
+}
+
+.time-red {
+  color: #e80000 !important;
+  display: inline-block;
+}
+
+.time-orange {
+  color: #ffac00 !important;
+  display: inline-block;
+}
+
+.time-gris {
+  margin-left: 2px;
+  margin-right: 2px;
+  color: #7e7e7e !important;
+  display: inline-block;
+}
+
+.time-white {
+  margin-left: 2px;
+  margin-right: 2px;
+  color: #fff !important;
+  display: inline-block;
+}
+
+/******************* triangle popip ********************/
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+
+  border-top: 20px solid #f00;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid green;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid blue;
+}
+
+.arrow-right.besoin-shift {
+  border: none;
+}
+
+/**********************************************************************************************************/
+/********************* icon list bar partie condensée shift fixe / besoin imposé *************************/
+/********************************************************************************************************/
+
+.btn-list-bars {
+  border: 1px solid #DEDEDE;
+  padding: 5px;
+  cursor: pointer;
+  @media screen and (max-width: 1199px) {
+    padding: 8px 0;
+  }
+
+  .pi {
+    color: #9B9B9B;
+    font-size: 2em;
+    @media screen and (max-width: 1199px) {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.listBesoinsCondense {
+  .td-drop-zone {
+    padding-top: 0 !important;
+  }
+
+  .shift-card {
+    padding: 5px !important;
+    @media screen and (max-width: 1366px) {
+      padding: 5px 3px !important;
+    }
+
+    .add-person-shift-fixe,
+    .date-container {
+      display: none;
+    }
+
+    .emp-count.bloc-condense-hdf-rhis {
+      line-height: 16px !important;
+      font-size: 10px !important;
+      float: right;
+      margin-top: -16px;
+      white-space: nowrap;
+      width: auto;
+      overflow: hidden;
+      margin-right: 18px;
+      @media screen and (max-width: 1850px) {
+        width: 24px;
+        margin-right: 14px;
+      }
+      @media screen and (max-width: 1500px) {
+        width: 12px;
+        margin-right: 8px;
+        font-size: 8px !important;
+      }
+    }
+
+    .petit-device.bloc-condense-hdf-rhis {
+      font-size: 9px !important;
+      margin-right: 0;
+    }
+
+    .edit-link {
+      right: -7px !important;
+    }
+
+    .edit-icon {
+      background-size: 80% !important;
+      background-repeat: no-repeat;
+      @media screen and (max-width: 1500px) {
+        width: 4px;
+        background-size: 70% !important;
+      }
+    }
+  }
+
+  .icon-add {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0 !important;
+    margin-left: auto !important;
+    filter: none !important;
+    width: 23px !important;
+    height: 23px !important;
+    background-image: url(/assets/icons/planning/add-icon/add-condense.png) !important;
+    z-index: 0;
+
+    &:hover {
+      background-image: url(/assets/icons/planning/add-icon/add-condense.png) !important;
+    }
+  }
+
+  .employeeCell {
+    padding: 0 15px !important;
+    @media screen and (max-width: 1366px) {
+      padding: 0 8px !important;
+    }
+  }
+
+  .active-planning-fixe {
+    .td-drop-zone {
+      padding-bottom: 0 !important;
+    }
+
+    .employee-draggable {
+      margin-top: 10px;
+    }
+  }
+
+  .posteCell {
+    padding: 0 15px !important;
+  }
+
+  .empName {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 202px;
+    @media screen and (max-width: 1366px) {
+      font-size: 16px !important;
+      max-width: 195px;
+    }
+    @media screen and (max-width: 1285px) {
+      max-width: 185px;
+    }
+    @media screen and (max-width: 1199px) {
+      max-width: 148px;
+    }
+
+    &:hover {
+      overflow: unset;
+      max-width: 100%;
+      white-space: unset;
+    }
+  }
+
+  .conge-exist.td-drop-zone {
+    padding-top: 25px !important;
+  }
+}
+
+.listBesoinsCondense.hebdo {
+  .shift-card {
+    padding: 4px !important;
+  }
+
+  .td-drop-zone {
+    padding-bottom: 3px !important;
+  }
+}
+
+.listBesoinsCondense .shift-card.position-card.acheval-style-BI {
+  margin-right: 10px;
+  @media screen and (max-width: 1500px) {
+    .hour-style.petit-device.bloc-condense-hdf-rhis {
+      margin-right: 0;
+    }
+  }
+  @media screen and (max-width: 1280px) {
+    .hour-style.petit-device.bloc-condense-hdf-rhis {
+      font-size: 8.5px !important;
+    }
+    .emp-count.bloc-condense-hdf-rhis {
+      width: 11px;
+      margin-right: 0;
+    }
+  }
+}
+
+.stylelistBesoinCondense {
+  background-color: #F7F7F7;
+}
+
+.section-element.section-element-pop-up {
+  margin-left: 0;
+}
+
+.text-danger {
+  font-family: "TT Wellingtons Regular", sans-serif;
+  font-size: 12px;
+}
+
+/*************************************************************************************************/
+/**************** Style générique pour le popover d'informations complémentaire GDH ************/
+/*********************************************************************************************/
+popover-content.employee-popover .popover {
+  max-width: 210px !important;
+  width: 210px !important;
+}
+
+popover-content.contrat-popover .popover {
+  max-width: 295px !important;
+  width: 295px !important;
+}
+
+/*************************** Progress bar *******************************/
+.ui-progressbar .ui-progressbar-value {
+  background-color: rgb(45, 199, 109) !important;
+}
+
+.button-style-special {
+  margin-top: -5px;
+}
+
+.nbr {
+  height: 27px;
+  width: 27px;
+  background-color: #FF9B42;
+  color: #FFFFFF;
+  font-family: "TT Wellingtons Light", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  border-radius: 50%;
+  margin-top: 6px;
+  float: right;
+  margin-left: 10px;
+}
+
+.opened-menu {
+  .table-view-all-gdh {
+    overflow-x: auto;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+.table-list .child-table-view-all-gdh {
+  .ui-table-scrollable-body,
+  .ui-table-scrollable-body:hover {
+    overflow-x: auto;
+  }
+
+  .ui-table-scrollable-body::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background-color: #F5F5F5;
+  }
+
+  .ui-table-scrollable-body:hover::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.pop-up-min-height {
+  max-height: 400px;
+}
+
+/*************************************************************************************************/
+/************************ Fixing planning equipier when scrolling vertically ********************/
+/***********************************************************************************************/
+
+.first-interface-planing-jour {
+  .planning-body {
+    .employees-list {
+      .employee-item {
+        &:nth-child(1) {
+          position: fixed !important;
+          top: 135px !important;
+          background: #f7f7f7 !important;
+          z-index: 9 !important;
+          padding-bottom: 0 !important;
+          height: 25px !important;
+          margin-bottom: 13px !important;
+        }
+
+        &:nth-child(2) {
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+}
+
+gridster-item:not(.style-rapport-item-hour).hour-item {
+  position: fixed;
+  top: 135px;
+  z-index: 9;
+}
+
+.planning-body {
+  display: grid;
+  position: relative;
+  grid-template-columns: 12% auto;
+  @media screen and (max-width: 1550px) {
+    grid-template-columns: 15% auto;
+  }
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 17% auto;
+  }
+}
+
+.opened-menu {
+  .planning-body {
+    grid-template-columns: 12% auto;
+    @media screen and (min-width: 1551px) {
+      grid-template-columns: 15% auto;
+    }
+    @media screen and (max-width: 1550px) {
+      grid-template-columns: 18% auto;
+    }
+    @media screen and (max-width: 1350px) {
+      grid-template-columns: 15% auto;
+    }
+    @media screen and (max-width: 1280px) {
+      grid-template-columns: 21% auto;
+    }
+  }
+}
+
+.horizontal-scroll-equipier-menu-open {
+  gridster.fit {
+    width: calc(100% + 220px);
+    overflow-x: hidden;
+  }
+}
+
+.horizontal-scroll-equipier-menu-close {
+  .first-interface-planing-jour .planning-body .employees-list .employee-item:nth-child(1) {
+    left: unset !important;
+  }
+
+  gridster-item.hour-item {
+    left: unset !important;
+  }
+
+}
+
+.first-interface-planing-jour .planning-body {
+  .employees-list.employee-item-minimal-display-condensee {
+    .employee-item {
+      &:nth-child(1) {
+        padding-bottom: 16px;
+        position: relative;
+        height: 30px !important;
+
+        .employee-arrow {
+          position: absolute;
+          top: 5px;
+          right: 20px;
+        }
+
+        .employee-name {
+          border-left: 1px solid #07c;
+          padding-left: 4px;
+          display: block;
+        }
+      }
+
+      &:nth-child(2) {
+        margin-top: 34px;
+      }
+
+      .employees-postes-buttons {
+        height: 25px;
+      }
+    }
+  }
+}
+
+/*************************************************************************************************/
+/******************** Fixing header in all planning without planning equipier ********************/
+/***********************************************************************************************/
+
+.content-planning-rhis {
+  overflow-y: overlay;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+    background-color: #AFA899;
+  }
+}
+
+.variable-paie.table-list .ui-table-scrollable-body {
+  min-height: 160px !important;
+  @media screen and (max-width: 1366px) {
+    min-height: 180px !important;
+  }
+}
+
+.ui-listbox .ui-listbox-list {
+  max-height: 450px;
+}
+
+
+/**************************************************************************************************************/
+/*########################################### popup planning equipier #######################################*/
+/************************************************************************************************************/
+
+.popup-equipier {
+  label.section-element-title,
+  .ui-dropdown .ui-dropdown-item,
+  .ui-dropdown .ui-dropdown-label {
+    font-size: 11px;
+  }
+
+  .ui-dropdown, .section-element .text-field,
+  .ui-calendar .ui-inputtext {
+    height: 41px;
+  }
+
+  .ui-dropdown .ui-dropdown-item, .ui-dropdown .ui-dropdown-label {
+    line-height: 12px;
+  }
+
+  #PLG-Eq-saveJournee-popup,
+  #PLG-Eq-saveSemaine-popup {
+    font-size: 12px;
+  }
+
+  .ui-chkbox-label, .label-list {
+    font-size: 11px;
+  }
+
+}
+
+#PLG-Eq-refJError-list-popup {
+  font-size: 11px;
+}
+
+.ui-overlaypanel {
+  border-radius: 5px !important;
+}
+
+.popup-containte-eq.table-list p-table .ui-table table .ui-table-tbody > tr > td:nth-child(2) {
+  font-size: 12px;
+  padding: 12px 6px;
+}
+
+.popup-containte-eq.table-list p-table .ui-table table .ui-table-tbody > tr > td.employee-width {
+  table-layout: fixed;
+  overflow: hidden;
+  word-wrap: break-word;
+  font-size: 12px;
+}
+
+.popup-containte-eq.table-list p-table .ui-table table .ui-table-tbody > tr > td {
+  @media screen and (min-width: 1024px) {
+    font-size: 12px;
+  }
+}
+
+.popup-equipier .btn.save-add-button-rhis,
+.popup-containte-eq .btn.button-popup-rhis {
+  padding: 8px;
+  font-size: 9px;
+}
+
+.popup-equipier {
+  #RAPPORT_compteurEmp-date {
+    .ui-calendar .ui-inputtext {
+      width: 175px !important;
+    }
+  }
+}
+
+/**************************************************************************************************************/
+/*############################################# Planning 24/24  #############################################*/
+/************************************************************************************************************/
+
+#planningBesoinImpose.content-planning-rhis.listBesoinsCondense,
+#planningFixeContainer.content-planning-rhis.listBesoinsCondense {
+  .add-person-shift-fixe {
+    display: none;
+  }
+}
+
+#planningFixeContainer.content-planning-rhis.listBesoinsCondense,
+#planningBesoinImpose.content-planning-rhis.listBesoinsCondense {
+  .shift-card.acheval-style-BI {
+    position: relative;
+
+    .arrow-acheval-test {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 0;
+    }
+
+    .arrow-acheval-test-black {
+      background-image: url(/assets/icons/planning/arrow-right--black.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 0;
+    }
+  }
+
+  .shift-card.acheval-fin-week {
+    position: relative;
+
+    .arrow-acheval-week {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 0;
+    }
+
+    .arrow-acheval-week--black {
+      background-image: url(/assets/icons/planning/arrow-right--black.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 0;
+    }
+  }
+}
+
+#planningBesoinImpose.content-planning-rhis:not(.listBesoinsCondense),
+#planningFixeContainer.content-planning-rhis:not(.listBesoinsCondense) {
+
+  .add-person-shift-fixe {
+    justify-content: space-between;
+  }
+
+  .shift-card.acheval-style-BI {
+    position: relative;
+
+    .arrow-acheval-test {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+
+    .arrow-acheval-test-black {
+      background-image: url(/assets/icons/planning/arrow-right--black.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+  }
+
+  .shift-card.acheval-fin-week {
+    position: relative;
+
+    .add-person-shift-fixe {
+      justify-content: space-between;
+    }
+
+    .arrow-acheval-week {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 8px;
+    }
+
+    .arrow-acheval-week--black {
+      background-image: url(/assets/icons/planning/arrow-right--black.png);
+      background-size: 17px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+      position: absolute;
+      right: 4px;
+      bottom: 8px;
+    }
+  }
+
+  .title-poste-general {
+    .arrow-acheval-test,
+    .arrow-acheval-test-black {
+      display: none;
+    }
+  }
+
+  .arrow-acheval-test-black.not-condensee {
+    display: none;
+  }
+
+}
+
+#planningManagerContainer.content-planning-rhis,
+#planningManagerVuePoste.content-planning-rhis {
+  .shift-card.acheval-style {
+    .arrow-acheval-test {
+      background-image: url(/assets/icons/planning/arrow-right.png);
+      background-size: 22px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+  }
+
+  .shift-card.position-card.acheval-style.acheval-week.not-modifiable-week {
+    .arrow-acheval-week-not-modifiable {
+      background-image: url(/assets/icons/planning/arrow-left.png);
+      background-size: 22px;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 10px;
+    }
+  }
+}
+
+/********************************************************/
+.center-flex-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.input-rapport-rhis {
+  height: 35px;
+  width: 100%;
+  font-family: "TT Wellingtons DemiBold";
+  border: 1px solid #C8C7C4;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  padding: 17px;
+  outline: none;
+
+  &::placeholder {
+    color: #414141;
+    font-family: "TT Wellingtons DemiBold";
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+  }
+}
+
+/**************************************************************************************************************/
+/*########################################### Bloc copiage parc  ############################################*/
+/************************************************************************************************************/
+
+.dropdown-list-restau-copiage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+
+  .dropdown-restaurant {
+    width: 300px;
+  }
+
+  .restaurant-style {
+    width: 90px;
+  }
+
+  .copy-icon-style {
+    width: 35px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+}
+
+/**************************************************************************************************************/
+/*########################################## RHIS TOOLTIP Copier ############################################*/
+/************************************************************************************************************/
+
+.rhis-tooltip-copy {
+  text-align: center;
+  visibility: hidden;
+  z-index: 1;
+  position: absolute;
+  padding: 5px 20px 8px 20px;
+  height: auto;
+  width: 280px;
+  border: 1px solid rgba(120, 121, 147, 0.3);
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 24px 30px 0 rgba(0, 0, 0, 0.1);
+  color: #9B9B9B;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    height: 0;
+    left: 50%;
+    position: absolute;
+    width: 0;
+  }
+
+  &:before {
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 6px solid rgba(120, 121, 147, 0.3);
+    margin-left: 33px;
+    top: -6px;
+  }
+
+  &:after {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 5px solid #fff;
+    margin-left: 35px;
+    top: -5px;
+  }
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy {
+  visibility: visible;
+  top: 40px;
+  transform: translateX(-143px);
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy.specifique {
+  top: 60px;
+  transform: translateX(-162px);
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy.specifique-param-glbx {
+  transform: translateX(-165px);
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy.specifique-param {
+  top: 34px;
+  transform: translateX(-103px);
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy.rapport {
+  top: 67px;
+  transform: translateX(-143px);
+}
+
+.rhis-tooltip-copy-generique:hover .rhis-tooltip-copy.param-nationaux {
+  top: 47px;
+}
+
+.bloc-btn-generation-rapport.center-flex-block {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-not-found-msg {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+/**
+This style was added for styling popup in hebdo planning because is attached to the body
+ */
+.hebdo_shift--modify {
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group.hide-groupe-propose-li {
+    display: none !important;
+  }
+
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group,
+  .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+    background: #00a2e8 !important;
+    color: #fff;
+    font-size: 11px;
+    text-align: center;
+
+    .group-propose {
+      font-size: 12px;
+    }
+  }
+}
+
+/*************************************************************************************************/
+/***************************** planning equipier / vue jour / vue semaine **********************/
+/*********************************************************************************************/
+
+.detail-temps-paye-minimalist {
+  background-color: white;
+  border-top-left-radius: 5px 5px;
+  border-top-right-radius: 5px 5px;
+
+  .arrow-top {
+    text-align: center;
+    padding-right: 2rem;
+    padding-top: 23px;
+
+    img:first-child {
+      top: -17px;
+    }
+
+    .close-chart-img {
+      left: 23px !important;
+    }
+
+    div {
+      top: -21px;
+      left: 23px;
+    }
+
+    img:last-child {
+      bottom: -19px;
+    }
+  }
+
+  .taux-moe, .ca-previsionnel, .temps-paye {
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 11px;
+    padding: 2px 0;
+  }
+
+  .taux-moe, .ca-previsionnel {
+    color: #9B9B9B;
+  }
+
+  .ca-previsionnel {
+    display: flex;
+    align-items: center;
+  }
+
+  .temps-paye {
+    color: #414141;
+  }
+
+  .details-temps-paye-values {
+    display: grid;
+    text-align: center;
+    border-right: 1px solid #DEDEDE;
+    line-height: 16px;
+  }
+}
+
+.block-left-temps {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-rows: repeat(3, 22px);
+  grid-template-columns: 35px auto;
+  border-right: 1px solid #DEDEDE;
+
+  .block-1 {
+    grid-area: 1 / 1 / 2 / 2;
+    img {
+      margin-top: 2px;
+      margin-left: 2px;
+    }
+  }
+
+  .block-2 {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  .block-3 {
+    grid-area: 2 / 1 / 4 / 2;
+  }
+
+  .block-4 {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  .block-5 {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+}
+
+.open_chart-mini_details-hide_icon {
+  bottom: 5px !important;
+  left: 10px;
+}
+
+.closed_chart-mini_details-hide_icon {
+  top: unset !important;
+  bottom: -19px;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+.icon-hover-container {
+  font-family: "TT Wellingtons Medium", serif;
+  font-size: 9px;
+  color: #414141;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-align: center;
+}

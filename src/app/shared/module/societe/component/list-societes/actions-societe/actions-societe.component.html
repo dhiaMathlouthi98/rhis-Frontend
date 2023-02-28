@@ -1,0 +1,21 @@
+<div class="rhis-container">
+  <div>
+<span (click)="showRestaurants()">
+    <img src="assets/icons/employe/Ico_View.svg" alt="no icon">
+  </span>
+  </div>
+  <div class="tooltip-container" *ngIf="isShownInfos" (rhisClickOutsideTooltip)="isShownInfos = false">
+    <rhis-infos-tooltip
+      [top]='topTooltipPosition()'
+      [buttom]='buttonTooltipPosition()'
+      [isFlagTop]='flagTopPosition()'
+    >
+      <rhis-list-restaurant-societe
+        [societeName]="societeName"
+        [societeUuid]="societeUuid"
+        [restaurants]="listRestaurants">
+      </rhis-list-restaurant-societe>
+    </rhis-infos-tooltip>
+  </div>
+
+</div>

@@ -1,0 +1,24 @@
+:host ::ng-deep {
+  legend{
+    width:auto !important;
+  }
+  /** le point commun entre les 3 blocs est la classe "ui-picklist-buttons" ce qui fait la difference c'est soit la classe
+  qui contient le mot "source" ou la classe qui contient le mot "target"
+   */
+  .ui-picklist-source-controls,
+  .ui-picklist-target-controls
+  {
+    visibility: hidden;
+  }
+
+  .profil-name-societe-rhis {
+    font-size: 14px;
+    float: left;
+    margin: 15px 5px 0 0
+  }
+  .ui-fieldset {
+    margin-bottom: 30px;
+  }
+
+}
+

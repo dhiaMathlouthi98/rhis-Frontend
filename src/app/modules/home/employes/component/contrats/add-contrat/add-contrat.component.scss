@@ -1,0 +1,61 @@
+.rhis-container {
+  position: relative;
+
+  textarea {
+    display: block;
+    position: relative;
+    top: 10px;
+    width: 100%;
+    height: 100px;
+    outline: none;
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .section-body {
+    .row {
+      height: 90px;
+    }
+  }
+
+  .valid {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    top: 85px;
+  }
+
+  .global-error-position {
+    position: absolute;
+    top: -45px;
+  }
+
+  .textarea-error {
+    position: relative;
+    top: 15px;
+  }
+
+  .form-item-error {
+    position: relative;
+    top: 5px;
+  }
+}
+
+.font-medium {
+  font-family: "TT Wellingtons Medium", sans-serif;
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+:host ::ng-deep {
+  .ui-datepicker.ui-widget {
+    top: 55px !important;
+  }
+}

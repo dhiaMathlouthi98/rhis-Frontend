@@ -1,0 +1,97 @@
+<span *ngIf="employee && employee.idEmployee !== null">
+        <span class="employees-postes-buttons" *ngIf="!employee.nom && showTimeAxis">
+          <div class="employees-button switch-button-left" (click)="sortEmployees()"
+               [ngClass]="{
+                  'white-background': sortByEmployee,
+                   'grey-background': !sortByEmployee,
+                   'language-specific-style': applyButtonPostStyle
+               }">
+            <span>{{"PLANNING_EQUIPIER.VUE_EMPLOYE" | translate | uppercase}}</span>
+          </div>
+          <div class="postes-button switch-button-right" (click)="sortShifts()"
+               [ngClass]="{
+                    'white-background': !sortByEmployee,
+                    'grey-background': sortByEmployee,
+                    'language-specific-style': applyButtonPostStyle}
+               ">
+            <span>{{"PLANNING_EQUIPIER.VUE_POSTE" | translate | uppercase}}</span>
+          </div>
+        </span>
+        <span (dblclick)="reAssignEmployee()" (highlitedEmployeeIndex)="highlightEmployee($event,employee)"
+              *ngIf="employee?.nom && !employee?.isManagerOrLeader" [idGrid]="idGrid"
+              [id]="'employee' + employee?.idEmployee" [rowIndex]="i"
+              rhisEmployeHighlight>
+                    <div class="name-employee-style">
+            <div (mouseenter)="showOrHideToolTip()"
+                 (mouseleave)="showOrHideToolTip()"
+                 class="block-name-ellipsis">
+              {{employee?.prenom}} {{employee?.nom}}
+            </div>
+          </div>
+          <div *ngIf="!minimalDisplay">
+            <div class="total-day">{{totalHourEmployee}}</div>
+            <div class="total-week">{{"PLANNING_EQUIPIER.HEURE_SEMAINE" | translate | uppercase}} :
+              {{hebdoPlanifieToDisplay}}/{{hebdoCourant | number:'1.0-2'}}</div>
+          </div>
+        </span>
+          <span *ngIf="employee?.nom && employee?.isManagerOrLeader"
+                [id]="'employee' + employee?.idEmployee">
+          <div class="name-employee-style">
+            <div (mouseenter)="showOrHideToolTip()"
+                 (mouseleave)="showOrHideToolTip()"
+                 class="block-name-ellipsis-Manager">
+              {{employee?.prenom}} {{employee?.nom}}
+            </div>
+          </div>
+          <div *ngIf="!minimalDisplay">
+            <div class="total-day">{{totalHourEmployee}}</div>
+            <div class="total-week">{{"PLANNING_EQUIPIER.HEURE_SEMAINE" | translate | uppercase}} :
+              {{hebdoPlanifieToDisplay}}/{{hebdoCourant | number:'1.0-2'}}</div>
+          </div>
+        </span>
+      </span>
+<span (highlitedEmployeeIndex)="highlightEmployee($event)" [idGrid]="idGrid" [rowIndex]="i"
+      rhisEmployeHighlight
+      *ngIf="(employee === null || employee?.idEmployee === null)" class="hover-container">
+            <rhis-infos-tooltip
+                    [buttom]="15"
+                    [right]="-15"
+                    [top]="-13" class="moe-tooltip-hover-content"
+                    style="z-index: 99 !important;" *ngIf="onCheckShiftNA">
+             <span style="width: max-content;font-size: 10px;">{{'PLANNING_EQUIPIER.BLOCK_PROPOSE' | translate}}</span>
+          </rhis-infos-tooltip>
+        <div *ngIf="activLoaderIndex===i && activLoader" class="spinner-border text-secondary">
+        </div>
+        <p-dropdown (onShow)="getNewEmployees()"  [disabled]="onCheckShiftNA"
+                    [(ngModel)]="employeeToAdd" [options]="employeesToDisplay"
+                    [group]="true"
+                    [emptyFilterMessage]="employeNotFound"
+                    (onChange)="confirmAddEmployee()" [autoWidth]="false"
+                    [style]="{'height': '20px'}"
+                    filter="true" id="PLG_Jr-employee-list"
+                    placeholder="- - -  Employé"
+                    scrollHeight="140px">
+          <ng-template let-group pTemplate="group">
+            <span [ngClass]="{'hide-groupe-propose': !group.label || group.label == 'empty'}"
+                  class="group-propose">
+                  {{group?.label}}
+            </span>
+
+          </ng-template>
+
+        </p-dropdown>
+      </span>
+
+<img *ngIf="(!selectedEmployee && employee?.nom)
+      || (selectedEmployee && employee?.nom && employee?.idEmployee !== selectedEmployee?.idEmployee)"
+     class="employee-arrow" (click)="openEmployeeWeeklyPlanning()"
+     src="assets/icons/planning/Arrow_Back_Grey.svg" alt="no icon">
+<img *ngIf="selectedEmployee && employee?.nom && employee?.idEmployee === selectedEmployee.idEmployee"
+     class="employee-arrow" (click)="closeEmployeeWeeklyPlanning()" style="width: 10px"
+     src="assets/icons/planning/arrow-up.png" alt="no icon">
+
+<rhis-infos-tooltip *ngIf="employee.toolTipShow && longeurEmployee > 15"
+                    [right]="tooltipStyleNomEmployee?.right"
+                    [top]="tooltipStyleNomEmployee?.top">
+  <span class="employee-tooltip-hover">{{employee?.prenom}} {{employee?.nom}}</span>
+</rhis-infos-tooltip>

@@ -1,0 +1,98 @@
+<div class="rhis-container view">
+  <div class="header" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+    <div>
+      <h1 class="titre-principale-page-rhis">{{"RESTAURANT.ALL" | translate}}</h1>
+      <div class="nbr d-flex flex-column justify-content-around text-center ml-1">{{nbrRestaurants}}</div>
+    </div>
+    <div class="block-droite-list-restaurant">
+      <div>
+        <button id="1002" type="button" [routerLink]="rhisRouter.getRoute('ALL_TYPES_RESTAURANTS')"
+                class="btn save-add-button-rhis blue-background">
+          <span>{{"RESTAURANT.BTN_SEE_TYPE_RESTAURANT" | translate}}</span>
+        </button>
+        <button id="1004" type="button"
+                [routerLink]="rhisRouter.getAddRestaurantForSpecificSocieteRoute('HOME_SOCIETE', uuidSociete, uuidFranchise)"
+                class="btn save-add-button-rhis blue-background">
+          <span>{{"RESTAURANT.BTN_CREATE" | translate}}</span>
+        </button>
+      </div>
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder="{{'RESTAURANT.SEARCH_PLACEHOLDER' | translate}}">
+        <span (click)="searchRestaurants()"><img src="assets/icons/employe/ico_search_small.svg" alt=""></span>
+      </div>
+    </div>
+  </div>
+  <div class="table-list" *ngIf="listRestaurants?.length">
+    <p-table [columns]="header"
+             [value]="listRestaurants"
+             [paginator]="true"
+             [lazy]="true"
+             [rows]="row"
+             [first]="first"
+             [totalRecords]="totalRecords"
+             [rowsPerPageOptions]="rowsPerPageOptions"
+             (onSort)="sortRows($event)"
+             [resetPageOnSort]="false"
+             (onPage)="onLazyLoad($event)"
+             [scrollable]="true" [scrollHeight]="heightInterface"
+    >
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let c of columns">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns stickyHeader stickyClass="stickyHeader">
+        <tr class="header-row">
+          <th *ngFor="let col of columns" [pSortableColumn]="(col?.field != 'telephone') ? col?.field : null">
+            {{col?.title}}
+            <p-sortIcon *ngIf="col?.field != 'telephone'" [field]="col?.field"
+                        ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-restaurant>
+        <tr (click)="showDetails($event, restaurant?.uuid)" class="table-row">
+          <td>{{restaurant?.typeRestaurant?.nomType}}</td>
+          <td>{{restaurant?.libelle}}</td>
+          <td>{{restaurant?.societe?.societeName}}</td>
+          <td>{{restaurant?.directeur?.nom}} {{restaurant?.directeur?.prenom}}</td>
+          <td>{{restaurant?.franchise?.nom}}</td>
+          <td>
+            <div class="d-flex justify-content-around">
+              <div>
+                <span (click)="getRestaurant(restaurant)" class="item">
+                <img class="redirect-restaurant" src="assets/icons/employe/icons-porte-ouverte.png" alt="no icon">
+                </span>
+              </div>
+              <div class="ml-3">
+                <rhis-actions-restaurant
+                  [restaurantName]="restaurant?.libelle">
+                </rhis-actions-restaurant>
+              </div>
+              <div *ngIf="deleteButtonControl()">
+              <span (click)=" showConfirmDelete(restaurant?.uuid); $event.stopPropagation()" class="item">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+
+<p-blockUI >
+  <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+    <span class="text-white">{{"BUTTON.IN_PROGRESS" | translate}}</span>
+  </div>
+</p-blockUI>

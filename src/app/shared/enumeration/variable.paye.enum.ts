@@ -1,0 +1,27 @@
+export enum VariablePayeEnum {
+
+  HP = 'HP',
+  CP0 = 'CP0',
+  CP10 = 'CP10',
+  CP25 = 'CP25',
+  SP0 = 'SP0',
+  SP10 = 'SP10',
+  SP20 = 'SP20',
+  SP25 = 'SP25',
+  SP50 = 'SP50',
+  N0 = 'N0',
+  N1 = 'N1',
+  N2 = 'N2',
+  FERIE = 'FERIE',
+  FIRSTMAI = 'FIRSTMAI',
+  COUPURES = 'COUPURES',
+  REPAS = 'REPAS',
+  AVENANT = 'AVENANT',
+  CONTRAT = 'CONTRAT',
+  HN = 'HN',
+  ABS_ES = 'ABS_ES',
+  NBDAYCP = 'NBDAYCP',
+  DAYNUMBER = 'JOURTRAVAIL',
+  DOUBLE_SHIFT_MIN = 'DOUBLE_SHIFT_MIN',
+  DOUBLE_SHIFT_MAX = 'DOUBLE_SHIFT_MAX'
+}

@@ -1,0 +1,36 @@
+<div class="item-body block-shift-equipier-rhis">
+  <div *ngIf="item?.sign" [ngStyle]="{'background': item?.colorSign}"
+       class="shift-signe-texte">
+  </div>
+  <img (click)="removeItem($event)" *ngIf="item?.canUpdate && canDelete"
+       [ngClass]="{'hiddenTexteShift': isSmallShiftHover}"
+       alt="" class="style-tooltip-hover" imgDbleClicked src="assets/icons/planning/delete/trash.ico">
+  <img *ngIf="!item?.canUpdate" [ngClass]="{'hiddenTexteShift': isSmallShiftHover}"
+       alt=""
+       class="style-tooltip-hover">
+  <div [ngStyle]="{'background-color' : item?.textColor}" [ngClass]="{'shift-signe' :item?.sign}"
+       class="vertical-line-left">&nbsp;
+  </div>
+  <div *ngIf="!isSmallShiftHover" class="item-label">
+    <div>{{item?.label}}</div>
+  </div>
+  <div [ngStyle]="{'background-color' : item?.textColor}" [ngClass]="{'resize-right': item?.acheval && item?.modifiable}" class="vertical-line-right">&nbsp;</div>
+  <div *ngIf="isSmallShiftHover"
+       [ngClass]="{
+          'hiddenTexteShift': isSmallShiftHover}"
+       class="style-tooltip-hover">
+    <div>{{item?.label}}</div>
+  </div>
+  <div *ngIf="isSmallShiftHover"
+       [ngClass]="{'tooltip-position-right': (item?.x <= 4) }"
+       style="color: rgb(65, 65, 65)">
+    <rhis-infos-tooltip
+            [buttom]="(item?.x <= 4) ? tooltipStyleRight.buttom : tooltipStyle?.buttom"
+            [isFlagTop]="tooltipStyle.isFlagTop"
+            [right]="(item?.x <= 4) ? tooltipStyleRight.right : tooltipStyle?.right"
+            [top]="(item?.x <= 4) ? tooltipStyleRight.top : tooltipStyle?.top"
+            class="contentSmallShiftHover">
+      <div>{{item?.label}}</div>
+    </rhis-infos-tooltip>
+  </div>
+</div>

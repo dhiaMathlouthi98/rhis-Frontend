@@ -1,0 +1,259 @@
+<ng-container *ngIf="!vuePoste">
+  <td class="employeeCell" (click)="selectRow($event,managerOuLeader)">
+    <div class="employee-draggable" [attr.data-empIndex]="empIndex">
+      <ng-container *ngIf="managerOuLeader">
+        <div class="empName">{{managerOuLeader?.nom}} {{managerOuLeader?.prenom}}</div>
+        <div class="contractFull" *ngIf="hebdoContrat && isContractTimeReached()">
+          <span class="contract-icon-y"></span>
+          {{'SHIFT_FIXE.CONTRAT' | translate}} {{managerOuLeader?.totalRowTime}}/{{hebdoContrat}}
+        </div>
+        <div class="contract" *ngIf="hebdoContrat && !isContractTimeReached()">
+          <span class="contract-icon-x"></span>
+          {{'SHIFT_FIXE.CONTRAT' | translate}} {{managerOuLeader?.totalRowTime}}/{{hebdoContrat}}
+        </div>
+      </ng-container>
+    </div>
+  </td>
+  <td *ngFor="let day of days; let  dayIndex=index" class="td-drop-zone" [attr.data-day]="day.val">
+    <div *ngFor="let conge of congeDisplay">
+      <ng-container *ngIf=" getJourSemaine(conge.dateDebutDisplayInPlanningManagerOrLeader) === (day.val | uppercase)">
+        <div class="conge-planned">
+          <a class="leave-text"
+             title="{{conge?.typeEvenement?.libelle}} {{conge.dateDebutDisplayInPlanningManagerOrLeader | date: 'dd/MM/yyyy'}}">{{conge?.typeEvenement?.libelle}} {{conge.dateDebutDisplayInPlanningManagerOrLeader | date: 'dd/MM/yyyy'}} </a>
+        </div>
+      </ng-container>
+    </div>
+    <div *ngFor="let planning of planningManagerOrLeaderByEmployee">
+      <ng-container *ngIf=" getJourSemaine(planning.dateJournee) === (day.val | uppercase)">
+
+        <rhis-planning-manager-card
+          [planning]="planning"
+          [managerOuLeader]="managerOuLeader"
+          [idPlanningManager]="planning?.idPlanningManager"
+          [cardDay]="day.val"
+          [cardID]="'card-'+dayIndex+'-'+i"
+          [cardEmpIndex]="empIndex"
+          (editCardPlanningManager)="showEditPlanningManagerCardForm($event)"
+          (deleteCardPlanningManager)="deletePlanningManagerCard(planning?.idPlanningManager)"
+        >
+        </rhis-planning-manager-card>
+      </ng-container>
+    </div>
+    <span *ngIf="!managerOuLeader?.disablePlanningManagerOrLeaderOrFixe && this.addButtonControl()" class="icon-add"
+          (click)="showAddCardForm(managerOuLeader, day.val)"
+          id="PLG-ML-Card-add">
+    </span>
+  </td>
+</ng-container>
+
+
+<ng-container *ngIf="vuePoste">
+  <td class="employeeCell" (click)="selectRow($event,periode)">
+    <div class="employee-draggable" [attr.data-periodeIndex]="periodeIndex">
+      <ng-container *ngIf="periode">
+        <div class="empName">{{periode?.libelle}}</div>
+        <div class="employee-cell-hour">{{heureDebutPeriodeManager}} - {{heureFinPeriodeManager}}</div>
+      </ng-container>
+
+    </div>
+  </td>
+  <td *ngFor="let day of days; let  dayIndex=index" class="td-drop-zone" [attr.data-day]="day.val">
+    <div *ngFor="let planning of planningManagerByPeriode">
+      <ng-container *ngIf=" getJourSemaine(planning?.dateJournee) === (day.val | uppercase)">
+        <rhis-planning-manager-card
+          [planning]="planning"
+          [periode]="periode"
+          [listManagerOrleaderInactif]="listManagerOrleaderInactif"
+          [vuePoste]="vuePoste"
+          [idPlanningManager]="planning?.idPlanningManager"
+          [cardDay]="day.val"
+          [cardID]="'card-'+dayIndex+'-'+i"
+          [cardPeriodeIndex]="periodeIndex"
+          (editCardPlanningManager)="showEditPlanningManagerCardForm($event)"
+          (deleteCardPlanningManager)="deletePlanningManagerCard(planning?.idPlanningManager)"
+        >
+        </rhis-planning-manager-card>
+      </ng-container>
+    </div>
+    <span *ngIf="this.addButtonControl() && periode?.statut" (click)="showAddCardForm(null, day?.val,periode)" [hidden]="hiddenAdd"
+          class="icon-add"
+          id="PLG-PM-add-icon"></span>
+  </td>
+</ng-container>
+
+<rhis-pop-up
+  (closeEvent)="closePopup($event)"
+  [showPopUp]="showPopUp"
+  [title]="titlePopup"
+  [width]="popUpStyle?.width">
+  <div class="section-body mt-0  ">
+    <div class="row">
+      <div *ngIf="!vuePoste" class="section-element col-md-12">
+        <div>
+        <span class="text-danger text-center"
+              *ngIf="messageConfonduPlanningManger"
+              id="PLG-ML-ConfonduError-dropdown">{{messageConfonduPlanningManger}}</span>
+        </div>
+        <label class="section-element-title" for="PLG-ML-selectPeriode-dropdown">
+          {{'PERIODE_MANAGER.PERIODE_MANAGER' | translate}}
+        </label>
+        <p-dropdown [options]="periodesManager"
+                    [(ngModel)]="selectedPeriode"
+                    optionLabel="libelle"
+                    [autoDisplayFirst]="false"
+                    (onChange)="setHeureDebutHeureFinPlanningManager()"
+                    name="selectedPeriode"
+                    id="PLG-ML-selectPeriode-dropdown"
+                    class="drop-down-general"
+        ></p-dropdown>
+        <span class="text-danger text-center"
+              *ngIf="selectedPeriodeRequiredField"
+              id="PLG-ML-selectPeriodeError-dropdown">
+          {{"TYPE_CONTRAT.REQUIRED" | translate}}
+        </span>
+      </div>
+
+      <div *ngIf="vuePoste" class="section-element col-md-12">
+        <div>
+        <span class="text-danger text-center"
+              *ngIf="messageConfonduPlanningManger"
+              id="PLG-ML-ConfonduVuePError-dropdown">{{messageConfonduPlanningManger}}</span>
+        </div>
+        <label class="section-element-title" for="PLG-ML-selectManager-dropdown-popup">
+          <div *ngIf="!hasPlanningLeader;else TypePlanning ">{{'PLANNING_MANAGER.MANAGER' | translate}}</div>
+          <ng-template #TypePlanning>
+            <div>{{'PLANNING_LEADER.MANAGER' | translate}}</div>
+          </ng-template>
+        </label>
+        <p-dropdown [options]="listManagerOrLeaderActif" [(ngModel)]="selectedManager"
+                    optionLabel="fullName"
+                    [autoDisplayFirst]="false"
+                    (onChange)="setManagerToPlanning(selectedManager)"
+                    id="PLG-ML-selectManager-dropdown-popup"
+                    name="selectedManager"
+                    class="drop-down-general"
+        ></p-dropdown>
+        <span class="text-danger text-center"
+              *ngIf="selectedManagerRequiredField"
+              id="PLG-ML-selectManagerError-dropdown-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_DEBUT' | translate}}</label>
+        <p-calendar [(ngModel)]="newPlanningManager.heureDebut" [timeOnly]="true"
+                    [disabled]="verificationNightIsRaised"
+                    (onClose)="validerHeureNuit(true, newPlanningManager)"
+                    id="PLG-ML-HD-popup"></p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutRequiredField"
+              id="PLG-ML-HDError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureDebutLimitError"
+              id="PLG-ML-HDLimiteError-popup">{{heureDebutLimitErrorMessage}}</span>
+      </div>
+      <div class="col-md-6 mt-4">
+        <label class="section-element-title">{{'BIMPOSE.HEURE_FIN' | translate}}</label>
+        <p-calendar [(ngModel)]="newPlanningManager.heureFin" [timeOnly]="true"
+                    [disabled]="verificationNightIsRaised"
+                    (onClose)="validerHeureNuit(false, newPlanningManager)"
+                    id="PLG-ML-HF-popup">
+        </p-calendar>
+        <span class="text-danger text-center"
+              *ngIf="heureFinRequiredField"
+              id="PLG-ML-HFError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+        <span class="text-danger text-center"
+              *ngIf="heureFinLimitError"
+              id="PLG-ML-HFLimiteError-popup">{{heureFinLimitErrorMessage}}</span>
+      </div>
+    </div>
+    <div *ngIf="errorHourMessagePlanningManager" class="row col-md-12 text-danger text-center"
+         id="PLG-ML-HourError-popup">
+      {{errorHourMessagePlanningManager}}
+    </div>
+  </div>
+  <div class="modif-shift-fixe-popup-rhis mt-4" *ngIf="listPlanningManagerProductifs.length">
+    <div class="section-body mt-2 mb-4"
+         *ngFor="let planningProductif of listPlanningManagerProductifs ;let i = index">
+      <div class="row">
+        <div class="section-element col-md-12">
+          <div class="row">
+            <div class="col-5">
+              <label class="section-element-title" for="PLG-ML-PosTr-dropdown-popup">
+                {{'GROUPEMENT_POST_TRAVAIL.POSITION_TRAVAIL' | translate}}
+              </label>
+              <p-dropdown [options]="listePositionTravail" [(ngModel)]="planningProductif.positionTravail"
+                          optionLabel="libelle"
+                          [autoDisplayFirst]="false"
+                          id="PLG-ML-PosTr-dropdown-popup"
+                          name="position"
+                          class="drop-down-general"
+              ></p-dropdown>
+            </div>
+            <div class="col-6 block-heure-planning-manager">
+              <div class="row">
+                <div class="col-6">
+                  <label class="section-element-title">{{'BIMPOSE.HEURE_DEBUT' | translate}}</label>
+                  <p-calendar [(ngModel)]="planningProductif.heureDebut" [timeOnly]="true"
+                              [disabled]="verificationNightIsRaised"
+                              (onClose)="validerHeureNuit(true, planningProductif)"
+                              id="PLG-MLP-HD-popup"
+                  ></p-calendar>
+                  <span class="text-danger text-center"
+                        *ngIf="planningProductif.heureDebutPlanningManagerProductifRequiredField"
+                        id="PLG-MLP-HDError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+                </div>
+                <div class="col-6 heure-fin-rhis">
+                  <label class="section-element-title">{{'BIMPOSE.HEURE_FIN' | translate}}</label>
+                  <p-calendar [(ngModel)]="planningProductif.heureFin" [timeOnly]="true"
+                              [disabled]="verificationNightIsRaised"
+                              (onClose)="validerHeureNuit(false, planningProductif)"
+                              id="PLG-MLP-HF-popup">
+                  </p-calendar>
+                  <span class="text-danger text-center"
+                        *ngIf="planningProductif.heureFinPlanningManagerProductifRequiredField"
+                        id="PLG-MLP-HFError-popup">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-1 block-delete-icon-panning-manager" id="PLG-MLP-Productif-delete-popup">
+              <img alt="no image" src="assets/icons/employe/Btn_Close.svg"
+                   (click)="deletePlanningManagerProductif(i)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row col-md-12 text-danger text-center"
+             *ngIf="planningProductif.errorHourePlanningManagerProductifMessage"
+             id="PLG-MLP-HPPError-popup">
+          {{planningProductif.errorHourePlanningManagerProductifMessage}} <br>
+        </div>
+        <div class="row col-md-12 text-danger text-center"
+             *ngIf="planningProductif.horraireConfonduesErrorMessage && !planningProductif.heureInclu"
+             id="PLG-MLP-HPPandConfonduError-popup">
+          {{"PLANNING_MANAGER.HORAIRE_CONFONDUE_ERROR_PRODECTIF" | translate}} <br>
+
+        </div>
+        <div *ngIf="planningProductif.heureInclu" class="row col-md-12 text-danger text-center"
+             id="PLG-MLP-HourIncluError-popup">
+          {{"PLANNING_MANAGER.HEURE_INCLU" | translate}} <br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-competence add-competence-planning-manager mt-4 mb-3"
+       (click)="displayAddPlanningManagerProductif()"
+       [hidden]="addPlanningManagerProductif" id="PLG-MLP-Productif-add-popup">
+    <img src="assets/icons/employe/Btn_Add.svg" alt="no image">
+    <span>{{'PLANNING_MANAGER.QUALIFICATION' | translate}}</span>
+  </div>
+  <button (click)="saveCard()" class="btn add-button-shift-rhis mt-4 orange-background valid"
+          id="PLG-MLP-saveCard-popup"
+          type="button">
+    <span>{{titlePopup|uppercase}}</span>
+  </button>
+</rhis-pop-up>
+

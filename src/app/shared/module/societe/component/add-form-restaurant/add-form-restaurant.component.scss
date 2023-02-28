@@ -1,0 +1,86 @@
+.main-view {
+  top: 2.5rem;
+}
+
+.section-element {
+  margin-left: unset;
+  width: unset;
+}
+
+.error-position {
+  top: 6rem;
+  left: 0;
+}
+
+:host ::ng-deep {
+  .type-periode-list {
+    .ui-dropdown.ui-dropdown-clearable .ui-dropdown-label {
+      padding-left: 0;
+      padding-right: 0;
+      @media screen and (max-width: 1300px) {
+        text-overflow: ellipsis;
+        width: 160px;
+      }
+      @media screen and (max-width: 1100px) {
+        width: 120px;
+      }
+    }
+  }
+
+  .menu-ouvert {
+    .type-periode-list {
+      .ui-dropdown.ui-dropdown-clearable .ui-dropdown-label {
+        @media screen and (max-width: 1400px) {
+          text-overflow: ellipsis;
+          width: 120px;
+        }
+        @media screen and (max-width: 1300px) {
+          text-overflow: ellipsis;
+          width: 180px;
+        }
+        @media screen and (max-width: 1110px) {
+          width: 120px;
+        }
+      }
+    }
+  }
+}
+
+.type-periode-number-jour {
+  padding-top: 2rem;
+  width: 75px !important;
+  margin-right: 5px;
+  @media screen and (max-width: 1110px) {
+    width: 60px !important;
+    .input-general-rhis {
+      padding: 17px 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 1110px) {
+  :host ::ng-deep {
+    .ui-inputswitch.ui-widget {
+      font-size: 10px;
+    }
+  }
+}
+
+.padding-top-without-label {
+  padding-top: 3.2rem;
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 12px;
+  @media screen and (max-width: 1110px) {
+    margin-left: 0;
+  }
+}
+
+.bloc-periode {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}

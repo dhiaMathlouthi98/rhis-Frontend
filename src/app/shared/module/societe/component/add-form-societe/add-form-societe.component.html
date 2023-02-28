@@ -1,0 +1,178 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="240">
+</div>
+<div class="rhis-container view scroll-content-rhis" [ngStyle]="{'height': heightInterface}">
+  <div [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="nom" class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_NAME' | translate}}*</label>
+          <input type="text"
+                 id="nom"
+                 maxlength="255"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.societeName?.errors && isFormSubmitted"
+                 formControlName="societeName">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.societeName?.errors && isFormSubmitted">
+            {{'SOCIETE.REQUIRED_ERROR' | translate}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="formeJuridique"
+                 class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_JURIDIQUE' | translate}}</label>
+          <input type="text"
+                 id="formeJuridique"
+                 maxlength="10"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.formeJuridique?.errors"
+                 formControlName="formeJuridique">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.formeJuridique?.errors && isFormSubmitted">
+          {{'SOCIETE.FORME_JURIDIQUE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_C_COUNTRY' | translate}}*</label>
+          <p-dropdown
+            [options]="listPays"
+            [autoDisplayFirst]="false"
+            showClear="true"
+            [optionLabel]="'paysFR'"
+            formControlName="pays"
+            rhisStyleForm
+            [hasError]="formGroup?.controls?.pays?.errors && isFormSubmitted"
+            selector=".ui-dropdown"
+            appendTo="body"
+            class="drop-down-general">
+          </p-dropdown>
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.pays?.errors && isFormSubmitted">
+          {{'SOCIETE.REQUIRED_ERROR' | translate}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="numSiren"
+                 class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_SIREN_CODE' | translate}}</label>
+          <input type="text"
+                 id="numSiren"
+                 maxlength="20"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.numSiren?.errors && isFormSubmitted"
+                 formControlName="numSiren">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.numSiren?.getError('maxlength') &&
+                 !formGroup?.controls?.numSiren?.getError('pattern') && isFormSubmitted">
+            {{'SOCIETE.SIREN_MAX_LENGTH_ERROR' | translate}}
+        </span>
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.numSiren?.getError('pattern')  && isFormSubmitted">
+            {{'SOCIETE.SOCIETE_ADD_FORM_NUM_PATTERN_ERROR' | translate}}
+        </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="villeRCS" class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_C_RCS' | translate}}</label>
+          <input type="text"
+                 id="villeRCS"
+                 maxlength="255"
+                 class="input-general-rhis"
+                 formControlName="villeRCS">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="capital"
+                 class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_SHARE_CAPITAL' | translate}}</label>
+          <input type="number"
+                 id="capital"
+                 min="0"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.capital?.errors && isFormSubmitted"
+                 formControlName="capital">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.capital?.errors && isFormSubmitted">
+            {{'SOCIETE.NOMBRE_MIN_ERROR' | translate}}
+        </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="adresse1" class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_ADDR1' | translate}}</label>
+          <input type="text"
+                 id="adresse1"
+                 maxlength="255"
+                 class="input-general-rhis"
+                 formControlName="adresse1">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="ville" class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_CITY' | translate}}</label>
+          <input type="text"
+                 id="ville"
+                 maxlength="255"
+                 class="input-general-rhis"
+                 formControlName="ville">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="section-element w-100">
+          <label for="codePostal"
+                 class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_ZIPCODE' | translate}}</label>
+          <input type="number"
+                 id="codePostal"
+                 min="0"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.codePostal?.errors && isFormSubmitted"
+                 formControlName="codePostal">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.codePostal?.errors && isFormSubmitted">
+            {{'SOCIETE.NOMBRE_MIN_ERROR' | translate}}
+        </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="red small-rhis">
+          <label for="telephone1" class="section-element-title">{{'SOCIETE.SOCIETE_ADD_FORM_TEL1' | translate}}</label>
+          <input type="text"
+                 id="telephone1"
+                 maxlength="20"
+                 class="input-general-rhis"
+                 rhisStyleForm
+                 [hasError]="formGroup?.controls?.telephone1?.errors && isFormSubmitted"
+                 formControlName="telephone1">
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.telephone1?.getError('pattern') && isFormSubmitted">
+          {{'SOCIETE.PHONE_FORMAT' | translate}}
+        </span>
+          <span class="red small-rhis"
+                *ngIf="formGroup?.controls?.telephone1?.getError('maxlength') &&
+                ! formGroup?.controls?.telephone1?.getError('pattern') && isFormSubmitted">
+          {{'SOCIETE.PHONE_MAX_LENGTH_ERROR' | translate}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

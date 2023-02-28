@@ -1,0 +1,64 @@
+<div class="shift-card position-card"
+     *ngIf="!shift.shiftAchevalHidden"
+     [ngStyle]="{
+     'background-color': !employee?.disablePlanningManagerOrLeaderOrFixe ? shift?.positionTravail?.couleur : (employee?.disablePlanningManagerOrLeaderOrFixe ? '' : null) ,
+     'color': colorTextShift
+     }"
+     [attr.data-idShiftFixe]="idShiftFixe"
+     [attr.data-cardDay]="cardDay"
+     [attr.data-EmpIndex]="cardEmpIndex"
+     [ngClass]="{'active-planning-fixe-card': employee?.disablePlanningManagerOrLeaderOrFixe,'acheval-style-BI': shift?.acheval,
+     'acheval-fin-week':shift?.shiftInLastWeek}">
+  <div class="dropdown">
+    <a class="dropdown-toggle edit-link"
+       role="button"
+       data-toggle="dropdown"
+       aria-haspopup="true"
+       aria-expanded="false"
+       id="PLG-fx-Edit-Icon">
+      <i class="edit-icon"
+         [ngStyle]="{'background-image': imageEditIcon}"></i>
+    </a>
+    <div class="dropdown-menu" [ngClass]="{
+          'dropdown-menu-opened': menuOpened,
+          'dropdown-menu-close': !menuOpened}">
+      <ng-container *ngIf="!employee?.disablePlanningManagerOrLeaderOrFixe">
+        <a (click)="edit($event)" class="dropdown-item" *ngIf="updateButtonControl()"
+           id="PLG-fx-edit-shift">{{'SHIFT_FIXE.UPDATE' | translate}}</a>
+      </ng-container>
+      <a (click)="delete($event)" class="dropdown-item" *ngIf="deleteButtonControl()"
+         id="PLG-fx-delete-shift">{{'SHIFT_FIXE.DELETE' | translate}}</a>
+    </div>
+  </div>
+  <div class="hour-style">{{shift?.heureDebut | date:'HH:mm'}} - {{shift?.heureFin | date:'HH:mm'}}</div>
+  <div class="title-poste-general">
+    <div *ngIf="shift?.positionTravail" class="title-poste-shift-rhis">{{shift?.positionTravail?.libelle}}</div>
+    <div *ngIf="shift?.acheval && colorTextShift === '#FFF' " class="arrow-acheval-test">
+    </div>
+    <div *ngIf="shift?.acheval && colorTextShift !== '#FFF' " class="arrow-acheval-test-black">
+    </div>
+  </div>
+
+  <div class="date-container" *ngIf="shift?.dateDebut || shift?.dateFin ">
+    <span class="icon-clock"></span>
+    <span>{{'SHIFT_FIXE.DU' | translate}} {{shift?.dateDebut | date: 'dd/MM/yyyy'}}
+      <br>
+      <ng-container *ngIf="shift?.dateFin">
+        {{'SHIFT_FIXE.AU' | translate}} {{shift?.dateFin  |  date: 'dd/MM/yyyy'}}
+      </ng-container>
+    </span>
+  </div>
+  <div class="add-person-shift-fixe">
+    <div>
+      <p-checkbox [(ngModel)]="shift.addShiftFixe" binary="true" disabled="true" id="PLG-fx-iconAdd-checkbox">
+      </p-checkbox>
+      <span>{{'SHIFT_FIXE.ADD' | translate}}</span>
+    </div>
+    <div>
+      <div *ngIf="shift?.acheval && colorTextShift === '#FFF' " class="arrow-acheval-test">
+      </div>
+      <div *ngIf="shift?.acheval && colorTextShift !== '#FFF' " class="arrow-acheval-test-black">
+      </div>
+    </div>
+  </div>
+</div>

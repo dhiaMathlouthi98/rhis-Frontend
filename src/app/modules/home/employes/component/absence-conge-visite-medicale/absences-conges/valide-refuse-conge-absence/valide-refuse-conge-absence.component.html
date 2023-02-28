@@ -1,0 +1,15 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<div class="container-fluid">
+  <div class="row">
+    <button (click)="validateAbsence()" class="btn save-add-button-rhis orange-background"
+            id="EMP_absConge-validate-popup"
+            type="button">
+      <span>{{'DEMANDE_CONGE.BUTTON_VALIDER'|translate | uppercase}}</span>
+    </button>
+    <button (click)="refuseAbsence()" class="btn save-add-button-rhis orange-background" id="EMP_absConge-refus-popup"
+            type="button">
+      <span>{{'DEMANDE_CONGE.BUTTON_REFUSER'|translate | uppercase}}</span>
+    </button>
+  </div>
+</div>

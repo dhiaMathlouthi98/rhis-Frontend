@@ -1,0 +1,35 @@
+<p-dialog [showHeader]="false"
+          [(visible)]="showPopUp"
+          [modal]="true"
+          [responsive]="true"
+          [maximizable]="true"
+          [appendTo]="'body'"
+          [dismissableMask]="true"
+          (onHide)="closePopUp()">
+  <div class="container-fluid mt-5" style="width: 1000px">
+    <div class="row">
+      <div class="col-lg-11">
+        <div class="header">
+          {{title}}
+        </div>
+        <div class="content pop-up-content"
+             [style.height.px]="height">
+          <ng-content></ng-content>
+        </div>
+      </div>
+      <div class="col-lg-1">
+        <div class="d-flex flex-column justify-content-between align-content-center h-25">
+          <span class="close-icon pointer-cursor" (click)="closePopUp()">
+            <img src="assets/icons/employe/Btn_Close_Beige.svg" alt="">
+          </span>
+          <span class="pointer-cursor" (click)="print()">
+            <img src="assets/icons/employe/Print Small.svg" alt="">
+          </span>
+          <span (click)="export()" class="pointer-cursor">
+            <img src="assets/icons/employe/dl small.svg" alt="">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

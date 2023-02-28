@@ -1,0 +1,33 @@
+<form [formGroup]="formGroup">
+  <fieldset class="row mt-4">
+    <legend>{{title}}
+      <ng-container *ngIf="isTotalHebdo">{{repartition.toFixed(2)}}</ng-container>
+    </legend>
+    <div class="row  equality-hours-error position-relative">
+      <span *ngIf="!istotalHeuresEquals && isTotalHebdo" class="form-item-error red position-relative mb-2"
+            id="EMP_Contrat-equalityHoursError"> {{"CONTRAT.EQUALITY_HOURS_ERROR" | translate}}</span>
+    </div>
+    <div class="rhis-row">
+      <div *ngFor="let s of sections; let i = index" class="section-element"
+           [ngClass]="{'sexa': sections?.length === 6, 'septem': sections?.length === 7}">
+        <label [for]="'EMP_' + prefixId + s.formControlName + '-' + (i+1)"
+               class="section-element-title">{{s?.sectionTitle}}</label>
+        <input [id]="'EMP_' + prefixId  + s.formControlName + '-' + (i+1)" class="text-field"
+               rhisTwoDigitDecimaNumber
+               type="text"
+               [formControlName]="s?.formControlName">
+        <span class="form-item-error red small"
+              *ngIf="!isTotalHebdo && (formGroup.get(s?.formControlName).hasError('required') || formGroup.get(s?.formControlName).hasError('trimValidator'))  && (formGroup.controls[s?.formControlName].touched)"
+              [id]="'EMP_' + prefixId + s.formControlName + '-' + (i+1) + 'Error'">{{"TYPE_CONTRAT.REQUIRED" | translate}}</span>
+      </div>
+    </div>
+  </fieldset>
+  <div>
+    <span *ngIf="isTotalHebdo && ouvre"
+          [id]="'EMP_' + prefixId + 'msgOuvreError'"
+          class="form-item-error red position-relative mb-2"> {{"CONTRAT.MESSAGE_OUVRE" | translate}}</span>
+    <span *ngIf="isTotalHebdo && ouvrable"
+          [id]="'EMP_' + prefixId + 'msgOuvrableError'"
+          class="form-item-error red position-relative mb-2"> {{"CONTRAT.MESSAGE_OUVRABLE" | translate}}</span>
+  </div>
+</form>

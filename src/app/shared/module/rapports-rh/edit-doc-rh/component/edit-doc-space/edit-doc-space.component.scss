@@ -1,0 +1,55 @@
+.header {
+  span.icon-arrow-right-rhis {
+    background-color: #F7F7F7;
+    margin: 12px 13px 0 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  h3 {
+    height: 36px;
+    color: #9B9B9B;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 36px;
+    margin: 7px 12px 0 0;
+    @media screen and (max-width: 1366px) {
+      font-size: 24px;
+      line-height: 34px;
+    }
+    @media screen and (max-width: 1244px) {
+      font-size: 22px;
+      line-height: 32px;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  h1 {
+    height: 50px;
+    color: #414141;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 50px;
+    @media screen and (max-width: 1024px) {
+      font-size: 20px;
+      line-height: 47px;
+    }
+  }
+}
+
+.block-left-header-rhis {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+  height: 50px;
+}

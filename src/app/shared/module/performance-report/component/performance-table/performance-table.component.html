@@ -1,0 +1,159 @@
+<div [ngStyle]="{'width': periodWidth}" [ngClass]="applyStyle ? 'analyse-perf-font' : ''">
+<div class="summary-section">
+  <div class="bold-text">{{tableTitle}}</div>
+  <div class="bold-text">{{'PERFORMANCES.TOTAL_CA_REEL' | translate}}
+    (€): {{performanceValues?.caReel[performanceValues?.caReel.length - 1].value}}€
+  </div>
+  <div class="bold-text">{{'PERFORMANCES.TOTAL_TAUX_MOE_REEL' | translate}}
+    : {{performanceValues?.moeReel[performanceValues?.moeReel.length - 1].value}}%
+  </div>
+  <div class="bold-text">{{'PERFORMANCES.PROD_GLOBAL' | translate}}
+    : {{performanceValues?.prodReel[performanceValues?.prodReel.length - 1].value}}€
+  </div>
+</div>
+
+<div class="performance-section">
+  <div class="performance-section-title">
+    {{'PERFORMANCES.CHIFFRE_AFFAIRE' | translate}}
+  </div>
+  <div [ngStyle]="{'grid-template-columns': applyStyle ? getColumnsParc() : getColumns() }"
+       class="performance-section-data">
+    <div class="bold-text">{{'PERFORMANCES.DATE' | translate}}</div>
+    <div class="bold-text" *ngFor="let fd of header">
+      {{fd}}
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.CA_PREV' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let cap of performanceValues?.caPrevisionnel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{cap.value | spaceAfterThousands}} €</span>
+    </div>
+    <div class="bold-text reel-data">{{'PERFORMANCES.CA_REEL' | translate}}</div>
+    <div class="reel-data" [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let car of performanceValues?.caReel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{car.value | spaceAfterThousands}} €</span>
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.ANALYSE_ECART' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let e of ecart; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{e}} %</span>
+    </div>
+  </div>
+</div>
+
+<div class="performance-section">
+  <div class="performance-section-title">
+    {{'PERFORMANCES.PROD' | translate}}
+  </div>
+  <div [ngStyle]="{'grid-template-columns': applyStyle ? getColumnsParc() : getColumns() }"
+       class="performance-section-data">
+    <div class="bold-text">{{'PERFORMANCES.PROD_PREV' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let pp of performanceValues?.prodPrevisionnel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{pp.value | spaceAfterThousands}} €</span>
+    </div>
+    <div class="bold-text reel-data">{{'PERFORMANCES.PROD_REEL' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         class="reel-data" *ngFor="let pr of performanceValues?.prodReel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{pr.value | spaceAfterThousands}} €</span>
+    </div>
+    <div class="bold-text text-right" [ngStyle]="{'padding-right': applyStyle ? '7%' : '' }">> {{'PERFORMANCES.PROD_REEL_12_14' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let prm of performanceValues?.prodReelMidi; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{prm.value | spaceAfterThousands}} €</span>
+    </div>
+    <div class="bold-text text-right" [ngStyle]="{'padding-right': applyStyle ? '7%' : '' }">> {{'PERFORMANCES.PROD_REEL_18_20' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let prs of performanceValues?.prodReelSoir; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{prs.value | spaceAfterThousands}} €</span>
+    </div>
+  </div>
+</div>
+
+<div class="performance-section">
+  <div class="performance-section-title">
+    {{'PERFORMANCES.MOE' | translate}}
+  </div>
+  <div [ngStyle]="{'grid-template-columns': applyStyle ? getColumnsParc() : getColumns() }"
+       class="performance-section-data">
+    <div class="bold-text">{{'PERFORMANCES.MOE_PREV' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let moep of performanceValues?.moePrevisionnel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{moep.value | spaceAfterThousands}} %</span>
+    </div>
+    <div class="bold-text reel-data">{{'PERFORMANCES.MOE_REEL' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         class="reel-data" *ngFor="let moer of performanceValues?.moeReel; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{moer.value | spaceAfterThousands}} %</span>
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.MOE_MANAGER_REEL' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let moerm of performanceValues?.moeReelManager; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{moerm.value | spaceAfterThousands}} %</span>
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.MOE_EQUIP_REEL' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let moere of performanceValues?.moeReelEquipier; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{moere.value | spaceAfterThousands}} %</span>
+    </div>
+  </div>
+</div>
+
+<div class="performance-section">
+  <div class="performance-section-title">
+    {{'PERFORMANCES.H_COMP' | translate}}
+  </div>
+  <div [ngStyle]="{'grid-template-columns': applyStyle ? getColumnsParc() : getColumns() }"
+       class="performance-section-data">
+    <div class="bold-text">{{'PERFORMANCES.CP10' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let cp10 of performanceValues?.cp10; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{getFormattedHeuresSuppComp(cp10.value)}} <span
+              *ngIf="cp10.value != null">h</span></span>
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.CP25' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let cp25 of performanceValues?.cp25; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{getFormattedHeuresSuppComp(cp25.value)}} <span
+              *ngIf="cp25.value != null">h</span></span>
+    </div>
+    <ng-container *ngFor="let palier of (getPaliers | memoize: performanceValues : spMode)">
+      <div class="bold-text">{{('PERFORMANCES.' + (palier | uppercase)) | translate}}</div>
+      <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+           *ngFor="let sp of performanceValues[palier]; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{getFormattedHeuresSuppComp(sp.value)}} <span
+              *ngIf="sp.value != null">h</span></span>
+      </div>
+    </ng-container>
+    <div class="bold-text">{{'PERFORMANCES.SP50' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let sp50 of performanceValues?.sp50; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{getFormattedHeuresSuppComp(sp50.value)}} <span
+              *ngIf="sp50.value != null">h</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="performance-section">
+  <div class="performance-section-title">
+     {{'PERFORMANCES.ABS' | translate}}
+  </div>
+  <div [ngStyle]="{'grid-template-columns': applyStyle ? getColumnsParc() : getColumns() }"
+       class="performance-section-data">
+    <div class="bold-text">{{'PERFORMANCES.ABS_MATIN' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let absm of performanceValues?.absenteismeMatin; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{absm.value | spaceAfterThousands}} %</span>
+    </div>
+    <div class="bold-text">{{'PERFORMANCES.ABS_SOIR' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         *ngFor="let abss of performanceValues?.absenteismeSoir; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{abss.value | spaceAfterThousands}} %</span>
+    </div>
+    <div class="bold-text reel-data">{{'PERFORMANCES.ABS_GLOBAL' | translate}}</div>
+    <div [ngClass]="filter === DISPLAY_YEAR ? 'year-data' : ''"
+         class="reel-data" *ngFor="let absg of performanceValues?.absenteismeGlobal; let last = last;">
+      <span [ngClass]="last ? 'bold-text' : ''">{{absg.value | spaceAfterThousands}} %</span>
+    </div>
+  </div>
+</div>
+</div>

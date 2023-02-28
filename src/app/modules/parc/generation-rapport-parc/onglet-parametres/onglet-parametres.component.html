@@ -1,0 +1,261 @@
+<div class="align-onglet-items">
+  <div class="bold-text mb-2 mt-1">
+    {{"GESTION_PARC_RAPPORT.COMPARATIF_MODE_TEXT" | translate}}
+  </div>
+  <div class="bloc-commun-poste">
+    <div class="small-box--1">
+      <div
+        *ngIf="rapportCodeName!='POSTES_TRAVAIL_RAPPORT' && rapportCodeName!='PERFORMANCE_RAPPORT'">{{"GESTION_PARC_RAPPORT.ONE_PAGE_MODE_1" | translate}}</div>
+      <div
+        *ngIf="rapportCodeName==='POSTES_TRAVAIL_RAPPORT' || rapportCodeName==='PERFORMANCE_RAPPORT'">{{"GESTION_PARC_RAPPORT.ONE_ONGLET_MODE" | translate}}</div>
+
+      <div>{{"GESTION_PARC_RAPPORT.ONE_PAGE_MODE_2" | translate}}</div>
+
+    </div>
+    <div class="small-box--2">
+      <p-inputSwitch (onChange)="changeValue();updateTypePeriode()"
+                     [disabled]="disableRadioButton"
+                     [(ngModel)]="comparatifFile"
+                     [ngClass]="{'grey-switch' : comparatifFile,'blue-switch' : !comparatifFile}"
+                     id="RAPP-GDP-switch-button">
+      </p-inputSwitch>
+    </div>
+    <div class="small-box--3">
+      <div>{{"GESTION_PARC_RAPPORT.MULTIPLE_PAGE_MODE_1" | translate}}</div>
+      <div>{{"GESTION_PARC_RAPPORT.MULTIPLE_PAGE_MODE_2" | translate}}</div>
+    </div>
+  </div>
+
+  <div class="bold-text mb-2 mt-3" *ngIf="rapportCodeName==='POSTES_TRAVAIL_RAPPORT'">
+    {{"GESTION_PARC_RAPPORT.POSTE_TRAVAIL_SWITCH_MODE" | translate}}
+  </div>
+  <div class="bloc-commun-poste"
+       *ngIf="rapportCodeName==='POSTES_TRAVAIL_RAPPORT'">
+    <div class="small-box--1">
+      <div>{{"GESTION_PARC_RAPPORT.DAY_PERIODE" | translate}}</div>
+    </div>
+    <div class="small-box--2">
+      <p-inputSwitch (onChange)="changeValue();updateTypePeriodePosteTravail()"
+                     [disabled]="disableRadioButton"
+                     [(ngModel)]="modeAffichageRapportPosteTravail"
+                     [ngClass]="{'grey-switch' : !modeAffichageRapportPosteTravail,'blue-switch' : modeAffichageRapportPosteTravail}"
+                     id="RAPP-GDP-switch-button">
+      </p-inputSwitch>
+    </div>
+    <div class="small-box--3">
+      <div>{{"GESTION_PARC_RAPPORT.WEEK_PERIOD" | translate}}</div>
+    </div>
+  </div>
+
+  <div class="bold-text mt-3">
+    {{"GESTION_PARC_RAPPORT.RESTAURANTS_LIST_TEXT" | translate}}
+  </div>
+  <div class="section-element-title mb-3 center-flex-block mt-3">
+    <p-multiSelect (onChange)="updateCalendar($event);changeValue()"
+                   [(ngModel)]="selectedRestaurants"
+                   [options]="listRestaurant"
+                   [disabled]="disableListResto"
+                   appendTo="body"
+                   defaultLabel="{{'GESTION_PARC_RAPPORT.CHOOSE'|translate}}"
+                   optionLabel="libelleRestaurant"
+                   selectedItemsLabel="{0} {{'GESTION_PARC_RAPPORT.SELECTED_RESTAURANTS' | translate}}"
+                   id="RAPP-GDP-multiselect">
+    </p-multiSelect>
+  </div>
+
+  <div *ngIf="rapportCodeName === 'PILOTAGE_RESUME_PLANNING_RAPPORT'">
+    <div class="bold-text">
+      {{"GESTION_PARC_RAPPORT.WEEK_CHOICE_TEXT" | translate}}
+    </div>
+    <div class="onglet-param-resume-plg mb-3 center-flex-block mt-2">
+      <div class="block-input-week-rhis">
+        <span class="img-planning left">
+          <img (click)="downWeekDate()" alt="no image" id="RAPP-RP-GDP-INC-CALEND"
+               src="assets/icons/planning/back-rhis.png">
+        </span>
+        <p-calendar (change)="onDateChange()"
+                    (onSelect)="selectDateFirstCalendar($event, true)"
+                    [(ngModel)]="values"
+                    [locale]="calendar_fr"
+                    [showIcon]="true"
+                    [showWeek]="true"
+                    appendTo="body"
+                    [disabled]="disableFirstCalendar"
+                    dateFormat="dd/mm/yy"
+                    id="PARAM-RESUME-DATE"
+                    selectionMode="range">
+        </p-calendar>
+        <span class="img-planning right">
+          <img (click)="upWeekDate()" alt="no image" id="RAPP-RP-GDP-DEC-CALEND"
+               src="assets/icons/planning/after-rhis.png">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="center-flex-block bloc-btn-generation-rapport">
+    <span class="con-tooltip bottom">
+    <button (click)="generateReport()"
+            [disabled]="disableButton"
+            [ngClass]="{'change-cursor': disableButton}"
+            class="btn save-add-button-rhis blue-background"
+            id="RAPP-RP-GENERATE"
+            type="button">
+      <span>{{"GESTION_PARC_RAPPORT.GENERATE_BUTTON_TEXT" | translate}}</span>
+    </button>
+    <span class="rhis-tooltip" *ngIf="disableButton">{{"GESTION_PARC_RAPPORT.MISSING_DATA_MSG" | translate}}</span>
+  </span>
+  </div>
+  <div *ngIf="rapportCodeName === 'PERFORMANCE_RAPPORT'">
+    <div class="align-onglet-items-analyse-perf mt-1 mb-3">
+      <div class="bold-text">
+        {{"GESTION_PARC_RAPPORT.PERIODE_CALCUL_TEXT" | translate}}
+      </div>
+      <div class="btn-group" role="group">
+        <span class="con-tooltip bottom">
+          <button (click)="onSelectType('jour');onDateChange()"
+                  [ngClass]="{'active': typePeriodeCalcul=='jour'}"
+                  class="btn btn-light"
+                  id="RAPP-AP-DAY" [disabled]="disableCalculPeriod"
+                  type="button">
+        {{"GESTION_PARC_RAPPORT.DAY_PERIODE" | translate}}
+         </button>
+        </span>
+        <button (click)="onSelectType('semaine');onDateChange()"
+                [ngClass]="{'active': typePeriodeCalcul=='semaine'}"
+                class="btn btn-light" [disabled]="disableCalculPeriod"
+                id="RAPP-AP-WEEK"
+                type="button">
+          {{"GESTION_PARC_RAPPORT.WEEK_PERIOD" | translate}}
+
+        </button>
+        <span class="con-tooltip bottom">
+          <button (click)="onSelectType('mois');onDateChange()"
+                  [ngClass]="{'active': typePeriodeCalcul=='mois'}"
+                  class="btn btn-light" [disabled]="disableCalculPeriod"
+                  id="RAPP-AP-MONTH"
+                  type="button">
+           {{"GESTION_PARC_RAPPORT.MONTH_PERIOD" | translate}}
+        </button>
+        </span>
+      </div>
+      <div class="bold-text mt-3 mb-2">
+        {{calendarText}}
+      </div>
+      <div *ngIf="typePeriodeCalcul === 'jour' || typePeriodeCalcul === 'semaine'" class="onglet-param-resume-plg">
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDateSecondCalendar();changeValue()" alt="no image" id="PARAM-RESUME-PLG-D-DAY"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar (change)="onDateChange()"
+                      (onSelect)="selectDateSecondCalendar($event, true)"
+                      [(ngModel)]="secondCalendarValues"
+                      [locale]="calendar_fr"
+                      [showIcon]="true"
+                      [showWeek]="true"
+                      appendTo="body"
+                      dateFormat="dd/mm/yy"
+                      [disabled]="disableSecondCalendar"
+                      id="PARAM-RESUME-DATE-DAY"
+                      [selectionMode]="comparatifFile && typePeriodeCalcul === 'jour' ? 'single' : 'range'">
+          </p-calendar>
+          <span class="img-planning right">
+            <img (click)="upWeekDateSecondCalendar();changeValue()"
+                 alt="no image"
+                 id="PARAM-RESUME-PLG-U-DAY"
+                 src="assets/icons/planning/after-rhis.png">
+          </span>
+        </div>
+      </div>
+      <div *ngIf="typePeriodeCalcul === 'mois' && !comparatifFile"
+           class="onglet-param-resume-plg">
+        <div class="block-input-week-rhis year-specific">
+          <span class="img-planning left">
+            <img (click)="yearDecrement();changeValue()"
+                 alt="no image"
+                 id="PARAM-RESUME-PLG-D-MONTH"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+
+          <input (ngModelChange)="changeValue()"
+                 [(ngModel)]="selectedYear"
+                 class="input-year-param input-rapport-rhis"
+                 type="text"/>
+
+          <span class="img-planning right">
+            <img (click)="yearIncrement();changeValue()" alt="no image"
+                 id="PARAM-RESUME-PLG-U-MONTH"
+                 src="assets/icons/planning/after-rhis.png">
+          </span>
+        </div>
+
+      </div>
+      <div *ngIf="comparatifFile && typePeriodeCalcul === 'mois'" class="month-calendar w-100 d-flex justify-content-center">
+        <p-calendar
+                (onSelect)="checkMonthDate($event)"
+                [(ngModel)]="monthModel"
+                [readonlyInput]="true"
+                [showIcon]="false"
+                [yearNavigator]="true"
+                dateFormat="mm/yy"
+                id="RAPPORT_plgV-month-startDateSelect"
+                inputId="monthpicker"
+                view="month"
+                yearRange="2000:2050">
+        </p-calendar>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="rapportCodeName === 'POSTES_TRAVAIL_RAPPORT'">
+    <div class="align-onglet-items-analyse-perf mb-3">
+      <div class="bold-text">
+        {{"GESTION_PARC_RAPPORT.RAPPORT_POSTE_TRAVAIL_TITLE_DATE" | translate}} :
+      </div>
+      <div *ngIf="typePeriodeCalcul === 'jour' || typePeriodeCalcul === 'semaine'" class="onglet-param-resume-plg">
+        <div class="block-input-week-rhis">
+          <span class="img-planning left">
+            <img (click)="downWeekDateSecondCalendar();changeValue()" alt="no image" id="PARAM-RESUME-PLG-D-DAY"
+                 src="assets/icons/planning/back-rhis.png">
+          </span>
+          <p-calendar (change)="onDateChange()"
+                      (onSelect)="selectDateCalendarPosteTravail($event, true)"
+                      [(ngModel)]="secondCalendarValues"
+                      [locale]="calendar_fr"
+                      [showIcon]="true"
+                      [showWeek]="true"
+                      appendTo="body"
+                      dateFormat="dd/mm/yy"
+                      [disabled]="disableSecondCalendar"
+                      id="PARAM-RESUME-DATE-DAY"
+                      [selectionMode]="typePeriodeCalcul === 'jour' ? 'single' : 'range'">
+          </p-calendar>
+          <span class="img-planning right">
+            <img (click)="upWeekDateSecondCalendar();changeValue()"
+                 alt="no image"
+                 id="PARAM-RESUME-PLG-U-DAY"
+                 src="assets/icons/planning/after-rhis.png">
+          </span>
+        </div>
+      </div>
+
+      <div class="bold-text mt-3" *ngIf="!modeAffichageRapportPosteTravail">
+        {{"GESTION_PARC_RAPPORT.DECOUPAGE_PAR_TRANCHE" | translate}}
+      </div>
+      <div class="section-element-title mb-3 center-flex-block mt-2 onglet-param-resume-plg" *ngIf="!modeAffichageRapportPosteTravail">
+        <p-dropdown
+                       [(ngModel)]="trancheHoraire"
+                       [options]="trancheHoraireList"
+                       (onChange)="changeValue()"
+                       appendTo="body"
+                       (onShow)="alignSizes()"
+                       optionLabel="label"
+                       selectId="value" dataKey="value"
+                       id="RAPP-GDP-multiselect">
+        </p-dropdown>
+      </div>
+
+    </div>
+  </div>
+</div>

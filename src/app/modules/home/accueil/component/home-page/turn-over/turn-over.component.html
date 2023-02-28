@@ -1,0 +1,28 @@
+<div class="rhis-container" [style.float]="position" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
+    <div class="period-list">
+      <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_WEEK,
+  'periode': filter!=FILTER_WEEK
+  }" (click)="setFilter(FILTER_WEEK)">{{'Acceuil.S_1' | translate}}</h1>
+    </div>
+    <div class="period-list">
+      <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_MONTH,
+  'periode': filter!=FILTER_MONTH
+  }" (click)="setFilter(FILTER_MONTH)"
+      >{{'Acceuil.M_1' | translate}}</h1>
+    </div>
+    <div class="period-list">
+      <h1 [ngClass]="{
+  'selected-periode': filter == FILTER_YEAR,
+  'periode': filter!=FILTER_YEAR
+  }" (click)="setFilter(FILTER_YEAR)">{{'MASSE_SAL.YEAR' | translate}}</h1>
+    </div>
+    <div *ngIf="!loadingTurnOver" class="center-block">
+      <div class="center-block-text">{{'Acceuil.TURN_OVER' | translate}} {{getDateLabel()}}</div>
+      <div class="center-block-value">{{turnOver}} <span class="center-block-unity">%</span></div>
+      <div class="center-block-display-rapp"><span>voir le rapport</span></div>
+    </div>
+</div>
+<p-progressSpinner id="spinner-to" *ngIf="loadingTurnOver" class="data-in-progress"></p-progressSpinner>

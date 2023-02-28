@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>EC4DC896-E880-4BFC-AEA2-24BE27E2BF0B</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="21-Tableau" transform="translate(-397.000000, -211.000000)" stroke="#9B9B9B">
+            <g id="Contenu" transform="translate(74.000000, 74.000000)">
+                <g id="Btn_Listes" transform="translate(276.000000, 127.000000)">
+                    <g id="BTN_Postes" transform="translate(37.000000, 0.000000)">
+                        <g id="Ico_Analyse_OFF" transform="translate(11.000000, 11.000000)">
+                            <rect id="Rectangle" x="0" y="0" width="17" height="17" rx="2"></rect>
+                            <path d="M4.5,1 L4.5,16" id="Path" stroke-width="0.5"></path>
+                            <path d="M8.5,1 L8.5,16" id="Path" stroke-width="0.5"></path>
+                            <path d="M12.5,1 L12.5,16" id="Path" stroke-width="0.5"></path>
+                            <path d="M6.32128906,8.5 L10.5,8.5" id="Path"></path>
+                            <path d="M1.72314453,4.5 L6.32128906,4.5" id="Path"></path>
+                            <path d="M10.5,12.5 L15.5,12.5" id="Path"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,6 @@
+:host ::ng-deep {
+  .table-list.bg-gris-avec-border p-table .ui-table table .ui-table-thead > tr > th:first-child {
+    text-align: left !important;
+    padding-left: 30px !important;
+  }
+}

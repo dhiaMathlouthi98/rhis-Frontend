@@ -1,0 +1,46 @@
+<div class="rhis-container">
+  <div class="header block-left-header-rhis">
+    <a [routerLink]="rhisRouter.getRoute('HOME_EMPLOYEE')">
+      <h3>{{"MENU.EMPLOYEE" | translate}}</h3>
+    </a>
+    <span class="icon-arrow-right-rhis">
+      <img src="assets/icons/employe/Arrow right.svg" alt="no icon">
+    </span>
+    <div class="shortcut">
+      {{getFirstFullNameLetters()}}
+    </div>
+    <h1>{{sharedEmployeeService?.selectedEmployee?.prenom}} {{sharedEmployeeService?.selectedEmployee?.nom}}</h1>
+    <span (click)="listEmplyeesAreShown = !listEmplyeesAreShown" class="arrow-list-employees-rhis">
+          <i class="pi pi-angle-down" style="font-size: 2em"></i>
+        </span>
+    <div class="list-employes-selectif_rhis" *ngIf="listEmplyeesAreShown"
+         (rhisClickOutsideTooltip)="listEmplyeesAreShown = false">
+      <p-listbox (onChange)="showDetails()"
+                 [options]="listOrdonneEmployee"
+                 [listStyle]="{'max-height':'250px'}"
+                 [(ngModel)]="selectedEmployee"
+                 optionLabel="displayedName">
+      </p-listbox>
+    </div>
+  </div>
+  <div class="detail">
+    <div class="panel" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+         [offset]="200">
+      <div class="menu-detail-employee-rhis">
+        <div class="item-menu-detail-employee-rhis" *ngFor="let s of sections; let f = first; let i=index"
+             (click)="setActive(i)"
+             [ngClass]="{'active': activeSection == i ,
+           'not-active': activeSection !== i,
+           'disabled': sectionState}"
+             [routerLink]="[s?.path]">
+          <span>{{s?.name}}</span>
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="{'scroll-content-detail-perso': addBlockScrollDetail}"
+         [ngStyle]="{'height': heightInterface}"
+         class="view scroll-content-rhis view-details-employes">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

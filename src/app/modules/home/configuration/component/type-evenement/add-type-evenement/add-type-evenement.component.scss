@@ -1,0 +1,14 @@
+.check-list {
+  height: 249px;
+  margin-bottom: 83px;
+}
+
+.section-element {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .ui-chkbox-label {
+    margin: 0 8px 0 0.2em !important;
+  }
+}

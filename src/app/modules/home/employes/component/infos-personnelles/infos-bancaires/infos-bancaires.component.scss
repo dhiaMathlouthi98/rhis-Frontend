@@ -1,0 +1,13 @@
+:host {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+:host ::ng-deep {
+  .section-element .text-field ,
+  .ui-calendar .ui-inputtext
+  {
+    margin-top: 0;
+  }
+}
+

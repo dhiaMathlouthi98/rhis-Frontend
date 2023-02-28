@@ -1,0 +1,262 @@
+<div class="gdh-container position-relative">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')" [offset]="300"
+       class="block-filter-gdh">
+    <button (click)="toggleFilterPopup()" class="btn mr-2 btn-filter-column">
+    <span>
+      <img alt="no print icon" src="assets/icons/gdh/Plus@3x.png">
+    </span>
+    </button>
+  </div>
+  <rhis-filter-popup [openedAlertes]="openedFilterPopup" [showCoupuresCol]="showCoupuresCol"
+                     [showRepasCol]="showRepasCol" (rhisClickOutsideTooltip)="closeFilterPopup()"
+                     *ngIf="openedFilterPopup" (toggleColumn)="toggleColumn($event)"
+                     (closeAlertes)="closeFilterPopup()"></rhis-filter-popup>
+  <div [ngClass]="{'d-flex': !menuIsOpen}" class="table-list">
+    <div class="child-table-view-all-gdh">
+      <p-table
+        (onPage)="onLazyLoad($event)"
+        [columns]="header"
+        [customSort]="true"
+        [first]="first"
+        [frozenValue]="frozenLines"
+        [lazy]="true"
+        [ngClass]="{
+  'scroll-table-menu-close-gdh': !menuIsOpen,
+  'scroll-table-menu-open-gdh': menuIsOpen}"
+        [paginator]="true"
+        [resetPageOnSort]="false"
+        [rowsPerPageOptions]="rowsPerPageOptions"
+        [rows]="rows"
+        [scrollHeight]="heightInterface"
+        [scrollable]="true"
+        [totalRecords]="totalRecords"
+        [value]="gdhViewData?.employees">
+        <ng-template let-columns pTemplate="colgroup">
+          <colgroup>
+            <col style="width:200px">
+            <ng-container *ngFor="let col of columns">
+              <col [ngStyle]="{'display':  (col?.field == 'coupures' && !showCoupuresCol) || (col?.field == 'repas' && !showRepasCol) ? 'none' : '',
+              'width': '150px'}">
+            </ng-container>
+          </colgroup>
+        </ng-template>
+        <ng-template let-columns pTemplate="header">
+          <tr class="header-row">
+            <th [pSortableColumn]="'prenom'" (click)="sortList()" class="float-left">
+              <ng-container>
+                {{"GDH.DAY_VEIW.TABLE_HEADER.EMPLOYE" | translate}}
+              </ng-container>
+              <p-sortIcon [field]="'prenom'" ariaLabel="Activate to sort"
+                          ariaLabelAsc="Activate to sort in ascending order"
+                          ariaLabelDesc="Activate to sort in descending order">
+              </p-sortIcon>
+            </th>
+            <th *ngFor="let col of columns; let l = last"
+                [ngStyle]="{'display':  (col?.field == 'coupures' && !showCoupuresCol) || (col?.field == 'repas' && !showRepasCol) ? 'none' : ''}"
+                class="vue-day-header">
+              <ng-container *ngIf="col?.field != 'pointages'">
+                {{col?.title}}
+              </ng-container>
+              <ng-container *ngIf="col?.field == 'pointages'">
+                <div class="d-flex width-100">
+                  {{col?.title}}
+                </div>
+              </ng-container>
+
+            </th>
+          </tr>
+
+        </ng-template>
+        <ng-template let-columns="columns" let-rowData pTemplate="frozenrows">
+          <tr *ngIf="total" class="table-row1 total">
+            <td>
+              <div class="d-flex justify-content-start gdh-total-title">
+                <span>{{rowData['title']}}</span>
+              </div>
+            </td>
+            <ng-container *ngFor="let col of columns">
+              <ng-container *ngIf="isFilteredColumns(col?.field)">
+                <ng-container *ngIf="col?.field === 'repas'">
+                  <td class="td-day">
+                    <b>{{total?.repas !== -1 ? total?.repas : ""}}</b>
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="col?.field === 'coupures'">
+                  <td class="td-day">
+                    <b>{{total?.coupures}}</b>
+                  </td>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="isNotFilteredColumns(col?.field)">
+                <td class="td-day">
+                  <strong *ngIf="isHourlyView">{{rowData[col?.field] | tempPlanifiesTime}}</strong>
+                  <strong *ngIf="!isHourlyView">{{rowData[col?.field] | centiemeTime}}</strong>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="col?.field === 'pointages'">
+                <td class="td-day"></td>
+              </ng-container>
+            </ng-container>
+          </tr>
+        </ng-template>
+        <ng-template let-employe let-employeIndex="rowIndex" pTemplate="body">
+          <tr [pSelectableRow]="employe" class="table-row1">
+            <td class="FirstCol">
+              <div class="d-flex justify-content-start ml-2">
+                <div>
+                  <div class="mr-2 img-profil__photo32">{{employe|user2Lettre}}</div>
+                </div>
+                <div (click)="employeeInfo(employe) ; popoverInfoEmploye.toggle($event)"
+                     class="gdh-employee">
+                  <b class="empl-prenom">{{employe?.nom}}</b>
+                  <br/>
+                  <span>{{employe?.prenom|userUpperFirstLetter}}</span>
+                </div>
+              </div>
+              <p-overlayPanel #popoverInfoEmploye
+                              [dismissable]="true"
+                              appendTo="body"
+                              class="employee-popover">
+                <rhis-employee-info-popover [employee]="employe"
+                                            [selectedEmployeeUuId]="selectedEmployeeId"></rhis-employee-info-popover>
+              </p-overlayPanel>
+            </td>
+
+            <td class="gdh-column-pointage">
+
+              <div class="d-flex">
+                <div>
+                  <ng-container
+                    *ngTemplateOutlet="pointageAbsence; context: {employe: employe,  indexEmploye: employeIndex, isFirstBlock: true}">
+                  </ng-container>
+                </div>
+                <div>
+                  <ng-container
+                    *ngTemplateOutlet="pointageAbsence; context: {employe: employe, indexEmploye: employeIndex, isFirstBlock: false}">
+                  </ng-container>
+                </div>
+              </div>
+
+              <!-- s'il n y a pas des pointage, on affiche ine tiret-->
+              <div *ngIf="employeeHasNoPointagesOrAbsences | memoize : employe" class="pointage-tiret"> --</div>
+
+              <!-- overlayPanel for adding new pointage-->
+              <div (click)="!isModificationBlocked ? popoverAdd.toggle($event) : checkModificationState()"
+                   *ngIf="addControlButton()"
+                   class="oval-plus"
+                   id="GDH-addPointage-btn">+
+              </div>
+              <p-overlayPanel #popoverAdd
+                              [dismissable]="true"
+                              (onHide)="onHideAddPopUp()"
+                              (onShow)="setPointageAbsenceToAdd()"
+                              appendTo="body">
+                <rhis-add-pointage-absence-form
+                  (hidePopUp)="popoverAdd?.hide()"
+                  (onSubmit)="onSubmit(pointageAbsenceToAdd, $event, employe, employeIndex, popoverAdd)"
+                  *ngIf="pointageAbsenceToAdd?.shown"
+                  [isCreation]="true"
+                  [pointageAbsence]="pointageAbsenceToAdd"
+                  [typeEvenements]="typeEvenements"
+                  [typePointages]="typePointages"
+                  [modeAffichage]="modeAffichage"
+                  [blockGdhParamDefault]="blockGdhParamDefault"
+                  [isContinuedDecoupageWithNextDay]="isContinuedDecoupageWithNextDay">
+                </rhis-add-pointage-absence-form>
+              </p-overlayPanel>
+            </td>
+
+            <td>
+              <span *ngIf="isHourlyView" [innerHTML]="employe?.tempsPlanifies|tempPlanifiesTime"></span>
+              <span *ngIf="!isHourlyView" [innerHTML]="employe?.tempsPlanifies|centiemeTime"></span>
+            </td>
+            <td>
+            <span
+              [innerHTML]="employe?.tempsPointes|tempPointesTime:employe?.tempsPlanifies:employe?.tempsAbsences: isHourlyView"></span>
+            </td>
+            <td>
+              <span [innerHTML]="employe?.tempsAbsences|tempAbsences:employe?.absences: isHourlyView"></span>
+            </td>
+            <td *ngIf="showCoupuresCol">{{employe?.coupures}}</td>
+            <td (click)="editRepas(employeIndex); checkModificationState()" *ngIf="showRepasCol" class="FirstCol" style="width: 150px;">
+              <div (rhisClickOutside)="saveRepas(employe, repas?.value, employeIndex)"
+                   *ngIf="isRepasOnEditionMode[employeIndex % gdhViewData?.size] && addControlButton()"
+                   [skipFirstClick]="true">
+                <input (keydown.enter)="saveRepas(employe, repas?.value, employeIndex)"
+                       [value]="employe?.repas >= 0 ? employe?.repas : ''" class="repas" min="0"
+                       ref-repas type="number">
+              </div>
+              <ng-container *ngIf="(employe?.repas >= 0) && !isRepasOnEditionMode[employeIndex % gdhViewData?.size]">
+                {{employe?.repas}}
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+  <ng-template let-employe="employe" let-isFirstBlock="isFirstBlock" let-indexEmploye="indexEmploye" #pointageAbsence>
+    <div *ngFor="let pointageAbsence of getPointagesAndAbsences| memoize: employe: guiDay24Coordination: modeAffichage;
+     let i= index; let c = count"
+         id="block_pointage_{{employe?.idEmploye}}{{i}}">
+      <div
+        *ngIf="isFirstBlock ? i < getLimit(c) : i>= getLimit(c)"
+        (dblclick)="openPopOver($event, popoverAbs, pointageAbsence)"
+        (click)="checkModificationState()"
+        [innerHTML]="pointageAbsence|colorPointageTime:i:rhisTranslateService"></div>
+      <p-overlayPanel #popoverAbs
+                      (onHide)="onHidden(pointageAbsence)"
+                      [dismissable]="true"
+                      appendTo="body">
+        <rhis-add-pointage-absence-form
+          *ngIf="pointageAbsence.shown"
+          [pointageAbsence]="pointageAbsence"
+          [typeEvenements]="typeEvenements"
+          [typePointages]="typePointages"
+          [modeAffichage]="modeAffichage"
+          [isContinuedDecoupageWithNextDay]="isContinuedDecoupageWithNextDay"
+          (onSubmit)="onSubmit(pointageAbsence, $event, employe, indexEmploye, popoverAbs)"
+          (hidePopUp)="popoverAbs?.hide()"
+          (printEvent)="printEvent($event, employe)"
+          [blockGdhParamDefault]="blockGdhParamDefault">
+        </rhis-add-pointage-absence-form>
+      </p-overlayPanel>
+
+    </div>
+  </ng-template>
+</div>
+
+
+<rhis-pop-up
+  (closeEvent)="isReportGenerationLoader = false"
+  [showPopUp]="isReportGenerationLoader"
+  [title]="reportGenerationTitle"
+  [width]="400">
+  <div class="container-generate-report">
+    <div>{{"POPUPS.GENERATOR_REPORT_MESSAGE" | translate}}</div>
+    <div class="generation-label text-white text-center d-flex flex-column justify-content-around mt-2"
+         [ngClass]="{
+     'bg-danger': getBackgroundColor(2),
+     'success': getBackgroundColor(0),
+     'progress': getBackgroundColor(1)}">
+      {{reportGenerationLabel}}
+    </div>
+    <div (click)="isReportGenerationLoader = false"
+         class="btn btn-light mt-4 w-50  float-right generation-report-close-btn">
+      {{"BUTTON.CLOSE" | translate}}
+    </div>
+  </div>
+</rhis-pop-up>
+
+<rhis-pop-up (closeEvent)="showVoucherPdf = false"
+             [showPopUp]="showVoucherPdf"
+             [height]="popUpStyle?.height">
+  <rhis-print-voucher [bonInfo]="bonInfo"></rhis-print-voucher>
+</rhis-pop-up>
+
+<rhis-pop-up (closeEvent)="warningPopUpLock = false"
+             [showPopUp]="warningPopUpLock"
+             [title]="('GDH.BLOCK.TO' | translate) + limitBlockDate">
+  {{'GDH.BLOCK.DAY_WARNING' | translate}}
+</rhis-pop-up>

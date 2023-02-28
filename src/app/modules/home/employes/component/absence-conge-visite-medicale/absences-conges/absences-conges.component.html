@@ -1,0 +1,155 @@
+<div class="table-list bg-gris-avec-border">
+  <p-table [columns]="absenceCongeHeader" [value]="listAbsenceConge" [scrollable]="true" scrollHeight="400px">
+    <ng-template pTemplate="colgroup" let-columns stickyHeader stickyClass="stickyHeader">
+      <colgroup>
+        <ng-container *ngIf="listAbsenceConge?.length">
+          <col *ngFor="let c of columns">
+          <col>
+        </ng-container>
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr class="header-row">
+        <ng-container *ngIf="listAbsenceConge?.length">
+          <th *ngFor="let col of columns; let f= first; let l = last"
+              [pSortableColumn]="col?.field != 'numTel' ? col.field : null">
+            {{col.title}}
+            <p-sortIcon *ngIf="l || f" [field]="col.field" ariaLabel="Activate to sort"
+                        ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </th>
+        </ng-container>
+        <th>
+          <button *ngIf="addButtonControl()" class="btn save-add-button-rhis button-add-intable-rhis orange-background"
+                  id="EMP_absConge-add-btn"
+                  (click)="addCongeAbsence()"
+                  type="button">
+            <span>{{'DEMANDE_CONGE.ADD_NEW_CONGE_LABEL'|translate | uppercase}}</span>
+          </button>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-conge>
+      <tr [pSelectableRow]="conge"
+          (click)="showDetailsAbsenceConge(conge); $event.stopPropagation()">
+        <td>
+          <div class="td-container td-left-border">
+            {{conge?.dateDebut| date:'dd/MM/yyyy'}}
+          </div>
+        </td>
+        <td>
+          <div class="td-container">
+            {{conge?.dateFin| date:'dd/MM/yyyy'}}
+          </div>
+        </td>
+        <td>
+          <div class="td-container">
+               <span class="label-table blue-background">
+        {{conge?.dateDebut | decompteConge: conge?.dateFin : conge?.typeEvenement?.code : absenceParam: listJourFeries}}
+            </span>
+          </div>
+        </td>
+        <td>
+          <div class="td-container">
+            {{conge?.typeEvenement?.libelle}}
+          </div>
+        </td>
+        <td>
+          <div class="td-container">
+            <span class="label-table" *ngIf="conge?.status === statusCongeValide"
+                  [ngStyle]="{'background-color': '#2DC76D'}">
+          {{conge.status}}
+        </span>
+            <span (click)="showPopupvalidateOrRefuseAbsenceConge(conge);$event.stopPropagation()" class="label-table"
+                  *ngIf="conge?.status === statusCongeAttente"
+                  [ngStyle]="{'background-color': '#ff0000'}"
+                  id="EMP_absConge-status">
+          {{conge.status}}
+        </span>
+            <span class="label-table" *ngIf="conge?.status === statusCongeNonValide"
+                  [ngStyle]="{'background-color': '#FF9B42'}">
+          {{conge.status}}
+        </span>
+          </div>
+        </td>
+        <td>
+          <div class="td-container td-right-border pr-4">
+            <div class="operation float-right" (click)="$event.stopPropagation()">
+              <span class="item mr-2" id="EMP_AbsConge-email-icon">
+                <img alt="" src="assets/icons/employe/Email Small.svg">
+              </span>
+              <span (click)="viewFile(conge)" class="item mr-2" id="EMP_AbsConge-view-icon">
+                <img alt="" src="assets/icons/employe/Ico_View.svg">
+              </span>
+              <span *ngIf="deleteButtonControl()" (click)="showConfirmDeleteAbsenceConge(conge,'delete')"
+                    class="item" id="EMP_AbsConge-close-icon">
+                <img alt="no image" src="assets/icons/employe/Btn_Close.svg">
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<rhis-pop-up
+  (closeEvent)="showCongeAbsencePopup = false"
+  [showPopUp]="showCongeAbsencePopup"
+  [title]=addUpdateAbsenceCongeTitle
+  width="700">
+
+  <rhis-add-conge-absence *ngIf="showCongeAbsencePopup" [listTypeEvenement]='listTypeEvenement'
+                          [absence]="absenceConge"
+                          [listJourFeries]="listJourFeries"
+                          [buttonLabel]="addUpdateAbsenceCongeTitle"
+                          [absenceParam]="absenceParam"
+                          (addOrUpdateAbsenceEvent)="addOrUpdateAbsenceForEmployee($event)"
+  ></rhis-add-conge-absence>
+</rhis-pop-up>
+<rhis-pop-up
+  (closeEvent)="showValidateOrRefuseCongeAbsencePopup = false"
+  [showPopUp]="showValidateOrRefuseCongeAbsencePopup"
+  [title]=addUpdateAbsenceCongeTitle>
+
+  <rhis-valide-refus-conge-absence *ngIf="showValidateOrRefuseCongeAbsencePopup"
+                                   [absence]="absenceConge"
+                                   (valideOrRefuseAbsenceEvent)="valideOrRefuseAbsenceForEmployee($event)"
+  ></rhis-valide-refus-conge-absence>
+</rhis-pop-up>
+<rhis-pop-up-report
+  (closeEvent)="isReportShown = false"
+  (exportEvent)="downloadFile()"
+  (printEvent)="printFile()"
+  [showPopUp]="isReportShown"
+  [title]="titleReport"
+  [height]="700"
+>
+  <div class="pdf scroll">
+    <pdf-viewer [src]="reportViewer"
+    ></pdf-viewer>
+  </div>
+</rhis-pop-up-report>
+<rhis-pop-up
+  (closeEvent)="isReportGenerationLoader = false"
+  [showPopUp]="isReportGenerationLoader"
+  [width]="400"
+  [title]="reportGenerationTitle">
+  <div class="container-generate-report">
+    <div>{{"POPUPS.GENERATOR_REPORT_MESSAGE" | translate}}</div>
+    <div class="generation-label text-white text-center d-flex flex-column justify-content-around mt-2"
+         [ngClass]="{
+           'bg-danger': getBackgroundColor(2),
+           'success': getBackgroundColor(0),
+           'progress': getBackgroundColor(1)}">
+      {{reportGenerationLabel}}</div>
+    <div (click)="isReportGenerationLoader = false"
+         class="btn btn-light mt-4 w-50  float-right generation-report-close-btn">
+      {{"BUTTON.CLOSE" | translate}}</div>
+  </div>
+</rhis-pop-up>
+<rhis-pop-up (closeEvent)="warningPopUpLock = false"
+             [showPopUp]="warningPopUpLock"
+             [title]="('GDH.BLOCK.TO' | translate) + blockGdhParam?.valeur">
+  {{'GDH.BLOCK.PERIOD_WARNING' | translate}}
+</rhis-pop-up>

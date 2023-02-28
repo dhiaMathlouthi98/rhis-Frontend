@@ -1,0 +1,12 @@
+{
+  "production": true,
+  "hostServerEmployee": "http://127.0.0.1:8092",
+  "hostServerPlanning": "http://127.0.0.1:8091",
+  "hostServerSecurity": "http://127.0.0.1:8094",
+  "hostServerGDH": "http://127.0.0.1:8093",
+  "hostServerCalculePlanning": "http://127.0.0.1:2009",
+  "hostServerRapport": "http://127.0.0.1:2007",
+  "defaultRestaurantId": "11261",
+  "title": "2.4.3",
+  "idleTimeMax": "60"
+}

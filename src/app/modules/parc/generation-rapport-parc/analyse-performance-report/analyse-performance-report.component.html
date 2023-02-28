@@ -1,0 +1,35 @@
+<div class="wrapper scroll-general-rhis pb-3">
+  <table>
+    <thead>
+      <tr>
+        <th>{{data?.upperHeader[0]}}</th>
+        <th colspan="9">{{data?.upperHeader[1]}}</th>
+        <th></th>
+        <th colspan="11">{{data?.upperHeader[2]}}</th>
+        <th></th>
+        <th [colSpan]="8 + (displayMode - 1)">{{data?.upperHeader[3]}}</th>
+        <th></th>
+        <th colspan="7">{{data?.upperHeader[4]}}</th>
+      </tr>
+      <tr>
+        <ng-container *ngFor="let column of data?.columns">
+          <th> {{column?.title}} </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let line of data?.data;">
+        <td *ngFor="let column of data?.columns;let i = index" [id]=column?.code [ngClass]="{'separators': isASeparator | memoize : column?.code : displayMode}">
+          {{getValueByCode(line, column)}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td *ngFor="let total of data?.total; let i = index" [style.color]="getRedColumnStyle(i + 1)">
+          {{total?.value}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

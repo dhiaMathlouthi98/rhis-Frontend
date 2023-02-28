@@ -1,0 +1,10 @@
+.scroll-content-rhis {
+  padding: 30px;
+  margin-top: 0;
+}
+
+:host ::ng-deep {
+  .view {
+    top: 0;
+  }
+}

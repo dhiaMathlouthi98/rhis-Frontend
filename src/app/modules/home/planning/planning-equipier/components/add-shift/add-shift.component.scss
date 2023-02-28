@@ -1,0 +1,46 @@
+.rhis-container {
+  height: 350px;
+  border-radius: 5px;
+  label {
+    display: block;
+  }
+
+  div {
+    text-align: center;
+    margin-bottom: 10px;
+    select {
+      width: 220px;
+      height: 35px;
+    }
+  }
+
+  .add {
+    margin-top: 20px;
+  }
+}
+
+:host ::ng-deep {
+  .update-list-dropdown {
+    .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group:has(span.group-propose:empty) {
+      display: none;
+    }
+
+    .ui-dropdown-panel .ui-dropdown-items li.ui-dropdown-item-group.hide-groupe-propose-li {
+      display: none !important;
+    }
+
+    .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group,
+    .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+      background: #00a2e8 !important;
+      color: #fff;
+    }
+  }
+
+  .ui-dropdown-panel .ui-dropdown-item-group {
+    padding: 2px 0 !important;
+
+    .group-propose {
+      font-size: 12px;
+    }
+  }
+}

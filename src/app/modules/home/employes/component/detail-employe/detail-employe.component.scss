@@ -1,0 +1,197 @@
+.rhis-container {
+  .header {
+    span.icon-arrow-right-rhis {
+      background-color: #F7F7F7;
+      margin: 12px 13px 0 0;
+    }
+
+    .shortcut {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: unset;
+    }
+
+    div.shortcut {
+      height: 38px;
+      width: 38px;
+      background-color: #385FE3;
+      color: #FFFFFF;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 22px;
+      border-radius: 50%;
+      margin: 6px 17px 0 0;
+      @media screen and (max-width: 991px) {
+        font-size: 14px;
+        height: 32px;
+        width: 32px;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    h3 {
+      height: 36px;
+      color: #9B9B9B;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 36px;
+      margin: 7px 12px 0 0;
+      @media screen and (max-width: 1366px) {
+        font-size: 24px;
+        line-height: 34px;
+      }
+      @media screen and (max-width: 1244px) {
+        font-size: 22px;
+        line-height: 32px;
+      }
+      @media screen and (max-width: 1024px) {
+        font-size: 20px;
+        line-height: 30px;
+      }
+    }
+
+    h1 {
+      height: 50px;
+      color: #414141;
+      font-family: "TT Wellingtons Medium", sans-serif;
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 50px;
+      @media screen and (max-width: 1366px) {
+        font-size: 30px;
+        line-height: 40px;
+      }
+      @media screen and (max-width: 1244px) {
+        font-size: 26px;
+        line-height: 36px;
+      }
+      @media screen and (max-width: 1024px) {
+        font-size: 22px;
+        line-height: 32px;
+      }
+    }
+  }
+
+  .detail {
+    clear: both;
+    padding: 0;
+    position: relative;
+    top: 30px;
+
+    .panel {
+      .menu-detail-employee-rhis {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+        padding-bottom: 20px;
+      }
+
+      div.item-menu-detail-employee-rhis {
+        text-transform: uppercase;
+        font-family: "TT Wellingtons DemiBold";
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: 14px;
+        width: fit-content;
+        cursor: pointer;
+        outline: none;
+        padding-right: 50px;
+        @media screen and (max-width: 1366px) {
+          padding-right: 40px;
+        }
+        @media screen and (max-width: 1366px) {
+          padding-right: 30px;
+        }
+        @media screen and (max-width: 1024px) {
+          padding-right: 25px;
+        }
+        @media screen and (max-width: 991px) {
+          line-height: 30px;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+
+      .active {
+        color: #414141;
+
+        span {
+          border-bottom: 1px solid #414141;
+          padding-bottom: 5px;
+        }
+      }
+
+      .not-active {
+        color: #414141;
+        opacity: 0.35;
+      }
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+}
+
+.scroll-content-rhis {
+  padding: 30px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.scroll-content-detail-perso.scroll-content-rhis {
+  overflow-y: auto;
+}
+
+.block-left-header-rhis {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+  height: 50px;
+}
+
+:host ::ng-deep {
+  .rhis-container .header {
+    span.arrow-list-employees-rhis {
+      padding: 5px;
+      cursor: pointer;
+      margin-top: 0 !important;
+    }
+
+    .list-employes-selectif_rhis {
+      z-index: 9;
+
+      .ui-listbox {
+        min-width: 15em;
+
+        .ui-listbox-list .ui-listbox-item {
+          &:hover {
+            color: #fff;
+            background-color: #385FE3;
+          }
+        }
+
+        .ui-listbox-list .ui-listbox-item.ui-state-highlight {
+          color: #fff;
+          background-color: #385FE3;
+        }
+      }
+    }
+  }
+}

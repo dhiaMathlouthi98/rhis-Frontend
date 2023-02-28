@@ -1,0 +1,16 @@
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+col:last-child, col:first-child {
+  width: 300px;
+  @media screen and (max-width: 1199px) {
+    width: auto;
+  }
+}

@@ -1,0 +1,45 @@
+@import '../../../../../../assets/file_import/table-style-commun';
+
+:host ::ng-deep {
+  .table-list {
+    @include nbre-ligne-page();
+  }
+}
+
+.header.row {
+  height: 50px;
+  margin-bottom: 25px;
+  margin-left: 0;
+  margin-right: 0;
+  align-items: center;
+  .col-6 {
+    padding-left: 0;
+  }
+}
+
+.section-element-title {
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+.loi-restaurant-check-rhis {
+  width: 102%;
+}
+
+:host ::ng-deep {
+  .table-list p-table .ui-table table .ui-table-tbody > tr > td {
+    padding: 12px 2px;
+  }
+  .rhis-container .flag-bottom {
+    left: -24px !important;
+    border-top: 10px solid transparent !important;
+    border-right: 11px solid #fff !important;
+    border-bottom: 11px solid transparent !important;
+    border-left: 13px solid transparent !important;
+    bottom: 7px !important;
+  }
+}

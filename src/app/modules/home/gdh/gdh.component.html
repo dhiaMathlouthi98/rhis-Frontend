@@ -1,0 +1,459 @@
+<div class="rhis-container interface-global-gdh">
+  <div class="header">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="titre-principale-page-rhis">{{"GDH.TITLE" | translate}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="header-filter-gdh">
+    <div class="header-filter-gdh-child">
+      <div class="left-block-filter">
+        <div class="filter-date-gdh">
+
+          <!-- date for day or paye -->
+          <div *ngIf="typeView=='day'" class="search" style="margin: 0px;">
+
+              <span (click)="prevDay()" class="owl-dt-control-content owl-dt-control-button-content"
+                    id="GDH-prevDay-select" style="cursor:pointer;width: 10px;position: relative;left: -205px;">
+                <svg height="100%" xml:space="preserve"
+                     style="enable-background:new 0 0 250.738 250.738;" version="1.1"
+                     viewBox="0 0 250.738 250.738" width="100%" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+                  <path
+                    d="M96.633,125.369l95.053-94.533c7.101-7.055,7.101-18.492,0-25.546   c-7.1-7.054-18.613-7.054-25.714,0L58.989,111.689c-3.784,3.759-5.487,8.759-5.238,13.68c-0.249,4.922,1.454,9.921,5.238,13.681   l106.983,106.398c7.101,7.055,18.613,7.055,25.714,0c7.101-7.054,7.101-18.491,0-25.544L96.633,125.369z"
+                    style="fill-rule: evenodd; clip-rule: evenodd;fill: #999;">
+                  </path>
+                </svg>
+              </span>
+
+            <input #dateCal (dateTimeChange)="onSelectDate($event)" [(ngModel)]="selectedDate"
+                   [ngModelOptions]="{standalone: true}"
+                   [owlDateTimeTrigger]="dt1"
+                   [owlDateTime]="dt1" id="dateCal"
+                   id="GDH-dateCal-input" name="calendar" placeholder="Date">
+
+            <span (click)="nextDay()" class="owl-dt-control-content owl-dt-control-button-content day-after">
+              <svg style="enable-background:new 0 0 250.738 250.738;"
+                   version="1.1" viewBox="0 0 250.738 250.738" x="0px" xml:space="preserve"
+                   xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M191.75,111.689L84.766,5.291c-7.1-7.055-18.613-7.055-25.713,0
+                                  c-7.101,7.054-7.101,18.49,0,25.544l95.053,94.534l-95.053,94.533c-7.101,7.054-7.101,18.491,0,25.545
+                                  c7.1,7.054,18.613,7.054,25.713,0L191.75,139.05c3.784-3.759,5.487-8.759,5.238-13.681
+                                  C197.237,120.447,195.534,115.448,191.75,111.689z" style="fill-rule:evenodd;clip-rule:evenodd;fill: #999;"></path>
+              </svg>
+            </span>
+
+            <!-- FIXME change this calendar and use instead primeng ones and apply css changes-->
+            <owl-date-time #dt1 [firstDayOfWeek]="firstDayOfWeek" [pickerType]="'calendar'"></owl-date-time>
+            <span>
+              <img (click)="runDate()" alt="" src="assets/icons/gdh/Ico_Grille_ON.svg" style="cursor: pointer;">
+            </span>
+          </div>
+          <div class="d-flex">
+              <div  *ngIf="typeView !=='day'"
+                    class="padlock-container d-flex justify-content-around align-items-center">
+                <img *ngIf="ghdViewBlockState?.isDateIntervalTotallyBlocked"
+                     (mouseenter)= "getPadlockHoverMessage($event, 'BLOCK', icon_text_hover_tooltip)"
+                     (mouseleave)="icon_text_hover_tooltip.hide()"
+                     (click)="unblockPeriod()" alt="" src="assets/icons/gdh/blocked.png" class="padlock">
+                <img *ngIf="!ghdViewBlockState?.isDateIntervalTotallyBlocked"
+                     (mouseenter)="getPadlockHoverMessage($event, 'UNBLOCK', icon_text_hover_tooltip)"
+                     (mouseleave)="icon_text_hover_tooltip.hide()"
+                     (click)="blockPeriod()" alt="" src="assets/icons/gdh/unblocked.png" class="padlock">
+              </div>
+            <!-- date for week -->
+            <div *ngIf="typeView !=='day'" class="search" style="margin: 0;"
+                 [ngClass]="{'time-picker-with-padlock': getBlockUnblockAccess()}">
+              <span (click)="prevPeriod()" class="owl-dt-control-content owl-dt-control-button-content"
+                    id="GDH-prevPeriod-select" style="cursor:pointer;width: 10px;position: relative;left: -205px;">
+                <svg height="100%" xml:space="preserve"
+                     style="enable-background:new 0 0 250.738 250.738;" version="1.1"
+                     viewBox="0 0 250.738 250.738" width="100%" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+                  <path
+                          d="M96.633,125.369l95.053-94.533c7.101-7.055,7.101-18.492,0-25.546   c-7.1-7.054-18.613-7.054-25.714,0L58.989,111.689c-3.784,3.759-5.487,8.759-5.238,13.68c-0.249,4.922,1.454,9.921,5.238,13.681   l106.983,106.398c7.101,7.055,18.613,7.055,25.714,0c7.101-7.054,7.101-18.491,0-25.544L96.633,125.369z"
+                          style="fill-rule: evenodd; clip-rule: evenodd;fill: #999;"></path></svg>
+              </span>
+
+              <input (focus)="runDateWeek()" [(ngModel)]="selectedPeriod" [ngModelOptions]="{standalone: true}"
+                     id="GDH-dateWeek-input" name="weekAsString">
+              <input #dateCalWeek (dateTimeChange)="onSelectWeek($event)" [(ngModel)]="selectedDate"
+                     [ngModelOptions]="{standalone: true}"
+                     [owlDateTimeTrigger]="dt1"
+                     [owlDateTime]="dt1" id="weekCal"
+                     name="calendar"
+                     id="GDH-weekCal-input" style="width: 0px;height: 0px;position: absolute;left: 13px;top: 48px;">
+              <span (click)="nextPeriod()" class="owl-dt-control-content owl-dt-control-button-content day-after"
+                    id="GDH-nextPeriod-select">
+              <svg style="enable-background:new 0 0 250.738 250.738;"
+                   version="1.1" viewBox="0 0 250.738 250.738" x="0px" xml:space="preserve"
+                   xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M191.75,111.689L84.766,5.291c-7.1-7.055-18.613-7.055-25.713,0
+                                  c-7.101,7.054-7.101,18.49,0,25.544l95.053,94.534l-95.053,94.533c-7.101,7.054-7.101,18.491,0,25.545
+                                  c7.1,7.054,18.613,7.054,25.713,0L191.75,139.05c3.784-3.759,5.487-8.759,5.238-13.681
+                                  C197.237,120.447,195.534,115.448,191.75,111.689z" style="fill-rule:evenodd;clip-rule:evenodd;fill: #999;"></path>
+              </svg>
+            </span>
+
+              <owl-date-time #dt1 [firstDayOfWeek]="firstDayOfWeek" [pickerType]="'calendar'"></owl-date-time>
+              <span>
+              <img (click)="runDateWeek()" alt="" id="GDH-dateWeek-select" src="assets/icons/gdh/Ico_Grille_ON.svg"
+                   style="cursor: pointer;">
+            </span>
+            </div>
+          </div>
+        </div>
+        <div class="navigate-vue-normal-graphique">
+          <!-- is planning day view -->
+          <div *ngIf="typeView=='day'" class="btn-group" role="group">
+            <button (click)="onSelectIsPlanning(false);" [ngClass]="{'active': !isPlanningView}"
+                    class="btn btn-light" id="GDH-vue-normal-btn" type="button">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_Grille_ON.svg">
+              </span>
+            </button>
+            <button (click)="onSelectIsPlanning(true);" [ngClass]="{'active': isPlanningView}"
+                    class="btn btn-light" id="GDH-vue-graphique-btn" type="button">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_Analyse_OFF.svg">
+              </span>
+            </button>
+          </div>
+          <!-- is planning week view -->
+          <rhis-hundredth-time
+            *ngIf="typeView=='week' || typeView=='paye'"
+            (selectHourState)="onSelectHourView($event)"
+            [isHourlyView]="isHourlyView"
+          ></rhis-hundredth-time>
+        </div>
+      </div>
+      <div class="left-block-filter">
+        <div class="navigate-vue-semaine-paye mr-2">
+          <!-- type view -->
+          <div class="btn-group" role="group">
+            <button (click)="onSelectType('day');" [ngClass]="{'active': typeView=='day'}"
+                    class="btn btn-light" id="GDH-jour-btn" type="button">
+              {{"GDH.FILTER.DAY" | translate}}
+            </button>
+            <button (click)="onSelectType('week');" [ngClass]="{'active': typeView=='week'}" class="btn btn-light"
+                    id="GDH-week-btn" type="button">{{"GDH.FILTER.WEEK" | translate}}
+            </button>
+            <button (click)="onSelectType('paye');" [ngClass]="{'active': typeView=='paye'}" class="btn btn-light"
+                    id="GDH-paye-btn" type="button">{{"GDH.FILTER.PAYE" | translate}}
+            </button>
+          </div>
+        </div>
+        <div class="mr-2" style="width: fit-content;">
+          <!-- liste des employées -->
+          <div class="btn-group" role="group">
+            <button (click)="setPopulationType('E');" [ngClass]="{'active': populationType=='E'}" class="btn btn-light"
+                    id="GDH-employee-btn" type="button">{{"GDH.FILTER.EMPLOYEES" | translate}}
+            </button>
+            <button (click)="setPopulationType('M');" [ngClass]="{'active': populationType=='M'}" class="btn btn-light"
+                    id="GDH-managers-btn" type="button">{{"GDH.FILTER.MANAGERS" | translate}}
+            </button>
+            <button (click)="setPopulationType('');" [ngClass]="{'active': populationType==''}" class="btn btn-light"
+                    id="GDH-all-btn" type="button">{{"GDH.FILTER.ALL" | translate}}
+            </button>
+          </div>
+        </div>
+        <rhis-hundredth-time
+          *ngIf="typeView=='day' && !isPlanningView"
+          (selectHourState)="onSelectHourView($event)"
+          [isHourlyView]="isHourlyView"
+        ></rhis-hundredth-time>
+      </div>
+    </div>
+    <div class="header-filter-gdh-child">
+      <div class="right-block-filter">
+        <div class="search_first_last_name">
+          <rhis-search-filter
+            [minSizeEnabled]="menuIsOpen && (typeView=='day') && (!this.isPlanningView)"
+            (searchByFirstLastName)="filterByFirstLastName()"
+            (sendFilter)="setFilterFirstLastName($event)">
+          </rhis-search-filter>
+        </div>
+        <div class="icon-right-download-gdh">
+          <div class="text-right pull-right">
+            <button (click)="toggleCommentairePopup()" *ngIf="typeView=='day' && addControlButton()"
+                    class="btn mini-btn" id="GDH-edit-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_Edit.svg">
+              </span>
+            </button>
+            <button (click)="displayPaiePopup()" *ngIf="typeView=='paye' && (showOngletSFP() || showOngletVAP() || showOngletVPP())"
+                    class="btn mini-btn" id="GDH-ppt-paye-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_PPT.svg">
+              </span>
+            </button>
+            <button *ngIf="typeView=='week'" class="btn mini-btn" id="GDH-ppt-week-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_PPT.svg">
+              </span>
+            </button>
+            <button (click)="generateExcelOrCSVFile()" class="btn mini-btn"
+                    id="GDH-xls-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_XLS.svg">
+              </span>
+            </button>
+            <button (click)="displayPrintPopup()" *ngIf="typeView=='day'"
+                    class="btn mini-btn" id="GDH-day-print-btn">
+              <span>
+                <img alt="no print icon" src="assets/icons/gdh/Ico_Print.svg">
+              </span>
+            </button>
+          </div>
+          <rhis-commentaire-popup (closeAlertes)="closeCommentairePopup()"
+                                  *ngIf="openedCommentaireopup"
+                                  [currentDate]="selectedDate"
+                                  [openedAlertes]="openedCommentaireopup"></rhis-commentaire-popup>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div [ngClass]="{'scroll-horizontal-hourly-day': typeView=='day' && isPlanningView }"
+       class="bg-white scroll-horizontal-gdh">
+    <rhis-day-view [blockGdhParamDefault]="blockGdhParamDefault"
+                   [isHourlyView]="isHourlyView"
+                   [populationType]="populationType"
+                   [selectedDate]="selectedDate"
+                   *ngIf="typeView=='day' && !isPlanningView"
+                   (lunchSortByOrder)="sortByOrder()"></rhis-day-view>
+    <rhis-day-hourly-view [blockGdhParamDefault]="blockGdhParamDefault"
+                          [populationType]="populationType"
+                          [selectedDate]="selectedDate"
+                          *ngIf="typeView=='day' && isPlanningView"
+                          (lunchSortByOrder)="sortByOrder()"></rhis-day-hourly-view>
+    <rhis-week-view [populationType]="populationType" [isHourlyView]="isHourlyView"
+                    *ngIf="typeView=='week'"
+                    (lunchSortByOrder)="sortByOrder()"></rhis-week-view>
+    <rhis-paye-view *ngIf="typeView=='paye'"
+                    [isHourlyView]="isHourlyView"
+                    [populationType]="populationType"
+                    [selectedDate]="selectedDate"
+                    (lunchSortByOrder)="sortByOrder()"></rhis-paye-view>
+  </div>
+</div>
+<rhis-pop-up
+  (closeEvent)="isPopUpImportFormatShown = false"
+  [showPopUp]="isPopUpImportFormatShown"
+  [title]="'GDH.EXCEL_PAY_POPUP_TITLE' | translate">
+  <div class="row d-flex justify-content-around">
+    <button *ngIf="showMenuControl() && systemParam" (click)="generateFile()" class="btn save-add-button-rhis blue-background" id="GDH-integration-csv-btn"
+            type="button">
+      <span>{{"GDH.INTEGRATION" | translate | uppercase}}</span>
+    </button>
+    <button (click)="exportCSV()" class="btn save-add-button-rhis blue-background" id="GDH-export-csv-btn"
+            type="button">
+      <span>{{"GDH.CSV_LIBEL" | translate | uppercase}}</span>
+    </button>
+    <button (click)="exportExcel()" class="btn save-add-button-rhis blue-background" id="GDH-export-excel-btn"
+            type="button">
+      <span>{{"GDH.EXCEL_LIBEL" | translate | uppercase}}</span>
+    </button>
+  </div>
+</rhis-pop-up>
+<rhis-pop-up
+  (closeEvent)="closeVariablePaiePopup()"
+  [showPopUp]="openPaiePopup"
+  [height]="popUpStyle?.height"
+  [title]="'GDH.PAY.EXTRACT_PAY' | translate">
+  <div class="pay-interface-container">
+    <p-tabView (onChange)="saveBeforeChangePanel($event)">
+      <p-tabPanel #validationTab [header]="'GDH.PAY.VAP_PANEL_TITLE' | translate" [headerStyle]="showOngletVPP() ? '' : {'display':'none'}">
+          <div *ngIf="selectedTab === 0 && showOngletVPP()">
+            <rhis-onglet-validation
+                    (checkDeltaAndValidatePaye)="checkDeltaAndValidatePaye($event)"
+                    (sendChosenReports)="chosenReports = $event"
+                    (downloadChosenReports)="downloadChosenReports($event)"
+                    [selectedPeriodFrom]="selectedPeriodFrom"
+                    [selectedPeriodTo]="selectedPeriodTo"
+            ></rhis-onglet-validation>
+          </div>
+      </p-tabPanel>
+      <p-tabPanel #variableTab [header]="'GDH.PAY.VARIABLES' | translate" [headerStyle]="showOngletVAP() ? '' : {'display':'none'}">
+        <div *ngIf="selectedTab === 1 && showOngletVAP()">
+          <rhis-onglet-variable-paie
+            (generateInterfacePayFile)="exportPaye()"
+          >
+          </rhis-onglet-variable-paie>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel #structureTab [header]="'GDH.PAY.FILE_STRUCTURE' | translate" [headerStyle]="showOngletSFP() ? '' : {'display':'none'}">
+        <ng-template pTemplate="content">
+          <div *ngIf="selectedTab === 2 && showOngletSFP()">
+            <rhis-pay-file-structure></rhis-pay-file-structure>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</rhis-pop-up>
+<rhis-pop-up
+  (closeEvent)="closeValidationPaiePopup()"
+  [showPopUp]="openValidationPaiePopup"
+  [width]="validationPaiepopUpStyle?.width"
+  [height]="validationPaiepopUpStyle?.height"
+  [title]="'GDH.PAY.VALIDATION_POPUP_TITLE' | translate">
+  <div class="align-popup-validation-elements">
+    <div class="popup-validation-text-font space-between">
+      {{'GDH.PAY.MSG_CLOTURE_PAIE' | translate}}
+   </div>
+    <div *ngIf="!chosenReports?.length" class="popup-validation-text-font space-between">
+      {{'GDH.PAY.MSG_SELECTION_FICHIERS' | translate}}
+    </div>
+    <div class="space-between">
+      <p-checkbox [(ngModel)]="downloadFiles" label="{{'GDH.PAY.DOWNLOAD_FILES' | translate}}" binary="true" [disabled]="!chosenReports?.length"
+      id="Validation_PAIE_CHECKBOX" name="downloadFiles"></p-checkbox>
+    </div>
+ 
+    <div class="pop-up-table-rhis">
+      <button (click)="closeValidationPaiePopup()" 
+              class="btn button-popup-rhis orange-background  color-btn-white-rhis btn-save-rhis"
+              id="validation_PAIE_BUTTON" type="button">
+        <span> {{'BUTTON.CANCEL' | translate}}</span>
+      </button>
+      <button (click)="validerPaie()"
+              class="btn button-popup-rhis blue-background color-btn-white-rhis btn-cancel-rhis "
+              id="Validation_PAIE_cANCEL_Button" type="button">
+        <span>
+          {{'GDH.PAY.VALIDER_BOUTON_POPUP'  | translate}}
+        </span>
+      </button>
+    </div>
+  </div>
+</rhis-pop-up>
+<rhis-pop-up
+  (closeEvent)="openPrintPopup = false"
+  [showPopUp]="openPrintPopup"
+  [title]="'GDH.PRINT_BON.POPUP_TITLE' | translate">
+  <div class="popup-print-rapport">
+    <form [formGroup]="voucherForm">
+      <div class="row">
+        <div class="col-7">
+          <label class="section-element-title">{{'GDH.PRINT_BON.DATE'|translate}}</label>
+          <div class="date-journee-calendar">
+            <p-calendar (onSelect)="getListActifEmployee($event)" [maxDate]="maxDateValue" dateFormat="dd/mm/yy"
+                        formControlName="dateJournee"
+                        id="GDH-dateJournee-popup"></p-calendar>
+          </div>
+          <span class="form-item-error red small-rhis"
+                *ngIf="voucherForm.get('dateJournee').hasError('required') && isSubmitted"
+                id="GDH-dateJourneeError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-5">
+          <label class="section-element-title">{{'GDH.PRINT_BON.DE'|translate | titlecase}}</label>
+          <p-calendar [timeOnly]="true" formControlName="heureDebut"
+                      id="GDH-heureDebut-popup"></p-calendar>
+          <span *ngIf="voucherForm.get('heureDebut').hasError('required') && isSubmitted"
+                class="form-item-error red small-rhis"
+                id="GDH-heureDebutError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+        </div>
+        <div class="col-5">
+          <label class="section-element-title">{{'GDH.PRINT_BON.A'|translate}}</label>
+          <p-calendar [timeOnly]="true" formControlName="heureFin"
+                      id="GDH-heureFin-popup"></p-calendar>
+          <span *ngIf="voucherForm.get('heureFin').hasError('required') && isSubmitted"
+                class="form-item-error red small-rhis"
+                id="GDH-heureFinError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+        </div>
+        <div *ngIf="errorHourMessage != ''" class="form-item-error red small-rhis"
+             id="GDH-hourError-popup">
+          {{errorHourMessage}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-10">
+          <span class="ml-3 ui-chkbox-label align-self-center">{{'GDH.PRINT_BON.RETARD' | translate }}</span>
+          <p-inputSwitch class="green-switch" formControlName="typeAbsence"
+                         id="GDH-switch-popup"></p-inputSwitch>
+          <span class="ml-3 ui-chkbox-label align-self-center">{{'GDH.PRINT_BON.DEPART' | translate}}</span>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-10">
+          <label class="section-element-title">{{"PLANNING_EQUIPIER.FIELD_EMPLOYE" | translate}} </label>
+          <div>
+            <p-dropdown [autoDisplayFirst]="false" [options]="employees" class="drop-down-general"
+                        formControlName="employee"
+                        appendTo="body"
+                        optionLabel="fullName"
+                        id="GDH-listEmp-popup"
+            ></p-dropdown>
+          </div>
+          <span *ngIf="voucherForm.get('employee').hasError('required') && isSubmitted"
+                class="form-item-error red small-rhis"
+                id="GDH-listEmpError-popup">{{"PLANNING_EQUIPIER.REQUIRED" | translate}}</span>
+        </div>
+      </div>
+      <br>
+      <button (click)="printVoucher()"
+              class="btn save-add-button-rhis orange-background btn-popup-rhis mt-2"
+              id="GDH-printVoch-btn"
+              type="button">
+        <span>{{"GDH.PRINT_BON.POPUP_BUTTON" | translate | uppercase}}</span>
+      </button>
+    </form>
+  </div>
+
+</rhis-pop-up>
+
+<rhis-pop-up (closeEvent)="showVoucherPdf = false"
+             [height]="popUpStyle?.height"
+             [showPopUp]="showVoucherPdf">
+  <rhis-print-voucher [bonInfo]="bonInfo"></rhis-print-voucher>
+</rhis-pop-up>
+
+<rhis-pop-up
+  (closeEvent)="closePopupDeltaNegatif()"
+  [showPopUp]="showPopupDeltaNegatif"
+  [title]="'GDH.TTILE_ECART' | translate">
+  <div>
+    <div class="font-weight-bold mb-3">
+      <span>{{"GDH.TTILE_DELTA_NEGATIF" | translate }} {{employeDelteNegatifNumber}} {{"GDH.TTILE_DELTA_NEGATIF_PART2" | translate }} </span>
+    </div>
+    <div class="col-4 drpo-delta">
+      <p-dropdown [autoDisplayFirst]="false"
+                  [options]="employeList"
+                  scrollHeight="150px"
+                  placeholder="Nom Prenom"
+                  id="GDH-addPointageAbs-listStatut-btn"
+                  optionLabel="nomPrenom"
+                  rhisStyleForm
+      ></p-dropdown>
+    </div>
+    <div class="font-weight-bold delta-txt">
+      <span> {{"GDH.DELTA_NEGATIF_QUESTION" | translate }}</span>
+    </div>
+    <div class="row delta-btn">
+
+      <button (click)="validateGeneration()" class="col-5 btn save-add-button-rhis orange-background"
+              id="GDH-DELTA-FALSE-btn"
+              type="button">
+        <span>{{"COMMON_LOI.TRUE" | translate | uppercase}}</span>
+      </button>
+      <div class="col-2"></div>
+      <button (click)="closePopupDeltaNegatif()" class="col-5 btn save-add-button-rhis orange-background"
+              id="GDH-DELTA-TRUE-btn"
+              type="button">
+        <span>{{"COMMON_LOI.FALSE" | translate | uppercase}}</span>
+      </button>
+    </div>
+
+  </div>
+</rhis-pop-up>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>
+<p-overlayPanel #icon_text_hover_tooltip
+                [dismissable]="true"
+                appendTo="body">
+  <div class="icon-hover-container">
+    <span>{{padLockHoverMessage}}</span>
+  </div>
+</p-overlayPanel>

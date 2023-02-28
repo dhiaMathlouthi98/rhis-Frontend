@@ -1,0 +1,72 @@
+<div class="row align-items-start">
+  <div class="col-lg col-md ml-3 mr-3">
+    <div class="form-group">
+      <div class="ui-g-12">
+        <div class="row">
+          <div class="col-5">
+            {{'GESTION_ALERTE.TYPE_LABEL' | translate}}
+          </div>
+          <div class="col-7">
+            {{selectedAlerte?.libelle}}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-5 align-self-center">
+            {{'GESTION_ALERTE.PARAM_LABEL' | translate}}*
+          </div>
+          <div class="col-7 section-element">
+            <input [(ngModel)]="selectedAlerte.valeurParam" class="text-field" rhisTwoDigitDecimaNumber
+                   type="text">
+            <span *ngIf="valeurParamErrorMessage"
+                  class="red small-rhis">
+            {{'GESTION_ALERTE.PARAM_VALUE_MISSING_ERROR_MESSAGE' | translate}}
+        </span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-5 align-self-center">
+            {{'GESTION_ALERTE.NIVEAU_ACCESS_LABEL' | translate}}*
+          </div>
+          <div class="col-7">
+            <p-dropdown [(ngModel)]="selectedAlerte.niveauAccess" [options]="niveauAccessItem" appendTo="body"
+                        class="drop-down-general"
+                        editable="true"></p-dropdown>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-5 align-self-center">
+            {{'GESTION_ALERTE.PREFIX_FICHIER_LABEL' | translate}}*
+          </div>
+          <div class="col-7 section-element">
+            <input [(ngModel)]="selectedAlerte.prefixFichier" class="text-field" type="text">
+            <span *ngIf="prefixFichierErrorMessage"
+                  class="red small-rhis">
+            {{'GESTION_ALERTE.PREFIX_FILE_MISSING_ERROR_MESSAGE' | translate}}
+        </span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-5">
+            {{'GESTION_ALERTE.DESCRIPTION_LABEL' | translate}}
+          </div>
+          <div class="col-7">
+            {{selectedAlerte?.description}}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-5">
+            {{'GESTION_ALERTE.ACTIF_LABEL' | translate}}
+          </div>
+          <div class="col-7">
+            <p-inputSwitch [(ngModel)]="selectedAlerte.actif"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-footer class="d-flex justify-content-center mt-3">
+  <button (click)="updateAlerte()" class="btn save-add-button-rhis btn-popup-rhis orange-background" type="button">
+    <span>{{'GESTION_ALERTE.UPDATE_ALERTE_BUTTON' | translate | uppercase }}</span>
+  </button>
+</p-footer>

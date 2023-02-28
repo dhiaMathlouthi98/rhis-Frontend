@@ -1,0 +1,210 @@
+.flex-between-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  width: 92%;
+}
+
+.flex-between-block.specifique-block {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.label-periode-debut-absence {
+  padding-right: 27px;
+}
+
+.error-coordination {
+  top: 61px;
+  left: 0;
+}
+
+.error-motif-absence {
+  top: 40px;
+  left: 120px;
+}
+
+.error-employee {
+  top: 40px;
+  left: 120px;
+}
+
+.filtrage-style {
+  padding-right: 35px;
+}
+
+.filtrage-style-motif-abs {
+  padding-right: 13px;
+}
+
+.flex-start-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+}
+
+.block-input-week-rhis {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+  padding-left: 3px;
+  position: relative;
+  .img-planning {
+    position: absolute;
+    z-index: 999;
+
+    img {
+      width: 20px;
+      height: auto;
+      cursor: pointer;
+      margin-top: -12px;
+    }
+  }
+
+  .img-planning.left {
+    left: 14px;
+  }
+
+  .img-planning.right {
+    left: 185px;
+  }
+}
+
+:host ::ng-deep {
+  .rapport-operationnel, .service_a_prendre, .planning_employee, .rapport_correction, .rapport_disponibilites {
+    .ui-calendar .ui-inputtext {
+      width: 85%;
+      min-width: 210px;
+      height: 37px;
+      border: none;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .ui-datepicker:not(.ui-datepicker-inline) {
+      top: 47px !important;
+      left: 0;
+    }
+
+    .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
+      padding: 3px;
+    }
+
+    .block-input-week-rhis {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      align-content: stretch;
+      max-width: 285px;
+      padding-left: 3px;
+      position: relative;
+
+      .img-planning {
+        position: absolute;
+        z-index: 999;
+
+        img {
+          width: 20px;
+          height: auto;
+          cursor: pointer;
+          margin-top: -5px;
+        }
+      }
+
+      .img-planning.left {
+        left: 14px;
+      }
+
+      .img-planning.right {
+        left: 185px;
+      }
+    }
+
+    .ui-calendar .ui-datepicker {
+      min-width: 315px;
+    }
+
+    .ui-calendar.ui-calendar-w-btn {
+      .ui-inputtext,
+      .ui-inputtext:hover {
+        border: 1px solid #DEDEDE;
+      }
+
+      .ui-datepicker-trigger.ui-button,
+      .ui-datepicker-trigger.ui-button:enabled:hover,
+      .ui-datepicker-trigger.ui-button:enabled:active {
+        background: none;
+        color: #DEDEDE;
+        border: 1px solid #DEDEDE;
+        padding: 1px 3px 3px 0;
+        border-left: none;
+        outline: none;
+
+        .pi {
+          font-size: 2.25em;
+        }
+      }
+
+      .ui-inputtext:enabled:focus:not(.ui-state-error) {
+        border: 1px solid #DEDEDE;
+      }
+    }
+  }
+
+  .ui-multiselect {
+    width: 175px;
+    min-height: 40px;
+  }
+
+  .green-switch .ui-inputswitch-checked .ui-inputswitch-slider {
+    background-color: #2DC76D !important;
+    border: 1px solid #2DC76D;
+  }
+}
+
+p-radioButton {
+  margin-left: 5px;
+}
+
+.switch-element-title {
+  width: fit-content;
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+}
+
+.text-perso-commun {
+  width: 160px;
+}
+
+.block-input-week-rhis .img-planning.right.popup-travail {
+  left: 160px;
+  top: 14px;
+}
+
+.block-input-week-rhis .img-planning.left.popup-travail {
+  left: 3px;
+  top: 14px;
+}
+
+.section-element-title1 {
+  width: fit-content;
+  color: #9B9B9B;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+}

@@ -1,0 +1,110 @@
+<div class="rhis-container view">
+  <div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="190"
+       class="header row justify-content-between">
+    <div class="titre">
+      <h1 class="titre-principale-page-rhis">{{"PROFIL.GLOBAL_ALL" | translate}}
+        <span class="nbr d-flex flex-column justify-content-around text-center">{{totalRecords}}</span>
+      </h1>
+    </div>
+    <div class="float-right">
+      <button type="button" (click)="showAddPopup()" class="btn save-add-button-rhis blue-background">
+        <span>{{"PROFIL.ADD_GLOBAL" | translate}}</span>
+      </button>
+      <div class="search">
+        <input type="text" [formControl]="filterName" placeholder={{searchParProfil}}>
+        <span (click)="searchProfil()">
+          <img src="assets/icons/employe/ico_search_small.svg" alt="">
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid change-container-fluid-rhis scroll-table-responsive">
+    <div class="table-list responsive-table-rhis" *ngIf="listProfilGlobal?.length">
+      <p-table #dt [columns]="header"
+               [value]="listProfilGlobal"
+               [paginator]="true"
+               [lazy]="true"
+               [rows]="row"
+               [first]="first"
+               [totalRecords]="nbreProfil"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               (onPage)="onLazyLoad($event)"
+               [scrollHeight]="heightInterface"
+               [scrollable]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let c of columns">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr class="header-row">
+            <th *ngFor="let col of columns"
+                [pSortableColumn]="(col?.field != 'delete') ? col?.field : null">
+              <ng-container *ngIf="!l">
+                {{col?.title}}
+
+              </ng-container>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-profil let-i="rowIndex">
+          <tr id="1016" class="table-row" [pSelectableRow]="profil" (dblclick)="showUpdate(profil,$event)">
+
+            <td>
+              <div>
+                {{profil?.libelle}}
+              </div>
+            </td>
+            <td>
+              <div *ngIf="profil.affectations.length==1 && profil.affectations[0].societe!=null">
+                {{profil?.affectations[0].societe.societeName}}
+              </div>
+
+              <div *ngIf="((profil.affectations.length==1 && profil.affectations[0].societe==null) || (profil.affectations.length>1 && profil.affectations[0].societe==null)) ">-</div>
+
+              <div *ngIf="profil.affectations.length>1 && profil.affectations[0].societe!=null">
+                <span (click)="op.toggle($event)">...</span>
+                <p-overlayPanel #op  [autoZIndex]="true" [appendTo]="'body'" [showCloseIcon]="true" [dismissable]="false">
+                  <rhis-list-societe-profil
+                    [affectations]="profil?.affectations">
+                  </rhis-list-societe-profil>
+                </p-overlayPanel>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="profil.affectations.length==1 && profil.affectations[0].restaurant!=null">
+                {{profil?.affectations[0].restaurant.libelle}}
+              </div>
+              <div
+                *ngIf="(profil.affectations.length==1 && profil.affectations[0].restaurant==null) || (profil.affectations.length>1 && profil.affectations[0].restaurant==null) ">
+                -
+              </div>
+              <div *ngIf="profil.affectations.length>1 && profil.affectations[0].restaurant!=null">
+                <span (click)="overlaybasic.toggle($event)" #test>...</span>
+                <p-overlayPanel class="overlay-myrhis" #overlaybasic [appendTo]="'body'" [showCloseIcon]="true" [dismissable]="true">
+                  <rhis-list-restaurant-profil
+                    [affectations]="profil?.affectations">
+                  </rhis-list-restaurant-profil>
+                </p-overlayPanel>
+              </div>
+            </td>
+            <td>
+              <div id="1008">
+              <span *ngIf="deleteButtonControl() && (profilLibelle !== profil?.libelle)" (click)=" deletProfil(profil)"
+                    class="item">
+                <img src="assets/icons/employe/Btn_Close.svg" alt="no image">
+              </span>
+              </div>
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog [appendTo]="'body'"></p-confirmDialog>

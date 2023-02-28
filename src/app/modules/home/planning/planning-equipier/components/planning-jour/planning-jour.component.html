@@ -1,0 +1,94 @@
+<div class="planning-body">
+  <div [ngClass]="{'employee-item-minimal-display-condensee': minimalDisplay}" class="employees-list">
+    <div *ngFor="let employee of _employees; let i = index" [ngStyle]="{'height': employeeItemHeight}"
+         class="employee-item">
+      <rhis-emp-planning-jour
+              [employee]="employee"
+              [showTimeAxis]="showTimeAxis"
+              [sortByEmployee]="sortByEmployee"
+              [applyButtonPostStyle]="applyButtonPostStyle"
+              [idGrid]="idGrid"
+              [i]="i"
+              [minimalDisplay]="minimalDisplay"
+              [activLoaderIndex]="activLoaderIndex"
+              [activLoader]="activLoader"
+              [newEmployeesToDisplay]="newEmployeesToDisplay"
+              [employeNotFound]="employeNotFound"
+              [selectedEmployee]="selectedEmployee"
+              [longeurEmployee]="longeurEmployee"
+              [tooltipStyleNomEmployee]="tooltipStyleNomEmployee"
+              [onCheckShiftNA]="checkShiftNA | memoize : i : data"
+              [hebdoPlanifieToDisplay]="employee?.hebdoPlanifieToDisplay"
+              [hebdoCourant]="employee?.hebdoCourant"
+              [totalHourEmployee]="getDayTotalHoursForEmployee | memoize : employee:
+                                                                          clone:
+                                                                          _listShift:
+                                                                          dateService:
+                                                                          contrainteSocialeService:
+                                                                          employesActifsWithTotalPlanifieJour:
+                                                                          _activeEmployeesPerWeek:
+                                                                          shiftService:
+                                                                          _newActiveEmployees:
+                                                                          newActiveEmployees:
+                                                                          contrainteSocialeCoupureService:
+                                                                          helperService:
+                                                                          datePipe:
+                                                                          selectedDate:
+                                                                          weekDates:
+                                                                          paramMode:
+                                                                          selectedEmployee:
+                                                                          data:
+                                                                          brightnessColorShiftService:
+                                                                          colorBrightDarker:
+                                                                          decoupageHoraireFinEtDebutActivity:
+                                                                          frConfig:
+                                                                          activeEmployeesPerWeek:
+                                                                          listOfBreakAndShift:
+                                                                          paramNationaux"
+
+              (onSortEmployees)="sortEmployees()"
+              (onSortShifts)="sortShifts()"
+              (onReAssignEmployee)="reAssignEmployee(employee, i)"
+              (onHighlightEmployee)="onHighlightEmployee($event?.value, $event?.employee)"
+              (onShowOrHideToolTip)="showOrHideToolTip(employee)"
+              (onGetNewEmployees)="employeeToAdd = $event; getNewEmployees(i)"
+              (onConfirmAddEmployee)="employeeToAdd = $event; confirmAddEmployee(i, false)"
+              (onOpenEmployeeWeeklyPlanning)="openEmployeeWeeklyPlanning(employee)"
+              (onCloseEmployeeWeeklyPlanning)="closeEmployeeWeeklyPlanning(employee)">
+      </rhis-emp-planning-jour>
+    </div>
+  </div>
+  <div class="gridster-container" [ngStyle]="{'height': gridsterHeight}">
+    <gridster [id]="'day-gridster' + idGrid"
+              [ngClass]="{'hour-item-condense': minimalDisplay}"
+              [options]="options">
+      <gridster-item *ngFor="let item of data" [item]="item"
+                     [ngClass]="{'shift-item': item?.isShift, 'hour-item': !item?.isShift,
+                      'first-hour': item?.isheureDeDebut,
+                      'inactive-employee-shift-display-style': item?.notPlgEquipier,
+                      'resize': item?.acheval,
+                      'modifiable': item?.modifiable && item?.acheval,
+                      'not-modifiable': !item?.modifiable && item?.acheval
+                      }"
+                     [ngStyle]="{'background': item?.color, 'color' : item?.textColor,
+                     'border-left': !item?.isShift ? '2px solid #DEDEDE' : (item?.sign ? '7px solid ' + item?.colorSign : '0px solid'),
+                     'border-right': item?.sign ? '7px solid ' + item?.colorSign : '0px solid'}"
+                     id="PLG_Jr-shift">
+        <rhis-data-gridster-item
+                [item]="item"
+                [lockState]="lockState"
+                [minimalDisplay]="minimalDisplay"
+                [tooltipStyleRight]="tooltipStyleRight"
+                [tooltipStyle]="tooltipStyle"
+                [enableDragAndResize]="enableDragAndResize"
+                [canDelete]="deleteButtonControl | memoize : domControlService: ecran"
+                [canUpdate]="updateButtonControl |memoize: domControlService: ecran"
+                [isSmallShiftHover]="smallShiftHover | memoize: item"
+
+                (onOpenUpdateShiftForm)="openUpdateShiftForm(item)"
+                (onShowConfirmDeleteShift)="showConfirmDeleteShift($event?.event, $event?.item)"
+        ></rhis-data-gridster-item>
+      </gridster-item>
+    </gridster>
+  </div>
+</div>

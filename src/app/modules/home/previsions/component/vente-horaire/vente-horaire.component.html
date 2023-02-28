@@ -1,0 +1,110 @@
+<div class="rhis-container">
+  <div class="header row" (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+       [offset]="220">
+    <div class="col-6">
+      <h1 class="titre-principale-page-rhis">{{'VENTE_HORAIRE.LABEL' | translate}} {{'VENTE_HORAIRE.DU' | translate}}
+        {{fullTitle}} </h1>
+    </div>
+    <div class="float-right col-6" *ngIf=realVentes>
+      <button (click)="updateVenteHoraire()" class="btn save-add-button-rhis orange-background"
+              id="VENTE-HORAIRE-save-btn"
+              type="button">
+        <span>{{'BUTTON.SAVE' | translate}}</span>
+      </button>
+      <button (click)="lisserVenteHoraire()" class="btn save-add-button-rhis orange-background"
+              id="VENTE-HORAIRE-lisser-btn"
+              type="button">
+        <span>{{'VENTE_HORAIRE.LISSER_VENTES' | translate}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid change-container-fluid-rhis mt-3">
+    <div class="table-list">
+      <p-table *ngIf="vhData.length > 0"
+               [scrollHeight]="heightInterface"
+               [scrollable]="true"
+               [value]="vhData">
+        <!--HEADER DU TABLEAU-->
+        <ng-template pTemplate="header">
+          <tr class="header-row">
+            <th class="text-center" rowspan="2">{{'BIMPOSE.HEURE_DEBUT' | translate}}</th>
+            <th class="text-center" rowspan="2">{{'BIMPOSE.HEURE_FIN' | translate}}</th>
+            <th class="text-center" rowspan="2">{{'VENTE_HORAIRE.COL_VENTE' | translate}}</th>
+            <th class="text-center" rowspan="2">{{'VENTE_HORAIRE.COL_POURCENTAGE' | translate}}</th>
+            <th class="text-center" rowspan="2">{{'VENTE_HORAIRE.COL_TRANSACTION' | translate}}</th>
+            <th *ngFor="let mv of listModeVentes" class="colspan-3 text-center" colspan="3">
+              {{mv?.libelle}}
+            </th>
+            <th class="text-center" rowspan="2">{{'VENTE_HORAIRE.COL_PLATEAU_MOY' | translate}}</th>
+          </tr>
+          <tr>
+            <th class="text-center" *ngFor="let col of venteHoraireModeVenteCol">{{col}}</th>
+          </tr>
+        </ng-template>
+
+
+        <!--BODY DU TABLEAU-->
+        <ng-template let-i="rowIndex" pTemplate="body" let-vh>
+          <tr class="table-row">
+            <td class="grey" [ngStyle]="{'font-weight': vh?.heureDebutNuit ? 'bold':''}">{{vh?.heureDebut |
+              date:'HH:mm'}}
+            </td>
+            <td class="grey" [ngStyle]="{'font-weight': vh?.heureFinNuit ? 'bold':''}">{{vh?.heureFin | date:'HH:mm'}}
+            </td>
+            <td [id]="'VENTE-HORAIRE_ventes-' + i"
+                style="text-align: center">
+                  <span (keydown)="checkForWrongNumberFormat($event,vh.ventes)"
+                        (blur)="updateVenteHoraireVenteValue(vh)"
+                        (keyup.enter)="updateVenteHoraireVenteValue(vh)" [contentEditable]="realVentes"
+                        [textContent]="vh?.ventes"
+                        (input)="vh.ventes=$event.target.textContent">{{vh?.ventes}} </span>
+            </td>
+            <td [id]="'VENTE-HORAIRE_pourcentage-' + i" class="grey">{{vh?.pourcentage}}</td>
+            <td [id]="'VENTE-HORAIRE_trans-' + i" class="grey">{{vh?.trans}}</td>
+            <ng-template ngFor let-mv [ngForOf]="listModeVentes" let-k="index">
+              <ng-template ngFor let-element [ngForOf]="vh?.venteHoraireModeVentes">
+                <ng-container>
+
+                  <td *ngIf="element?.venteHoraireModeVentePK?.idModeVente  === mv?.idModeVente"
+                      [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle +'ventes'">
+                  <span (keydown)="checkForWrongNumberFormat($event,element.ventes)"
+                        (blur)="updateVenteHoraireModeVenteValue(element)"
+                        (keyup.enter)="updateVenteHoraireModeVenteValue(element)" [contentEditable]="realVentes"
+                        [textContent]="element?.ventes"
+                        (input)="element.ventes=$event.target.textContent">{{element?.ventes}}</span>
+                  </td>
+                  <td *ngIf="element?.venteHoraireModeVentePK?.idModeVente  === mv?.idModeVente"
+                      [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle + '-pourcentage'"
+                      class="grey">
+                    {{element?.pourcentage}} %
+                  </td>
+                  <td *ngIf="element?.venteHoraireModeVentePK?.idModeVente  === mv?.idModeVente"
+                      [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle + '-transaction'"
+                      class="grey">
+                    {{element?.transaction}}
+                  </td>
+
+                </ng-container>
+                <ng-container *ngIf="modeVenteNotPresent(vh,mv)">
+                  <td [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle +'-ventes'" style="text-align: center">
+                  <span #newElement
+                        (keydown)="checkForWrongNumberFormat($event,0)"
+                        (keyup.enter)="createNewVenteHoraireModeVente(newElement,vh,mv)"
+                        (blur)="createNewVenteHoraireModeVente(newElement,vh,mv)"
+                        [contentEditable]="realVentes">0</span>
+                  </td>
+                  <td [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle + '-pourcentage'" class="grey">0 %</td>
+                  <td [id]="'VENTE-HORAIRE-' + listModeVentes[k].libelle + '-transaction'" class="grey">0</td>
+                </ng-container>
+              </ng-template>
+            </ng-template>
+            <td class="grey">{{vh.plateauMoyen}}</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>

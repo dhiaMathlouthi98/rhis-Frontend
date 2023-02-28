@@ -1,0 +1,82 @@
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+}
+.time {
+  color: #ffffff;
+  border-radius: 3px;
+  margin-bottom: 2px;
+  font-size: 10px;
+  z-index: 1;
+}
+
+.time-green {
+  color: #2DC76D !important;
+}
+
+.time-red {
+  color: #EA443D !important;
+}
+
+.time-orange {
+  color: #FF9B42 !important;
+}
+
+.red-block {
+  background-color: #e8000042;
+  border: 1px solid #EA443D;
+}
+
+.green-block {
+  border: 1pt solid #2DC76D;
+  background-color: #2DC76D42;
+}
+
+.yellow-block {
+  background-color: #ffac0042;
+  border: 1px solid #FF9B42;
+}
+.pointage-border {
+  border: 1pt solid #2DC76D;
+}
+
+.inner-absence-border {
+  border: 1pt solid #e8000042;
+}
+.small-font {
+  font-size: 9px;
+}
+
+.small-font.shiftSmallThan30,
+.small-font.ShiftSmallThan60 {
+  line-height: 12px;
+}
+
+.type-absence {
+  position: absolute;
+  background: rgba(255, 155, 66, 0.5);
+  bottom: -7px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #020202;
+  border: 2px solid #FF9B42;
+  line-height: 15px;
+}
+
+.acheval-start-hour-arrow {
+  left: 5px;
+}
+
+.acheval-end-hour-arrow {
+  right: 5px;
+}
+
+.shift_mini_format_container {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 9px;
+  font-family: "TT Wellingtons Medium", sans-serif;
+}

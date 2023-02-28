@@ -1,0 +1,64 @@
+<div (rhisHeightScrollableSection)="heightInterface = ($event + 'px')"
+     [offset]="240">
+</div>
+<div (rhisClickOutside)="unselectPositionement()"
+     [ngStyle]="{'height': heightInterface}"
+     class="scroll-general-rhis">
+  <div>
+    <span (click)="loadPreviousData()" *ngIf="displayPreviousButton" class="previous-data-button"
+          id="PREV-VueG-loadPrevData"></span>
+    <canvas id="positionChart" baseChart
+            [datasets]="truncatedChartData"
+            [labels]="truncatedChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartClick)="chartClicked($event)"
+            id="PREV-VueG-charte">
+    </canvas>
+    <span (click)="loadNextData()" *ngIf="displayNextButton" class="next-data-button"
+          id="PREV-VueG-loadNextData"></span>
+  </div>
+
+  <div class="banner-details {{isBannerEditable ? 'banner-details-border' : ''}}">
+    <div class="ca-details">
+      <h4>{{'CHARTEPOSITIONNEMENT.VENTEHOR' | translate}}</h4>
+      <span [contentEditable]="isBannerEditable" [textContent]="selectedPositionnement.venteHoraire"
+            (blur)="getNewCA($event)"
+            (keypress)="controlNewCA($event)"
+            id="PREV_VueG-selectPosVH">{{selectedPositionnement.venteHoraire}}</span>
+    </div>
+    <div class="effectif-details">
+      <h4>{{'CHARTEPOSITIONNEMENT.EFFECTIF' | translate}}</h4>
+      <span>{{selectedPositionnement.effectif}}</span>
+    </div>
+    <div class="indicateur-pourcentage-prod">
+      <h4>{{'CHARTEPOSITIONNEMENT.PROD' | translate}}</h4>
+      <rhis-percentage-cercle [value]="selectedPositionnement.productivite"
+                              [colors]="['#385FE3', '#EBEFFC']"></rhis-percentage-cercle>
+    </div>
+    <div class="indicateur-pourcentage-empl">
+      <h4>{{'CHARTEPOSITIONNEMENT.%COL' | translate}}</h4>
+      <rhis-percentage-cercle [value]="selectedPositionnement.pourcentageCol"
+                              [colors]="['#FF9B42', '#fcefe3']"></rhis-percentage-cercle>
+    </div>
+    <div class="scroll-positions">
+      <div *ngIf="showPdtScrollLeft" class="arrow-left-container">
+        <div (click)="scrollLeft()" class="arrow-left" id="PREV_VueG-scrollL"></div>
+      </div>
+
+      <div #widgetsContent class="middle">
+        <div *ngFor="let positionDeTravail of selectedChartBar.selectedPDT" class="info-widget">
+          <rhis-position-de-travail [positionDeTravail]="positionDeTravail"
+                                    [isBannerEditable]="isBannerEditable"
+                                    (newPosition)="getChartNewValues($event)">
+          </rhis-position-de-travail>
+        </div>
+      </div>
+      <div *ngIf="showPdtScrollRight" class="arrow-right-container">
+        <div (click)="scrollRight()" class="arrow-right" id="PREV_VueG-scrollR"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,407 @@
+header {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  top: 0;
+  z-index: 1;
+}
+
+#logo {
+  height: 60px;
+  float: left;
+  background-color: #FFFFFF;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+
+  img {
+    margin: 14px;
+  }
+}
+
+.closed-menu {
+  width: -webkit-calc(100% - 60px);
+  width: -moz-calc(100% - 60px);
+  width: calc(100% - 60px);
+  margin-left: 60px;
+}
+
+.opened-menu {
+  width: -webkit-calc(100% - 294px);
+  width: -moz-calc(100% - 294px);
+  width: calc(100% - 294px);
+  margin-left: 295px;
+}
+
+nav {
+  background-color: #FFFFFF;
+  height: inherit;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+
+  .restaurant-name {
+    height: inherit;
+    width: fit-content;
+    color: #AFA899;
+    font-family: "TT Wellingtons Medium", sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 22px;
+    margin-left: 1.5rem;
+    text-transform: uppercase;
+    @media screen and (max-width: 1366px) {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
+
+  .all-list-restaurant {
+    position: absolute;
+  }
+
+  .profile {
+    margin-right: 34.25px;
+    float: right;
+    width: auto;
+
+    @media screen and (max-width: 1199px) {
+      margin-right: 37px;
+    }
+
+    @media screen and (max-width: 991px) {
+      margin-right: 20.25px;
+    }
+
+    span {
+      position: relative;
+
+      &:nth-of-type(1) {
+        margin-left: 10px;
+        color: #414141;
+        @media screen and (max-width: 991px) {
+          margin-left: 5px;
+        }
+      }
+
+      &:nth-of-type(2) {
+        color: #385FE3;
+      }
+
+      &:nth-of-type(1), &:nth-of-type(2) {
+        position: relative;
+        height: 17px;
+        width: 141px;
+        font-family: "TT Wellingtons Medium";
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+      }
+
+      &:nth-of-type(3) {
+        margin-left: 10.25px;
+      }
+    }
+  }
+
+  .search {
+    float: right;
+    margin-right: 35.75px;
+    position: relative;
+    @media screen and (max-width: 1199px) {
+      min-width: 225px;
+    }
+    @media screen and (max-width: 991px) {
+      margin-right: 18.75px;
+    }
+
+    .input-search {
+      margin-right: 13px;
+      margin-top: 3px;
+      height: 26px;
+      width: 81px;
+      opacity: 0.35;
+      color: #AFA899;
+      font-family: "TT Wellingtons Regular";
+      font-size: 14px;
+      line-height: 20px;
+      float: left;
+      @media screen and (max-width: 991px) {
+        margin-right: 10px;
+        width: 68px;
+      }
+
+      input {
+        width: 92px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        @media screen and (max-width: 991px) {
+          font-size: 12px;
+          width: 65px;
+        }
+      }
+    }
+  }
+
+  .header-icons {
+    float: left;
+    cursor: pointer;
+    @media screen and (max-width: 991px) {
+      img {
+        width: 18px;
+      }
+    }
+  }
+
+  .sep {
+    margin-right: 25px;
+    margin-left: 25px;
+    height: 24px;
+    width: 1px;
+    background-color: #F0F0F0;
+    float: left;
+    @media screen and (max-width: 1199px) {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .menu-bar-rhis {
+    .ui-menubar {
+      border: none;
+
+      .ui-menuitem-link {
+        &:hover {
+          background: none;
+        }
+      }
+    }
+  }
+
+  .ui-menubar {
+    .ui-menubar-root-list {
+      margin-top: 3px;
+
+      > .ui-menuitem > .ui-menuitem-link {
+        padding-right: 0;
+
+        > .ui-submenu-icon {
+          float: right;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+
+  header .restaurant-name {
+    .dropdown-bloc-name-restaurant {
+      cursor: pointer;
+      position: relative;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .ui-dropdown-panel {
+      .ui-dropdown-items-wrapper {
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+          border-radius: 10px;
+          background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar {
+          width: 4px;
+          background-color: #F5F5F5;
+        }
+
+        &:hover::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, .3);
+          background-color: #AFA899;
+        }
+      }
+    }
+
+    .ui-dropdown {
+      height: 40px;
+      padding: 10px 17px 13px 0;
+      border: none !important;
+
+      label.ui-dropdown-label {
+        color: #AFA899;
+        font-family: "TT Wellingtons Medium", sans-serif;
+        font-size: 26px;
+        font-weight: 500;
+        line-height: 36px;
+      }
+    }
+
+    .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight,
+    .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group.ui-state-highlight {
+      background-color: #385FE3;
+    }
+
+    .ui-dropdown .ui-dropdown-trigger .ui-dropdown-trigger-icon {
+      margin-top: -18px;
+      margin-left: 2px;
+      color: #AFA899;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 36px;
+    }
+
+    .pi-chevron-down:before {
+      font-size: 22px;
+    }
+
+    .ui-dropdown .ui-dropdown-label {
+      padding-right: 10px;
+      padding-left: 0;
+      padding-top: 5px;
+    }
+
+    .pi.pi-angle-down {
+      margin-top: 4px;
+    }
+
+    .ui-dropdown-panel .ui-dropdown-items-wrapper {
+      height: auto !important;
+      max-height: 160px !important;
+    }
+  }
+}
+
+.block-flex-btw-rhis {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+}
+
+.alert-postion-style-rhis {
+  position: absolute;
+  right: -35px;
+  top: 28px;
+}
+
+.filter {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: rgba(65, 65, 65, 0.25);
+}
+
+div.shortcut {
+  height: 38px;
+  width: 38px;
+  background-color: #385FE3;
+  color: #FFFFFF;
+  font-family: "TT Wellingtons Medium", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 37px;
+  border-radius: 50%;
+  text-align: center;
+  @media screen and (max-width: 991px) {
+    font-size: 14px;
+    height: 32px;
+    width: 32px;
+  }
+}
+
+:host ::ng-deep {
+  .ui-menubar .ui-menuitem-active > .ui-submenu > .ui-submenu-list {
+    right: 0;
+    left: unset !important;
+
+    .ui-menuitem {
+      &:hover, &:focus {
+        background: #385FE3;
+
+        .ui-menuitem-link .ui-menuitem-text {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.support {
+
+  &__info {
+    padding: 10px 40px;
+
+    &--img {
+      text-align: center;
+      margin-bottom: 60px;
+      margin-top: -44px;
+    }
+
+    &--detail {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: stretch;
+      margin-bottom: 20px;
+      font-weight: bold;
+
+      > span:nth-child(1) {
+        width: 220px;
+        font-weight: bold;
+      }
+
+      .support_Form {
+        color: #385FE3 !important;
+      }
+    }
+
+    &--CG {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      align-content: stretch;
+      margin-top: 30px;
+    }
+  }
+
+  &--link {
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: #385FE3 !important;
+
+    &-CG {
+      font-size: 12px;
+      font-weight: bold;
+      color: #FF9B42 !important;
+    }
+
+    &-CG.actived-link {
+      cursor: pointer;
+    }
+  }
+
+
+}
